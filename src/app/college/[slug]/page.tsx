@@ -127,18 +127,20 @@ export default async function CollegePage({ params }: CollegePageProps) {
     );
   }
 
-  // Fetch cached AI results for scholarships
+  // Fetch cached AI results for scholarships via the cache_key on results
+  const cachePrefix = college.name.toLowerCase().trim() + "::";
   const { data: cachedResults } = await supabase
     .from("results")
-    .select("result_data")
-    .eq("college", college.name)
+    .select("raw_ai_response, scholarships_json, cc_gateway_json")
+    .ilike("cache_key", `${cachePrefix}%`)
     .order("created_at", { ascending: false })
     .limit(1);
 
+  const row = cachedResults?.[0];
   const cachedScholarships: ScholarshipResult[] =
-    cachedResults?.[0]?.result_data?.scholarships || [];
+    row?.scholarships_json || (row?.raw_ai_response as Record<string, unknown>)?.scholarships as ScholarshipResult[] || [];
 
-  const cachedCC = cachedResults?.[0]?.result_data?.cc_gateway || null;
+  const cachedCC = row?.cc_gateway_json || (row?.raw_ai_response as Record<string, unknown>)?.cc_gateway || null;
 
   // Fetch anonymised Q&A
   const { data: questions } = await supabase
