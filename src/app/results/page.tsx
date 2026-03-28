@@ -25,10 +25,10 @@ export default async function ResultsPage({
 
   const supabase = createServiceRoleClient();
 
-  // Fetch the result
+  // Fetch the result with its parent search for college/major names
   const { data: resultRow, error: resultErr } = await supabase
     .from("results")
-    .select("*")
+    .select("*, searches(college, major)")
     .eq("id", resultId)
     .single();
 
@@ -36,9 +36,10 @@ export default async function ResultsPage({
     notFound();
   }
 
-  const result: AIResearchResult = resultRow.result_data;
-  const college: string = resultRow.college;
-  const major: string = resultRow.major;
+  const result: AIResearchResult = resultRow.raw_ai_response as AIResearchResult;
+  const search = resultRow.searches as unknown as { college: string; major: string } | null;
+  const college: string = search?.college ?? "Unknown College";
+  const major: string = search?.major ?? "Unknown Major";
   const searchId: string = resultRow.search_id;
 
   // Generate initial suggested questions

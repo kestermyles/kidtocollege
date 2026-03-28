@@ -149,8 +149,15 @@ export async function submitSearch(
       .insert({
         college: data.college,
         major: data.major,
-        wizard_data: data,
-        cache_key: cacheKey,
+        minor: data.minor || null,
+        application_year: data.applicationYear || null,
+        gpa: data.gpa || null,
+        sat_score: data.satScore || null,
+        activities: data.activities || [],
+        other_skills: data.otherSkills || null,
+        priorities: data.priorities || [],
+        budget: data.budget || null,
+        notes: data.notes || null,
       })
       .select("id")
       .single();
@@ -173,12 +180,6 @@ export async function submitSearch(
       .single();
 
     if (cached) {
-      // Link search to the cached result
-      await supabase
-        .from("searches")
-        .update({ result_id: cached.id })
-        .eq("id", searchId);
-
       return { searchId, resultId: cached.id };
     }
 
@@ -191,20 +192,17 @@ export async function submitSearch(
       .insert({
         search_id: searchId,
         cache_key: cacheKey,
-        college: data.college,
-        major: data.major,
-        result_data: result,
+        match_score: result.match_score ?? null,
+        raw_ai_response: result,
+        scholarships_json: result.scholarships ?? null,
+        playbook_json: result.playbook ?? null,
+        budget_json: result.budget ?? null,
+        cc_gateway_json: result.cc_gateway ?? null,
       })
       .select("id")
       .single();
 
     if (resultErr) throw resultErr;
-
-    // Link search to result
-    await supabase
-      .from("searches")
-      .update({ result_id: resultRow.id })
-      .eq("id", searchId);
 
     return { searchId, resultId: resultRow.id };
   } catch (err) {
@@ -264,7 +262,6 @@ Return ONLY valid JSON. No markdown, no commentary, no code fences.`;
       search_id: searchId,
       question,
       answer: parsed.answer,
-      suggested_questions: parsed.suggestedQuestions,
     });
 
     return parsed;
