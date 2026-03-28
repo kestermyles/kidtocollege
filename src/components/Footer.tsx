@@ -72,10 +72,20 @@ export function Footer() {
               &copy; {new Date().getFullYear()} KidToCollege. All rights
               reserved.
             </p>
-            <p className="text-xs text-white/40">
-              Your data is never sold, shared with colleges, or used for
-              advertising.
-            </p>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/privacy"
+                className="text-xs text-white/40 hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-xs text-white/40 hover:text-white transition-colors"
+              >
+                Terms of Use
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

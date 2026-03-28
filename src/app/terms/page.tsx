@@ -1,0 +1,198 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Use — KidToCollege",
+  description: "Terms and conditions for using the KidToCollege platform.",
+};
+
+export default function TermsOfUsePage() {
+  return (
+    <div className="min-h-screen bg-white pt-28 pb-20">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="font-display text-3xl sm:text-4xl font-bold text-navy mb-2">
+          Terms of Use
+        </h1>
+        <p className="font-mono-label text-xs text-navy/40 uppercase tracking-wider mb-10">
+          Effective date: March 28, 2026
+        </p>
+
+        <div className="space-y-10 font-body text-navy/80 leading-relaxed">
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              1. Acceptance of terms
+            </h2>
+            <p>
+              By accessing or using KidToCollege (&ldquo;the Service&rdquo;), you agree to
+              be bound by these Terms of Use. If you do not agree to these terms, do not use
+              the Service. We reserve the right to update these terms at any time; continued
+              use of the Service after changes are posted constitutes acceptance of the
+              revised terms.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              2. Nature of the service
+            </h2>
+            <p>
+              KidToCollege provides AI-generated college research reports, scholarship
+              information, and coaching content for informational and guidance purposes
+              only. The Service is <strong>not a substitute for professional college
+              admissions counseling</strong>. Users should use the information provided as
+              one input among many when making educational decisions.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              3. No guarantees
+            </h2>
+            <p>
+              KidToCollege makes no guarantees of admission to any college or university,
+              scholarship awards, financial aid eligibility, or any specific educational
+              outcome. Scholarship amounts, deadlines, and eligibility criteria are subject
+              to change at any time — always verify directly with the institution or
+              scholarship body before relying on any information provided by the Service.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              4. Data accuracy
+            </h2>
+            <p>
+              All college data presented on KidToCollege is sourced from public records,
+              including the Integrated Postsecondary Education Data System (IPEDS), Common
+              Data Sets, College Board, and FAFSA.gov. While we believe this data to be
+              accurate at the time of publication, it is not warranted for accuracy,
+              completeness, or timeliness. Institutional data changes frequently, and the
+              Service may not reflect the most recent updates from every institution.
+            </p>
+            <p className="mt-3">
+              AI-generated content, including research reports, scholarship
+              recommendations, essay feedback, and coaching guidance, is produced by
+              artificial intelligence and may contain errors, omissions, or outdated
+              information. Users should independently verify all critical information.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              5. User accounts
+            </h2>
+            <p>
+              You are responsible for maintaining the confidentiality of your account
+              credentials and for all activity that occurs under your account. You agree to
+              provide accurate information when creating an account and to notify us
+              promptly of any unauthorised access.
+            </p>
+            <p className="mt-3">
+              Parent and student accounts may be linked by invitation. Both parties consent
+              to sharing saved colleges, search results, checklist items, and related data
+              within the linked account pair.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              6. Intellectual property and content use
+            </h2>
+            <p>
+              All AI-generated report content, coaching materials, and site content
+              produced by KidToCollege is provided for the user&apos;s personal,
+              non-commercial use only. You may not redistribute, resell, republish, or
+              commercially exploit any content generated by the Service without our prior
+              written consent.
+            </p>
+            <p className="mt-3">
+              The KidToCollege name, logo, design, and original written content are the
+              property of KidToCollege and are protected by applicable intellectual property
+              laws.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              7. Prohibited use
+            </h2>
+            <p>You agree not to:</p>
+            <ul className="list-disc pl-6 mt-3 space-y-1">
+              <li>Scrape, crawl, or use automated tools to extract content from the Service</li>
+              <li>Reproduce, republish, or redistribute site content for commercial purposes</li>
+              <li>Use the Service to generate content that is fraudulent, misleading, or intended to deceive admissions offices</li>
+              <li>Attempt to gain unauthorised access to other users&apos; accounts or data</li>
+              <li>Use the Service in any way that violates applicable law</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              8. Essay coaching disclaimer
+            </h2>
+            <p>
+              The AI essay coaching feature is designed to help students improve their own
+              writing. It provides feedback, structural suggestions, and clarity
+              improvements. It does not write essays on behalf of users. Users are solely
+              responsible for the content of their college application essays and for
+              ensuring their submissions comply with each institution&apos;s academic
+              integrity policies.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              9. Limitation of liability
+            </h2>
+            <p>
+              To the fullest extent permitted by law, KidToCollege and its operators shall
+              not be liable for any indirect, incidental, special, consequential, or
+              punitive damages arising from your use of the Service, including but not
+              limited to missed deadlines, incorrect scholarship information, denied
+              applications, or financial losses.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              10. Independence
+            </h2>
+            <p>
+              KidToCollege is 100% independent. We are not affiliated with, endorsed by, or
+              paid by any college, university, scholarship body, or educational
+              organisation. The Service does not receive compensation for recommending or
+              featuring any institution.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              11. Governing law
+            </h2>
+            <p>
+              These Terms of Use are governed by and construed in accordance with the laws
+              of the State of Texas, without regard to its conflict of law provisions. Any
+              disputes arising under these terms shall be resolved in the courts of the
+              State of Texas.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              12. Contact
+            </h2>
+            <p>
+              For questions about these terms, contact us at{" "}
+              <a
+                href="mailto:privacy@kidtocollege.com"
+                className="text-gold hover:text-gold/80 underline underline-offset-2"
+              >
+                privacy@kidtocollege.com
+              </a>
+              .
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
