@@ -163,7 +163,10 @@ export async function submitSearch(
       .select("id")
       .single();
 
-    if (searchErr) throw searchErr;
+    if (searchErr) {
+      console.error("[submitSearch] Search insert error:", searchErr);
+      throw new Error("Failed to save your search. Please try again.");
+    }
     const searchId: string = searchRow.id;
 
     // 2. Check for cached result within 24 hours
@@ -171,17 +174,16 @@ export async function submitSearch(
       Date.now() - CACHE_TTL_HOURS * 60 * 60 * 1000
     ).toISOString();
 
-    const { data: cached } = await supabase
+    const { data: cachedRows } = await supabase
       .from("results")
       .select("id")
       .eq("cache_key", cacheKey)
       .gte("created_at", cutoff)
       .order("created_at", { ascending: false })
-      .limit(1)
-      .single();
+      .limit(1);
 
-    if (cached) {
-      return { searchId, resultId: cached.id };
+    if (cachedRows && cachedRows.length > 0) {
+      return { searchId, resultId: cachedRows[0].id };
     }
 
     // 3. No cache — run the AI research
@@ -203,7 +205,10 @@ export async function submitSearch(
       .select("id")
       .single();
 
-    if (resultErr) throw resultErr;
+    if (resultErr) {
+      console.error("[submitSearch] Result insert error:", resultErr);
+      throw new Error("Failed to save your report. Please try again.");
+    }
 
     return { searchId, resultId: resultRow.id };
   } catch (err) {

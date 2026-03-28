@@ -178,6 +178,7 @@ export function Wizard({
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(1);
   const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [showMinor, setShowMinor] = useState(false);
 
   const [form, setForm] = useState<WizardData>({
@@ -231,15 +232,19 @@ export function Wizard({
 
   const handleSubmit = async () => {
     setSubmitting(true);
+    setErrorMsg("");
     try {
       const result = await submitSearch(form);
       if ("error" in result) {
-        console.error(result.error);
+        setErrorMsg(result.error);
         setSubmitting(false);
         return;
       }
       router.push(`/results?id=${result.resultId}`);
-    } catch {
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
       setSubmitting(false);
     }
   };
@@ -472,6 +477,12 @@ export function Wizard({
           className={inputCls}
         />
       </div>
+
+      {errorMsg && (
+        <div className="p-4 rounded-md bg-crimson/10 border border-crimson/20">
+          <p className="text-sm font-body text-crimson">{errorMsg}</p>
+        </div>
+      )}
 
       <button
         type="button"
