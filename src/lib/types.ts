@@ -75,6 +75,15 @@ export interface AIResearchResult {
   early_decision_advantage: string;
   essay_angles: string[];
   live_links: LiveLinks;
+  recommended_colleges?: RecommendedCollege[];
+}
+
+export interface RecommendedCollege {
+  name: string;
+  reason: string;
+  acceptance_rate: string;
+  estimated_cost: string;
+  scholarship_potential: string;
 }
 
 export interface College {

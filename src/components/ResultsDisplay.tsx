@@ -11,6 +11,7 @@ import type {
   AIResearchResult,
   ScholarshipResult,
   PlaybookItem,
+  RecommendedCollege,
 } from "@/lib/types";
 
 // ---------------------------------------------------------------------------
@@ -214,6 +215,7 @@ export function ResultsDisplay({
     early_decision_advantage,
     essay_angles,
     live_links,
+    recommended_colleges,
   } = result;
 
   // -----------------------------------------------------------------------
@@ -365,6 +367,67 @@ export function ResultsDisplay({
             </div>
           </section>
         </FadeIn>
+
+        {/* -------------------------------------------------------------- */}
+        {/* YOU MIGHT ALSO CONSIDER                                        */}
+        {/* -------------------------------------------------------------- */}
+        {recommended_colleges && recommended_colleges.length > 0 && (
+          <FadeIn>
+            <section>
+              <SectionHeader
+                number=""
+                title="You Might Also Consider"
+                subtitle="Alternative colleges that fit your profile"
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {recommended_colleges.map(
+                  (rc: RecommendedCollege, i: number) => (
+                    <div key={i} className="ktc-card p-5 flex flex-col">
+                      <h3 className="font-display text-lg font-bold text-navy mb-2">
+                        {rc.name}
+                      </h3>
+                      <p className="font-body text-sm text-navy/70 mb-3 flex-1">
+                        {rc.reason}
+                      </p>
+                      <div className="grid grid-cols-2 gap-2 mb-4">
+                        <div className="bg-cream rounded p-2 text-center">
+                          <p className="font-mono text-[10px] text-navy/40 uppercase tracking-wider">
+                            Acceptance
+                          </p>
+                          <p className="font-body text-sm font-semibold text-navy">
+                            {rc.acceptance_rate}
+                          </p>
+                        </div>
+                        <div className="bg-cream rounded p-2 text-center">
+                          <p className="font-mono text-[10px] text-navy/40 uppercase tracking-wider">
+                            Est. Cost
+                          </p>
+                          <p className="font-body text-sm font-semibold text-navy">
+                            {rc.estimated_cost}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="bg-gold/5 border border-gold/20 rounded p-2 mb-4">
+                        <p className="font-mono text-[10px] text-gold uppercase tracking-wider">
+                          Scholarship Potential
+                        </p>
+                        <p className="font-body text-sm text-navy">
+                          {rc.scholarship_potential}
+                        </p>
+                      </div>
+                      <Link
+                        href={`/search?college=${encodeURIComponent(rc.name)}&major=${encodeURIComponent(major)}`}
+                        className="font-body text-sm text-gold hover:text-gold/80 font-medium transition-colors"
+                      >
+                        Research this college &rarr;
+                      </Link>
+                    </div>
+                  )
+                )}
+              </div>
+            </section>
+          </FadeIn>
+        )}
 
         {/* -------------------------------------------------------------- */}
         {/* 02 — BUDGET BREAKDOWN                                          */}
