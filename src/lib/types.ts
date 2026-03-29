@@ -97,6 +97,7 @@ export interface College {
   graduation_rate: number | null;
   total_enrollment: number | null;
   photo_url: string | null;
+  official_url?: string | null;
   programs: string[];
   last_updated: string;
 }

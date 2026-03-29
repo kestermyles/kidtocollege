@@ -1,6 +1,6 @@
 import { College } from "./types";
 
-type CollegeSeed = Omit<College, "last_updated">;
+type CollegeSeed = Omit<College, "last_updated"> & { official_url?: string };
 
 export const COLLEGES_SEED: CollegeSeed[] = [
   // ── Ivy League ──────────────────────────────────────────────
@@ -15,7 +15,8 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     graduation_rate: 98,
     total_enrollment: 31345,
     photo_url:
-      "https://images.unsplash.com/photo-1559135197-8a45ea74d367?w=1920&q=80",
+      "https://images.unsplash.com/photo-1583373834259-46cc92173cb7?w=800&q=80",
+    official_url: "https://www.harvard.edu",
     programs: [
       "Economics",
       "Computer Science",
@@ -38,7 +39,8 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     graduation_rate: 97,
     total_enrollment: 14776,
     photo_url:
-      "https://images.unsplash.com/photo-1570992870781-e0e04a3e3de3?w=1920&q=80",
+      "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=800&q=80",
+    official_url: "https://www.yale.edu",
     programs: [
       "Economics",
       "Political Science",
@@ -61,7 +63,8 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     graduation_rate: 97,
     total_enrollment: 8623,
     photo_url:
-      "https://images.unsplash.com/photo-1576495199011-eb94736d05d6?w=1920&q=80",
+      "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?w=800&q=80",
+    official_url: "https://www.princeton.edu",
     programs: [
       "Computer Science",
       "Economics",
@@ -84,7 +87,8 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     graduation_rate: 95,
     total_enrollment: 36649,
     photo_url:
-      "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1920&q=80",
+      "https://images.unsplash.com/photo-1569982175971-d92b01cf8694?w=800&q=80",
+    official_url: "https://www.columbia.edu",
     programs: [
       "Computer Science",
       "Economics",
@@ -109,7 +113,8 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     graduation_rate: 93,
     total_enrollment: 45307,
     photo_url:
-      "https://images.unsplash.com/photo-1597926661974-69a3c585e032?w=1920&q=80",
+      "https://images.unsplash.com/photo-1519452575417-564c1401ecc0?w=800&q=80",
+    official_url: "https://www.berkeley.edu",
     programs: [
       "Computer Science",
       "Electrical Engineering",
@@ -132,7 +137,8 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     graduation_rate: 92,
     total_enrollment: 47310,
     photo_url:
-      "https://images.unsplash.com/photo-1580982324076-d95230f6e2f2?w=1920&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80",
+    official_url: "https://www.ucla.edu",
     programs: [
       "Biology",
       "Psychology",
@@ -155,7 +161,8 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     graduation_rate: 93,
     total_enrollment: 48090,
     photo_url:
-      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&q=80",
+      "https://images.unsplash.com/photo-1598618443855-232ee0f819f6?w=800&q=80",
+    official_url: "https://umich.edu",
     programs: [
       "Engineering",
       "Business",
@@ -179,6 +186,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 26082,
     photo_url:
       "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=1920&q=80",
+    official_url: "https://www.virginia.edu",
     programs: [
       "Commerce",
       "Economics",
@@ -202,6 +210,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 32575,
     photo_url:
       "https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=1920&q=80",
+    official_url: "https://www.unc.edu",
     programs: [
       "Biology",
       "Business",
@@ -224,7 +233,8 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     graduation_rate: 88,
     total_enrollment: 53082,
     photo_url:
-      "https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=1920&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
+    official_url: "https://www.utexas.edu",
     programs: [
       "Business",
       "Engineering",
@@ -248,6 +258,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 47000,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=1920&q=80",
+    official_url: "https://www.gatech.edu",
     programs: [
       "Computer Science",
       "Mechanical Engineering",
@@ -273,6 +284,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 61369,
     photo_url:
       "https://images.unsplash.com/photo-1543505298-b8be9b0e5e4d?w=1920&q=80",
+    official_url: "https://www.osu.edu",
     programs: [
       "Business",
       "Engineering",
@@ -296,6 +308,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 88502,
     photo_url:
       "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=1920&q=80",
+    official_url: "https://www.psu.edu",
     programs: [
       "Engineering",
       "Business",
@@ -319,6 +332,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 55211,
     photo_url:
       "https://images.unsplash.com/photo-1535957998253-26ae1ef29506?w=1920&q=80",
+    official_url: "https://www.ufl.edu",
     programs: [
       "Engineering",
       "Business",
@@ -342,6 +356,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 78254,
     photo_url:
       "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=1920&q=80",
+    official_url: "https://www.asu.edu",
     programs: [
       "Business",
       "Engineering",
@@ -365,6 +380,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 44862,
     photo_url:
       "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?w=1920&q=80",
+    official_url: "https://www.fsu.edu",
     programs: [
       "Business",
       "Criminology",
@@ -390,6 +406,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 22825,
     photo_url:
       "https://images.unsplash.com/photo-1574958269340-fa927503f3dd?w=1920&q=80",
+    official_url: "https://www.jmu.edu",
     programs: [
       "Health Sciences",
       "Business",
@@ -413,6 +430,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 28466,
     photo_url:
       "https://images.unsplash.com/photo-1590012314607-cda9d9b699ae?w=1920&q=80",
+    official_url: "https://www.clemson.edu",
     programs: [
       "Engineering",
       "Business",
@@ -436,6 +454,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 26067,
     photo_url:
       "https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1920&q=80",
+    official_url: "https://www.boisestate.edu",
     programs: [
       "Business",
       "Health Science",
@@ -459,6 +478,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 30708,
     photo_url:
       "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=1920&q=80",
+    official_url: "https://www.iastate.edu",
     programs: [
       "Engineering",
       "Agriculture",
@@ -484,6 +504,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 2089,
     photo_url:
       "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=1920&q=80",
+    official_url: "https://www.williams.edu",
     programs: [
       "Economics",
       "Mathematics",
@@ -507,6 +528,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 1971,
     photo_url:
       "https://images.unsplash.com/photo-1592495981488-073153776d9a?w=1920&q=80",
+    official_url: "https://www.amherst.edu",
     programs: [
       "Economics",
       "Mathematics",
@@ -530,6 +552,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 1878,
     photo_url:
       "https://images.unsplash.com/photo-1580977276076-ae4b8c219b8e?w=1920&q=80",
+    official_url: "https://www.bowdoin.edu",
     programs: [
       "Government",
       "Economics",
@@ -555,6 +578,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 12753,
     photo_url:
       "https://images.unsplash.com/photo-1523050854058-8df90110c476?w=1920&q=80",
+    official_url: "https://www.howard.edu",
     programs: [
       "Biology",
       "Nursing",
@@ -578,6 +602,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 2264,
     photo_url:
       "https://images.unsplash.com/photo-1607013407627-6848f64e5fa4?w=1920&q=80",
+    official_url: "https://www.spelman.edu",
     programs: [
       "Biology",
       "Psychology",
@@ -601,6 +626,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 2256,
     photo_url:
       "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1920&q=80",
+    official_url: "https://www.morehouse.edu",
     programs: [
       "Business Administration",
       "Biology",
@@ -625,7 +651,8 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     graduation_rate: 96,
     total_enrollment: 11858,
     photo_url:
-      "https://images.unsplash.com/photo-1564399580075-5dfe19c205f3?w=1920&q=80",
+      "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.mit.edu",
     programs: [
       "Computer Science",
       "Electrical Engineering",
@@ -649,6 +676,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 2397,
     photo_url:
       "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80",
+    official_url: "https://www.caltech.edu",
     programs: [
       "Physics",
       "Computer Science",
@@ -672,6 +700,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 7762,
     photo_url:
       "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=1920&q=80",
+    official_url: "https://www.rpi.edu",
     programs: [
       "Computer Science",
       "Engineering",
@@ -697,6 +726,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 28000,
     photo_url:
       "https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1920&q=80",
+    official_url: "https://www.smc.edu",
     programs: [
       "Business",
       "Nursing",
@@ -720,6 +750,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 67000,
     photo_url:
       "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1920&q=80",
+    official_url: "https://www.nvcc.edu",
     programs: [
       "Liberal Arts",
       "Business",
@@ -743,6 +774,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 41000,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=1920&q=80",
+    official_url: "https://www.austincc.edu",
     programs: [
       "Business",
       "Computer Science",
@@ -768,6 +800,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 31103,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://missouri.edu",
     programs: [
       "Journalism",
       "Business",
@@ -791,6 +824,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 22394,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.missouristate.edu",
     programs: [
       "Business",
       "Education",
@@ -814,6 +848,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 16275,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://wustl.edu",
     programs: [
       "Business",
       "Computer Science",
@@ -837,6 +872,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 12564,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.slu.edu",
     programs: [
       "Nursing",
       "Business",
@@ -860,6 +896,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 5500,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.truman.edu",
     programs: [
       "Biology",
       "Business",
@@ -885,6 +922,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 27638,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.ku.edu",
     programs: [
       "Business",
       "Pharmacy",
@@ -908,6 +946,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 20660,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.k-state.edu",
     programs: [
       "Agriculture",
       "Engineering",
@@ -931,6 +970,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 30936,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.uark.edu",
     programs: [
       "Business",
       "Engineering",
@@ -954,6 +994,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 32116,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.ou.edu",
     programs: [
       "Petroleum Engineering",
       "Meteorology",
@@ -977,6 +1018,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 24649,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://go.okstate.edu",
     programs: [
       "Agriculture",
       "Engineering",
@@ -1000,6 +1042,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 25108,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.unl.edu",
     programs: [
       "Business",
       "Engineering",
@@ -1023,6 +1066,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 31240,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://uiowa.edu",
     programs: [
       "Creative Writing",
       "Business",
@@ -1048,6 +1092,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 54117,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://twin-cities.umn.edu",
     programs: [
       "Engineering",
       "Business",
@@ -1071,6 +1116,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 49066,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.wisc.edu",
     programs: [
       "Engineering",
       "Business",
@@ -1094,6 +1140,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 11400,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.marquette.edu",
     programs: [
       "Nursing",
       "Business",
@@ -1117,6 +1164,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 50023,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://msu.edu",
     programs: [
       "Business",
       "Engineering",
@@ -1140,6 +1188,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 23800,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://wayne.edu",
     programs: [
       "Engineering",
       "Nursing",
@@ -1165,6 +1214,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 47914,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.uc.edu",
     programs: [
       "Engineering",
       "Design",
@@ -1188,6 +1238,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 12084,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://case.edu",
     programs: [
       "Engineering",
       "Nursing",
@@ -1211,6 +1262,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 34036,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.pitt.edu",
     programs: [
       "Nursing",
       "Engineering",
@@ -1234,6 +1286,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 35496,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.temple.edu",
     programs: [
       "Business",
       "Communications",
@@ -1257,6 +1310,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 23870,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://drexel.edu",
     programs: [
       "Engineering",
       "Business",
@@ -1280,6 +1334,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 10659,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www1.villanova.edu",
     programs: [
       "Business",
       "Engineering",
@@ -1305,6 +1360,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 24437,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.udel.edu",
     programs: [
       "Engineering",
       "Business",
@@ -1328,6 +1384,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 41200,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.umd.edu",
     programs: [
       "Computer Science",
       "Engineering",
@@ -1351,6 +1408,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 39142,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.gmu.edu",
     programs: [
       "Business",
       "Computer Science",
@@ -1374,6 +1432,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 38139,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.vt.edu",
     programs: [
       "Engineering",
       "Business",
@@ -1399,6 +1458,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 8938,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.wfu.edu",
     programs: [
       "Business",
       "Biology",
@@ -1422,6 +1482,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 17620,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://duke.edu",
     programs: [
       "Computer Science",
       "Economics",
@@ -1445,6 +1506,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 37751,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.ncsu.edu",
     programs: [
       "Engineering",
       "Business",
@@ -1468,6 +1530,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 35364,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://sc.edu",
     programs: [
       "Business",
       "Nursing",
@@ -1493,6 +1556,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 38645,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.ua.edu",
     programs: [
       "Business",
       "Engineering",
@@ -1516,6 +1580,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 32035,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.auburn.edu",
     programs: [
       "Engineering",
       "Business",
@@ -1539,6 +1604,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 34425,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.utk.edu",
     programs: [
       "Business",
       "Engineering",
@@ -1562,6 +1628,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 13710,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.vanderbilt.edu",
     programs: [
       "Economics",
       "Engineering",
@@ -1585,6 +1652,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 31958,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.uky.edu",
     programs: [
       "Business",
       "Engineering",
@@ -1608,6 +1676,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 22640,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://louisville.edu",
     programs: [
       "Engineering",
       "Business",
@@ -1633,6 +1702,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 47005,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.indiana.edu",
     programs: [
       "Business",
       "Music",
@@ -1656,6 +1726,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 50884,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.purdue.edu",
     programs: [
       "Engineering",
       "Computer Science",
@@ -1679,6 +1750,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 13139,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.nd.edu",
     programs: [
       "Business",
       "Engineering",
@@ -1704,6 +1776,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 21157,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.depaul.edu",
     programs: [
       "Business",
       "Computer Science",
@@ -1727,6 +1800,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 33518,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.uic.edu",
     programs: [
       "Engineering",
       "Nursing",
@@ -1750,6 +1824,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 17007,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.luc.edu",
     programs: [
       "Nursing",
       "Biology",
@@ -1775,6 +1850,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 11965,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.du.edu",
     programs: [
       "Business",
       "International Studies",
@@ -1798,6 +1874,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 40120,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.colorado.edu",
     programs: [
       "Engineering",
       "Business",
@@ -1821,6 +1898,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 33877,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.colostate.edu",
     programs: [
       "Veterinary Medicine",
       "Agriculture",
@@ -1844,6 +1922,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 34324,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.utah.edu",
     programs: [
       "Business",
       "Engineering",
@@ -1867,6 +1946,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 30471,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.unlv.edu",
     programs: [
       "Hospitality Management",
       "Business",
@@ -1892,6 +1972,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 23634,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.uoregon.edu",
     programs: [
       "Journalism",
       "Business",
@@ -1915,6 +1996,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 34108,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://oregonstate.edu",
     programs: [
       "Engineering",
       "Agriculture",
@@ -1938,6 +2020,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 61468,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.washington.edu",
     programs: [
       "Computer Science",
       "Engineering",
@@ -1961,6 +2044,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 31607,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://wsu.edu",
     programs: [
       "Business",
       "Engineering",
@@ -1986,6 +2070,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 24960,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.unm.edu",
     programs: [
       "Engineering",
       "Business",
@@ -2009,6 +2094,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 47090,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.uh.edu",
     programs: [
       "Engineering",
       "Business",
@@ -2032,6 +2118,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 74829,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.tamu.edu",
     programs: [
       "Engineering",
       "Agriculture",
@@ -2055,6 +2142,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 20626,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.baylor.edu",
     programs: [
       "Business",
       "Nursing",
@@ -2078,6 +2166,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 12281,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.tcu.edu",
     programs: [
       "Business",
       "Nursing",
@@ -2101,6 +2190,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 12096,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.smu.edu",
     programs: [
       "Business",
       "Engineering",
@@ -2124,6 +2214,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 8285,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.rice.edu",
     programs: [
       "Engineering",
       "Computer Science",
@@ -2149,6 +2240,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 14046,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://tulane.edu",
     programs: [
       "Business",
       "Public Health",
@@ -2174,6 +2266,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 16938,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.fordham.edu",
     programs: [
       "Business",
       "Communications",
@@ -2197,6 +2290,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 14932,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.bc.edu",
     programs: [
       "Business",
       "Economics",
@@ -2220,6 +2314,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 23496,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.northeastern.edu",
     programs: [
       "Engineering",
       "Business",
@@ -2243,6 +2338,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 12955,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.tufts.edu",
     programs: [
       "International Relations",
       "Biology",
@@ -2266,6 +2362,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 5854,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.brandeis.edu",
     programs: [
       "Biology",
       "Economics",
@@ -2291,6 +2388,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 32257,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://uconn.edu",
     programs: [
       "Business",
       "Engineering",
@@ -2314,6 +2412,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 17092,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.uri.edu",
     programs: [
       "Pharmacy",
       "Nursing",
@@ -2337,6 +2436,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 10696,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.brown.edu",
     programs: [
       "Computer Science",
       "Economics",
@@ -2360,6 +2460,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 6834,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://home.dartmouth.edu",
     programs: [
       "Economics",
       "Government",
@@ -2383,6 +2484,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 15482,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.unh.edu",
     programs: [
       "Business",
       "Engineering",
@@ -2406,6 +2508,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 13734,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.uvm.edu",
     programs: [
       "Environmental Science",
       "Business",
@@ -2431,6 +2534,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 22850,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.syracuse.edu",
     programs: [
       "Communications",
       "Business",
@@ -2454,6 +2558,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 12174,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.rochester.edu",
     programs: [
       "Music",
       "Optics",
@@ -2477,6 +2582,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 32347,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.buffalo.edu",
     programs: [
       "Engineering",
       "Business",
@@ -2500,6 +2606,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 27368,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.stonybrook.edu",
     programs: [
       "Computer Science",
       "Engineering",
@@ -2525,6 +2632,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 50411,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.rutgers.edu",
     programs: [
       "Business",
       "Engineering",
@@ -2548,6 +2656,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 9783,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.shu.edu",
     programs: [
       "Nursing",
       "Business",
@@ -2573,6 +2682,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 32208,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.umass.edu",
     programs: [
       "Computer Science",
       "Engineering",
@@ -2596,6 +2706,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 7314,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.wpi.edu",
     programs: [
       "Engineering",
       "Computer Science",
@@ -2621,6 +2732,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 15451,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.emory.edu",
     programs: [
       "Business",
       "Biology",
@@ -2644,6 +2756,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 54016,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.gsu.edu",
     programs: [
       "Business",
       "Biology",
@@ -2669,6 +2782,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 22456,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://olemiss.edu",
     programs: [
       "Pharmacy",
       "Accountancy",
@@ -2692,6 +2806,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 22649,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.msstate.edu",
     programs: [
       "Engineering",
       "Agriculture",
@@ -2717,6 +2832,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 50577,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.usf.edu",
     programs: [
       "Business",
       "Engineering",
@@ -2740,6 +2856,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 58711,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.fiu.edu",
     programs: [
       "Business",
       "Engineering",
@@ -2763,6 +2880,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 71948,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.ucf.edu",
     programs: [
       "Engineering",
       "Business",
@@ -2788,6 +2906,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 18865,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://manoa.hawaii.edu",
     programs: [
       "Marine Biology",
       "Hawaiian Studies",
@@ -2813,6 +2932,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 3624,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://home.hamptonu.edu",
     programs: [
       "Nursing",
       "Biology",
@@ -2836,6 +2956,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 3364,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.xula.edu",
     programs: [
       "Biology",
       "Pharmacy",
@@ -2859,6 +2980,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 5300,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.gram.edu",
     programs: [
       "Nursing",
       "Criminal Justice",
@@ -2882,6 +3004,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 8732,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.pvamu.edu",
     programs: [
       "Nursing",
       "Engineering",
@@ -2905,6 +3028,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 10031,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.famu.edu",
     programs: [
       "Business",
       "Biology",
@@ -2928,6 +3052,7 @@ export const COLLEGES_SEED: CollegeSeed[] = [
     total_enrollment: 8872,
     photo_url:
       "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
+    official_url: "https://www.morgan.edu",
     programs: [
       "Engineering",
       "Business",

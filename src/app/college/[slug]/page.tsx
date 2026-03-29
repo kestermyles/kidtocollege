@@ -175,9 +175,11 @@ export default async function CollegePage({ params }: CollegePageProps) {
     questions = qData;
   }
 
+  const defaultPhoto = "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80";
   const heroImage =
-    college.photo_url ||
-    "https://images.unsplash.com/photo-1562774053-701939374585?w=1920&q=80";
+    college.photo_url && college.photo_url !== defaultPhoto
+      ? college.photo_url
+      : defaultPhoto;
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
   const jsonLd = {
@@ -246,6 +248,18 @@ export default async function CollegePage({ params }: CollegePageProps) {
                 }
               />
             </div>
+            {college.official_url && (
+              <div className="mt-6 text-center">
+                <a
+                  href={college.official_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-navy hover:bg-navy/90 text-white font-body font-medium px-6 py-3 rounded-md transition-colors text-sm"
+                >
+                  Official Website &rarr;
+                </a>
+              </div>
+            )}
           </FadeIn>
         </div>
       </section>

@@ -19,10 +19,28 @@ const supabase = createClient(url, key, {
 async function seed() {
   console.log(`Seeding ${COLLEGES_SEED.length} colleges...`);
 
-  const rows = COLLEGES_SEED.map((c) => ({
-    ...c,
-    last_updated: new Date().toISOString(),
-  }));
+  // Check if official_url column exists
+  const { error: colCheck } = await supabase
+    .from("colleges")
+    .select("official_url")
+    .limit(1);
+
+  const hasOfficialUrl = !colCheck?.message?.includes("official_url");
+  if (!hasOfficialUrl) {
+    console.log("Note: official_url column not found — stripping from seed data.");
+    console.log("Run this SQL in Supabase to add it: ALTER TABLE public.colleges ADD COLUMN IF NOT EXISTS official_url text;");
+  }
+
+  const rows = COLLEGES_SEED.map((c) => {
+    const row: Record<string, unknown> = {
+      ...c,
+      last_updated: new Date().toISOString(),
+    };
+    if (!hasOfficialUrl) {
+      delete row.official_url;
+    }
+    return row;
+  });
 
   const { data, error } = await supabase
     .from("colleges")
