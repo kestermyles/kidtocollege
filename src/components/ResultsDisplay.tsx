@@ -281,7 +281,7 @@ export function ResultsDisplay({
                   </div>
                   <div className="px-4 py-2 rounded-md bg-white/5 border border-white/10">
                     <span className="font-mono text-[11px] text-white/40 uppercase tracking-wider block">
-                      Est. Net Cost
+                      Est. Total Cost After Aid
                     </span>
                     <span className="font-body font-semibold text-gold">
                       {budget.estimated_net_after_aid}
@@ -437,7 +437,7 @@ export function ResultsDisplay({
             <SectionHeader
               number="02"
               title="Budget Breakdown"
-              subtitle="Understanding the true cost"
+              subtitle="All figures represent total annual cost of attendance"
             />
             <div className="ktc-card p-6 md:p-8">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -457,10 +457,13 @@ export function ResultsDisplay({
               <div className="bg-navy rounded-lg p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                   <p className="font-mono text-xs text-white/50 uppercase tracking-wider">
-                    Estimated Net After Aid
+                    Est. Total Cost After Aid
                   </p>
                   <p className="font-display text-3xl md:text-4xl font-bold text-gold">
                     {budget.estimated_net_after_aid}
+                  </p>
+                  <p className="font-body text-xs text-white/40 mt-1">
+                    Includes tuition, room &amp; board, books &amp; living expenses
                   </p>
                 </div>
                 <div className="flex-shrink-0">

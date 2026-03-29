@@ -1,16 +1,8 @@
 import { MetadataRoute } from "next";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://kidtocollege.com";
-
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-      },
-    ],
-    sitemap: `${BASE_URL}/sitemap.xml`,
+    rules: { userAgent: "*", allow: "/" },
+    sitemap: "https://www.kidtocollege.com/sitemap.xml",
   };
 }

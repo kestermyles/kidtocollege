@@ -232,29 +232,24 @@ export function Wizard({
   const handleSubmit = async () => {
     setSubmitting(true);
     setErrorMsg("");
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 180000); // 3 min
     try {
-      const res = await fetch("/api/research", {
+      const res = await fetch("/api/research/start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
-        signal: controller.signal,
       });
-      clearTimeout(timeout);
       const result = await res.json();
       if (!res.ok || result.error) {
         setErrorMsg(result.error || `Server error (${res.status})`);
         setSubmitting(false);
         return;
       }
-      router.push(`/results?id=${result.resultId}`);
+      // Redirect immediately — report generates in background
+      router.push(`/results?searchId=${result.searchId}`);
     } catch (err) {
-      clearTimeout(timeout);
-      const msg = err instanceof Error && err.name === "AbortError"
-        ? "The request timed out. Please try again."
-        : err instanceof Error ? err.message : "Something went wrong. Please try again.";
-      setErrorMsg(msg);
+      setErrorMsg(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
       setSubmitting(false);
     }
   };

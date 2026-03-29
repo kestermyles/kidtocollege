@@ -4,14 +4,12 @@ import { createServiceRoleClient } from "@/lib/supabase-server";
 import { cacheResult } from "@/lib/result-cache";
 import type { WizardData, AIResearchResult } from "@/lib/types";
 
-// Force Node.js runtime (not Edge) for longer timeout support
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
 const MODEL = "claude-sonnet-4-5";
 const MAX_TOKENS = 4096;
 const MAX_RETRIES = 2;
-const CACHE_TTL_HOURS = 24;
 
 const SYSTEM_PROMPT = `CRITICAL: For all URLs in scholarship url fields and live_links: only use real verified URLs you are certain exist and are currently live. If uncertain about any URL, use a Google search URL instead in this format: https://www.google.com/search?q=SCHOLARSHIP+NAME+apply — never invent or guess URLs.
 
@@ -35,10 +33,6 @@ function getAnthropicClient() {
   return new Anthropic({ apiKey });
 }
 
-function buildCacheKey(college: string, major: string): string {
-  return `${college.toLowerCase().trim()}::${major.toLowerCase().trim()}`;
-}
-
 async function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -56,29 +50,6 @@ function buildUserPrompt(data: WizardData): string {
   if (data.notes) lines.push(`Additional notes from the family: ${data.notes}`);
   lines.push("", "Produce the full AIResearchResult JSON for this student.");
   return lines.join("\n");
-}
-
-async function callAnthropic(systemPrompt: string, userPrompt: string): Promise<string> {
-  const anthropic = getAnthropicClient();
-  let lastError: unknown;
-
-  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-    try {
-      const response = await anthropic.messages.create({
-        model: MODEL,
-        max_tokens: MAX_TOKENS,
-        system: systemPrompt,
-        messages: [{ role: "user", content: userPrompt }],
-      });
-      const block = response.content[0];
-      if (block.type === "text") return block.text;
-      throw new Error("Unexpected response block type");
-    } catch (err) {
-      lastError = err;
-      if (attempt < MAX_RETRIES) await delay(1000 * Math.pow(2, attempt));
-    }
-  }
-  throw lastError;
 }
 
 function repairTruncatedJSON(text: string): string {
@@ -101,88 +72,69 @@ function repairTruncatedJSON(text: string): string {
   return repaired;
 }
 
+function buildCacheKey(college: string, major: string): string {
+  return `${college.toLowerCase().trim()}::${major.toLowerCase().trim()}`;
+}
+
 function isSupabaseConfigured(): boolean {
   return !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 }
 
 export async function POST(request: Request) {
-  console.log("[/api/research] POST received at:", new Date().toISOString());
   try {
-    const data: WizardData = await request.json();
-    console.log("[api/research] START for:", data.college, data.major);
+    const { searchId, wizardData: data } = (await request.json()) as {
+      searchId: string;
+      wizardData: WizardData;
+    };
+    console.log("[/api/research/run] START for:", data.college, data.major, "searchId:", searchId);
 
-    const cacheKey = buildCacheKey(data.college, data.major);
-    const dbAvailable = isSupabaseConfigured();
+    // Call Anthropic
+    const anthropic = getAnthropicClient();
+    let lastError: unknown;
+    let rawResponse = "";
 
-    let searchId = crypto.randomUUID();
-    let resultId = crypto.randomUUID();
-
-    // Save search to Supabase + check cache
-    if (dbAvailable) {
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
       try {
-        const supabase = createServiceRoleClient();
-
-        const { data: searchRow, error: searchErr } = await supabase
-          .from("searches")
-          .insert({
-            college: data.college,
-            major: data.major,
-            minor: data.minor || null,
-            application_year: data.applicationYear || null,
-            gpa: data.gpa || null,
-            sat_score: data.satScore || null,
-            activities: data.activities || [],
-            other_skills: data.otherSkills || null,
-            priorities: data.priorities || [],
-            budget: data.budget || null,
-            notes: data.notes || null,
-          })
-          .select("id")
-          .single();
-
-        if (!searchErr && searchRow) {
-          searchId = searchRow.id;
-          console.log("[api/research] Search saved:", searchId);
-
-          // Check cache
-          const cutoff = new Date(Date.now() - CACHE_TTL_HOURS * 60 * 60 * 1000).toISOString();
-          const { data: cachedRows } = await supabase
-            .from("results")
-            .select("id")
-            .eq("cache_key", cacheKey)
-            .gte("created_at", cutoff)
-            .order("created_at", { ascending: false })
-            .limit(1);
-
-          if (cachedRows && cachedRows.length > 0) {
-            console.log("[api/research] Cache hit:", cachedRows[0].id);
-            return NextResponse.json({ searchId, resultId: cachedRows[0].id });
-          }
-        } else {
-          console.warn("[api/research] Search insert failed:", searchErr?.message);
+        const response = await anthropic.messages.create({
+          model: MODEL,
+          max_tokens: MAX_TOKENS,
+          system: SYSTEM_PROMPT,
+          messages: [{ role: "user", content: buildUserPrompt(data) }],
+        });
+        const block = response.content[0];
+        if (block.type === "text") {
+          rawResponse = block.text;
+          break;
         }
-      } catch (dbErr) {
-        console.warn("[api/research] Supabase error:", dbErr);
+        throw new Error("Unexpected response block type");
+      } catch (err) {
+        lastError = err;
+        if (attempt < MAX_RETRIES) await delay(1000 * Math.pow(2, attempt));
       }
     }
 
-    // Run AI research
-    console.log("[api/research] Calling Anthropic...");
-    const raw = await callAnthropic(SYSTEM_PROMPT, buildUserPrompt(data));
-    console.log("[api/research] AI response length:", raw.length);
+    if (!rawResponse) throw lastError;
 
-    const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/i, "").trim();
+    console.log("[/api/research/run] AI response length:", rawResponse.length);
+
+    // Parse JSON
+    const cleaned = rawResponse
+      .replace(/^```(?:json)?\s*/i, "")
+      .replace(/\s*```\s*$/i, "")
+      .trim();
 
     let result: AIResearchResult;
     try {
       result = JSON.parse(cleaned);
     } catch {
-      console.log("[api/research] First parse failed, repairing...");
       result = JSON.parse(repairTruncatedJSON(cleaned));
     }
 
     // Save result to Supabase
-    if (dbAvailable) {
+    const cacheKey = buildCacheKey(data.college, data.major);
+    let resultId = crypto.randomUUID();
+
+    if (isSupabaseConfigured()) {
       try {
         const supabase = createServiceRoleClient();
         const { data: resultRow } = await supabase
@@ -202,21 +154,22 @@ export async function POST(request: Request) {
 
         if (resultRow) {
           resultId = resultRow.id;
-          console.log("[api/research] SUCCESS saved to DB - resultId:", resultId);
+          console.log("[/api/research/run] SUCCESS saved resultId:", resultId);
         }
       } catch (dbErr) {
-        console.warn("[api/research] Failed to save result:", dbErr);
+        console.warn("[/api/research/run] Failed to save result:", dbErr);
       }
     }
 
     // Always cache in memory as fallback
     cacheResult(resultId, result, data.college, data.major);
-    console.log("[api/research] DONE - resultId:", resultId);
 
-    return NextResponse.json({ searchId, resultId });
+    return NextResponse.json({ resultId, searchId });
   } catch (err) {
-    console.error("[api/research] Error:", err);
-    const message = err instanceof Error ? err.message : "An unexpected error occurred";
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error("[/api/research/run] Error:", err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Unexpected error" },
+      { status: 500 }
+    );
   }
 }

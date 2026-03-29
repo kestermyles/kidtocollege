@@ -35,7 +35,7 @@ export async function generateMetadata({
     college = data;
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://kidtocollege.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
   const canonicalUrl = `${siteUrl}/college/${slug}`;
 
   if (!college) {
@@ -179,7 +179,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
     college.photo_url ||
     "https://images.unsplash.com/photo-1562774053-701939374585?w=1920&q=80";
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://kidtocollege.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollegeOrUniversity",

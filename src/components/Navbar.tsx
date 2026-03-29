@@ -26,16 +26,16 @@ export function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-navy shadow-lg"
-          : "bg-navy/30 backdrop-blur-sm"
+          ? "bg-white shadow-sm border-b border-gray-200"
+          : "bg-white/80 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-gold font-display text-xl font-bold tracking-display">
-              KidToCollege
+            <span className="text-navy font-display text-xl font-bold tracking-display">
+              Kid<span className="text-gold">To</span>College
             </span>
           </Link>
 
@@ -45,14 +45,14 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-white/90 hover:text-gold text-sm font-body font-medium transition-colors"
+                className="text-navy/70 hover:text-gold text-sm font-body font-medium transition-colors"
               >
                 {link.label}
               </Link>
             ))}
             <Link
               href="/account"
-              className="text-sm font-body font-medium text-navy bg-gold hover:bg-gold/90 px-4 py-2 rounded-md transition-colors"
+              className="text-sm font-body font-medium text-white bg-gold hover:bg-gold/90 px-4 py-2 rounded-md transition-colors"
             >
               Sign In
             </Link>
@@ -61,7 +61,7 @@ export function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-white p-2"
+            className="md:hidden text-navy p-2"
             aria-label="Toggle menu"
           >
             <svg
@@ -97,7 +97,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-navy border-t border-white/10"
+            className="md:hidden bg-white border-t border-gray-100"
           >
             <div className="px-4 py-4 space-y-3">
               {NAV_LINKS.map((link) => (
@@ -105,7 +105,7 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block text-white/90 hover:text-gold text-base font-body py-2"
+                  className="block text-navy/70 hover:text-gold text-base font-body py-2"
                 >
                   {link.label}
                 </Link>
@@ -113,7 +113,7 @@ export function Navbar() {
               <Link
                 href="/account"
                 onClick={() => setMobileOpen(false)}
-                className="block text-center text-navy bg-gold hover:bg-gold/90 px-4 py-2 rounded-md font-body font-medium"
+                className="block text-center text-white bg-gold hover:bg-gold/90 px-4 py-2 rounded-md font-body font-medium"
               >
                 Sign In
               </Link>
