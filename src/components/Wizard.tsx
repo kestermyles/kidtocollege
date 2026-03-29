@@ -233,7 +233,7 @@ export function Wizard({
     setSubmitting(true);
     setErrorMsg("");
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5 * 60 * 1000); // 5 min
+    const timeout = setTimeout(() => controller.abort(), 180000); // 3 min
     try {
       const res = await fetch("/api/research", {
         method: "POST",
@@ -592,8 +592,8 @@ function LoadingScreen() {
 
       <p className="font-body text-navy/60 max-w-md mx-auto mb-8">
         Our AI is researching scholarships, admissions data, and building your
-        personal playbook. This takes about 60 seconds — please don&apos;t close
-        this page.
+        personal playbook. This typically takes 60–90 seconds — please keep
+        this page open.
       </p>
 
       <div className="max-w-xs mx-auto">

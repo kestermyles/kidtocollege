@@ -77,7 +77,7 @@ export default async function ResultsPage({
 
   // If still no result, show pending or error based on retry count
   if (!result) {
-    if (retryCount >= 10) {
+    if (retryCount >= 20) {
       return <ResultsError />;
     }
     return <ResultsPending resultId={resultId} retryCount={retryCount} />;
@@ -128,7 +128,7 @@ function ResultsPending({
           This can take up to 90 seconds. This page will refresh automatically.
         </p>
         <p className="font-mono-label text-xs text-navy/30 uppercase tracking-wider">
-          Attempt {nextRetry} of 10 — refreshing in 15 seconds...
+          Attempt {nextRetry} of 20 — refreshing in 15 seconds...
         </p>
       </div>
     </div>
