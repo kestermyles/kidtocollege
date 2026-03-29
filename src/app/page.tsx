@@ -74,7 +74,7 @@ export default function HomePage() {
         className="parallax-section relative min-h-screen flex items-center"
         style={{
           backgroundImage:
-            "url(https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=1600&q=80)",
+            "url(https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=1600&q=80)",
         }}
       >
         <div className="absolute inset-0 bg-black/45" />
