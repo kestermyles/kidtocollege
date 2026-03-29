@@ -3,7 +3,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { submitSearch } from "@/app/actions/research";
 import type { WizardData } from "@/lib/types";
 
 /* ───────────── constants ───────────── */
@@ -234,9 +233,14 @@ export function Wizard({
     setSubmitting(true);
     setErrorMsg("");
     try {
-      const result = await submitSearch(form);
-      if ("error" in result) {
-        setErrorMsg(result.error);
+      const res = await fetch("/api/research", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const result = await res.json();
+      if (!res.ok || result.error) {
+        setErrorMsg(result.error || `Server error (${res.status})`);
         setSubmitting(false);
         return;
       }
