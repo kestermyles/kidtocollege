@@ -4,7 +4,13 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createServiceRoleClient } from "@/lib/supabase-server";
 import type { WizardData, AIResearchResult } from "@/lib/types";
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+function getAnthropicClient() {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    throw new Error("ANTHROPIC_API_KEY is not set in environment variables");
+  }
+  return new Anthropic({ apiKey });
+}
 
 const MODEL = "claude-sonnet-4-5";
 const MAX_TOKENS = 4000;
@@ -87,6 +93,10 @@ async function callAnthropic(
   systemPrompt: string,
   userPrompt: string
 ): Promise<string> {
+  const anthropic = getAnthropicClient();
+  const keyPrefix = process.env.ANTHROPIC_API_KEY?.slice(0, 10) ?? "UNDEFINED";
+  console.log(`[callAnthropic] Using API key starting with: ${keyPrefix}...`);
+
   let lastError: unknown;
 
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
