@@ -14,7 +14,7 @@ function getAnthropicClient() {
 }
 
 const MODEL = "claude-sonnet-4-5";
-const MAX_TOKENS = 8192;
+const MAX_TOKENS = 4096;
 const MAX_RETRIES = 2;
 const CACHE_TTL_HOURS = 24;
 
@@ -34,7 +34,7 @@ async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const SYSTEM_PROMPT = `CRITICAL: Your entire response must be a single raw JSON object. Do not use markdown. Do not use code fences. Do not write any text before or after the JSON. Start your response with { and end with }.
+const SYSTEM_PROMPT = `CRITICAL: Your entire response must be a single raw JSON object. Do not use markdown. Do not use code fences. Do not write any text before or after the JSON. Start your response with { and end with }. Be concise — limit each text field to 2 sentences maximum. Limit scholarships array to 8 items. Limit playbook array to 6 items. Limit insider_intel array to 5 items. Limit essay_angles array to 4 items.
 
 You are a specialist college admissions counselor with deep, institution-specific knowledge. Produce a comprehensive research report for the student and their family.
 
