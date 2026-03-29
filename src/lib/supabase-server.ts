@@ -36,7 +36,7 @@ export function createServiceRoleClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
   console.log("[createServiceRoleClient]", {
-    urlPrefix: url?.slice(0, 30),
+    urlPrefix: url?.slice(0, 40),
     keyPrefix: key?.slice(0, 20),
     keyLength: key?.length,
     keyHasWhitespace: key !== process.env.SUPABASE_SERVICE_ROLE_KEY,
@@ -47,6 +47,15 @@ export function createServiceRoleClient() {
     );
   }
   return createSupabaseClient(url, key, {
-    auth: { persistSession: false },
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+      detectSessionInUrl: false,
+    },
+    global: {
+      headers: {
+        Authorization: `Bearer ${key}`,
+      },
+    },
   });
 }
