@@ -144,28 +144,31 @@ export async function submitSearch(
     const cacheKey = buildCacheKey(data.college, data.major);
 
     // 1. Save the search
+    const searchPayload = {
+      college: data.college,
+      major: data.major,
+      minor: data.minor || null,
+      application_year: data.applicationYear || null,
+      gpa: data.gpa || null,
+      sat_score: data.satScore || null,
+      activities: data.activities || [],
+      other_skills: data.otherSkills || null,
+      priorities: data.priorities || [],
+      budget: data.budget || null,
+      notes: data.notes || null,
+      cache_key: cacheKey,
+    };
+    console.log("[submitSearch] Inserting search:", JSON.stringify(searchPayload, null, 2));
+
     const { data: searchRow, error: searchErr } = await supabase
       .from("searches")
-      .insert({
-        college: data.college,
-        major: data.major,
-        minor: data.minor || null,
-        application_year: data.applicationYear || null,
-        gpa: data.gpa || null,
-        sat_score: data.satScore || null,
-        activities: data.activities || [],
-        other_skills: data.otherSkills || null,
-        priorities: data.priorities || [],
-        budget: data.budget || null,
-        notes: data.notes || null,
-        cache_key: cacheKey,
-      })
+      .insert(searchPayload)
       .select("id")
       .single();
 
     if (searchErr) {
-      console.error("[submitSearch] Search insert error:", searchErr);
-      throw new Error("Failed to save your search. Please try again.");
+      console.error("[submitSearch] Search insert error:", JSON.stringify(searchErr, null, 2));
+      throw new Error(`Failed to save your search: ${searchErr.message || searchErr.code || "unknown error"}`);
     }
     const searchId: string = searchRow.id;
 
@@ -206,8 +209,8 @@ export async function submitSearch(
       .single();
 
     if (resultErr) {
-      console.error("[submitSearch] Result insert error:", resultErr);
-      throw new Error("Failed to save your report. Please try again.");
+      console.error("[submitSearch] Result insert error:", JSON.stringify(resultErr, null, 2));
+      throw new Error(`Failed to save your report: ${resultErr.message || resultErr.code || "unknown error"}`);
     }
 
     return { searchId, resultId: resultRow.id };
