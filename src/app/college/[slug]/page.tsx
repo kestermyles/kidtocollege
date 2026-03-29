@@ -14,16 +14,25 @@ interface CollegePageProps {
   params: Promise<{ slug: string }>;
 }
 
+function hasSupabase() {
+  return !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+}
+
 export async function generateMetadata({
   params,
 }: CollegePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const supabase = createServiceRoleClient();
-  const { data: college } = await supabase
-    .from("colleges")
-    .select("name, location, state")
-    .eq("slug", slug)
-    .single();
+
+  let college: { name: string; location: string; state: string } | null = null;
+  if (hasSupabase()) {
+    const supabase = createServiceRoleClient();
+    const { data } = await supabase
+      .from("colleges")
+      .select("name, location, state")
+      .eq("slug", slug)
+      .single();
+    college = data;
+  }
 
   if (!college) {
     const readable = slug
@@ -74,14 +83,17 @@ function formatPercent(rate: number | null) {
 
 export default async function CollegePage({ params }: CollegePageProps) {
   const { slug } = await params;
-  const supabase = createServiceRoleClient();
 
-  // Fetch college
-  const { data: collegeRow } = await supabase
-    .from("colleges")
-    .select("*")
-    .eq("slug", slug)
-    .single();
+  let collegeRow = null;
+  if (hasSupabase()) {
+    const supabase = createServiceRoleClient();
+    const { data } = await supabase
+      .from("colleges")
+      .select("*")
+      .eq("slug", slug)
+      .single();
+    collegeRow = data;
+  }
 
   const college = collegeRow as College | null;
 
@@ -127,28 +139,35 @@ export default async function CollegePage({ params }: CollegePageProps) {
     );
   }
 
-  // Fetch cached AI results for scholarships via the cache_key on results
-  const cachePrefix = college.name.toLowerCase().trim() + "::";
-  const { data: cachedResults } = await supabase
-    .from("results")
-    .select("raw_ai_response, scholarships_json, cc_gateway_json")
-    .ilike("cache_key", `${cachePrefix}%`)
-    .order("created_at", { ascending: false })
-    .limit(1);
+  // Fetch cached AI results for scholarships and Q&A
+  let cachedScholarships: ScholarshipResult[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let cachedCC: any = null;
+  let questions: { question: string; answer: string; created_at: string }[] | null = null;
 
-  const row = cachedResults?.[0];
-  const cachedScholarships: ScholarshipResult[] =
-    row?.scholarships_json || (row?.raw_ai_response as Record<string, unknown>)?.scholarships as ScholarshipResult[] || [];
+  if (hasSupabase()) {
+    const supabase = createServiceRoleClient();
+    const cachePrefix = college.name.toLowerCase().trim() + "::";
+    const { data: cachedResults } = await supabase
+      .from("results")
+      .select("raw_ai_response, scholarships_json, cc_gateway_json")
+      .ilike("cache_key", `${cachePrefix}%`)
+      .order("created_at", { ascending: false })
+      .limit(1);
 
-  const cachedCC = row?.cc_gateway_json || (row?.raw_ai_response as Record<string, unknown>)?.cc_gateway || null;
+    const row = cachedResults?.[0];
+    cachedScholarships =
+      row?.scholarships_json || (row?.raw_ai_response as Record<string, unknown>)?.scholarships as ScholarshipResult[] || [];
+    cachedCC = row?.cc_gateway_json || (row?.raw_ai_response as Record<string, unknown>)?.cc_gateway || null;
 
-  // Fetch anonymised Q&A
-  const { data: questions } = await supabase
-    .from("questions")
-    .select("question, answer, created_at")
-    .eq("college_slug", slug)
-    .order("created_at", { ascending: false })
-    .limit(10);
+    const { data: qData } = await supabase
+      .from("questions")
+      .select("question, answer, created_at")
+      .eq("college_slug", slug)
+      .order("created_at", { ascending: false })
+      .limit(10);
+    questions = qData;
+  }
 
   const heroImage =
     college.photo_url ||

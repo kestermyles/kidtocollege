@@ -7,13 +7,16 @@ export async function GET(request: Request) {
   const next = searchParams.get("next") ?? "/account";
 
   if (code) {
-    const supabase = createServerSupabaseClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+    try {
+      const supabase = createServerSupabaseClient();
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      if (!error) {
+        return NextResponse.redirect(`${origin}${next}`);
+      }
+    } catch (err) {
+      console.error("[auth/callback] Error:", err);
     }
   }
 
-  // If code exchange failed, redirect to sign-in with error
   return NextResponse.redirect(`${origin}/auth/signin?error=auth_callback_failed`);
 }

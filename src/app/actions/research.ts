@@ -204,6 +204,7 @@ export async function submitSearch(
 
     const cacheKey = buildCacheKey(data.college, data.major);
     const dbAvailable = isSupabaseConfigured();
+    console.log("[submitSearch] dbAvailable:", dbAvailable, "url:", process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 20), "key:", process.env.SUPABASE_SERVICE_ROLE_KEY?.slice(0, 20));
 
     let searchId = crypto.randomUUID();
     let resultId = crypto.randomUUID();
@@ -341,13 +342,15 @@ Return ONLY valid JSON. No markdown, no commentary, no code fences.`;
       throw new Error("The AI returned an invalid response. Please try again.");
     }
 
-    // Save Q&A to database
-    const supabase = createServiceRoleClient();
-    await supabase.from("questions").insert({
-      search_id: searchId,
-      question,
-      answer: parsed.answer,
-    });
+    // Save Q&A to database (skip if Supabase not configured)
+    if (isSupabaseConfigured()) {
+      const supabase = createServiceRoleClient();
+      await supabase.from("questions").insert({
+        search_id: searchId,
+        question,
+        answer: parsed.answer,
+      });
+    }
 
     return parsed;
   } catch (err) {
