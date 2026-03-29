@@ -1,12 +1,13 @@
 import { MetadataRoute } from "next";
+import { COLLEGES_SEED } from "@/lib/colleges-seed";
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://kidtocollege.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://kidtocollege.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
       lastModified: now,
@@ -79,5 +80,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}/international`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
+
+  const collegePages: MetadataRoute.Sitemap = COLLEGES_SEED.map((c) => ({
+    url: `${BASE_URL}/college/${c.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...collegePages];
 }

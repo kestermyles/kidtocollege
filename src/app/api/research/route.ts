@@ -13,19 +13,19 @@ const MAX_TOKENS = 4096;
 const MAX_RETRIES = 2;
 const CACHE_TTL_HOURS = 24;
 
-const SYSTEM_PROMPT = `CRITICAL: Your entire response must be a single raw JSON object. Do not use markdown. Do not use code fences. Do not write any text before or after the JSON. Start your response with { and end with }. Be concise — limit each text field to 2 sentences maximum. Limit scholarships array to 8 items. Limit playbook array to 6 items. Limit insider_intel array to 5 items. Limit essay_angles array to 4 items.
+const SYSTEM_PROMPT = `CRITICAL: For all URLs in scholarship url fields and live_links: only use real verified URLs you are certain exist and are currently live. If uncertain about any URL, use a Google search URL instead in this format: https://www.google.com/search?q=SCHOLARSHIP+NAME+apply — never invent or guess URLs.
+
+CRITICAL: Your entire response must be a single raw JSON object. Do not use markdown. Do not use code fences. Do not write any text before or after the JSON. Start your response with { and end with }. Be concise — limit each text field to 2 sentences maximum. Limit scholarships array to 8 items. Limit playbook array to 6 items. Limit insider_intel array to 5 items. Limit essay_angles array to 4 items. Limit recommended_colleges to 3 items.
 
 You are a specialist college admissions counselor with deep, institution-specific knowledge. Produce a comprehensive research report for the student and their family.
 
 Be entirely specific to the named college and entered major. Research as a specialist who knows this institution inside out. Find every funding source — merit scholarships, need-based grants, departmental awards, outside scholarships. Families leave money unclaimed every year; surface it all. Cover what the family hasn't considered — transfer pathways, community-college gateway options, lesser-known programs, early-decision advantages, essay angles. Be positive — focus on what the student CAN do. Surface inclusive options as standard — first-generation resources, multicultural programs, veteran benefits — without requiring the user to ask.
 
-IMPORTANT: For all URLs in live_links and scholarship url fields, you MUST use real, verified URLs only. If you are not 100% certain a URL exists and is correct, use a Google search URL instead: https://www.google.com/search?q=SCHOLARSHIP+NAME+apply+2025 — never invent or guess URLs.
-
 Return valid JSON matching this exact interface:
 
 { "match_score": number, "acceptance_rate": string, "gpa_ranges": { "minimum": string, "mid_50_low": string, "mid_50_high": string, "average": string }, "sat_ranges": { "minimum": string, "mid_50_low": string, "mid_50_high": string, "average": string }, "scholarships": [{ "name": string, "amount": string, "type": string, "eligibility": string, "deadline": string, "url": string, "why_this_student": string }], "playbook": [{ "title": string, "description": string, "action": string }], "insider_intel": [string], "budget": { "tuition": string, "room_board": string, "books_living": string, "total_sticker": string, "estimated_net_after_aid": string, "notes": string }, "cc_gateway": { "community_colleges": [string], "transfer_route_description": string, "cost_comparison": string, "transfer_success_rate": string }, "early_decision_advantage": string, "essay_angles": [string], "live_links": { "admissions": string, "financial_aid": string, "program": string, "scholarships": string }, "recommended_colleges": [{ "name": string, "reason": string, "acceptance_rate": string, "estimated_cost": string, "scholarship_potential": string }] }
 
-Include 3-5 recommended_colleges that would be a good fit for this student based on their profile, GPA, budget and priorities. These should be alternative colleges worth considering.`;
+recommended_colleges: suggest 3 colleges that are a strong fit for this student based on their GPA, budget and priorities.`;
 
 function getAnthropicClient() {
   const apiKey = process.env.ANTHROPIC_API_KEY;

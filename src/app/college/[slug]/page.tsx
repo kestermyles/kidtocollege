@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { createServiceRoleClient } from "@/lib/supabase-server";
 import { FadeIn } from "@/components/FadeIn";
+import { COLLEGES_SEED } from "@/lib/colleges-seed";
 import type { College, ScholarshipResult } from "@/lib/types";
 
 export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 export async function generateStaticParams() {
-  return []; // pages generated on demand
+  return COLLEGES_SEED.map((c) => ({ slug: c.slug }));
 }
 
 interface CollegePageProps {
@@ -34,6 +35,9 @@ export async function generateMetadata({
     college = data;
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://kidtocollege.vercel.app";
+  const canonicalUrl = `${siteUrl}/college/${slug}`;
+
   if (!college) {
     const readable = slug
       .replace(/-/g, " ")
@@ -41,12 +45,14 @@ export async function generateMetadata({
     return {
       title: `${readable} — KidToCollege`,
       description: `Research ${readable} with KidToCollege. Get personalised admissions data, scholarships, and a step-by-step playbook.`,
+      alternates: { canonical: canonicalUrl },
     };
   }
 
   return {
     title: `${college.name} — KidToCollege`,
     description: `Everything you need to know about ${college.name} in ${college.location}, ${college.state}. Admissions data, costs, scholarships, and personalised guidance.`,
+    alternates: { canonical: canonicalUrl },
     openGraph: {
       title: `${college.name} — KidToCollege`,
       description: `Research ${college.name}: acceptance rate, costs, scholarships, and community college transfer routes.`,
@@ -173,8 +179,25 @@ export default async function CollegePage({ params }: CollegePageProps) {
     college.photo_url ||
     "https://images.unsplash.com/photo-1562774053-701939374585?w=1920&q=80";
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://kidtocollege.vercel.app";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollegeOrUniversity",
+    name: college.name,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: college.location,
+      addressRegion: college.state,
+    },
+    url: `${siteUrl}/college/${slug}`,
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Full-bleed hero */}
       <section
         className="parallax-section relative min-h-[50vh] sm:min-h-[60vh] flex items-end"
