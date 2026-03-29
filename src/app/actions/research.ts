@@ -196,6 +196,12 @@ export async function submitSearch(
   data: WizardData
 ): Promise<{ searchId: string; resultId: string } | { error: string }> {
   try {
+    console.log("[submitSearch] Env check:", {
+      hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+      hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+      hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
+    });
+
     const cacheKey = buildCacheKey(data.college, data.major);
     const dbAvailable = isSupabaseConfigured();
 
