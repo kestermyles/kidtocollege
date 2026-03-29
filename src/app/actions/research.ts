@@ -6,7 +6,7 @@ import type { WizardData, AIResearchResult } from "@/lib/types";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-const MODEL = "claude-sonnet-4-20250514";
+const MODEL = "claude-sonnet-4-5";
 const MAX_TOKENS = 4000;
 const MAX_RETRIES = 2;
 const CACHE_TTL_HOURS = 24;
