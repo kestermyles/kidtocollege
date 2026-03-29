@@ -2,6 +2,7 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import { createServiceRoleClient } from "@/lib/supabase-server";
+import { cacheResult } from "@/lib/result-cache";
 import type { WizardData, AIResearchResult } from "@/lib/types";
 
 function getAnthropicClient() {
@@ -13,7 +14,7 @@ function getAnthropicClient() {
 }
 
 const MODEL = "claude-sonnet-4-5";
-const MAX_TOKENS = 4000;
+const MAX_TOKENS = 8192;
 const MAX_RETRIES = 2;
 const CACHE_TTL_HOURS = 24;
 
@@ -94,9 +95,6 @@ async function callAnthropic(
   userPrompt: string
 ): Promise<string> {
   const anthropic = getAnthropicClient();
-  const keyPrefix = process.env.ANTHROPIC_API_KEY?.slice(0, 10) ?? "UNDEFINED";
-  console.log(`[callAnthropic] Using API key starting with: ${keyPrefix}...`);
-
   let lastError: unknown;
 
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
@@ -124,21 +122,62 @@ async function callAnthropic(
   throw lastError;
 }
 
+function repairTruncatedJSON(text: string): string {
+  // Try to close any open strings, arrays, and objects
+  let repaired = text;
+  // If it ends mid-string, close the string
+  const quoteCount = (repaired.match(/(?<!\\)"/g) || []).length;
+  if (quoteCount % 2 !== 0) {
+    repaired += '"';
+  }
+  // Count open/close braces and brackets
+  let openBraces = 0;
+  let openBrackets = 0;
+  let inString = false;
+  for (let i = 0; i < repaired.length; i++) {
+    const ch = repaired[i];
+    if (ch === '"' && (i === 0 || repaired[i - 1] !== "\\")) {
+      inString = !inString;
+    }
+    if (!inString) {
+      if (ch === "{") openBraces++;
+      else if (ch === "}") openBraces--;
+      else if (ch === "[") openBrackets++;
+      else if (ch === "]") openBrackets--;
+    }
+  }
+  // Close open brackets and braces
+  for (let i = 0; i < openBrackets; i++) repaired += "]";
+  for (let i = 0; i < openBraces; i++) repaired += "}";
+  return repaired;
+}
+
 async function runResearch(data: WizardData): Promise<AIResearchResult> {
   const raw = await callAnthropic(SYSTEM_PROMPT, buildUserPrompt(data));
+  console.log("[runResearch] Raw AI response length:", raw.length);
 
   // Strip potential markdown fences the model might add despite instructions
   const cleaned = raw
     .replace(/^```(?:json)?\s*/i, "")
-    .replace(/\s*```$/i, "")
+    .replace(/\s*```\s*$/i, "")
     .trim();
 
+  // First attempt: parse as-is
   try {
     return JSON.parse(cleaned) as AIResearchResult;
   } catch {
-    throw new Error(
-      "The AI returned an invalid response. Please try your search again."
-    );
+    // Second attempt: try to repair truncated JSON
+    console.log("[runResearch] First parse failed, attempting JSON repair...");
+    try {
+      const repaired = repairTruncatedJSON(cleaned);
+      return JSON.parse(repaired) as AIResearchResult;
+    } catch (parseErr) {
+      console.error("[runResearch] JSON parse error after repair:", parseErr);
+      console.error("[runResearch] Response tail:", cleaned.slice(-200));
+      throw new Error(
+        "The AI returned an invalid response. Please try your search again."
+      );
+    }
   }
 }
 
@@ -146,84 +185,105 @@ async function runResearch(data: WizardData): Promise<AIResearchResult> {
 // submitSearch
 // ---------------------------------------------------------------------------
 
+function isSupabaseConfigured(): boolean {
+  return !!(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+}
+
 export async function submitSearch(
   data: WizardData
 ): Promise<{ searchId: string; resultId: string } | { error: string }> {
   try {
-    const supabase = createServiceRoleClient();
     const cacheKey = buildCacheKey(data.college, data.major);
+    const dbAvailable = isSupabaseConfigured();
 
-    // 1. Save the search
-    const searchPayload = {
-      college: data.college,
-      major: data.major,
-      minor: data.minor || null,
-      application_year: data.applicationYear || null,
-      gpa: data.gpa || null,
-      sat_score: data.satScore || null,
-      activities: data.activities || [],
-      other_skills: data.otherSkills || null,
-      priorities: data.priorities || [],
-      budget: data.budget || null,
-      notes: data.notes || null,
-      cache_key: cacheKey,
-    };
-    console.log("[submitSearch] Inserting search:", JSON.stringify(searchPayload, null, 2));
+    let searchId = crypto.randomUUID();
+    let resultId = crypto.randomUUID();
 
-    const { data: searchRow, error: searchErr } = await supabase
-      .from("searches")
-      .insert(searchPayload)
-      .select("id")
-      .single();
+    if (dbAvailable) {
+      const supabase = createServiceRoleClient();
 
-    if (searchErr) {
-      console.error("[submitSearch] Search insert error:", JSON.stringify(searchErr, null, 2));
-      throw new Error(`Failed to save your search: ${searchErr.message || searchErr.code || "unknown error"}`);
+      // 1. Save the search
+      const { data: searchRow, error: searchErr } = await supabase
+        .from("searches")
+        .insert({
+          college: data.college,
+          major: data.major,
+          minor: data.minor || null,
+          application_year: data.applicationYear || null,
+          gpa: data.gpa || null,
+          sat_score: data.satScore || null,
+          activities: data.activities || [],
+          other_skills: data.otherSkills || null,
+          priorities: data.priorities || [],
+          budget: data.budget || null,
+          notes: data.notes || null,
+          cache_key: cacheKey,
+        })
+        .select("id")
+        .single();
+
+      if (searchErr) {
+        console.error("[submitSearch] Search insert error:", JSON.stringify(searchErr, null, 2));
+        throw new Error(`Failed to save your search: ${searchErr.message || searchErr.code || "unknown error"}`);
+      }
+      searchId = searchRow.id;
+
+      // 2. Check for cached result within 24 hours
+      const cutoff = new Date(
+        Date.now() - CACHE_TTL_HOURS * 60 * 60 * 1000
+      ).toISOString();
+
+      const { data: cachedRows } = await supabase
+        .from("results")
+        .select("id")
+        .eq("cache_key", cacheKey)
+        .gte("created_at", cutoff)
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+      if (cachedRows && cachedRows.length > 0) {
+        return { searchId, resultId: cachedRows[0].id };
+      }
+    } else {
+      console.log("[submitSearch] Supabase not configured — skipping DB, running AI only");
     }
-    const searchId: string = searchRow.id;
 
-    // 2. Check for cached result within 24 hours
-    const cutoff = new Date(
-      Date.now() - CACHE_TTL_HOURS * 60 * 60 * 1000
-    ).toISOString();
-
-    const { data: cachedRows } = await supabase
-      .from("results")
-      .select("id")
-      .eq("cache_key", cacheKey)
-      .gte("created_at", cutoff)
-      .order("created_at", { ascending: false })
-      .limit(1);
-
-    if (cachedRows && cachedRows.length > 0) {
-      return { searchId, resultId: cachedRows[0].id };
-    }
-
-    // 3. No cache — run the AI research
+    // 3. Run the AI research
     const result = await runResearch(data);
 
-    // 4. Save result
-    const { data: resultRow, error: resultErr } = await supabase
-      .from("results")
-      .insert({
-        search_id: searchId,
-        cache_key: cacheKey,
-        match_score: result.match_score ?? null,
-        raw_ai_response: result,
-        scholarships_json: result.scholarships ?? null,
-        playbook_json: result.playbook ?? null,
-        budget_json: result.budget ?? null,
-        cc_gateway_json: result.cc_gateway ?? null,
-      })
-      .select("id")
-      .single();
+    if (dbAvailable) {
+      const supabase = createServiceRoleClient();
 
-    if (resultErr) {
-      console.error("[submitSearch] Result insert error:", JSON.stringify(resultErr, null, 2));
-      throw new Error(`Failed to save your report: ${resultErr.message || resultErr.code || "unknown error"}`);
+      // 4. Save result
+      const { data: resultRow, error: resultErr } = await supabase
+        .from("results")
+        .insert({
+          search_id: searchId,
+          cache_key: cacheKey,
+          match_score: result.match_score ?? null,
+          raw_ai_response: result,
+          scholarships_json: result.scholarships ?? null,
+          playbook_json: result.playbook ?? null,
+          budget_json: result.budget ?? null,
+          cc_gateway_json: result.cc_gateway ?? null,
+        })
+        .select("id")
+        .single();
+
+      if (resultErr) {
+        console.error("[submitSearch] Result insert error:", JSON.stringify(resultErr, null, 2));
+        throw new Error(`Failed to save your report: ${resultErr.message || resultErr.code || "unknown error"}`);
+      }
+      resultId = resultRow.id;
+    } else {
+      // No DB — store in memory cache so /results page can read it
+      cacheResult(resultId, result, data.college, data.major);
     }
 
-    return { searchId, resultId: resultRow.id };
+    return { searchId, resultId };
   } catch (err) {
     console.error("[submitSearch] Error:", err);
     const message =

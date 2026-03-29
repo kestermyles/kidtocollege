@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createServiceRoleClient } from "@/lib/supabase-server";
+import { getCachedResult } from "@/lib/result-cache";
 import { generateSuggestedQuestions } from "@/app/actions/research";
 import { ResultsDisplay } from "@/components/ResultsDisplay";
 import type { AIResearchResult } from "@/lib/types";
@@ -23,24 +24,50 @@ export default async function ResultsPage({
     notFound();
   }
 
-  const supabase = createServiceRoleClient();
+  let result: AIResearchResult | null = null;
+  let college = "Unknown College";
+  let major = "Unknown Major";
+  let searchId = resultId;
 
-  // Fetch the result with its parent search for college/major names
-  const { data: resultRow, error: resultErr } = await supabase
-    .from("results")
-    .select("*, searches(college, major)")
-    .eq("id", resultId)
-    .single();
+  // Try Supabase first
+  const hasSupabase = !!(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
 
-  if (resultErr || !resultRow) {
-    notFound();
+  if (hasSupabase) {
+    const supabase = createServiceRoleClient();
+    const { data: resultRow } = await supabase
+      .from("results")
+      .select("*, searches(college, major)")
+      .eq("id", resultId)
+      .single();
+
+    if (resultRow) {
+      result = resultRow.raw_ai_response as AIResearchResult;
+      const search = resultRow.searches as unknown as {
+        college: string;
+        major: string;
+      } | null;
+      college = search?.college ?? "Unknown College";
+      major = search?.major ?? "Unknown Major";
+      searchId = resultRow.search_id;
+    }
   }
 
-  const result: AIResearchResult = resultRow.raw_ai_response as AIResearchResult;
-  const search = resultRow.searches as unknown as { college: string; major: string } | null;
-  const college: string = search?.college ?? "Unknown College";
-  const major: string = search?.major ?? "Unknown Major";
-  const searchId: string = resultRow.search_id;
+  // Fall back to in-memory cache
+  if (!result) {
+    const cached = getCachedResult(resultId);
+    if (cached) {
+      result = cached.result;
+      college = cached.college;
+      major = cached.major;
+    }
+  }
+
+  if (!result) {
+    notFound();
+  }
 
   // Generate initial suggested questions
   const suggestedQuestions = await generateSuggestedQuestions(
