@@ -130,7 +130,6 @@ export async function POST(request: Request) {
             priorities: data.priorities || [],
             budget: data.budget || null,
             notes: data.notes || null,
-            cache_key: cacheKey,
           })
           .select("id")
           .single();
