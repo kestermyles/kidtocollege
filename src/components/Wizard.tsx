@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { submitSearch } from "@/app/actions/research";
@@ -509,6 +509,10 @@ export function Wizard({
     4: renderStep4,
   };
 
+  if (submitting) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="ktc-card p-8 md:p-10 max-w-2xl mx-auto">
       <ProgressBar step={step} />
@@ -544,6 +548,55 @@ export function Wizard({
           {RENDERERS[step]()}
         </motion.div>
       </AnimatePresence>
+    </div>
+  );
+}
+
+function LoadingScreen() {
+  const [progress, setProgress] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 90) {
+          if (intervalRef.current) clearInterval(intervalRef.current);
+          return 90;
+        }
+        return prev + 1.5;
+      });
+    }, 1000);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="ktc-card p-8 md:p-10 max-w-2xl mx-auto text-center py-16">
+      <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-8" />
+
+      <h3 className="font-display text-2xl font-bold text-navy mb-3">
+        Building your college report...
+      </h3>
+
+      <p className="font-body text-navy/60 max-w-md mx-auto mb-8">
+        Our AI is researching scholarships, admissions data, and building your
+        personal playbook. This takes about 60 seconds — please don&apos;t close
+        this page.
+      </p>
+
+      <div className="max-w-xs mx-auto">
+        <div className="h-2 bg-navy/10 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gold rounded-full transition-all duration-1000 ease-linear"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <p className="font-mono-label text-xs text-navy/30 mt-2">
+          {Math.round(progress)}%
+        </p>
+      </div>
     </div>
   );
 }
