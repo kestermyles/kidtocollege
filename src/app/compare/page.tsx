@@ -172,10 +172,34 @@ export default function ComparePage() {
                   searchQuery.length >= 2 &&
                   searchResults.length === 0 &&
                   !searching && (
-                    <div className="absolute z-20 mt-1 w-full bg-white border border-card rounded-md shadow-lg p-4">
-                      <p className="text-sm font-body text-navy/50 text-center">
-                        No colleges found matching &quot;{searchQuery}&quot;
-                      </p>
+                    <div className="absolute z-20 mt-1 w-full bg-white border border-card rounded-md shadow-lg">
+                      <button
+                        onClick={() => {
+                          const tempCollege: College = {
+                            slug: searchQuery.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+                            name: searchQuery,
+                            location: "",
+                            state: "",
+                            acceptance_rate: null,
+                            avg_cost_instate: null,
+                            avg_cost_outstate: null,
+                            graduation_rate: null,
+                            total_enrollment: null,
+                            photo_url: null,
+                            programs: [],
+                            last_updated: new Date().toISOString(),
+                          };
+                          addCollege(tempCollege);
+                        }}
+                        className="w-full text-left px-4 py-3 font-body text-sm hover:bg-cream transition-colors cursor-pointer"
+                      >
+                        <span className="text-gold font-medium">
+                          Search for &quot;{searchQuery}&quot; &rarr;
+                        </span>
+                        <span className="block text-navy/40 text-xs mt-0.5">
+                          Not in our database yet — add to comparison
+                        </span>
+                      </button>
                     </div>
                   )}
               </div>
