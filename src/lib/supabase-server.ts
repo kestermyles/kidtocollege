@@ -33,8 +33,14 @@ export function createServerSupabaseClient() {
 }
 
 export function createServiceRoleClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  console.log("[createServiceRoleClient]", {
+    urlPrefix: url?.slice(0, 30),
+    keyPrefix: key?.slice(0, 20),
+    keyLength: key?.length,
+    keyHasWhitespace: key !== process.env.SUPABASE_SERVICE_ROLE_KEY,
+  });
   if (!url || !key) {
     throw new Error(
       "SUPABASE_SERVICE_ROLE_KEY is not set — check your Vercel environment variables"
