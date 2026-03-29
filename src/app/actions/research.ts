@@ -196,23 +196,17 @@ export async function submitSearch(
   data: WizardData
 ): Promise<{ searchId: string; resultId: string } | { error: string }> {
   try {
-    console.log("[submitSearch] Env check:", {
-      hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-      hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
-      hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
-    });
+    const SKIP_DB = true; // temporary debug flag — bypass all Supabase
+    console.log("[submitSearch] START - skipping DB, going direct to AI");
 
-    const cacheKey = buildCacheKey(data.college, data.major);
-    const dbAvailable = isSupabaseConfigured();
-    console.log("[submitSearch] dbAvailable:", dbAvailable, "url:", process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 20), "key:", process.env.SUPABASE_SERVICE_ROLE_KEY?.slice(0, 20));
+    const searchId = crypto.randomUUID();
+    const resultId = crypto.randomUUID();
 
-    let searchId = crypto.randomUUID();
-    let resultId = crypto.randomUUID();
-
-    if (dbAvailable) {
+    if (!SKIP_DB && isSupabaseConfigured()) {
+      // --- All Supabase code disabled while SKIP_DB is true ---
       const supabase = createServiceRoleClient();
+      const cacheKey = buildCacheKey(data.college, data.major);
 
-      // 1. Save the search
       const { data: searchRow, error: searchErr } = await supabase
         .from("searches")
         .insert({
@@ -236,9 +230,7 @@ export async function submitSearch(
         console.error("[submitSearch] Search insert error:", JSON.stringify(searchErr, null, 2));
         throw new Error(`Failed to save your search: ${searchErr.message || searchErr.code || "unknown error"}`);
       }
-      searchId = searchRow.id;
 
-      // 2. Check for cached result within 24 hours
       const cutoff = new Date(
         Date.now() - CACHE_TTL_HOURS * 60 * 60 * 1000
       ).toISOString();
@@ -252,43 +244,17 @@ export async function submitSearch(
         .limit(1);
 
       if (cachedRows && cachedRows.length > 0) {
-        return { searchId, resultId: cachedRows[0].id };
+        return { searchId: searchRow.id, resultId: cachedRows[0].id };
       }
-    } else {
-      console.log("[submitSearch] Supabase not configured — skipping DB, running AI only");
     }
 
-    // 3. Run the AI research
+    // Run the AI research directly
+    console.log("[submitSearch] Calling AI for:", data.college, data.major);
     const result = await runResearch(data);
+    console.log("[submitSearch] AI returned match_score:", result.match_score);
 
-    if (dbAvailable) {
-      const supabase = createServiceRoleClient();
-
-      // 4. Save result
-      const { data: resultRow, error: resultErr } = await supabase
-        .from("results")
-        .insert({
-          search_id: searchId,
-          cache_key: cacheKey,
-          match_score: result.match_score ?? null,
-          raw_ai_response: result,
-          scholarships_json: result.scholarships ?? null,
-          playbook_json: result.playbook ?? null,
-          budget_json: result.budget ?? null,
-          cc_gateway_json: result.cc_gateway ?? null,
-        })
-        .select("id")
-        .single();
-
-      if (resultErr) {
-        console.error("[submitSearch] Result insert error:", JSON.stringify(resultErr, null, 2));
-        throw new Error(`Failed to save your report: ${resultErr.message || resultErr.code || "unknown error"}`);
-      }
-      resultId = resultRow.id;
-    } else {
-      // No DB — store in memory cache so /results page can read it
-      cacheResult(resultId, result, data.college, data.major);
-    }
+    // Store in memory cache so /results page can read it
+    cacheResult(resultId, result, data.college, data.major);
 
     return { searchId, resultId };
   } catch (err) {
