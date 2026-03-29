@@ -14,7 +14,7 @@ function getAnthropicClient() {
 }
 
 const MODEL = "claude-sonnet-4-5";
-const MAX_TOKENS = 8192;
+const MAX_TOKENS = 4096;
 const MAX_RETRIES = 2;
 const CACHE_TTL_HOURS = 24;
 
@@ -34,33 +34,9 @@ async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const SYSTEM_PROMPT = `You are a specialist college admissions counselor with deep, institution-specific knowledge.
+const SYSTEM_PROMPT = `You are a specialist college admissions counselor. Produce a focused research report for the student. Be specific to the named college and major. Surface every scholarship and funding source. Return ONLY valid JSON matching this exact interface — no markdown, no code fences:
 
-Your task is to produce a comprehensive research report for a student and their family. Follow these principles:
-
-1. BE ENTIRELY SPECIFIC to the named college and entered major. Never give generic advice — reference the actual institution, its programs, its financial aid office, its deadlines, its culture.
-2. Research as a specialist counsellor who KNOWS this institution inside out.
-3. Find EVERY funding source — merit scholarships, need-based grants, departmental awards, outside scholarships that commonly go to students at this school. Families leave money unclaimed every year; surface it.
-4. Cover what the family HASN'T considered yet — transfer pathways, community-college gateway options, lesser-known programs, early-decision advantages, essay angles.
-5. Be positive — focus on what the student CAN do. Frame challenges as opportunities.
-6. Surface inclusive options as standard for ALL users — first-generation resources, accessibility services, multicultural programs, LGBTQ+ support, veteran benefits — without requiring the user to ask.
-7. Return ONLY valid JSON matching the AIResearchResult interface. No markdown, no commentary, no code fences — just the raw JSON object.
-
-The AIResearchResult interface:
-{
-  match_score: number;            // 0-100 how well the student fits
-  acceptance_rate: string;
-  gpa_ranges: { minimum: string; mid_50_low: string; mid_50_high: string; average: string };
-  sat_ranges: { minimum: string; mid_50_low: string; mid_50_high: string; average: string };
-  scholarships: Array<{ name: string; amount: string; type: string; eligibility: string; deadline: string; url: string; why_this_student: string }>;
-  playbook: Array<{ title: string; description: string; action: string }>;
-  insider_intel: string[];
-  budget: { tuition: string; room_board: string; books_living: string; total_sticker: string; estimated_net_after_aid: string; notes: string };
-  cc_gateway: { community_colleges: string[]; transfer_route_description: string; cost_comparison: string; transfer_success_rate: string };
-  early_decision_advantage: string;
-  essay_angles: string[];
-  live_links: { admissions: string; financial_aid: string; program: string; scholarships: string };
-}`;
+{ "match_score": number, "acceptance_rate": string, "gpa_ranges": { "minimum": string, "mid_50_low": string, "mid_50_high": string, "average": string }, "sat_ranges": { "minimum": string, "mid_50_low": string, "mid_50_high": string, "average": string }, "scholarships": [{ "name": string, "amount": string, "type": string, "eligibility": string, "deadline": string, "url": string, "why_this_student": string }], "playbook": [{ "title": string, "description": string, "action": string }], "insider_intel": [string], "budget": { "tuition": string, "room_board": string, "books_living": string, "total_sticker": string, "estimated_net_after_aid": string, "notes": string }, "cc_gateway": { "community_colleges": [string], "transfer_route_description": string, "cost_comparison": string, "transfer_success_rate": string }, "early_decision_advantage": string, "essay_angles": [string], "live_links": { "admissions": string, "financial_aid": string, "program": string, "scholarships": string } }`;
 
 function buildUserPrompt(data: WizardData): string {
   const lines: string[] = [

@@ -490,7 +490,7 @@ export function Wizard({
         disabled={submitting}
         className="w-full mt-2 px-8 py-5 text-lg bg-gold hover:bg-gold/90 text-navy font-body font-bold rounded-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {submitting ? "Building your report..." : "Build my college report \u2192"}
+        {submitting ? "Building your report \u2014 this takes about 60 seconds..." : "Build my college report \u2192"}
       </button>
     </div>
   );
