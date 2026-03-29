@@ -100,6 +100,7 @@ function isSupabaseConfigured(): boolean {
 }
 
 export async function POST(request: Request) {
+  console.log("[/api/research] POST received at:", new Date().toISOString());
   try {
     const data: WizardData = await request.json();
     console.log("[api/research] START for:", data.college, data.major);
