@@ -258,6 +258,7 @@ export async function submitSearch(
 
         if (resultRow) {
           resultId = resultRow.id;
+          console.log("[submitSearch] SUCCESS - resultId:", resultRow.id, "searchId:", searchId);
         }
       } catch (dbErr) {
         console.warn("[submitSearch] Failed to save result to DB:", dbErr);
@@ -266,6 +267,7 @@ export async function submitSearch(
 
     // Always cache in memory as fallback
     cacheResult(resultId, result, data.college, data.major);
+    console.log("[submitSearch] DONE - returning resultId:", resultId, "searchId:", searchId);
 
     return { searchId, resultId };
   } catch (err) {
