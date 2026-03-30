@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Compass, GraduationCap } from "lucide-react";
 import type { WizardData } from "@/lib/types";
 
 /* ───────────── constants ───────────── */
@@ -170,7 +171,7 @@ interface WizardProps {
 export function Wizard({
   initialCollege = "",
   initialMajor = "",
-  initialMode = "college",
+  initialMode = "league",
 }: WizardProps) {
   const router = useRouter();
 
@@ -275,13 +276,13 @@ export function Wizard({
             update("mode", "league");
             update("college", "");
           }}
-          className={`text-left p-4 rounded-lg border-2 transition-all ${
+          className={`text-left p-6 rounded-lg transition-all duration-200 ${
             form.mode === "league"
-              ? "border-gold bg-gold/5"
-              : "border-gray-200 bg-white hover:border-gray-300"
+              ? "border-2 border-gold bg-amber-50 shadow-sm"
+              : "border border-gray-200 bg-white hover:shadow-md hover:border-gray-300"
           }`}
         >
-          <span className="text-2xl mb-2 block">🎯</span>
+          <Compass className={`w-8 h-8 mb-3 ${form.mode === "league" ? "text-gold" : "text-navy/40"}`} />
           <span className="font-body font-medium text-navy block text-sm">
             Help me find the right college
           </span>
@@ -292,13 +293,13 @@ export function Wizard({
         <button
           type="button"
           onClick={() => update("mode", "college")}
-          className={`text-left p-4 rounded-lg border-2 transition-all ${
+          className={`text-left p-6 rounded-lg transition-all duration-200 ${
             form.mode === "college"
-              ? "border-gold bg-gold/5"
-              : "border-gray-200 bg-white hover:border-gray-300"
+              ? "border-2 border-gold bg-amber-50 shadow-sm"
+              : "border border-gray-200 bg-white hover:shadow-md hover:border-gray-300"
           }`}
         >
-          <span className="text-2xl mb-2 block">🏫</span>
+          <GraduationCap className={`w-8 h-8 mb-3 ${form.mode === "college" ? "text-gold" : "text-navy/40"}`} />
           <span className="font-body font-medium text-navy block text-sm">
             I already have a college in mind
           </span>
