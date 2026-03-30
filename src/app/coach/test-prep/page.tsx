@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
+import { TestPrepPlanner } from "@/components/TestPrepPlanner";
 
 export const metadata: Metadata = {
   title: "Test Prep — The Coach — KidToCollege",
@@ -57,8 +58,30 @@ export default function TestPrepPage() {
         </div>
       </section>
 
-      {/* SAT vs ACT */}
+      {/* Personalised Study Plan */}
       <section className="py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-6">
+          <FadeIn>
+            <p className="font-mono-label text-gold text-xs tracking-widest uppercase mb-2">
+              Personalised Study Plan
+            </p>
+            <h2 className="font-display text-3xl font-bold text-navy mb-2">
+              Build your SAT/ACT roadmap
+            </h2>
+            <p className="font-body text-navy/60 mb-8">
+              Enter your scores and study preferences. Our AI will create a
+              week-by-week study plan with score predictions, resource
+              recommendations, and milestone checkpoints.
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <TestPrepPlanner />
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* SAT vs ACT */}
+      <section className="py-20 bg-white border-t border-gray-200">
         <div className="max-w-3xl mx-auto px-6">
           <FadeIn>
             <h2 className="font-display text-3xl font-bold text-navy mb-6">
