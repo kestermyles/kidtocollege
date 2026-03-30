@@ -195,6 +195,9 @@ export function Wizard({
     notes: "",
     mode: initialMode,
   });
+  const [selectedMajors, setSelectedMajors] = useState<Set<string>>(
+    initialMajor ? new Set([initialMajor]) : new Set()
+  );
 
   /* helpers */
 
@@ -266,6 +269,20 @@ export function Wizard({
     "Psychology", "Education", "Criminal Justice", "Data Science", "Marketing",
   ];
 
+  const syncMajorFromPills = useCallback((pills: Set<string>) => {
+    setForm((prev) => ({ ...prev, major: Array.from(pills).join(", ") }));
+  }, []);
+
+  const toggleMajorPill = (name: string) => {
+    setSelectedMajors((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      syncMajorFromPills(next);
+      return next;
+    });
+  };
+
   const renderStep1 = () => (
     <div className="space-y-6">
       {/* Mode cards */}
@@ -313,30 +330,33 @@ export function Wizard({
       {form.mode === "college" && (
         <div>
           <label htmlFor="college" className="block text-sm font-body font-medium text-navy mb-1">
-            Which college?
+            Which college(s) are you considering?
           </label>
           <input
             id="college"
             type="text"
             value={form.college}
             onChange={(e) => update("college", e.target.value)}
-            placeholder="e.g. University of Texas at Austin"
+            placeholder="e.g. University of Texas at Austin, UCLA..."
             className={inputCls}
           />
         </div>
       )}
 
-      {/* Major input */}
+      {/* Subject input with multi-select pills */}
       <div>
         <label htmlFor="major" className="block text-sm font-body font-medium text-navy mb-1">
-          What do they want to study?
+          What subject(s) interest you?
         </label>
         <input
           id="major"
           type="text"
           value={form.major}
-          onChange={(e) => update("major", e.target.value)}
-          placeholder="Type a subject or pick one below"
+          onChange={(e) => {
+            update("major", e.target.value);
+            setSelectedMajors(new Set());
+          }}
+          placeholder="e.g. Computer Science, Nursing..."
           className={inputCls}
         />
         <div className="flex flex-wrap gap-1.5 mt-2">
@@ -344,9 +364,9 @@ export function Wizard({
             <button
               key={m}
               type="button"
-              onClick={() => update("major", m)}
+              onClick={() => toggleMajorPill(m)}
               className={`px-3 py-1 rounded-full text-xs font-body transition-all border ${
-                form.major === m
+                selectedMajors.has(m)
                   ? "bg-gold/15 border-gold text-navy font-medium"
                   : "border-gray-200 text-navy/50 hover:border-gold/40"
               }`}
@@ -535,8 +555,8 @@ export function Wizard({
 
   const STEP_TITLES: Record<number, string> = {
     1: "Let\u2019s start with the basics",
-    2: "About your student",
-    3: "What makes your kid them",
+    2: "Academic profile",
+    3: "Activities & interests",
     4: "What matters most",
   };
 
