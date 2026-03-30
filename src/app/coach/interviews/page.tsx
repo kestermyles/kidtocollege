@@ -6,6 +6,7 @@ import { FadeIn } from "@/components/FadeIn";
 import { GoldButton } from "@/components/GoldButton";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { getMockInterviewFeedback } from "@/app/actions/coach";
+import { VoiceInterview } from "@/components/VoiceInterview";
 
 const INTERVIEW_SCHOOLS = [
   "Harvard, Yale, Princeton, and most Ivies use alumni interviews.",
@@ -372,7 +373,29 @@ export default function InterviewsPage() {
         </div>
       </section>
 
-      {/* AI Mock Interview */}
+      {/* AI Voice Interview */}
+      <section className="py-20 bg-white border-t border-card">
+        <div className="max-w-4xl mx-auto px-6">
+          <FadeIn>
+            <p className="font-mono-label text-gold text-xs tracking-widest uppercase mb-2">
+              Live AI Interview
+            </p>
+            <h2 className="font-display text-3xl font-bold text-navy mb-2">
+              Practice with your voice
+            </h2>
+            <p className="font-body text-navy/60 mb-8">
+              Our AI interviewer will ask you questions, listen to your answers
+              through your microphone, and give you real-time feedback. It&apos;s
+              the closest thing to a real interview you can get from home.
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <VoiceInterview />
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* AI Text Mock Interview */}
       <section className="py-20 bg-cream border-t border-card">
         <div className="max-w-3xl mx-auto px-6">
           <FadeIn>
