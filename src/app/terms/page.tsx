@@ -178,7 +178,20 @@ export default function TermsOfUsePage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              12. Contact
+              12. Partner links &amp; compensation
+            </h2>
+            <p>
+              KidToCollege may include links to third-party services. In some cases
+              we may receive compensation when you click a link or make a purchase.
+              This does not affect the guidance or recommendations we provide. All
+              college data and AI-generated advice is editorially independent.
+              Partner relationships are always disclosed.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              13. Contact
             </h2>
             <p>
               For questions about these terms, contact us at{" "}

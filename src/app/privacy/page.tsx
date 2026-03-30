@@ -175,7 +175,21 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              11. Changes to this policy
+              11. Affiliate &amp; partner relationships
+            </h2>
+            <p>
+              We may in the future receive compensation from partners including
+              student loan providers, test preparation companies and scholarship
+              platforms. Any such relationships will be clearly disclosed and will
+              never influence our editorial guidance or college recommendations. We
+              will update this policy and notify users before any such relationships
+              take effect.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              12. Changes to this policy
             </h2>
             <p>
               We may update this privacy policy from time to time. When we make material
