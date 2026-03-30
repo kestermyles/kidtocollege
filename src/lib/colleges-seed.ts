@@ -3,6 +3,31 @@ import { College } from "./types";
 type CollegeSeed = Omit<College, "last_updated"> & { official_url?: string };
 
 export const COLLEGES_SEED: CollegeSeed[] = [
+  // ── Featured ───────────────────────────────────────────────
+  {
+    slug: "ut-austin",
+    name: "University of Texas at Austin",
+    location: "Austin, TX",
+    state: "TX",
+    acceptance_rate: 31.8,
+    avg_cost_instate: 11448,
+    avg_cost_outstate: 41070,
+    graduation_rate: 88,
+    total_enrollment: 53082,
+    photo_url:
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
+    official_url: "https://www.utexas.edu",
+    programs: [
+      "Business",
+      "Engineering",
+      "Computer Science",
+      "Communications",
+      "Biology",
+      "Economics",
+      "Nursing",
+      "Architecture",
+    ],
+  },
   // ── Ivy League ──────────────────────────────────────────────
   {
     slug: "harvard-university",
@@ -220,30 +245,6 @@ export const COLLEGES_SEED: CollegeSeed[] = [
       "Political Science",
       "Psychology",
       "Public Health",
-    ],
-  },
-  {
-    slug: "ut-austin",
-    name: "University of Texas at Austin",
-    location: "Austin, TX",
-    state: "TX",
-    acceptance_rate: 31.8,
-    avg_cost_instate: 11448,
-    avg_cost_outstate: 41070,
-    graduation_rate: 88,
-    total_enrollment: 53082,
-    photo_url:
-      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
-    official_url: "https://www.utexas.edu",
-    programs: [
-      "Business",
-      "Engineering",
-      "Computer Science",
-      "Communications",
-      "Biology",
-      "Economics",
-      "Nursing",
-      "Architecture",
     ],
   },
   {
