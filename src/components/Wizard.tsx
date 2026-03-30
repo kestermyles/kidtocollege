@@ -178,7 +178,7 @@ export function Wizard({
   const [direction, setDirection] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [showMinor, setShowMinor] = useState(false);
+
 
   const [form, setForm] = useState<WizardData>({
     college: initialCollege,
@@ -260,69 +260,101 @@ export function Wizard({
 
   /* ───── step renderers ───── */
 
+  const QUICK_MAJORS = [
+    "Nursing", "Computer Science", "Business", "Engineering", "Pre-Med",
+    "Psychology", "Education", "Criminal Justice", "Data Science", "Marketing",
+  ];
+
   const renderStep1 = () => (
-    <div className="space-y-5">
-      <div>
-        <label htmlFor="college" className="block text-sm font-body font-medium text-navy mb-1">
-          Which college are you thinking about?
-        </label>
-        <input
-          id="college"
-          type="text"
-          value={form.college}
-          onChange={(e) => update("college", e.target.value)}
-          placeholder="e.g. University of Michigan"
-          className={inputCls}
-        />
+    <div className="space-y-6">
+      {/* Mode cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <button
           type="button"
           onClick={() => {
-            update("college", "");
             update("mode", "league");
+            update("college", "");
           }}
-          className="text-xs text-gold hover:text-gold/80 mt-1 font-body"
+          className={`text-left p-4 rounded-lg border-2 transition-all ${
+            form.mode === "league"
+              ? "border-gold bg-gold/5"
+              : "border-gray-200 bg-white hover:border-gray-300"
+          }`}
         >
-          Not sure yet? Find the best colleges for your subject instead
+          <span className="text-2xl mb-2 block">🎯</span>
+          <span className="font-body font-medium text-navy block text-sm">
+            Help me find the right college
+          </span>
+          <span className="font-body text-xs text-navy/50 mt-1 block">
+            We&apos;ll recommend the best colleges for your profile, budget and goals
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={() => update("mode", "college")}
+          className={`text-left p-4 rounded-lg border-2 transition-all ${
+            form.mode === "college"
+              ? "border-gold bg-gold/5"
+              : "border-gray-200 bg-white hover:border-gray-300"
+          }`}
+        >
+          <span className="text-2xl mb-2 block">🏫</span>
+          <span className="font-body font-medium text-navy block text-sm">
+            I already have a college in mind
+          </span>
+          <span className="font-body text-xs text-navy/50 mt-1 block">
+            Research a specific college in depth
+          </span>
         </button>
       </div>
 
+      {/* College input — only when "college" mode */}
+      {form.mode === "college" && (
+        <div>
+          <label htmlFor="college" className="block text-sm font-body font-medium text-navy mb-1">
+            Which college?
+          </label>
+          <input
+            id="college"
+            type="text"
+            value={form.college}
+            onChange={(e) => update("college", e.target.value)}
+            placeholder="e.g. University of Texas at Austin"
+            className={inputCls}
+          />
+        </div>
+      )}
+
+      {/* Major input */}
       <div>
         <label htmlFor="major" className="block text-sm font-body font-medium text-navy mb-1">
-          What does your kid want to study?
+          What do they want to study?
         </label>
         <input
           id="major"
           type="text"
           value={form.major}
           onChange={(e) => update("major", e.target.value)}
-          placeholder="e.g. Computer Science, Nursing, Business"
+          placeholder="Type a subject or pick one below"
           className={inputCls}
         />
-      </div>
-
-      {!showMinor ? (
-        <button
-          type="button"
-          onClick={() => setShowMinor(true)}
-          className="text-xs text-navy/50 hover:text-navy/70 font-body underline underline-offset-2"
-        >
-          + Second major or minor?
-        </button>
-      ) : (
-        <div>
-          <label htmlFor="minor" className="block text-sm font-body font-medium text-navy mb-1">
-            Second major or minor
-          </label>
-          <input
-            id="minor"
-            type="text"
-            value={form.minor ?? ""}
-            onChange={(e) => update("minor", e.target.value)}
-            placeholder="e.g. Psychology, Data Science"
-            className={inputCls}
-          />
+        <div className="flex flex-wrap gap-1.5 mt-2">
+          {QUICK_MAJORS.map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => update("major", m)}
+              className={`px-3 py-1 rounded-full text-xs font-body transition-all border ${
+                form.major === m
+                  ? "bg-gold/15 border-gold text-navy font-medium"
+                  : "border-gray-200 text-navy/50 hover:border-gold/40"
+              }`}
+            >
+              {m}
+            </button>
+          ))}
         </div>
-      )}
+      </div>
 
       <button
         type="button"

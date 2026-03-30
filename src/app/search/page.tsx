@@ -24,12 +24,12 @@ export default async function SearchPage({
       <section className="bg-navy py-16 pb-20">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h1 className="font-display text-3xl md:text-4xl font-bold text-white mb-3">
-            Your college report starts here
+            Find the right college. Fund it fully.
           </h1>
           <p className="font-body text-white/60 text-lg max-w-xl mx-auto">
-            Four quick steps. No sign-up required. We&apos;ll build a
-            personalised research report with scholarships, admissions data, and
-            a step-by-step playbook.
+            Tell us about your student — we&apos;ll find the best colleges for
+            their profile, surface every scholarship, and build a step-by-step
+            admissions playbook.
           </p>
         </div>
       </section>
