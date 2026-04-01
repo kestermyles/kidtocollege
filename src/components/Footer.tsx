@@ -43,8 +43,8 @@ export function Footer() {
                 KidToCollege
               </span>
               <p className="mt-3 text-sm leading-relaxed text-white/60">
-                Free college guidance for every family. No ads, no affiliates,
-                no paywalls. 100% independent.
+                Leveling the playing field, one family at a time. Free to use.
+                100% independent.
               </p>
             </div>
 

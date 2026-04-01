@@ -237,11 +237,10 @@ export default function HomePage() {
           <FadeIn>
             <div className="text-center mb-16">
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-navy">
-                Built for every family
+                Leveling the playing field, one family at a time
               </h2>
               <p className="mt-4 text-navy/60 font-body max-w-xl mx-auto">
-                No ads. No affiliate links. No college partnerships. Completely
-                independent.
+                Free to use. 100% independent.
               </p>
             </div>
           </FadeIn>
