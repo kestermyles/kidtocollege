@@ -11,6 +11,8 @@ import {
   AlertTriangle,
   ShieldAlert,
   Pin,
+  Info,
+  FileDown,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -206,6 +208,11 @@ export default function FAFSAGuidePage() {
                 definition:
                   "A second financial aid form required by approximately 200–300 selective colleges — mostly private universities. It uses a different formula to the FAFSA, is more detailed, and counts assets (like home equity) that the FAFSA excludes. Find the full list of schools requiring it at cssprofile.collegeboard.org.",
               },
+              {
+                term: "Income Protection Allowance",
+                definition:
+                  "A portion of family income that the FAFSA formula automatically excludes from the SAI calculation — it is set aside to cover basic living expenses and is never counted as available for college costs. The allowance varies by family size. This means the SAI formula does not assume your entire income is available to pay for college.",
+              },
             ].map((item) => (
               <div key={item.term} className="ktc-card p-6">
                 <h3 className="font-display text-lg font-bold text-navy mb-2">
@@ -276,6 +283,36 @@ export default function FAFSAGuidePage() {
                 <p className="font-body text-sm text-navy/70">{card.text}</p>
               </div>
             ))}
+          </div>
+
+          {/* How to read a Common Data Set */}
+          <div className="bg-cream border border-card rounded-lg p-6 mb-8">
+            <h3 className="font-display text-lg font-bold text-navy mb-3">
+              <Info className="w-4 h-4 text-gold inline-block mr-1 -mt-0.5" />{" "}
+              How to read a Common Data Set
+            </h3>
+            <div className="font-body text-sm text-navy/70 space-y-3 leading-relaxed">
+              <p>
+                The Common Data Set is a standardised document every college
+                publishes annually. To find one, search &ldquo;[School Name]
+                Common Data Set&rdquo; — it will be a PDF, usually 30–50 pages
+                long.
+              </p>
+              <p>
+                The number you are looking for is in Section H, Row I:
+                &ldquo;Percent of need met of students who were awarded any
+                need-based aid.&rdquo; This tells you how much of demonstrated
+                financial need the school actually covers.
+              </p>
+              <p>
+                <strong>Important caveat:</strong> read the fine print carefully.
+                Many schools include loans inside this percentage. A school
+                claiming to meet 80% of need may be counting a $25,000 loan as
+                part of that figure. Look specifically for the breakdown showing
+                grants and scholarships separately from loans. The grants-only
+                figure is what actually reduces your bill.
+              </p>
+            </div>
           </div>
 
           {/* Need Met % callout */}
@@ -413,6 +450,28 @@ export default function FAFSAGuidePage() {
                 assessed at the lower parent asset rate. From 2026–27,
                 distributions from grandparent-owned 529 plans no longer count
                 as student income — a significant improvement from prior years.
+              </p>
+            </div>
+
+            {/* Low-income asset exemption */}
+            <div className="bg-gold/10 border border-gold/30 rounded-lg p-5">
+              <p className="font-body text-sm text-navy leading-relaxed">
+                <Info className="w-4 h-4 text-gold inline-block mr-1 -mt-0.5" />{" "}
+                <strong>Low-income asset exemption:</strong> If a dependent
+                student&apos;s parents have a combined AGI of $60,000 or less
+                and meet certain other criteria, assets do not need to be
+                reported on the FAFSA at all — they are automatically excluded
+                from the SAI calculation. This is called the Simplified Needs
+                Test exemption. Check the current criteria at{" "}
+                <a
+                  href="https://studentaid.gov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gold hover:text-gold/80 underline transition-colors"
+                >
+                  studentaid.gov
+                </a>{" "}
+                before filing.
               </p>
             </div>
           </div>
@@ -801,6 +860,18 @@ export default function FAFSAGuidePage() {
                 title: "Common Data Sets",
                 desc: 'Find need-met %, aid statistics, and more for any college. Search "[School Name] Common Data Set".',
                 url: "https://www.google.com/search?q=common+data+set",
+              },
+              {
+                icon: <FileDown className="w-6 h-6 text-gold" />,
+                title: "2026–27 FAFSA Form (PDF)",
+                desc: "The actual blank FAFSA form — useful to review all questions before you file.",
+                url: "https://studentaid.gov/sites/default/files/2026-27-fafsa-form.pdf",
+              },
+              {
+                icon: <Calculator className="w-6 h-6 text-gold" />,
+                title: "Official SAI Formula Guide (PDF)",
+                desc: "The federal government's full Student Aid Index formula — the exact document used to calculate your number.",
+                url: "https://fsapartners.ed.gov/sites/default/files/2025-06/202627StudentAidIndexSAIandPellGrantEligibilityGuide.pdf",
               },
             ].map((resource) => (
               <a
