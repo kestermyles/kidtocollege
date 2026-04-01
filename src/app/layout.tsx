@@ -6,15 +6,17 @@ import { Providers } from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kidtocollege.com"),
   title: "KidToCollege — Free College Guidance for Every Family",
   description:
     "Private college counsellors charge up to $15,000. We think every kid deserves the same advantage — for free. AI-powered college research, scholarships, and coaching.",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
-    apple: "/favicon.svg",
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon-32x32.png",
   },
   openGraph: {
     title: "KidToCollege — Free College Guidance for Every Family",
