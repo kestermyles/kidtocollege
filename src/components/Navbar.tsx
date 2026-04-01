@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const NAV_LINKS = [
   { href: "/search", label: "Find a College" },
   { href: "/scholarships", label: "Scholarships" },
+  { href: "/fafsa-guide", label: "FAFSA Guide" },
   { href: "/coach", label: "Coach" },
   { href: "/compare", label: "Compare" },
   { href: "/international", label: "International" },
