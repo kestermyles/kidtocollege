@@ -22,6 +22,28 @@ const PILLARS = [
     ),
   },
   {
+    title: "Merit Sweet Spot",
+    href: "/coach/merit-sweet-spot",
+    description:
+      "Enter your GPA and scores to find which colleges put you in merit scholarship territory. The leverage most families miss.",
+    icon: (
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+      </svg>
+    ),
+  },
+  {
+    title: "Appeal Letter",
+    href: "/coach/appeal-letter",
+    description:
+      "Learn when and how to appeal your financial aid offer. Generate a personalised appeal letter with AI.",
+    icon: (
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+      </svg>
+    ),
+  },
+  {
     title: "The Essay",
     href: "/coach/essay",
     description:
@@ -113,7 +135,7 @@ export default function CoachPage() {
         <div className="max-w-6xl mx-auto px-6">
           <FadeIn>
             <p className="font-mono-label text-sage text-sm tracking-widest uppercase mb-3 text-center">
-              Six pillars
+              Eight pillars
             </p>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-navy text-center mb-4">
               The full private counsellor experience

@@ -106,6 +106,19 @@ export default function FAFSAGuidePage() {
         </div>
       </section>
 
+      {/* ─── Inline educational disclaimer ─── */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-amber-50 border border-amber-200 rounded-lg px-6 py-4 mb-8 max-w-3xl mx-auto">
+          <p className="text-sm text-amber-900">
+            <strong>Educational guide only.</strong> This content explains the FAFSA
+            process using official federal and College Board data. It is not financial,
+            tax, or legal advice. Every family&apos;s situation is different — always
+            verify with your school&apos;s financial aid office or a qualified financial
+            advisor before making decisions.
+          </p>
+        </div>
+      </div>
+
       {/* ─── SECTION B — Disclaimer bar ─── */}
       <section className="bg-cream border-l-4 border-gold">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -918,6 +931,12 @@ export default function FAFSAGuidePage() {
               className="bg-white/10 hover:bg-white/20 text-white font-body font-medium px-8 py-4 rounded-md transition-colors border border-white/20"
             >
               Search Scholarships
+            </Link>
+            <Link
+              href="/coach/appeal-letter"
+              className="bg-white/10 hover:bg-white/20 text-white font-body font-medium px-8 py-4 rounded-md transition-colors border border-white/20"
+            >
+              Appeal Your Aid Offer &rarr;
             </Link>
           </div>
         </div>

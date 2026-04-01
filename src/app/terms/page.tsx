@@ -13,7 +13,7 @@ export default function TermsOfUsePage() {
           Terms of Use
         </h1>
         <p className="font-mono-label text-xs text-navy/40 uppercase tracking-wider mb-10">
-          Effective date: March 28, 2026
+          Effective date: April 1, 2026
         </p>
 
         <div className="space-y-10 font-body text-navy/80 leading-relaxed">
@@ -32,20 +32,85 @@ export default function TermsOfUsePage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              2. Nature of the service
+              2. Educational purpose only
             </h2>
             <p>
-              KidToCollege provides AI-generated college research reports, scholarship
-              information, and coaching content for informational and guidance purposes
-              only. The Service is <strong>not a substitute for professional college
-              admissions counseling</strong>. Users should use the information provided as
-              one input among many when making educational decisions.
+              KidToCollege provides general educational information about college admissions,
+              financial aid, and scholarships. All content is for informational purposes only
+              and does not constitute financial, legal, or professional advice of any kind.
             </p>
           </section>
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              3. No guarantees
+              3. Not a financial or legal advisor
+            </h2>
+            <p>
+              KidToCollege is not a registered financial advisor, investment advisor, licensed
+              counselor, or legal professional. We are an educational technology platform.
+              Nothing on this site should be construed as personalized financial, legal, or
+              admissions advice.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              4. Consult a professional
+            </h2>
+            <p>
+              All financial aid, scholarship, and college funding decisions involve complex
+              personal circumstances. You should consult a qualified financial advisor, your
+              school&apos;s financial aid office, or a licensed college counselor before making
+              any financial decisions related to college funding.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              5. Limitation of liability
+            </h2>
+            <p>
+              To the fullest extent permitted by applicable law, KidToCollege and its
+              operators shall not be liable for any financial loss, missed opportunity,
+              admission outcome, or adverse result arising from reliance on any information
+              provided on this platform. Use of this site constitutes your acceptance of this
+              limitation.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              6. Information accuracy
+            </h2>
+            <p>
+              College costs, scholarship availability, admissions requirements, and financial
+              aid policies change frequently. While we strive for accuracy using public
+              sources including IPEDS, Common Data Sets, and College Board data, always verify
+              all information directly with the institution before making decisions.
+            </p>
+            <p className="mt-3">
+              AI-generated content, including research reports, scholarship
+              recommendations, essay feedback, and coaching guidance, is produced by
+              artificial intelligence and may contain errors, omissions, or outdated
+              information. Users should independently verify all critical information.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              7. Affiliate disclosure
+            </h2>
+            <p>
+              KidToCollege may receive compensation from third-party affiliate partners
+              including student loan providers and test prep services. This compensation does
+              not influence our educational content or college rankings in any way. Full
+              details are in our Privacy Policy.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              8. No guarantees
             </h2>
             <p>
               KidToCollege makes no guarantees of admission to any college or university,
@@ -58,27 +123,7 @@ export default function TermsOfUsePage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              4. Data accuracy
-            </h2>
-            <p>
-              All college data presented on KidToCollege is sourced from public records,
-              including the Integrated Postsecondary Education Data System (IPEDS), Common
-              Data Sets, College Board, and FAFSA.gov. While we believe this data to be
-              accurate at the time of publication, it is not warranted for accuracy,
-              completeness, or timeliness. Institutional data changes frequently, and the
-              Service may not reflect the most recent updates from every institution.
-            </p>
-            <p className="mt-3">
-              AI-generated content, including research reports, scholarship
-              recommendations, essay feedback, and coaching guidance, is produced by
-              artificial intelligence and may contain errors, omissions, or outdated
-              information. Users should independently verify all critical information.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="font-display text-xl font-bold text-navy mb-3">
-              5. User accounts
+              9. User accounts
             </h2>
             <p>
               You are responsible for maintaining the confidentiality of your account
@@ -95,7 +140,7 @@ export default function TermsOfUsePage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              6. Intellectual property and content use
+              10. Intellectual property and content use
             </h2>
             <p>
               All AI-generated report content, coaching materials, and site content
@@ -113,7 +158,7 @@ export default function TermsOfUsePage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              7. Prohibited use
+              11. Prohibited use
             </h2>
             <p>You agree not to:</p>
             <ul className="list-disc pl-6 mt-3 space-y-1">
@@ -127,7 +172,7 @@ export default function TermsOfUsePage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              8. Essay coaching disclaimer
+              12. Essay coaching disclaimer
             </h2>
             <p>
               The AI essay coaching feature is designed to help students improve their own
@@ -141,20 +186,7 @@ export default function TermsOfUsePage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              9. Limitation of liability
-            </h2>
-            <p>
-              To the fullest extent permitted by law, KidToCollege and its operators shall
-              not be liable for any indirect, incidental, special, consequential, or
-              punitive damages arising from your use of the Service, including but not
-              limited to missed deadlines, incorrect scholarship information, denied
-              applications, or financial losses.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="font-display text-xl font-bold text-navy mb-3">
-              10. Independence
+              13. Independence
             </h2>
             <p>
               KidToCollege is 100% independent. We are not affiliated with, endorsed by, or
@@ -166,7 +198,7 @@ export default function TermsOfUsePage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              11. Governing law
+              14. Governing law
             </h2>
             <p>
               These Terms of Use are governed by and construed in accordance with the laws
@@ -178,20 +210,7 @@ export default function TermsOfUsePage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              12. Partner links &amp; compensation
-            </h2>
-            <p>
-              KidToCollege may include links to third-party services. In some cases
-              we may receive compensation when you click a link or make a purchase.
-              This does not affect the guidance or recommendations we provide. All
-              college data and AI-generated advice is editorially independent.
-              Partner relationships are always disclosed.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="font-display text-xl font-bold text-navy mb-3">
-              13. Contact
+              15. Contact
             </h2>
             <p>
               For questions about these terms, contact us at{" "}

@@ -58,8 +58,116 @@ export default function TestPrepPage() {
         </div>
       </section>
 
-      {/* Personalised Study Plan */}
+      {/* Test-optional strategy — introductory section */}
       <section className="py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-6">
+          <FadeIn>
+            <p className="font-mono-label text-gold text-xs tracking-widest uppercase mb-2">
+              Strategy
+            </p>
+            <h2 className="font-display text-3xl font-bold text-navy mb-2">
+              Should you submit your score?
+            </h2>
+            <p className="font-body text-navy/70 leading-relaxed mb-8">
+              The real question isn&apos;t whether a school is test-optional.
+              It&apos;s whether <strong>your</strong> score helps or hurts you —
+              and whether it can save you money.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={0.1}>
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Submit column */}
+              <div className="ktc-card p-6 border-l-4 border-sage">
+                <h3 className="font-display text-lg font-bold text-sage mb-4">
+                  Submit your score if:
+                </h3>
+                <ul className="space-y-3 font-body text-navy/70 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-sage flex-shrink-0" />
+                    Your score is at or above the school&apos;s 75th percentile
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-sage flex-shrink-0" />
+                    You&apos;re applying test-optional but your score is within 50
+                    points of the median — submit, it differentiates you
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-sage flex-shrink-0" />
+                    You&apos;re borderline on GPA — a strong score compensates
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-sage flex-shrink-0" />
+                    The school offers automatic merit aid tied to scores (many do
+                    even if they&apos;re &ldquo;test optional&rdquo; for admissions)
+                  </li>
+                </ul>
+              </div>
+
+              {/* Don't submit column */}
+              <div className="ktc-card p-6 border-l-4 border-crimson">
+                <h3 className="font-display text-lg font-bold text-crimson mb-4">
+                  Do NOT submit your score if:
+                </h3>
+                <ul className="space-y-3 font-body text-navy/70 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-crimson flex-shrink-0" />
+                    Your score is below the school&apos;s 25th percentile
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-crimson flex-shrink-0" />
+                    Your GPA is strong and you don&apos;t need the boost
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-crimson flex-shrink-0" />
+                    The school explicitly states scores play no role
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-crimson flex-shrink-0" />
+                    You haven&apos;t had time to prepare properly
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Key insight */}
+          <FadeIn delay={0.2}>
+            <div className="mt-8 bg-gold/10 border border-gold/30 rounded-lg p-6">
+              <p className="font-body text-navy leading-relaxed">
+                <strong>Your SAT/ACT score is a financial lever, not just an
+                admissions lever.</strong> A score in the top 25% at your target
+                school can unlock $8,000–$15,000/year in automatic merit
+                scholarships — even at test-optional schools. Run the numbers
+                before you decide not to submit.
+              </p>
+            </div>
+          </FadeIn>
+
+          {/* Where to find score ranges */}
+          <FadeIn delay={0.3}>
+            <div className="mt-6 font-body text-navy/60 text-sm">
+              <p>
+                <strong className="text-navy">Where to find each school&apos;s score ranges:</strong>{" "}
+                Check the Common Data Set for each school (Section C) or use our
+                college pages — we surface the 25th and 75th percentile scores
+                for every college in our database.
+              </p>
+            </div>
+            <div className="mt-6">
+              <Link
+                href="/coach/merit-sweet-spot"
+                className="inline-block font-body font-medium bg-gold hover:bg-gold/90 text-navy px-6 py-3 rounded-md transition-all"
+              >
+                See where your score lands &rarr;
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Personalised Study Plan */}
+      <section className="py-20 bg-white border-t border-gray-200">
         <div className="max-w-3xl mx-auto px-6">
           <FadeIn>
             <p className="font-mono-label text-gold text-xs tracking-widest uppercase mb-2">
@@ -407,6 +515,9 @@ export default function TestPrepPage() {
               </Link>
               <Link href="/coach/financial-aid" className="font-body text-sm bg-white border border-card rounded-md px-5 py-2.5 text-navy hover:border-gold/40 transition-colors">
                 Financial Aid
+              </Link>
+              <Link href="/coach/merit-sweet-spot" className="font-body text-sm bg-white border border-card rounded-md px-5 py-2.5 text-navy hover:border-gold/40 transition-colors">
+                Merit Sweet Spot
               </Link>
               <Link href="/coach" className="font-body text-sm bg-gold/10 border border-gold/30 rounded-md px-5 py-2.5 text-navy hover:bg-gold/20 transition-colors">
                 All Coach sections
