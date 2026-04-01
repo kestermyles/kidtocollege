@@ -9,6 +9,13 @@ export const metadata: Metadata = {
   title: "KidToCollege — Free College Guidance for Every Family",
   description:
     "Private college counsellors charge up to $15,000. We think every kid deserves the same advantage — for free. AI-powered college research, scholarships, and coaching.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/favicon.svg",
+  },
   openGraph: {
     title: "KidToCollege — Free College Guidance for Every Family",
     description:
