@@ -156,6 +156,13 @@ export function ResultsDisplay({
   const [nudgeDismissed, setNudgeDismissed] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  // Multi-college detection
+  const collegeNames = college
+    .split(",")
+    .map((c) => c.trim())
+    .filter(Boolean);
+  const isMultiCollege = collegeNames.length > 1;
+
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);
@@ -274,12 +281,35 @@ export function ResultsDisplay({
             </FadeIn>
             <FadeIn delay={0.15}>
               <div>
-                <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3">
-                  {college}
-                </h1>
-                <p className="font-body text-lg md:text-xl text-gold">
-                  {major}
-                </p>
+                {isMultiCollege ? (
+                  <>
+                    <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3">
+                      Your College Comparison
+                    </h1>
+                    <p className="font-body text-lg md:text-xl text-gold mb-4">
+                      {major}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {collegeNames.map((name) => (
+                        <span
+                          key={name}
+                          className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 font-body text-sm text-white"
+                        >
+                          {name}
+                        </span>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3">
+                      {college}
+                    </h1>
+                    <p className="font-body text-lg md:text-xl text-gold">
+                      {major}
+                    </p>
+                  </>
+                )}
                 <div className="flex flex-wrap gap-4 mt-6">
                   <div className="px-4 py-2 rounded-md bg-white/5 border border-white/10">
                     <span className="font-mono text-[11px] text-white/40 uppercase tracking-wider block">
@@ -771,7 +801,7 @@ export function ResultsDisplay({
                 Ask Anything
               </h2>
               <p className="font-body text-navy/60">
-                Have a follow-up question about {college}? Ask away.
+                Have a follow-up question about {isMultiCollege ? "these colleges" : college}? Ask away.
               </p>
             </div>
           </FadeIn>
@@ -860,7 +890,7 @@ export function ResultsDisplay({
               type="text"
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
-              placeholder={`Ask about ${college}...`}
+              placeholder={`Ask about ${isMultiCollege ? "these colleges" : college}...`}
               disabled={chatLoading}
               className="flex-1 font-body bg-white border border-card rounded-lg px-4 py-3 text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold disabled:opacity-50"
             />

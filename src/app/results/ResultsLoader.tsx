@@ -110,31 +110,73 @@ export function ResultsLoader({ resultId: initialResultId, searchId }: Props) {
   );
 }
 
+const LOADING_FACTS = [
+  "Searching 125+ colleges for scholarships matched to your profile...",
+  "Did you know? The average private college now costs over $100,000 for four years — we're finding ways to cut that for you.",
+  "Checking merit aid thresholds, need-met percentages, and hidden departmental awards...",
+  "The first FAFSA was filed in 1992. A lot has changed — we're on top of it.",
+  "Private college counsellors charge up to $15,000. This report is free.",
+];
+
 function PendingScreen({ pollCount }: { pollCount: number }) {
   const seconds = pollCount * 3;
+  const [factIndex, setFactIndex] = useState(0);
+  const [factVisible, setFactVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFactVisible(false);
+      setTimeout(() => {
+        setFactIndex((prev) => (prev + 1) % LOADING_FACTS.length);
+        setFactVisible(true);
+      }, 400);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="max-w-md mx-auto px-4 text-center">
-        <div className="mb-8">
-          <div className="w-14 h-14 border-4 border-gray-200 border-t-gold rounded-full animate-spin mx-auto" />
+    <div className="min-h-screen bg-navy relative overflow-hidden flex items-center justify-center">
+      {/* Animated background pulse */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(242,169,0,0.06)_0%,_transparent_70%)] animate-pulse" style={{ animationDuration: "4s" }} />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_rgba(242,169,0,0.04)_0%,_transparent_60%)] animate-pulse" style={{ animationDuration: "6s", animationDelay: "2s" }} />
+      </div>
+
+      <div className="relative max-w-lg mx-auto px-6 text-center">
+        {/* Spinner */}
+        <div className="mb-10">
+          <div className="w-16 h-16 border-4 border-white/10 border-t-gold rounded-full animate-spin mx-auto" />
         </div>
-        <h1 className="font-display text-2xl font-bold text-navy mb-3">
-          Building your college report...
+
+        <h1 className="font-display text-3xl md:text-4xl font-bold text-white mb-3">
+          Building your report
         </h1>
-        <p className="font-body text-navy/60 mb-6">
+        <p className="font-body text-white/50 mb-10">
           Our AI is researching scholarships, admissions data, and building your
-          personal playbook. This typically takes 60–90 seconds.
+          personal playbook.
         </p>
+
+        {/* Rotating fun facts */}
+        <div className="min-h-[4rem] mb-10 flex items-center justify-center">
+          <p
+            className={`font-body text-sm text-gold/80 max-w-sm mx-auto leading-relaxed transition-opacity duration-400 ${
+              factVisible ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            {LOADING_FACTS[factIndex]}
+          </p>
+        </div>
+
         {/* Progress bar */}
         <div className="max-w-xs mx-auto mb-4">
-          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
             <div
               className="h-full bg-gold rounded-full transition-all duration-1000 ease-linear"
-              style={{ width: `${Math.min(seconds / 90 * 100, 95)}%` }}
+              style={{ width: `${Math.min((seconds / 90) * 100, 95)}%` }}
             />
           </div>
         </div>
-        <p className="font-mono-label text-xs text-navy/30 uppercase tracking-wider">
+        <p className="font-mono-label text-xs text-white/25 uppercase tracking-wider">
           {seconds}s elapsed
         </p>
       </div>
