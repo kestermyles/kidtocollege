@@ -7,6 +7,7 @@ import { GoldButton } from "@/components/GoldButton";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { DisclaimerBar } from "@/components/DisclaimerBar";
 import { askQuestion } from "@/app/actions/research";
+import { createClient } from "@/lib/supabase-browser";
 import type {
   AIResearchResult,
   ScholarshipResult,
@@ -151,11 +152,20 @@ export function ResultsDisplay({
     initialSuggestedQuestions
   );
   const [saved, setSaved] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(true); // default true to avoid flash
+  const [nudgeDismissed, setNudgeDismissed] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => {
+      setIsSignedIn(!!data.user);
+    });
+  }, []);
 
   // -----------------------------------------------------------------------
   // Ask a question
@@ -301,6 +311,33 @@ export function ResultsDisplay({
           </div>
         </div>
       </section>
+
+      {/* Signed-out nudge */}
+      {!isSignedIn && !nudgeDismissed && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+          <div className="bg-cream rounded-lg px-4 py-3 flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
+            <p className="font-body text-sm text-navy/70 flex items-center gap-2">
+              <svg className="w-4 h-4 text-sage flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+              </svg>
+              Save this report and track your colleges — free, takes 10 seconds.{" "}
+              <Link
+                href={`/auth/signup?next=/results${searchId ? `?searchId=${searchId}` : ""}`}
+                className="text-sage hover:text-sage/80 underline underline-offset-2 whitespace-nowrap"
+              >
+                Create an account &rarr;
+              </Link>
+            </p>
+            <button
+              onClick={() => setNudgeDismissed(true)}
+              className="text-navy/30 hover:text-navy/60 transition-colors flex-shrink-0"
+              aria-label="Dismiss"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ================================================================ */}
       {/* REPORT BODY                                                      */}
