@@ -91,7 +91,7 @@ export default function SignUpPage() {
           <div className="text-center mb-8">
             <Link href="/">
               <span className="font-display text-2xl font-bold text-navy tracking-display">
-                KidToCollege
+                Kid<span className="text-gold">To</span>College
               </span>
             </Link>
             <p className="font-body text-navy/60 text-sm mt-1">
