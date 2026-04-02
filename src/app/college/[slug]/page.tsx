@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createServiceRoleClient } from "@/lib/supabase-server";
 import { FadeIn } from "@/components/FadeIn";
 import { COLLEGES_SEED } from "@/lib/colleges-seed";
+import { fetchScorecardData } from "@/lib/collegeScorecard";
 import type { College, ScholarshipResult } from "@/lib/types";
 
 export const revalidate = 86400; // ISR: revalidate every 24 hours
@@ -175,6 +176,34 @@ export default async function CollegePage({ params }: CollegePageProps) {
     questions = qData;
   }
 
+  // Refresh Scorecard data if stale (>7 days) — fire and forget
+  if (hasSupabase() && college) {
+    const needsRefresh =
+      !college.scorecard_last_updated ||
+      new Date(college.scorecard_last_updated) <
+        new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+    if (needsRefresh) {
+      fetchScorecardData(college.name).then((scorecard) => {
+        if (scorecard) {
+          const supabase = createServiceRoleClient();
+          supabase
+            .from("colleges")
+            .update({
+              median_earnings_6yr: scorecard.medianEarnings6yr,
+              median_earnings_10yr: scorecard.medianEarnings10yr,
+              employment_rate: scorecard.employmentRate,
+              graduation_rate_4yr: scorecard.graduationRate4yr,
+              loan_default_rate: scorecard.loanDefaultRate,
+              scorecard_last_updated: new Date().toISOString(),
+            })
+            .eq("slug", slug)
+            .then(() => {});
+        }
+      });
+    }
+  }
+
   const defaultPhoto = "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80";
   const heroImage =
     college.photo_url && college.photo_url !== defaultPhoto
@@ -282,6 +311,144 @@ export default async function CollegePage({ params }: CollegePageProps) {
                   </span>
                 ))}
               </div>
+            </FadeIn>
+          </div>
+        </section>
+      )}
+
+      {/* Graduate Outcomes — College Scorecard */}
+      {(college.median_earnings_6yr != null ||
+        college.median_earnings_10yr != null ||
+        college.employment_rate != null ||
+        college.graduation_rate_4yr != null) && (
+        <section className="py-12 sm:py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-2">
+                Graduate outcomes
+              </h2>
+              <p className="text-sm font-body text-navy/50 mb-6">
+                Source: U.S. Department of Education College Scorecard
+              </p>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                {college.median_earnings_6yr != null && (
+                  <div className="ktc-card p-5 text-center">
+                    <svg
+                      className="w-6 h-6 text-gold mx-auto mb-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
+                      />
+                    </svg>
+                    <p className="font-mono-label text-gold text-xl sm:text-2xl font-bold">
+                      {formatCurrency(college.median_earnings_6yr)}
+                    </p>
+                    <p className="text-navy font-body text-sm font-medium mt-1">
+                      Median Earnings at 6 Years
+                    </p>
+                    <p className="text-navy/50 text-xs font-body mt-1">
+                      median graduate salary 6 years after starting
+                    </p>
+                  </div>
+                )}
+                {college.median_earnings_10yr != null && (
+                  <div className="ktc-card p-5 text-center">
+                    <svg
+                      className="w-6 h-6 text-gold mx-auto mb-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
+                      />
+                    </svg>
+                    <p className="font-mono-label text-gold text-xl sm:text-2xl font-bold">
+                      {formatCurrency(college.median_earnings_10yr)}
+                    </p>
+                    <p className="text-navy font-body text-sm font-medium mt-1">
+                      Median Earnings at 10 Years
+                    </p>
+                    <p className="text-navy/50 text-xs font-body mt-1">
+                      median graduate salary 10 years after starting
+                    </p>
+                  </div>
+                )}
+                {college.employment_rate != null && (
+                  <div className="ktc-card p-5 text-center">
+                    <svg
+                      className="w-6 h-6 text-gold mx-auto mb-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0"
+                      />
+                    </svg>
+                    <p className="font-mono-label text-gold text-xl sm:text-2xl font-bold">
+                      {Math.round(college.employment_rate * 100)}%
+                    </p>
+                    <p className="text-navy font-body text-sm font-medium mt-1">
+                      Employment Rate
+                    </p>
+                    <p className="text-navy/50 text-xs font-body mt-1">
+                      graduates employed 2 years after completion
+                    </p>
+                  </div>
+                )}
+                {college.graduation_rate_4yr != null && (
+                  <div className="ktc-card p-5 text-center">
+                    <svg
+                      className="w-6 h-6 text-gold mx-auto mb-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342"
+                      />
+                    </svg>
+                    <p className="font-mono-label text-gold text-xl sm:text-2xl font-bold">
+                      {Math.round(college.graduation_rate_4yr * 100)}%
+                    </p>
+                    <p className="text-navy font-body text-sm font-medium mt-1">
+                      4-Year Graduation Rate
+                    </p>
+                    <p className="text-navy/50 text-xs font-body mt-1">
+                      students completing degree within 4 years
+                    </p>
+                  </div>
+                )}
+              </div>
+              <p className="text-xs font-body text-navy/40 mt-4">
+                Data from{" "}
+                <a
+                  href="https://collegescorecard.ed.gov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gold hover:text-gold/80 underline underline-offset-2"
+                >
+                  U.S. Department of Education College Scorecard
+                </a>
+                . Figures represent recent cohorts and may not reflect current
+                outcomes.
+              </p>
             </FadeIn>
           </div>
         </section>

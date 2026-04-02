@@ -25,7 +25,9 @@ Return valid JSON matching this exact interface:
 
 { "match_score": number, "acceptance_rate": string, "gpa_ranges": { "minimum": string, "mid_50_low": string, "mid_50_high": string, "average": string }, "sat_ranges": { "minimum": string, "mid_50_low": string, "mid_50_high": string, "average": string }, "scholarships": [{ "name": string, "amount": string, "type": string, "eligibility": string, "deadline": string, "url": string, "why_this_student": string }], "playbook": [{ "title": string, "description": string, "action": string }], "insider_intel": [string], "budget": { "tuition": string, "room_board": string, "books_living": string, "total_sticker": string, "estimated_net_after_aid": string, "notes": string }, "cc_gateway": { "community_colleges": [string], "transfer_route_description": string, "cost_comparison": string, "transfer_success_rate": string }, "early_decision_advantage": string, "essay_angles": [string], "live_links": { "admissions": string, "financial_aid": string, "program": string, "scholarships": string }, "recommended_colleges": [{ "name": string, "reason": string, "acceptance_rate": string, "estimated_cost": string, "scholarship_potential": string }] }
 
-recommended_colleges: suggest 3 colleges that are a strong fit for this student based on their GPA, budget and priorities.`;
+recommended_colleges: suggest 3 colleges that are a strong fit for this student based on their GPA, budget and priorities.
+
+When discussing career outcomes and return on investment for this college and major combination, include: typical starting salaries for this major, industries that recruit from this school, and whether the degree is considered strong ROI for the cost. Frame this in terms of years to break even on the investment versus not attending college.`;
 
 function getAnthropicClient() {
   const apiKey = process.env.ANTHROPIC_API_KEY;

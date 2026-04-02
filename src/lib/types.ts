@@ -100,6 +100,12 @@ export interface College {
   official_url?: string | null;
   programs: string[];
   last_updated: string;
+  median_earnings_6yr?: number | null;
+  median_earnings_10yr?: number | null;
+  employment_rate?: number | null;
+  graduation_rate_4yr?: number | null;
+  loan_default_rate?: number | null;
+  scorecard_last_updated?: string | null;
 }
 
 export interface SavedCollege {
