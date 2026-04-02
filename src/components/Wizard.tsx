@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Compass, GraduationCap } from "lucide-react";
+import { COLLEGES_SEED } from "@/lib/colleges-seed";
 import type { WizardData } from "@/lib/types";
 
 /* ───────────── constants ───────────── */
@@ -199,6 +200,32 @@ export function Wizard({
     initialMajor ? new Set([initialMajor]) : new Set()
   );
 
+  // College autocomplete state
+  const [collegeQuery, setCollegeQuery] = useState(initialCollege);
+  const [collegeResolved, setCollegeResolved] = useState(!!initialCollege);
+  const [showCollegeDropdown, setShowCollegeDropdown] = useState(false);
+  const collegeDropdownRef = useRef<HTMLDivElement>(null);
+
+  const collegeMatches =
+    collegeQuery.length >= 2
+      ? COLLEGES_SEED.filter((c) =>
+          c.name.toLowerCase().includes(collegeQuery.toLowerCase())
+        ).slice(0, 8)
+      : [];
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        collegeDropdownRef.current &&
+        !collegeDropdownRef.current.contains(e.target as Node)
+      ) {
+        setShowCollegeDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   /* helpers */
 
   const update = useCallback(
@@ -237,10 +264,31 @@ export function Wizard({
     setSubmitting(true);
     setErrorMsg("");
     try {
+      // Clean up form before submitting
+      const cleanedForm = {
+        ...form,
+        major: form.major.trim(),
+        college: form.college.trim(),
+      };
+
+      // If college was typed but not resolved from our database, add a note
+      if (
+        cleanedForm.mode === "college" &&
+        cleanedForm.college &&
+        !collegeResolved
+      ) {
+        cleanedForm.notes = [
+          cleanedForm.notes,
+          `[Note: "${cleanedForm.college}" was typed manually and may not be the official name. Please interpret loosely and use the full official college name in the report.]`,
+        ]
+          .filter(Boolean)
+          .join(" ");
+      }
+
       const res = await fetch("/api/research/start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(cleanedForm),
       });
       const result = await res.json();
       if (!res.ok || result.error) {
@@ -292,6 +340,8 @@ export function Wizard({
           onClick={() => {
             update("mode", "league");
             update("college", "");
+            setCollegeQuery("");
+            setCollegeResolved(false);
           }}
           className={`text-left p-6 rounded-lg transition-all duration-200 ${
             form.mode === "league"
@@ -326,20 +376,62 @@ export function Wizard({
         </button>
       </div>
 
-      {/* College input — only when "college" mode */}
+      {/* College input with autocomplete — only when "college" mode */}
       {form.mode === "college" && (
         <div>
           <label htmlFor="college" className="block text-sm font-body font-medium text-navy mb-1">
-            Which college(s) are you considering?
+            Which college are you considering?
           </label>
-          <input
-            id="college"
-            type="text"
-            value={form.college}
-            onChange={(e) => update("college", e.target.value)}
-            placeholder="e.g. University of Texas at Austin, UCLA..."
-            className={inputCls}
-          />
+          <div className="relative" ref={collegeDropdownRef}>
+            <input
+              id="college"
+              type="text"
+              value={collegeQuery}
+              onChange={(e) => {
+                const val = e.target.value;
+                setCollegeQuery(val);
+                update("college", val);
+                setCollegeResolved(false);
+                setShowCollegeDropdown(true);
+              }}
+              onFocus={() => {
+                if (collegeQuery.length >= 2) setShowCollegeDropdown(true);
+              }}
+              placeholder="e.g. University of Texas at Austin"
+              className={inputCls}
+              autoComplete="off"
+            />
+            {showCollegeDropdown && collegeMatches.length > 0 && (
+              <div className="absolute z-10 top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                {collegeMatches.map((c) => (
+                  <button
+                    key={c.slug}
+                    type="button"
+                    onClick={() => {
+                      setCollegeQuery(c.name);
+                      update("college", c.name);
+                      setCollegeResolved(true);
+                      setShowCollegeDropdown(false);
+                    }}
+                    className="w-full text-left px-4 py-2.5 font-body text-sm text-navy hover:bg-cream transition-colors"
+                  >
+                    {c.name}
+                    <span className="text-navy/40 ml-2 text-xs">
+                      {c.location}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          {collegeQuery.length >= 2 &&
+            collegeMatches.length === 0 &&
+            !collegeResolved && (
+              <p className="text-xs font-body text-navy/40 mt-1">
+                No exact match — no problem. We&apos;ll research this college for
+                you.
+              </p>
+            )}
         </div>
       )}
 
