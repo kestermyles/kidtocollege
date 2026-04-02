@@ -200,18 +200,51 @@ export function Wizard({
     initialMajor ? new Set([initialMajor]) : new Set()
   );
 
-  // College autocomplete state
-  const [collegeQuery, setCollegeQuery] = useState(initialCollege);
-  const [collegeResolved, setCollegeResolved] = useState(!!initialCollege);
+  // College autocomplete state — multi-college with chips
+  const [selectedColleges, setSelectedColleges] = useState<
+    { name: string; resolved: boolean }[]
+  >(initialCollege ? [{ name: initialCollege, resolved: true }] : []);
+  const [collegeQuery, setCollegeQuery] = useState("");
   const [showCollegeDropdown, setShowCollegeDropdown] = useState(false);
   const collegeDropdownRef = useRef<HTMLDivElement>(null);
 
   const collegeMatches =
-    collegeQuery.length >= 2
-      ? COLLEGES_SEED.filter((c) =>
-          c.name.toLowerCase().includes(collegeQuery.toLowerCase())
+    collegeQuery.trim().length >= 2
+      ? COLLEGES_SEED.filter(
+          (c) =>
+            c.name.toLowerCase().includes(collegeQuery.trim().toLowerCase()) &&
+            !selectedColleges.some((s) => s.name === c.name)
         ).slice(0, 8)
       : [];
+
+  // Sync selectedColleges → form.college as comma-separated string
+  const syncCollegesToForm = useCallback(
+    (colleges: { name: string; resolved: boolean }[], query: string) => {
+      const names = colleges.map((c) => c.name);
+      if (query.trim()) names.push(query.trim());
+      setForm((prev) => ({ ...prev, college: names.join(", ") }));
+    },
+    []
+  );
+
+  function addCollege(name: string, resolved: boolean) {
+    setSelectedColleges((prev) => {
+      if (prev.some((c) => c.name === name)) return prev;
+      const next = [...prev, { name, resolved }];
+      syncCollegesToForm(next, "");
+      return next;
+    });
+    setCollegeQuery("");
+    setShowCollegeDropdown(false);
+  }
+
+  function removeCollege(name: string) {
+    setSelectedColleges((prev) => {
+      const next = prev.filter((c) => c.name !== name);
+      syncCollegesToForm(next, collegeQuery);
+      return next;
+    });
+  }
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -264,22 +297,26 @@ export function Wizard({
     setSubmitting(true);
     setErrorMsg("");
     try {
-      // Clean up form before submitting
+      // Collect all colleges — chips + any leftover typed text
+      const allColleges = [...selectedColleges];
+      if (collegeQuery.trim()) {
+        allColleges.push({ name: collegeQuery.trim(), resolved: false });
+      }
+
       const cleanedForm = {
         ...form,
         major: form.major.trim(),
-        college: form.college.trim(),
+        college: allColleges.map((c) => c.name).join(", "),
       };
 
-      // If college was typed but not resolved from our database, add a note
-      if (
-        cleanedForm.mode === "college" &&
-        cleanedForm.college &&
-        !collegeResolved
-      ) {
+      // If any college was typed but not resolved, add a note for the AI
+      const unresolvedNames = allColleges
+        .filter((c) => !c.resolved)
+        .map((c) => c.name);
+      if (cleanedForm.mode === "college" && unresolvedNames.length > 0) {
         cleanedForm.notes = [
           cleanedForm.notes,
-          `[Note: "${cleanedForm.college}" was typed manually and may not be the official name. Please interpret loosely and use the full official college name in the report.]`,
+          `[Note: ${unresolvedNames.map((n) => `"${n}"`).join(", ")} ${unresolvedNames.length === 1 ? "was" : "were"} typed manually and may not be the official ${unresolvedNames.length === 1 ? "name" : "names"}. Please interpret loosely and use the full official college ${unresolvedNames.length === 1 ? "name" : "names"} in the report.]`,
         ]
           .filter(Boolean)
           .join(" ");
@@ -341,7 +378,7 @@ export function Wizard({
             update("mode", "league");
             update("college", "");
             setCollegeQuery("");
-            setCollegeResolved(false);
+            setSelectedColleges([]);
           }}
           className={`text-left p-6 rounded-lg transition-all duration-200 ${
             form.mode === "league"
@@ -376,28 +413,72 @@ export function Wizard({
         </button>
       </div>
 
-      {/* College input with autocomplete — only when "college" mode */}
+      {/* College input with chips + autocomplete — only when "college" mode */}
       {form.mode === "college" && (
         <div>
           <label htmlFor="college" className="block text-sm font-body font-medium text-navy mb-1">
-            Which college are you considering?
+            Which college(s) are you considering?
           </label>
+
+          {/* Selected college chips */}
+          {selectedColleges.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-2">
+              {selectedColleges.map((c) => (
+                <span
+                  key={c.name}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-sage/10 text-sage text-sm rounded-full font-body"
+                >
+                  {c.name}
+                  <button
+                    type="button"
+                    onClick={() => removeCollege(c.name)}
+                    className="hover:text-crimson transition-colors"
+                  >
+                    &times;
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Autocomplete input */}
           <div className="relative" ref={collegeDropdownRef}>
             <input
               id="college"
               type="text"
               value={collegeQuery}
               onChange={(e) => {
-                const val = e.target.value;
-                setCollegeQuery(val);
-                update("college", val);
-                setCollegeResolved(false);
+                const raw = e.target.value;
+
+                // Comma = confirm current text as a college and start fresh
+                if (raw.includes(",")) {
+                  const beforeComma = raw.split(",")[0].trim();
+                  if (beforeComma) {
+                    addCollege(
+                      beforeComma,
+                      COLLEGES_SEED.some(
+                        (c) =>
+                          c.name.toLowerCase() === beforeComma.toLowerCase()
+                      )
+                    );
+                  }
+                  setCollegeQuery("");
+                  return;
+                }
+
+                setCollegeQuery(raw);
+                syncCollegesToForm(selectedColleges, raw);
                 setShowCollegeDropdown(true);
               }}
               onFocus={() => {
-                if (collegeQuery.length >= 2) setShowCollegeDropdown(true);
+                if (collegeQuery.trim().length >= 2)
+                  setShowCollegeDropdown(true);
               }}
-              placeholder="e.g. University of Texas at Austin"
+              placeholder={
+                selectedColleges.length > 0
+                  ? "Add another college..."
+                  : "e.g. University of Texas at Austin"
+              }
               className={inputCls}
               autoComplete="off"
             />
@@ -407,12 +488,7 @@ export function Wizard({
                   <button
                     key={c.slug}
                     type="button"
-                    onClick={() => {
-                      setCollegeQuery(c.name);
-                      update("college", c.name);
-                      setCollegeResolved(true);
-                      setShowCollegeDropdown(false);
-                    }}
+                    onClick={() => addCollege(c.name, true)}
                     className="w-full text-left px-4 py-2.5 font-body text-sm text-navy hover:bg-cream transition-colors"
                   >
                     {c.name}
@@ -424,12 +500,10 @@ export function Wizard({
               </div>
             )}
           </div>
-          {collegeQuery.length >= 2 &&
-            collegeMatches.length === 0 &&
-            !collegeResolved && (
+          {collegeQuery.trim().length >= 2 &&
+            collegeMatches.length === 0 && (
               <p className="text-xs font-body text-navy/40 mt-1">
-                No exact match — no problem. We&apos;ll research this college for
-                you.
+                No exact match — no problem. Press comma or continue typing.
               </p>
             )}
         </div>
