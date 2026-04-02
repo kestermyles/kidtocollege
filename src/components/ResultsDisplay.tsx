@@ -279,14 +279,35 @@ export function ResultsDisplay({
             </Link>
             <div className="flex-1" />
             <button
-              onClick={() => setSaved(!saved)}
+              onClick={async () => {
+                if (!isSignedIn) {
+                  window.location.href = `/auth/signup?next=/my-list`;
+                  return;
+                }
+                if (!saved && collegeNames[0]) {
+                  // Find slug for the first college
+                  const slug = collegeNames[0]
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, "-")
+                    .replace(/(^-|-$)/g, "");
+                  await fetch("/api/list", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      collegeSlug: slug,
+                      category: "unknown",
+                    }),
+                  });
+                }
+                setSaved(!saved);
+              }}
               className={`font-body text-sm px-4 py-2 rounded-md border transition-all ${
                 saved
                   ? "bg-gold text-navy border-gold"
                   : "border-white/20 text-white hover:border-gold hover:text-gold"
               }`}
             >
-              {saved ? "Saved" : "Save to my colleges"}
+              {saved ? "✓ On your list" : "Add to My List"}
             </button>
             <Link
               href={`/compare?colleges=${encodeURIComponent(college)}`}

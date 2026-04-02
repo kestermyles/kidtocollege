@@ -4,6 +4,7 @@ import { createServiceRoleClient } from "@/lib/supabase-server";
 import { FadeIn } from "@/components/FadeIn";
 import { COLLEGES_SEED } from "@/lib/colleges-seed";
 import { fetchScorecardData } from "@/lib/collegeScorecard";
+import { AddToListButton } from "@/components/AddToListButton";
 import type { College, ScholarshipResult } from "@/lib/types";
 
 export const revalidate = 86400; // ISR: revalidate every 24 hours
@@ -277,8 +278,8 @@ export default async function CollegePage({ params }: CollegePageProps) {
                 }
               />
             </div>
-            {college.official_url && (
-              <div className="mt-6 text-center">
+            <div className="mt-6 flex flex-wrap gap-3 justify-center">
+              {college.official_url && (
                 <a
                   href={college.official_url}
                   target="_blank"
@@ -287,8 +288,9 @@ export default async function CollegePage({ params }: CollegePageProps) {
                 >
                   Official Website &rarr;
                 </a>
-              </div>
-            )}
+              )}
+              <AddToListButton collegeSlug={slug} />
+            </div>
           </FadeIn>
         </div>
       </section>
