@@ -6,9 +6,11 @@ export const runtime = "nodejs";
 export const maxDuration = 300;
 
 export async function GET(request: Request) {
-  // Simple auth check — only allow calls with a secret header
+  // Auth check — require SYNC_SECRET to be configured and match header
+  const secret = process.env.SYNC_SECRET;
   const authHeader = request.headers.get("x-sync-secret");
-  if (authHeader !== process.env.SYNC_SECRET) {
+
+  if (!secret || !authHeader || authHeader !== secret) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
