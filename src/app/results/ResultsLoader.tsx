@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { ResultsDisplay } from "@/components/ResultsDisplay";
 import type { AIResearchResult } from "@/lib/types";
@@ -20,6 +20,7 @@ export function ResultsLoader({ resultId: initialResultId, searchId }: Props) {
   const [major, setMajor] = useState("");
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
   const [pollCount, setPollCount] = useState(0);
+  const completedRef = useRef(false);
 
   // Fetch full result data by resultId
   const fetchResult = useCallback(async (id: string) => {
@@ -28,6 +29,7 @@ export function ResultsLoader({ resultId: initialResultId, searchId }: Props) {
       if (!res.ok) return false;
       const data = await res.json();
       if (data.result) {
+        completedRef.current = true;
         setResult(data.result);
         setCollege(data.college || "");
         setMajor(data.major || "");
@@ -66,6 +68,7 @@ export function ResultsLoader({ resultId: initialResultId, searchId }: Props) {
 
         if (data.status === "complete" && data.resultId) {
           clearInterval(interval);
+          clearTimeout(timeout);
           await fetchResult(data.resultId);
         }
       } catch {
@@ -73,10 +76,12 @@ export function ResultsLoader({ resultId: initialResultId, searchId }: Props) {
       }
     }, 3000);
 
-    // Give up after 100 polls (5 minutes)
+    // Give up after 5 minutes — but only if the report never loaded
     const timeout = setTimeout(() => {
-      clearInterval(interval);
-      setStatus("error");
+      if (!completedRef.current) {
+        clearInterval(interval);
+        setStatus("error");
+      }
     }, 5 * 60 * 1000);
 
     return () => {
