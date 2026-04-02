@@ -52,14 +52,18 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "not found" }, { status: 404 });
   }
 
-  // Generate basic suggested questions (no AI call to keep it fast)
+  // Generate basic suggested questions — keep under 60 chars each
+  const colleges = college.split(",").map((c: string) => c.trim()).filter(Boolean);
+  const isMulti = colleges.length > 1;
+  const shortName = isMulti ? "these colleges" : (colleges[0] || "this college");
+
   const suggestedQuestions = [
-    `What merit scholarships does ${college} offer for ${major} students?`,
-    `What is the typical financial aid package at ${college}?`,
-    `How can I strengthen my application to ${college}?`,
-    `What career outcomes do ${major} graduates from ${college} typically see?`,
-    `Are there research or internship opportunities for ${major} students?`,
-    `What makes a standout essay for ${college} admissions?`,
+    `What merit scholarships are available for ${major}?`,
+    `What's the typical aid package at ${shortName}?`,
+    `How can I strengthen my application?`,
+    `What career outcomes do ${major} graduates see?`,
+    `Are there research or internship opportunities?`,
+    `What makes a standout admissions essay?`,
   ];
 
   return NextResponse.json({ result, college, major, suggestedQuestions });

@@ -154,6 +154,12 @@ export function ResultsDisplay({
   const [saved, setSaved] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(true); // default true to avoid flash
   const [nudgeDismissed, setNudgeDismissed] = useState(false);
+  const [scorecardData, setScorecardData] = useState<{
+    median_earnings_6yr: number | null;
+    median_earnings_10yr: number | null;
+    employment_rate: number | null;
+    graduation_rate_4yr: number | null;
+  } | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Multi-college detection
@@ -172,6 +178,22 @@ export function ResultsDisplay({
     supabase.auth.getUser().then(({ data }) => {
       setIsSignedIn(!!data.user);
     });
+
+    // Fetch Scorecard data for the first college
+    if (collegeNames.length > 0) {
+      supabase
+        .from("colleges")
+        .select(
+          "median_earnings_6yr, median_earnings_10yr, employment_rate, graduation_rate_4yr"
+        )
+        .ilike("name", collegeNames[0])
+        .limit(1)
+        .single()
+        .then(({ data }) => {
+          if (data) setScorecardData(data);
+        });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // -----------------------------------------------------------------------
@@ -548,6 +570,92 @@ export function ResultsDisplay({
             </div>
           </section>
         </FadeIn>
+
+        {/* -------------------------------------------------------------- */}
+        {/* GRADUATE OUTCOMES (from College Scorecard)                      */}
+        {/* -------------------------------------------------------------- */}
+        {scorecardData &&
+          (scorecardData.median_earnings_6yr != null ||
+            scorecardData.median_earnings_10yr != null ||
+            scorecardData.employment_rate != null ||
+            scorecardData.graduation_rate_4yr != null) && (
+            <FadeIn>
+              <section>
+                <SectionHeader
+                  number=""
+                  title="Graduate Outcomes"
+                  subtitle="Source: U.S. Department of Education College Scorecard"
+                />
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  {scorecardData.median_earnings_6yr != null && (
+                    <div className="ktc-card p-5 text-center">
+                      <p className="font-mono-label text-gold text-xl sm:text-2xl font-bold">
+                        ${scorecardData.median_earnings_6yr.toLocaleString()}
+                      </p>
+                      <p className="text-navy font-body text-sm font-medium mt-1">
+                        Median Earnings at 6 Years
+                      </p>
+                      <p className="text-navy/50 text-xs font-body mt-1">
+                        median graduate salary 6 years after starting
+                      </p>
+                    </div>
+                  )}
+                  {scorecardData.median_earnings_10yr != null && (
+                    <div className="ktc-card p-5 text-center">
+                      <p className="font-mono-label text-gold text-xl sm:text-2xl font-bold">
+                        ${scorecardData.median_earnings_10yr.toLocaleString()}
+                      </p>
+                      <p className="text-navy font-body text-sm font-medium mt-1">
+                        Median Earnings at 10 Years
+                      </p>
+                      <p className="text-navy/50 text-xs font-body mt-1">
+                        median graduate salary 10 years after starting
+                      </p>
+                    </div>
+                  )}
+                  {scorecardData.employment_rate != null && (
+                    <div className="ktc-card p-5 text-center">
+                      <p className="font-mono-label text-gold text-xl sm:text-2xl font-bold">
+                        {Math.round(scorecardData.employment_rate * 100)}%
+                      </p>
+                      <p className="text-navy font-body text-sm font-medium mt-1">
+                        Employment Rate
+                      </p>
+                      <p className="text-navy/50 text-xs font-body mt-1">
+                        graduates employed 2 years after completion
+                      </p>
+                    </div>
+                  )}
+                  {scorecardData.graduation_rate_4yr != null && (
+                    <div className="ktc-card p-5 text-center">
+                      <p className="font-mono-label text-gold text-xl sm:text-2xl font-bold">
+                        {Math.round(scorecardData.graduation_rate_4yr * 100)}%
+                      </p>
+                      <p className="text-navy font-body text-sm font-medium mt-1">
+                        4-Year Graduation Rate
+                      </p>
+                      <p className="text-navy/50 text-xs font-body mt-1">
+                        students completing degree within 4 years
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <p className="text-xs font-body text-navy/40 mt-4">
+                  Data from{" "}
+                  <a
+                    href="https://collegescorecard.ed.gov"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gold hover:text-gold/80 underline underline-offset-2"
+                  >
+                    U.S. Department of Education College Scorecard
+                  </a>
+                  . Figures represent recent cohorts and may not reflect current
+                  outcomes.
+                </p>
+              </section>
+            </FadeIn>
+          )}
 
         {/* -------------------------------------------------------------- */}
         {/* 03 — SCHOLARSHIPS                                              */}
