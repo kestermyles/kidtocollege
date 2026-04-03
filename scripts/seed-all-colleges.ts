@@ -48,43 +48,59 @@ interface ScorecardSchool {
   "latest.employment.employed_2_yrs_after_completion.rate_suppressed": number | null;
 }
 
-async function fetchPage(page: number): Promise<{ results: ScorecardSchool[]; total: number }> {
-  const fields = [
-    "school.name",
-    "school.city",
-    "school.state",
-    "school.school_url",
-    "school.ownership",
-    "latest.admissions.admission_rate.overall",
-    "latest.cost.tuition.in_state",
-    "latest.cost.tuition.out_of_state",
-    "latest.student.size",
-    "latest.completion.rate_suppressed.four_year",
-    "latest.earnings.10_yrs_after_entry.median",
-    "latest.earnings.6_yrs_after_entry.median",
-    "latest.repayment.3_yr_default_rate",
-    "latest.employment.employed_2_yrs_after_completion.rate_suppressed",
-  ].join(",");
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+const SCORECARD_FIELDS = [
+  "school.name",
+  "school.city",
+  "school.state",
+  "school.school_url",
+  "school.ownership",
+  "latest.admissions.admission_rate.overall",
+  "latest.cost.tuition.in_state",
+  "latest.cost.tuition.out_of_state",
+  "latest.student.size",
+  "latest.completion.rate_suppressed.four_year",
+  "latest.earnings.10_yrs_after_entry.median",
+  "latest.earnings.6_yrs_after_entry.median",
+  "latest.repayment.3_yr_default_rate",
+  "latest.employment.employed_2_yrs_after_completion.rate_suppressed",
+].join(",");
+
+async function fetchPage(
+  page: number,
+  retries = 3
+): Promise<{ results: ScorecardSchool[]; total: number }> {
   const params = new URLSearchParams({
-    "school.degrees_awarded.predominant": "3", // 4-year institutions
-    "school.operating": "1", // currently operating
-    fields,
+    "school.degrees_awarded.predominant": "3",
+    "school.operating": "1",
+    fields: SCORECARD_FIELDS,
     api_key: API_KEY!,
     per_page: "100",
     page: page.toString(),
   });
 
-  const res = await fetch(`${SCORECARD_API}?${params}`);
-  if (!res.ok) {
-    throw new Error(`Scorecard API error: ${res.status} ${res.statusText}`);
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    const res = await fetch(`${SCORECARD_API}?${params}`);
+
+    if (res.status === 429) {
+      console.log(`  Rate limited on page ${page}, waiting 5s... (attempt ${attempt}/${retries})`);
+      await sleep(5000);
+      continue;
+    }
+
+    if (!res.ok) {
+      throw new Error(`Scorecard API error: ${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    return {
+      results: data.results || [],
+      total: data.metadata?.total || 0,
+    };
   }
 
-  const data = await res.json();
-  return {
-    results: data.results || [],
-    total: data.metadata?.total || 0,
-  };
+  throw new Error(`Scorecard API: gave up after ${retries} retries on page ${page}`);
 }
 
 function schoolToRow(school: ScorecardSchool) {
@@ -130,6 +146,7 @@ async function main() {
   console.log("Fetching 4-year institutions from College Scorecard...\n");
 
   // First request to get total count
+  console.log("Fetching page 1...");
   const firstPage = await fetchPage(0);
   const total = firstPage.total;
   const totalPages = Math.ceil(total / 100);
@@ -140,6 +157,10 @@ async function main() {
   const seenSlugs = new Set<string>();
 
   for (let page = 0; page < totalPages; page++) {
+    // Fetch with delay between pages
+    if (page > 0) {
+      await sleep(500);
+    }
     const { results } = page === 0 ? firstPage : await fetchPage(page);
 
     const rows = [];
@@ -165,17 +186,15 @@ async function main() {
       } else {
         inserted += rows.length;
       }
+
+      // Delay between upsert batches
+      await sleep(1000);
     }
 
-    const progress = Math.min(((page + 1) * 100), total);
+    const progress = Math.min((page + 1) * 100, total);
     console.log(
       `  Page ${page + 1}/${totalPages} — ${progress}/${total} processed (${rows.length} upserted, ${skipped} skipped total)`
     );
-
-    // Rate limit: small delay between pages
-    if (page < totalPages - 1) {
-      await new Promise((r) => setTimeout(r, 500));
-    }
   }
 
   console.log(`\nDone!`);
