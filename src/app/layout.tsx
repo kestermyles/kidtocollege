@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/react";
+import Sam from "@/components/Sam";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kidtocollege.com"),
@@ -53,6 +54,7 @@ export default function RootLayout({
           <Footer />
         </Providers>
         <Analytics />
+        <Sam />
       </body>
     </html>
   );
