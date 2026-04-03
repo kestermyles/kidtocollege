@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { FadeIn } from "@/components/FadeIn";
+
 import Link from "next/link";
 import type { SavedCollege, SearchRecord } from "@/lib/types";
 
@@ -87,17 +87,17 @@ export default function AccountPage() {
   return (
     <div className="min-h-screen bg-white pt-24 pb-16 px-4">
       <div className="max-w-5xl mx-auto">
-        <FadeIn>
+        <div>
           <div className="mb-10">
             <h1 className="font-display text-3xl sm:text-4xl font-bold text-navy mb-2">
               Your college dashboard
             </h1>
             <p className="font-body text-navy/60">{userEmail}</p>
           </div>
-        </FadeIn>
+        </div>
 
         {/* Quick links */}
-        <FadeIn delay={0.05}>
+        <div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-10">
             {QUICK_LINKS.map((link) => (
               <Link
@@ -112,11 +112,11 @@ export default function AccountPage() {
               </Link>
             ))}
           </div>
-        </FadeIn>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Recent Searches */}
-          <FadeIn delay={0.1}>
+          <div>
             <div className="ktc-card p-6 h-full">
               <h2 className="font-display text-xl font-bold text-navy mb-4">
                 Recent Reports
@@ -156,10 +156,10 @@ export default function AccountPage() {
                 </ul>
               )}
             </div>
-          </FadeIn>
+          </div>
 
           {/* Saved Colleges */}
-          <FadeIn delay={0.15}>
+          <div>
             <div className="ktc-card p-6 h-full">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-display text-xl font-bold text-navy">
@@ -202,10 +202,10 @@ export default function AccountPage() {
                 </div>
               )}
             </div>
-          </FadeIn>
+          </div>
 
           {/* Account Settings */}
-          <FadeIn delay={0.2}>
+          <div>
             <div className="ktc-card p-6 h-full">
               <h2 className="font-display text-xl font-bold text-navy mb-4">
                 Account
@@ -233,7 +233,7 @@ export default function AccountPage() {
                 Sign out
               </button>
             </div>
-          </FadeIn>
+          </div>
         </div>
       </div>
     </div>
