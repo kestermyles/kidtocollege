@@ -11,7 +11,7 @@ const US_STATES = [
   "VT","VA","WA","WV","WI","WY",
 ];
 
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 24;
 
 interface CollegeRow {
   slug: string;
