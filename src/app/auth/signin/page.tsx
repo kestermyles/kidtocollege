@@ -29,7 +29,7 @@ export default function SignInPage() {
       const { error: err } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${location.origin}/auth/callback`,
+          emailRedirectTo: `https://www.kidtocollege.com/auth/callback`,
         },
       });
       if (err) setError(err.message);
@@ -56,7 +56,7 @@ export default function SignInPage() {
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo: `https://www.kidtocollege.com/auth/callback`,
       },
     });
     if (err) {

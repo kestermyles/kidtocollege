@@ -30,7 +30,7 @@ export default function SignUpPage() {
         email,
         options: {
           data: { role },
-          emailRedirectTo: `${location.origin}/auth/callback`,
+          emailRedirectTo: `https://www.kidtocollege.com/auth/callback`,
         },
       });
       if (err) setError(err.message);
@@ -44,7 +44,7 @@ export default function SignUpPage() {
       password,
       options: {
         data: { role },
-        emailRedirectTo: `${location.origin}/auth/callback`,
+        emailRedirectTo: `https://www.kidtocollege.com/auth/callback`,
       },
     });
     if (err) setError(err.message);
@@ -58,7 +58,7 @@ export default function SignUpPage() {
       provider: "google",
       options: {
         queryParams: { role },
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo: `https://www.kidtocollege.com/auth/callback`,
       },
     });
     if (err) {
