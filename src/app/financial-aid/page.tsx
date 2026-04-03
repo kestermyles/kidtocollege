@@ -43,10 +43,11 @@ export default function FinancialAidIndexPage() {
             </h2>
           </FadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {STATE_AID_DATA.map((state, i) => (
-              <FadeIn key={state.slug} delay={i * 0.05}>
+          <FadeIn>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {STATE_AID_DATA.map((state) => (
                 <Link
+                  key={state.slug}
                   href={`/financial-aid/${state.slug}`}
                   className="ktc-card p-6 block group hover:shadow-lg hover:-translate-y-0.5 transition-all"
                 >
@@ -74,9 +75,9 @@ export default function FinancialAidIndexPage() {
                     </span>
                   </div>
                 </Link>
-              </FadeIn>
-            ))}
-          </div>
+              ))}
+            </div>
+          </FadeIn>
 
           {/* More states coming */}
           <FadeIn delay={0.5}>
