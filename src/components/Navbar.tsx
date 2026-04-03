@@ -14,7 +14,6 @@ interface NavLink {
 
 const NAV_LINKS: NavLink[] = [
   { href: "/search", label: "Find a College" },
-  { href: "/scholarships", label: "Scholarships" },
   { href: "/colleges", label: "Colleges" },
   { href: "/my-chances", label: "My Chances" },
   {
@@ -26,9 +25,16 @@ const NAV_LINKS: NavLink[] = [
     ],
   },
   { href: "/coach", label: "Coach" },
-  { href: "/family", label: "Family", authOnly: true },
-  { href: "/compare", label: "Compare" },
-  { href: "/international", label: "International" },
+  {
+    href: "/more",
+    label: "More",
+    children: [
+      { href: "/scholarships", label: "Scholarships" },
+      { href: "/compare", label: "Compare Colleges" },
+      { href: "/international", label: "International" },
+      { href: "/family", label: "Family" },
+    ],
+  },
 ];
 
 export function Navbar() {
