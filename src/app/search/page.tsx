@@ -27,8 +27,8 @@ export default async function SearchPage({
             Find the right college. Fund it fully.
           </h1>
           <p className="font-body text-white/60 text-lg max-w-xl mx-auto">
-            Tell us about your student — we&apos;ll find the best colleges for
-            their profile, surface every scholarship, and build a step-by-step
+            Tell us about yourself — we&apos;ll find the best colleges for
+            your profile, surface every scholarship, and build a step-by-step
             admissions playbook.
           </p>
         </div>

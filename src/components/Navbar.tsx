@@ -36,6 +36,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [listCount, setListCount] = useState(0);
+  const [userInitials, setUserInitials] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -55,6 +56,14 @@ export function Navbar() {
             if (d.items) setListCount(d.items.length);
           })
           .catch(() => {});
+      }
+      if (data.user?.email) {
+        const parts = data.user.email.split("@")[0].split(/[._-]/);
+        const initials = parts
+          .slice(0, 2)
+          .map((p: string) => p[0]?.toUpperCase())
+          .join("");
+        setUserInitials(initials || data.user.email[0].toUpperCase());
       }
     });
   }, []);
@@ -124,12 +133,21 @@ export function Navbar() {
                 )}
               </Link>
             )}
-            <Link
-              href="/account"
-              className="text-sm font-body font-medium text-white bg-gold hover:bg-gold/90 px-4 py-2 rounded-md transition-colors"
-            >
-              {isSignedIn ? "Account" : "Sign In"}
-            </Link>
+            {userInitials ? (
+              <Link
+                href="/account"
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-navy text-white text-sm font-bold border-2 border-gold hover:opacity-90 transition-opacity"
+              >
+                {userInitials}
+              </Link>
+            ) : (
+              <Link
+                href="/account"
+                className="text-sm font-body font-medium text-white bg-gold hover:bg-gold/90 px-4 py-2 rounded-md transition-colors"
+              >
+                Sign In
+              </Link>
+            )}
           </div>
 
           {/* Mobile hamburger */}
@@ -211,13 +229,26 @@ export function Navbar() {
                   My List{listCount > 0 ? ` (${listCount})` : ""}
                 </Link>
               )}
-              <Link
-                href="/account"
-                onClick={() => setMobileOpen(false)}
-                className="block text-center text-white bg-gold hover:bg-gold/90 px-4 py-2 rounded-md font-body font-medium"
-              >
-                {isSignedIn ? "Account" : "Sign In"}
-              </Link>
+              {userInitials ? (
+                <Link
+                  href="/account"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 text-navy/70 hover:text-gold text-base font-body py-2"
+                >
+                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-navy text-white text-xs font-bold border-2 border-gold">
+                    {userInitials}
+                  </span>
+                  Account
+                </Link>
+              ) : (
+                <Link
+                  href="/account"
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-center text-white bg-gold hover:bg-gold/90 px-4 py-2 rounded-md font-body font-medium"
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </motion.div>
         )}

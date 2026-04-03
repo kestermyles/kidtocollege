@@ -83,7 +83,7 @@ export async function generateMetadata({
 
   return {
     title: `${college.name} — Acceptance Rate, Costs & Admissions | KidToCollege`,
-    description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${college.name} in ${college.location}, ${college.state}. Get a free personalised admissions report in minutes.`,
+    description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${college.name} in ${college.location}. Get a free personalised admissions report in minutes.`,
     alternates: { canonical: canonicalUrl },
     openGraph: {
       title: `${college.name} — Acceptance Rate, Costs & Admissions | KidToCollege`,
@@ -228,7 +228,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
               ) : (
                 <p className="text-navy/60 font-body mb-10">
                   We don&apos;t have a profile for this college yet, but our AI
-                  can research it for your student in minutes.
+                  can research it for you in minutes.
                 </p>
               )}
 
@@ -352,13 +352,19 @@ export default async function CollegePage({ params }: CollegePageProps) {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+        <Link
+          href="/colleges"
+          className="absolute top-4 left-4 z-20 flex items-center gap-1.5 text-white/90 hover:text-white text-sm font-medium bg-black/20 hover:bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full transition-all"
+        >
+          &larr; All Colleges
+        </Link>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 pt-32 w-full">
           <FadeIn>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
               {college.name}
             </h1>
             <p className="mt-2 text-white/70 font-body text-lg">
-              {college.location}, {college.state}
+              {college.location}
             </p>
           </FadeIn>
         </div>
@@ -715,7 +721,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
               Ready to dig deeper?
             </h2>
             <p className="text-white/60 font-body mb-8">
-              Get a personalised research report for your student at{" "}
+              Get your personalised research report for{" "}
               {college.name} — scholarships, admissions strategy, costs, and a
               step-by-step playbook.
             </p>

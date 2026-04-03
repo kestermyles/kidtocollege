@@ -9,7 +9,7 @@ export function LeagueRedirectInput() {
         htmlFor="league-major"
         className="block text-sm font-body font-medium text-navy mb-2"
       >
-        What does your kid want to study?
+        What do you want to study?
       </label>
       <div className="flex gap-3">
         <input

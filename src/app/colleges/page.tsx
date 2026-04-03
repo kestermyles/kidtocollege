@@ -39,7 +39,8 @@ export default function CollegesBrowsePage() {
       .select("slug, name, location, state, acceptance_rate, avg_cost_instate", {
         count: "exact",
       })
-      .order("name")
+      .order("total_enrollment", { ascending: false, nullsFirst: false })
+      .order("name", { ascending: true })
       .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
 
     if (search.length >= 2) {

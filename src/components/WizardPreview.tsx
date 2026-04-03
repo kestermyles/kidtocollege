@@ -57,7 +57,7 @@ export function WizardPreview() {
             htmlFor="wizard-major"
             className="block text-sm font-body font-medium text-navy mb-1"
           >
-            What does your kid want to study?
+            What do you want to study?
           </label>
           <input
             id="wizard-major"

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed:colleges": "tsx scripts/seed-all-colleges.ts",
-    "enrich:programs": "tsx scripts/enrich-programs.ts"
+    "enrich:programs": "tsx scripts/enrich-programs.ts",
+    "enrich:photos": "tsx scripts/enrich-photos.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",
