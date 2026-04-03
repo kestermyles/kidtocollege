@@ -414,7 +414,7 @@ export function ScholarshipsClient() {
             </h2>
             <p className="text-navy/60 font-body mb-8">
               Our AI research engine finds scholarships specific to your
-              student&apos;s profile, college, major, and activities.
+              profile, college, major, and activities.
             </p>
             <a href="/search">
               <GoldButton size="lg">
