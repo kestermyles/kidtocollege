@@ -69,10 +69,11 @@ const SCORECARD_FIELDS = [
 
 async function fetchPage(
   page: number,
+  preddeg: "2" | "3" = "3",
   retries = 3
 ): Promise<{ results: ScorecardSchool[]; total: number }> {
   const params = new URLSearchParams({
-    "school.degrees_awarded.predominant": "3",
+    "school.degrees_awarded.predominant": preddeg,
     "school.operating": "1",
     fields: SCORECARD_FIELDS,
     api_key: API_KEY!,
@@ -142,32 +143,31 @@ function schoolToRow(school: ScorecardSchool) {
   };
 }
 
-async function main() {
-  console.log("Fetching 4-year institutions from College Scorecard...\n");
+async function seedDegreeType(
+  preddeg: "2" | "3",
+  label: string,
+  seenSlugs: Set<string>
+): Promise<{ inserted: number; skipped: number }> {
+  console.log(`\nFetching ${label} from College Scorecard...`);
 
-  // First request to get total count
-  console.log("Fetching page 1...");
-  const firstPage = await fetchPage(0);
+  const firstPage = await fetchPage(0, preddeg);
   const total = firstPage.total;
   const totalPages = Math.ceil(total / 100);
-  console.log(`Total institutions: ${total} (${totalPages} pages)\n`);
+  console.log(`  Total ${label}: ${total} (${totalPages} pages)\n`);
 
   let inserted = 0;
   let skipped = 0;
-  const seenSlugs = new Set<string>();
 
   for (let page = 0; page < totalPages; page++) {
-    // Fetch with delay between pages
     if (page > 0) {
       await sleep(500);
     }
-    const { results } = page === 0 ? firstPage : await fetchPage(page);
+    const { results } = page === 0 ? firstPage : await fetchPage(page, preddeg);
 
     const rows = [];
     for (const school of results) {
       const row = schoolToRow(school);
 
-      // Skip duplicate slugs (different campuses with same name)
       if (seenSlugs.has(row.slug)) {
         skipped++;
         continue;
@@ -187,7 +187,6 @@ async function main() {
         inserted += rows.length;
       }
 
-      // Delay between upsert batches
       await sleep(1000);
     }
 
@@ -197,10 +196,22 @@ async function main() {
     );
   }
 
+  return { inserted, skipped };
+}
+
+async function main() {
+  const seenSlugs = new Set<string>();
+
+  // Pass 1: 4-year institutions
+  const fourYear = await seedDegreeType("3", "4-year institutions", seenSlugs);
+
+  // Pass 2: 2-year / community colleges
+  const twoYear = await seedDegreeType("2", "2-year community colleges", seenSlugs);
+
   console.log(`\nDone!`);
-  console.log(`  Total processed: ${seenSlugs.size}`);
-  console.log(`  Duplicates skipped: ${skipped}`);
-  console.log(`  Upserted: ${inserted}`);
+  console.log(`  Total unique colleges: ${seenSlugs.size}`);
+  console.log(`  4-year upserted: ${fourYear.inserted} (${fourYear.skipped} duplicates)`);
+  console.log(`  2-year upserted: ${twoYear.inserted} (${twoYear.skipped} duplicates)`);
 }
 
 main().catch((err) => {
