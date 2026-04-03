@@ -6,6 +6,7 @@ import { COLLEGES_SEED } from "@/lib/colleges-seed";
 import { fetchScorecardData } from "@/lib/collegeScorecard";
 import { AddToListButton } from "@/components/AddToListButton";
 import { CollegeRequirements } from "@/components/CollegeRequirements";
+import CollegeTravelInfo from "@/components/CollegeTravelInfo";
 import type { College, ScholarshipResult } from "@/lib/types";
 
 export const revalidate = 86400;
@@ -443,6 +444,9 @@ export default async function CollegePage({ params }: CollegePageProps) {
 
       {/* Application Requirements */}
       <CollegeRequirements slug={slug} />
+
+      {/* Travel Info */}
+      <CollegeTravelInfo collegeState={college.state} />
 
       {/* Graduate Outcomes — College Scorecard */}
       {(college.median_earnings_6yr != null ||
