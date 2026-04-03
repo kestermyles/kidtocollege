@@ -28,6 +28,9 @@ export default function CollegesBrowsePage() {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
   const [stateFilter, setStateFilter] = useState("");
+  const [filterGreek, setFilterGreek] = useState(false);
+  const [filterD1, setFilterD1] = useState(false);
+  const [filterSetting, setFilterSetting] = useState("");
   const [loading, setLoading] = useState(true);
 
   const fetchColleges = useCallback(async () => {
@@ -49,12 +52,21 @@ export default function CollegesBrowsePage() {
     if (stateFilter) {
       query = query.eq("state", stateFilter);
     }
+    if (filterGreek) {
+      query = query.eq("has_greek_life", true);
+    }
+    if (filterD1) {
+      query = query.eq("has_d1_sports", true);
+    }
+    if (filterSetting) {
+      query = query.eq("campus_setting", filterSetting);
+    }
 
     const { data, count } = await query;
     setColleges((data as CollegeRow[]) || []);
     setTotal(count || 0);
     setLoading(false);
-  }, [page, search, stateFilter]);
+  }, [page, search, stateFilter, filterGreek, filterD1, filterSetting]);
 
   useEffect(() => {
     fetchColleges();
@@ -63,7 +75,7 @@ export default function CollegesBrowsePage() {
   // Reset to page 0 when filters change
   useEffect(() => {
     setPage(0);
-  }, [search, stateFilter]);
+  }, [search, stateFilter, filterGreek, filterD1, filterSetting]);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -81,18 +93,18 @@ export default function CollegesBrowsePage() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        <div className="flex flex-wrap gap-3 mb-8 items-center">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name..."
-            className="flex-1 min-w-[200px] px-4 py-3 border border-gray-200 rounded-md font-body text-navy text-sm focus:outline-none focus:border-gold/60 focus:ring-1 focus:ring-gold/30"
+            className="flex-1 min-w-[200px] px-4 py-2.5 border border-gray-200 rounded-md font-body text-navy text-sm focus:outline-none focus:border-gold/60 focus:ring-1 focus:ring-gold/30"
           />
           <select
             value={stateFilter}
             onChange={(e) => setStateFilter(e.target.value)}
-            className="px-4 py-3 border border-gray-200 rounded-md font-body text-navy text-sm focus:outline-none focus:border-gold/60 bg-white"
+            className="px-3 py-2.5 border border-gray-200 rounded-md font-body text-navy text-sm focus:outline-none focus:border-gold/60 bg-white"
           >
             <option value="">All states</option>
             {US_STATES.map((s) => (
@@ -101,6 +113,37 @@ export default function CollegesBrowsePage() {
               </option>
             ))}
           </select>
+          <select
+            value={filterSetting}
+            onChange={(e) => setFilterSetting(e.target.value)}
+            className="px-3 py-2.5 border border-gray-300 rounded-lg font-body text-sm text-navy/70 focus:outline-none focus:ring-2 focus:ring-gold/30 bg-white"
+          >
+            <option value="">All settings</option>
+            <option value="Urban">Urban</option>
+            <option value="Suburban">Suburban</option>
+            <option value="Rural">Rural</option>
+            <option value="College Town">College Town</option>
+          </select>
+          <button
+            onClick={() => setFilterGreek(!filterGreek)}
+            className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
+              filterGreek
+                ? "text-white bg-navy border-navy"
+                : "bg-white text-gray-600 border-gray-300 hover:border-gray-400"
+            }`}
+          >
+            Greek life
+          </button>
+          <button
+            onClick={() => setFilterD1(!filterD1)}
+            className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
+              filterD1
+                ? "text-white bg-navy border-navy"
+                : "bg-white text-gray-600 border-gray-300 hover:border-gray-400"
+            }`}
+          >
+            D1 Sports
+          </button>
         </div>
 
         {/* Results */}
