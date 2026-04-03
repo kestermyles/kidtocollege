@@ -4,6 +4,7 @@ import { DisclaimerBar } from "./DisclaimerBar";
 const FOOTER_LINKS = {
   Research: [
     { href: "/search", label: "Find a College" },
+    { href: "/colleges", label: "Browse All Colleges" },
     { href: "/scholarships", label: "Scholarships" },
     { href: "/compare", label: "Compare Colleges" },
   ],
