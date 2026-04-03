@@ -28,13 +28,25 @@ export async function generateMetadata({
 
   let college: { name: string; location: string; state: string } | null = null;
   if (hasSupabase()) {
-    const supabase = createServiceRoleClient();
-    const { data } = await supabase
-      .from("colleges")
-      .select("name, location, state")
-      .eq("slug", slug)
-      .single();
-    college = data;
+    try {
+      const supabase = createServiceRoleClient();
+      const { data } = await supabase
+        .from("colleges")
+        .select("name, location, state")
+        .eq("slug", slug)
+        .single();
+      college = data;
+    } catch {
+      // Fall through to seed
+    }
+  }
+
+  // Fall back to seed data
+  if (!college) {
+    const seed = COLLEGES_SEED.find((c) => c.slug === slug);
+    if (seed) {
+      college = { name: seed.name, location: seed.location, state: seed.state };
+    }
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
@@ -45,19 +57,19 @@ export async function generateMetadata({
       .replace(/-/g, " ")
       .replace(/\b\w/g, (c: string) => c.toUpperCase());
     return {
-      title: `${readable} — KidToCollege`,
-      description: `Research ${readable} with KidToCollege. Get personalised admissions data, scholarships, and a step-by-step playbook.`,
+      title: `${readable} — Acceptance Rate, Costs & Admissions | KidToCollege`,
+      description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${readable}. Get a free personalised admissions report in minutes.`,
       alternates: { canonical: canonicalUrl },
     };
   }
 
   return {
-    title: `${college.name} — KidToCollege`,
-    description: `Everything you need to know about ${college.name} in ${college.location}, ${college.state}. Admissions data, costs, scholarships, and personalised guidance.`,
+    title: `${college.name} — Acceptance Rate, Costs & Admissions | KidToCollege`,
+    description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${college.name} in ${college.location}, ${college.state}. Get a free personalised admissions report in minutes.`,
     alternates: { canonical: canonicalUrl },
     openGraph: {
-      title: `${college.name} — KidToCollege`,
-      description: `Research ${college.name}: acceptance rate, costs, scholarships, and community college transfer routes.`,
+      title: `${college.name} — Acceptance Rate, Costs & Admissions | KidToCollege`,
+      description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${college.name}. Free personalised admissions report in minutes.`,
     },
   };
 }
@@ -94,13 +106,25 @@ export default async function CollegePage({ params }: CollegePageProps) {
 
   let collegeRow = null;
   if (hasSupabase()) {
-    const supabase = createServiceRoleClient();
-    const { data } = await supabase
-      .from("colleges")
-      .select("*")
-      .eq("slug", slug)
-      .single();
-    collegeRow = data;
+    try {
+      const supabase = createServiceRoleClient();
+      const { data } = await supabase
+        .from("colleges")
+        .select("*")
+        .eq("slug", slug)
+        .single();
+      collegeRow = data;
+    } catch {
+      // Supabase unavailable at build time — fall through to seed
+    }
+  }
+
+  // Fall back to seed data if Supabase isn't available (e.g. during build)
+  if (!collegeRow) {
+    const seed = COLLEGES_SEED.find((c) => c.slug === slug);
+    if (seed) {
+      collegeRow = { ...seed, last_updated: new Date().toISOString() };
+    }
   }
 
   const college = collegeRow as College | null;
