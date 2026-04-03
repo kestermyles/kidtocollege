@@ -3,93 +3,51 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
-import { useRole } from "@/lib/role-context";
-import { GoldButton } from "@/components/GoldButton";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { FadeIn } from "@/components/FadeIn";
-import { StudentDashboard } from "./StudentDashboard";
-import { ParentDashboard } from "./ParentDashboard";
 import Link from "next/link";
-import type {
-  SavedCollege,
-  ChecklistItem,
-  EssayDraft,
-  SearchRecord,
-} from "@/lib/types";
+import type { SavedCollege, SearchRecord } from "@/lib/types";
 
-interface CoachSession {
-  id: string;
-  section_slug: string;
-  status: "started" | "completed";
-  updated_at: string;
-}
+const QUICK_LINKS = [
+  { href: "/my-chances", label: "My Chances", desc: "Check your admission odds" },
+  { href: "/my-list", label: "My College List", desc: "Build your reach/target/safety list" },
+  { href: "/coach", label: "The Coach", desc: "Essays, test prep, interviews" },
+  { href: "/colleges", label: "Browse Colleges", desc: "Explore all 3,000+ colleges" },
+  { href: "/family", label: "Family Access", desc: "Share progress with your family" },
+];
 
 export default function AccountPage() {
   const supabase = createClient();
   const router = useRouter();
-  const { role, loading: roleLoading } = useRole();
 
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState("");
-  const [userRole, setUserRole] = useState("");
   const [userId, setUserId] = useState("");
 
   const [searches, setSearches] = useState<SearchRecord[]>([]);
   const [savedColleges, setSavedColleges] = useState<SavedCollege[]>([]);
-  const [coachSessions, setCoachSessions] = useState<CoachSession[]>([]);
-  const [essays, setEssays] = useState<EssayDraft[]>([]);
-  const [checklist, setChecklist] = useState<ChecklistItem[]>([]);
-
   const [sectionsLoading, setSectionsLoading] = useState(true);
-  const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteSent, setInviteSent] = useState(false);
 
   const fetchData = useCallback(
     async (uid: string) => {
       setSectionsLoading(true);
-      const now = new Date();
-      const in30 = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
-        .toISOString()
-        .split("T")[0];
 
-      const [searchRes, savedRes, coachRes, essayRes, checkRes] =
-        await Promise.all([
-          supabase
-            .from("searches")
-            .select("id, college, major, created_at")
-            .eq("user_id", uid)
-            .order("created_at", { ascending: false })
-            .limit(10),
-          supabase
-            .from("saved_colleges")
-            .select("*")
-            .eq("user_id", uid)
-            .order("created_at", { ascending: false }),
-          supabase
-            .from("coach_sessions")
-            .select("id, section_slug, status, updated_at")
-            .eq("user_id", uid)
-            .order("updated_at", { ascending: false }),
-          supabase
-            .from("essay_drafts")
-            .select("*")
-            .eq("user_id", uid)
-            .order("updated_at", { ascending: false })
-            .limit(5),
-          supabase
-            .from("checklist_items")
-            .select("*")
-            .eq("user_id", uid)
-            .lte("deadline", in30)
-            .neq("status", "done")
-            .order("deadline", { ascending: true }),
-        ]);
+      const [searchRes, savedRes] = await Promise.all([
+        supabase
+          .from("searches")
+          .select("id, college, major, created_at")
+          .eq("user_id", uid)
+          .order("created_at", { ascending: false })
+          .limit(6),
+        supabase
+          .from("saved_colleges")
+          .select("*")
+          .eq("user_id", uid)
+          .order("created_at", { ascending: false }),
+      ]);
 
       setSearches((searchRes.data as SearchRecord[]) ?? []);
       setSavedColleges((savedRes.data as SavedCollege[]) ?? []);
-      setCoachSessions((coachRes.data as CoachSession[]) ?? []);
-      setEssays((essayRes.data as EssayDraft[]) ?? []);
-      setChecklist((checkRes.data as ChecklistItem[]) ?? []);
       setSectionsLoading(false);
     },
     [supabase]
@@ -105,7 +63,6 @@ export default function AccountPage() {
         return;
       }
       setUserEmail(user.email ?? "");
-      setUserRole(user.user_metadata?.role ?? "parent");
       setUserId(user.id);
       setLoading(false);
       fetchData(user.id);
@@ -119,12 +76,7 @@ export default function AccountPage() {
     router.refresh();
   }
 
-  function handleInvite() {
-    setInviteSent(true);
-    setTimeout(() => setInviteSent(false), 3000);
-  }
-
-  if (loading || roleLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20">
         <LoadingSpinner size="lg" />
@@ -132,72 +84,63 @@ export default function AccountPage() {
     );
   }
 
-  // Role-adapted dashboards
-  if (role === "student") {
-    return (
-      <StudentDashboard
-        userId={userId}
-        userEmail={userEmail}
-        onSignOut={handleSignOut}
-      />
-    );
-  }
-
-  if (role === "parent") {
-    return (
-      <ParentDashboard
-        userId={userId}
-        userEmail={userEmail}
-        onSignOut={handleSignOut}
-      />
-    );
-  }
-
-  // Fallback: original dashboard for users without a resolved role
-  const COACH_SECTIONS = [
-    { slug: "college-list-builder", label: "College List Builder" },
-    { slug: "application-tracker", label: "Application Tracker" },
-    { slug: "essay-workshop", label: "Essay Workshop" },
-    { slug: "financial-aid", label: "Financial Aid" },
-    { slug: "interview-prep", label: "Interview Prep" },
-    { slug: "decision-day", label: "Decision Day" },
-    { slug: "summer-prep", label: "Summer Prep" },
-  ];
-
   return (
     <div className="min-h-screen bg-white pt-24 pb-16 px-4">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <FadeIn>
           <div className="mb-10">
-            <h1 className="font-display text-3xl sm:text-4xl text-navy mb-2">
-              Welcome back
+            <h1 className="font-display text-3xl sm:text-4xl font-bold text-navy mb-2">
+              Your college dashboard
             </h1>
             <p className="font-body text-navy/60">{userEmail}</p>
           </div>
         </FadeIn>
 
+        {/* Quick links */}
+        <FadeIn delay={0.05}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-10">
+            {QUICK_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="ktc-card p-4 block group hover:shadow-md hover:-translate-y-0.5 transition-all"
+              >
+                <h3 className="font-body text-sm font-medium text-navy group-hover:text-gold transition-colors mb-1">
+                  {link.label}
+                </h3>
+                <p className="font-body text-xs text-navy/40">{link.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </FadeIn>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Recent Searches */}
-          <FadeIn delay={0.05}>
+          <FadeIn delay={0.1}>
             <div className="ktc-card p-6 h-full">
-              <h2 className="font-display text-xl text-navy mb-4">
-                Recent Searches
+              <h2 className="font-display text-xl font-bold text-navy mb-4">
+                Recent Reports
               </h2>
               {sectionsLoading ? (
                 <LoadingSpinner size="sm" />
               ) : searches.length === 0 ? (
-                <p className="font-body text-sm text-navy/50">
-                  No searches yet.{" "}
-                  <Link href="/search" className="text-gold hover:underline">
-                    Start one
+                <div>
+                  <p className="font-body text-sm text-navy/50 mb-3">
+                    No research reports yet.
+                  </p>
+                  <Link
+                    href="/search"
+                    className="font-body text-sm text-gold hover:text-gold/80 font-medium"
+                  >
+                    Run your first college report &rarr;
                   </Link>
-                </p>
+                </div>
               ) : (
                 <ul className="space-y-3">
                   {searches.map((s) => (
                     <li key={s.id}>
                       <Link
-                        href={`/results?id=${s.id}`}
+                        href={`/results?searchId=${s.id}`}
                         className="block p-3 rounded-md bg-cream/50 hover:bg-cream transition-colors"
                       >
                         <span className="font-body text-sm font-medium text-navy">
@@ -216,218 +159,56 @@ export default function AccountPage() {
           </FadeIn>
 
           {/* Saved Colleges */}
-          <FadeIn delay={0.1}>
+          <FadeIn delay={0.15}>
             <div className="ktc-card p-6 h-full">
-              <h2 className="font-display text-xl text-navy mb-4">
-                Saved Colleges
-              </h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-display text-xl font-bold text-navy">
+                  Saved Colleges
+                </h2>
+                {savedColleges.length > 0 && (
+                  <Link
+                    href="/my-list"
+                    className="font-body text-xs text-gold hover:text-gold/80"
+                  >
+                    View list &rarr;
+                  </Link>
+                )}
+              </div>
               {sectionsLoading ? (
                 <LoadingSpinner size="sm" />
               ) : savedColleges.length === 0 ? (
-                <p className="font-body text-sm text-navy/50">
-                  No saved colleges yet.
-                </p>
-              ) : (
-                <ul className="space-y-3">
-                  {savedColleges.map((c) => (
-                    <li
-                      key={c.id}
-                      className="p-3 rounded-md bg-cream/50"
-                    >
-                      <Link
-                        href={`/college/${c.college_slug}`}
-                        className="font-body text-sm font-medium text-navy hover:text-gold transition-colors"
-                      >
-                        {c.college_name}
-                      </Link>
-                      {c.user_notes && (
-                        <p className="font-body text-xs text-navy/50 mt-1">
-                          {c.user_notes}
-                        </p>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </FadeIn>
-
-          {/* Coach Progress */}
-          <FadeIn delay={0.15}>
-            <div className="ktc-card p-6 h-full">
-              <h2 className="font-display text-xl text-navy mb-4">
-                Coach Progress
-              </h2>
-              {sectionsLoading ? (
-                <LoadingSpinner size="sm" />
-              ) : (
-                <ul className="space-y-2">
-                  {COACH_SECTIONS.map((section) => {
-                    const session = coachSessions.find(
-                      (s) => s.section_slug === section.slug
-                    );
-                    const status = session?.status;
-                    return (
-                      <li key={section.slug}>
-                        <Link
-                          href={`/coach/${section.slug}`}
-                          className="flex items-center gap-3 p-2 rounded-md hover:bg-cream/50 transition-colors"
-                        >
-                          <span
-                            className={`w-3 h-3 rounded-full flex-shrink-0 ${
-                              status === "completed"
-                                ? "bg-sage"
-                                : status === "started"
-                                ? "bg-gold"
-                                : "bg-navy/15"
-                            }`}
-                          />
-                          <span className="font-body text-sm text-navy">
-                            {section.label}
-                          </span>
-                          {status && (
-                            <span className="ml-auto font-mono-label text-xs text-navy/40 capitalize">
-                              {status}
-                            </span>
-                          )}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
-          </FadeIn>
-
-          {/* Essay Drafts */}
-          <FadeIn delay={0.2}>
-            <div className="ktc-card p-6 h-full">
-              <h2 className="font-display text-xl text-navy mb-4">
-                Essay Drafts
-              </h2>
-              {sectionsLoading ? (
-                <LoadingSpinner size="sm" />
-              ) : essays.length === 0 ? (
-                <p className="font-body text-sm text-navy/50">
-                  No essay drafts yet.{" "}
+                <div>
+                  <p className="font-body text-sm text-navy/50 mb-3">
+                    No saved colleges yet.
+                  </p>
                   <Link
-                    href="/coach/essay-workshop"
-                    className="text-gold hover:underline"
+                    href="/colleges"
+                    className="font-body text-sm text-gold hover:text-gold/80 font-medium"
                   >
-                    Start writing
+                    Browse colleges &rarr;
                   </Link>
-                </p>
+                </div>
               ) : (
-                <ul className="space-y-3">
-                  {essays.map((e) => (
-                    <li
-                      key={e.id}
-                      className="p-3 rounded-md bg-cream/50"
+                <div className="flex flex-wrap gap-2">
+                  {savedColleges.map((c) => (
+                    <Link
+                      key={c.id}
+                      href={`/college/${c.college_slug}`}
+                      className="px-3 py-1.5 bg-cream text-navy text-sm font-body rounded-full border border-card hover:border-gold/40 transition-colors"
                     >
-                      <div className="flex items-center justify-between">
-                        <span className="font-body text-sm font-medium text-navy">
-                          {e.draft_type}
-                        </span>
-                        <span className="font-mono-label text-xs text-navy/40">
-                          v{e.version}
-                        </span>
-                      </div>
-                      <p className="font-body text-xs text-navy/50 mt-1 line-clamp-2">
-                        {e.content.slice(0, 120)}
-                        {e.content.length > 120 ? "..." : ""}
-                      </p>
-                      <span className="font-body text-xs text-navy/40 block mt-1">
-                        {new Date(e.updated_at).toLocaleDateString()}
-                      </span>
-                    </li>
+                      {c.college_name}
+                    </Link>
                   ))}
-                </ul>
-              )}
-            </div>
-          </FadeIn>
-
-          {/* Checklist — Due Soon */}
-          <FadeIn delay={0.25}>
-            <div className="ktc-card p-6 h-full">
-              <h2 className="font-display text-xl text-navy mb-4">
-                Due in Next 30 Days
-              </h2>
-              {sectionsLoading ? (
-                <LoadingSpinner size="sm" />
-              ) : checklist.length === 0 ? (
-                <p className="font-body text-sm text-navy/50">
-                  Nothing due soon. You&apos;re on track!
-                </p>
-              ) : (
-                <ul className="space-y-3">
-                  {checklist.map((item) => (
-                    <li
-                      key={item.id}
-                      className="p-3 rounded-md bg-cream/50 flex items-start gap-3"
-                    >
-                      <span
-                        className={`mt-1 w-2.5 h-2.5 rounded-full flex-shrink-0 ${
-                          item.status === "in-progress"
-                            ? "bg-gold"
-                            : "bg-navy/15"
-                        }`}
-                      />
-                      <div className="min-w-0">
-                        <span className="font-body text-sm text-navy block">
-                          {item.item_label}
-                        </span>
-                        <span className="font-body text-xs text-navy/50">
-                          {item.college_name}
-                          {item.deadline && (
-                            <>
-                              {" "}
-                              &middot; Due{" "}
-                              {new Date(item.deadline).toLocaleDateString()}
-                            </>
-                          )}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </FadeIn>
-
-          {/* Partner Invite */}
-          <FadeIn delay={0.3}>
-            <div className="ktc-card p-6 h-full">
-              <h2 className="font-display text-xl text-navy mb-2">
-                Invite Your {userRole === "student" ? "Parent" : "Student"}
-              </h2>
-              <p className="font-body text-sm text-navy/50 mb-4">
-                Share access so you can collaborate on college planning.
-              </p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  value={inviteEmail}
-                  onChange={(e) => setInviteEmail(e.target.value)}
-                  placeholder="Email address"
-                  className="flex-1 border border-card rounded-md px-4 py-2.5 font-body text-sm text-navy bg-white focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold transition"
-                />
-                <GoldButton onClick={handleInvite} disabled={!inviteEmail}>
-                  Invite
-                </GoldButton>
-              </div>
-              {inviteSent && (
-                <p className="font-body text-sm text-sage mt-2">
-                  Invite sent! (placeholder)
-                </p>
+                </div>
               )}
             </div>
           </FadeIn>
 
           {/* Account Settings */}
-          <FadeIn delay={0.35}>
+          <FadeIn delay={0.2}>
             <div className="ktc-card p-6 h-full">
-              <h2 className="font-display text-xl text-navy mb-4">
-                Account Settings
+              <h2 className="font-display text-xl font-bold text-navy mb-4">
+                Account
               </h2>
               <dl className="space-y-3 mb-6">
                 <div>
@@ -435,14 +216,6 @@ export default function AccountPage() {
                     Email
                   </dt>
                   <dd className="font-body text-sm text-navy">{userEmail}</dd>
-                </div>
-                <div>
-                  <dt className="font-body text-xs text-navy/40 uppercase tracking-wider">
-                    Role
-                  </dt>
-                  <dd className="font-body text-sm text-navy capitalize">
-                    {userRole}
-                  </dd>
                 </div>
                 <div>
                   <dt className="font-body text-xs text-navy/40 uppercase tracking-wider">
