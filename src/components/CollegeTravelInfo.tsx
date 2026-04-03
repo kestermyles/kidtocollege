@@ -170,7 +170,9 @@ export default function CollegeTravelInfo({ collegeLat, collegeLng, collegeState
         )}
 
         {!userState && (
-          <p className="text-sm text-gray-400">Select your home state to see distance and travel estimates.</p>
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800">
+            📍 Select your home state above to see how far away this college is, drive time, and estimated flight costs.
+          </div>
         )}
       </div>
     </section>

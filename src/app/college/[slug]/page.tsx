@@ -738,7 +738,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
                 href={`/search?college=${encodeURIComponent(college.name)}`}
                 className="bg-gold hover:bg-gold/90 text-navy font-body font-medium px-8 py-4 rounded-md transition-colors"
               >
-                Research this college for my student &rarr;
+                Research this college &rarr;
               </Link>
               <Link
                 href="/coach/roadmap"
