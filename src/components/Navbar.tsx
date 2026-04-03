@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase-browser";
 
-const NAV_LINKS = [
+const NAV_LINKS: { href: string; label: string; authOnly?: boolean }[] = [
   { href: "/search", label: "Find a College" },
   { href: "/scholarships", label: "Scholarships" },
   { href: "/fafsa-guide", label: "FAFSA Guide" },
   { href: "/coach", label: "Coach" },
+  { href: "/family", label: "Family", authOnly: true },
   { href: "/compare", label: "Compare" },
   { href: "/international", label: "International" },
 ];
@@ -61,7 +62,7 @@ export function Navbar() {
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
+            {NAV_LINKS.filter((l) => !l.authOnly || isSignedIn).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -133,7 +134,7 @@ export function Navbar() {
             className="md:hidden bg-white border-t border-gray-100"
           >
             <div className="px-4 py-4 space-y-3">
-              {NAV_LINKS.map((link) => (
+              {NAV_LINKS.filter((l) => !l.authOnly || isSignedIn).map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
