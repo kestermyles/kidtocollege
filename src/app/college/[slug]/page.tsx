@@ -7,8 +7,8 @@ import { fetchScorecardData } from "@/lib/collegeScorecard";
 import { AddToListButton } from "@/components/AddToListButton";
 import type { College, ScholarshipResult } from "@/lib/types";
 
-export const revalidate = 86400; // ISR: revalidate daily
-export const dynamicParams = true; // allow ISR for slugs not in seed
+export const dynamic = "force-dynamic"; // bypass CDN cache until data confirmed fresh
+// export const revalidate = 86400; // re-enable ISR once cache is cleared
 
 export async function generateStaticParams() {
   return COLLEGES_SEED.map((c) => ({ slug: c.slug }));
