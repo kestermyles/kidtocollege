@@ -105,38 +105,26 @@ function formatPercent(rate: number | null) {
 export default async function CollegePage({ params }: CollegePageProps) {
   const { slug } = await params;
 
-  // Try Supabase first, then fall back to seed data
-  let collegeRow = null;
+  // Start with seed data (always available, synchronous)
+  const seed = COLLEGES_SEED.find((c) => c.slug === slug);
+  let collegeRow: Record<string, unknown> | null = seed
+    ? { ...seed, last_updated: new Date().toISOString() }
+    : null;
 
-  // 1. Try Supabase
+  // Try to upgrade with Supabase data (richer: scorecard, official_url, etc.)
   if (hasSupabase()) {
     try {
       const supabase = createServiceRoleClient();
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("colleges")
         .select("*")
         .eq("slug", slug)
         .single();
       if (data) {
         collegeRow = data;
-      } else {
-        console.log(`[college/${slug}] Supabase returned null. Error: ${error?.message || "none"}`);
       }
-    } catch (err) {
-      console.log(`[college/${slug}] Supabase threw: ${err instanceof Error ? err.message : err}`);
-    }
-  } else {
-    console.log(`[college/${slug}] Supabase not configured`);
-  }
-
-  // 2. Fall back to seed data
-  if (!collegeRow) {
-    const seed = COLLEGES_SEED.find((c) => c.slug === slug);
-    if (seed) {
-      console.log(`[college/${slug}] Using seed data for ${seed.name}`);
-      collegeRow = { ...seed, last_updated: new Date().toISOString() };
-    } else {
-      console.log(`[college/${slug}] Not found in seed either (${COLLEGES_SEED.length} colleges in seed)`);
+    } catch {
+      // Supabase unavailable — use seed data
     }
   }
 
