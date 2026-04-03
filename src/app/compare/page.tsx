@@ -194,10 +194,10 @@ export default function ComparePage() {
                         className="w-full text-left px-4 py-3 font-body text-sm hover:bg-cream transition-colors cursor-pointer"
                       >
                         <span className="text-gold font-medium">
-                          Search for &quot;{searchQuery}&quot; &rarr;
+                          Add &quot;{searchQuery}&quot; to comparison &rarr;
                         </span>
                         <span className="block text-navy/40 text-xs mt-0.5">
-                          Not in our database yet — add to comparison
+                          No exact match found — add manually
                         </span>
                       </button>
                     </div>

@@ -182,6 +182,14 @@ export function LeagueTable({ rows, major }: LeagueTableProps) {
                   >
                     <span className="font-mono-label text-xs uppercase tracking-wider text-navy/60">
                       {col.label}
+                      {col.key === "match_score" && (
+                        <span
+                          title="Your personalised fit score based on your academic profile, budget, and goals. Not a general college ranking."
+                          className="ml-1 cursor-help inline-flex items-center justify-center w-4 h-4 rounded-full border border-current text-xs opacity-60 hover:opacity-100"
+                        >
+                          ?
+                        </span>
+                      )}
                       <SortArrow
                         active={sortKey === col.key}
                         dir={sortKey === col.key ? sortDir : "asc"}

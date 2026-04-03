@@ -321,6 +321,9 @@ export function ResultsDisplay({
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
             <FadeIn>
               <CircularScore score={match_score} size={160} strokeWidth={12} />
+              <p className="text-sm text-white/60 mt-2 text-center max-w-xs mx-auto">
+                Your personalised fit score — based on your GPA, budget, major, and goals
+              </p>
             </FadeIn>
             <FadeIn delay={0.15}>
               <div>
@@ -426,6 +429,9 @@ export function ResultsDisplay({
               title="Match & Admission"
               subtitle="How you stack up against admitted students"
             />
+            <p className="text-sm text-gray-500 mb-6">
+              Your match score is personalised to you — it reflects how well this college fits your academic profile, budget, and goals. It is not a general college ranking.
+            </p>
             <div className="ktc-card p-6 md:p-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Score circle */}
