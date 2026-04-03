@@ -285,8 +285,8 @@ export default function HomePage() {
                 Find the best colleges for any subject
               </h2>
               <p className="mt-4 text-navy/60 font-body max-w-xl mx-auto">
-                Enter a subject and we&apos;ll rank the best colleges for your
-                student. Personalised to their profile.
+                Enter a subject and we&apos;ll rank the best colleges for you.
+                Personalised to your profile.
               </p>
             </div>
           </FadeIn>
