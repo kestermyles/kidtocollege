@@ -52,9 +52,9 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <Sam />
         </Providers>
         <Analytics />
-        <Sam />
       </body>
     </html>
   );
