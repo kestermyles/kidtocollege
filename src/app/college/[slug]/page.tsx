@@ -7,7 +7,8 @@ import { fetchScorecardData } from "@/lib/collegeScorecard";
 import { AddToListButton } from "@/components/AddToListButton";
 import type { College, ScholarshipResult } from "@/lib/types";
 
-export const revalidate = 86400; // ISR: revalidate every 24 hours
+export const revalidate = 86400; // ISR: revalidate daily
+export const dynamicParams = true; // allow ISR for slugs not in seed
 
 export async function generateStaticParams() {
   return COLLEGES_SEED.map((c) => ({ slug: c.slug }));
@@ -178,54 +179,64 @@ export default async function CollegePage({ params }: CollegePageProps) {
   let questions: { question: string; answer: string; created_at: string }[] | null = null;
 
   if (hasSupabase()) {
-    const supabase = createServiceRoleClient();
-    const cachePrefix = college.name.toLowerCase().trim() + "::";
-    const { data: cachedResults } = await supabase
-      .from("results")
-      .select("raw_ai_response, scholarships_json, cc_gateway_json")
-      .ilike("cache_key", `${cachePrefix}%`)
-      .order("created_at", { ascending: false })
-      .limit(1);
+    try {
+      const supabase = createServiceRoleClient();
+      const cachePrefix = college.name.toLowerCase().trim() + "::";
+      const { data: cachedResults } = await supabase
+        .from("results")
+        .select("raw_ai_response, scholarships_json, cc_gateway_json")
+        .ilike("cache_key", `${cachePrefix}%`)
+        .order("created_at", { ascending: false })
+        .limit(1);
 
-    const row = cachedResults?.[0];
-    cachedScholarships =
-      row?.scholarships_json || (row?.raw_ai_response as Record<string, unknown>)?.scholarships as ScholarshipResult[] || [];
-    cachedCC = row?.cc_gateway_json || (row?.raw_ai_response as Record<string, unknown>)?.cc_gateway || null;
+      const row = cachedResults?.[0];
+      cachedScholarships =
+        row?.scholarships_json || (row?.raw_ai_response as Record<string, unknown>)?.scholarships as ScholarshipResult[] || [];
+      cachedCC = row?.cc_gateway_json || (row?.raw_ai_response as Record<string, unknown>)?.cc_gateway || null;
 
-    const { data: qData } = await supabase
-      .from("questions")
-      .select("question, answer, created_at")
-      .eq("college_slug", slug)
-      .order("created_at", { ascending: false })
-      .limit(10);
-    questions = qData;
+      const { data: qData } = await supabase
+        .from("questions")
+        .select("question, answer, created_at")
+        .eq("college_slug", slug)
+        .order("created_at", { ascending: false })
+        .limit(10);
+      questions = qData;
+    } catch {
+      // Supabase unavailable — render without cached data
+    }
   }
 
   // Refresh Scorecard data if stale (>7 days) — fire and forget
   if (hasSupabase() && college) {
-    const needsRefresh =
-      !college.scorecard_last_updated ||
-      new Date(college.scorecard_last_updated) <
-        new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    try {
+      const needsRefresh =
+        !college.scorecard_last_updated ||
+        new Date(college.scorecard_last_updated) <
+          new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
-    if (needsRefresh) {
-      fetchScorecardData(college.name).then((scorecard) => {
-        if (scorecard) {
-          const supabase = createServiceRoleClient();
-          supabase
-            .from("colleges")
-            .update({
-              median_earnings_6yr: scorecard.medianEarnings6yr,
-              median_earnings_10yr: scorecard.medianEarnings10yr,
-              employment_rate: scorecard.employmentRate,
-              graduation_rate_4yr: scorecard.graduationRate4yr,
-              loan_default_rate: scorecard.loanDefaultRate,
-              scorecard_last_updated: new Date().toISOString(),
-            })
-            .eq("slug", slug)
-            .then(() => {});
-        }
-      });
+      if (needsRefresh) {
+        fetchScorecardData(college.name)
+          .then((scorecard) => {
+            if (scorecard) {
+              const supabase = createServiceRoleClient();
+              supabase
+                .from("colleges")
+                .update({
+                  median_earnings_6yr: scorecard.medianEarnings6yr,
+                  median_earnings_10yr: scorecard.medianEarnings10yr,
+                  employment_rate: scorecard.employmentRate,
+                  graduation_rate_4yr: scorecard.graduationRate4yr,
+                  loan_default_rate: scorecard.loanDefaultRate,
+                  scorecard_last_updated: new Date().toISOString(),
+                })
+                .eq("slug", slug)
+                .then(() => {});
+            }
+          })
+          .catch(() => {});
+      }
+    } catch {
+      // Skip scorecard refresh if unavailable
     }
   }
 
