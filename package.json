@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed:colleges": "tsx scripts/seed-all-colleges.ts"
+    "seed:colleges": "tsx scripts/seed-all-colleges.ts",
+    "enrich:programs": "tsx scripts/enrich-programs.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",

@@ -7,8 +7,7 @@ import { fetchScorecardData } from "@/lib/collegeScorecard";
 import { AddToListButton } from "@/components/AddToListButton";
 import type { College, ScholarshipResult } from "@/lib/types";
 
-export const dynamic = "force-dynamic"; // bypass CDN cache until data confirmed fresh
-// export const revalidate = 86400; // re-enable ISR once cache is cleared
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
   // Try Supabase for full list, fall back to seed
@@ -418,7 +417,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeIn>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-6">
-                Programs offered
+                Popular programs
               </h2>
               <div className="flex flex-wrap gap-2">
                 {college.programs.map((program: string) => (

@@ -15,6 +15,8 @@ interface NavLink {
 const NAV_LINKS: NavLink[] = [
   { href: "/search", label: "Find a College" },
   { href: "/scholarships", label: "Scholarships" },
+  { href: "/colleges", label: "Colleges" },
+  { href: "/my-chances", label: "My Chances" },
   {
     href: "/fafsa-guide",
     label: "Financial Aid",
