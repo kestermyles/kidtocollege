@@ -7,7 +7,7 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { createClient } from "@/lib/supabase-browser";
 import type { College } from "@/lib/types";
 
-const MAX_COLLEGES = 3;
+const MAX_COLLEGES = 4;
 
 function formatCurrency(amount: number | null) {
   if (amount == null) return "N/A";
