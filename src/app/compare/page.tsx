@@ -160,7 +160,7 @@ export default function ComparePage() {
                             {c.name}
                           </span>
                           <span className="text-navy/50 ml-2">
-                            {c.location}, {c.state}
+                            {c.location}
                           </span>
                         </button>
                       );
@@ -255,7 +255,7 @@ export default function ComparePage() {
                           {c.name}
                         </h3>
                         <p className="text-navy/50 text-sm font-body">
-                          {c.location}, {c.state}
+                          {c.location}
                         </p>
                       </div>
                       <button
