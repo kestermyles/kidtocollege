@@ -46,13 +46,21 @@ export async function generateMetadata({
 }: CollegePageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  let college: { name: string; location: string; state: string } | null = null;
+  let college: {
+    name: string;
+    location: string;
+    acceptance_rate: number | null;
+    avg_cost_instate: number | null;
+    programs: string[] | null;
+    photo_url: string | null;
+  } | null = null;
+
   if (hasSupabase()) {
     try {
       const supabase = createServiceRoleClient();
       const { data } = await supabase
         .from("colleges")
-        .select("name, location, state")
+        .select("name, location, acceptance_rate, avg_cost_instate, programs, photo_url")
         .eq("slug", slug)
         .single();
       college = data;
@@ -61,11 +69,17 @@ export async function generateMetadata({
     }
   }
 
-  // Fall back to seed data
   if (!college) {
     const seed = COLLEGES_SEED.find((c) => c.slug === slug);
     if (seed) {
-      college = { name: seed.name, location: seed.location, state: seed.state };
+      college = {
+        name: seed.name,
+        location: seed.location,
+        acceptance_rate: seed.acceptance_rate,
+        avg_cost_instate: seed.avg_cost_instate,
+        programs: seed.programs,
+        photo_url: seed.photo_url,
+      };
     }
   }
 
@@ -83,13 +97,32 @@ export async function generateMetadata({
     };
   }
 
+  const cost = college.avg_cost_instate
+    ? `$${college.avg_cost_instate.toLocaleString()} in-state`
+    : "costs vary";
+
+  const acceptance = college.acceptance_rate
+    ? `${college.acceptance_rate}% acceptance rate`
+    : null;
+
+  const description = [
+    `${college.name} — ${acceptance ? acceptance + ", " : ""}${cost}.`,
+    college.programs?.length
+      ? `Popular programs: ${college.programs.slice(0, 3).join(", ")}.`
+      : "",
+    "Free AI-powered admissions research, scholarships, and personalised playbook.",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return {
     title: `${college.name} — Acceptance Rate, Costs & Admissions | KidToCollege`,
-    description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${college.name} in ${college.location}. Get a free personalised admissions report in minutes.`,
+    description,
     alternates: { canonical: canonicalUrl },
     openGraph: {
-      title: `${college.name} — Acceptance Rate, Costs & Admissions | KidToCollege`,
-      description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${college.name}. Free personalised admissions report in minutes.`,
+      title: `${college.name} | KidToCollege`,
+      description,
+      images: college.photo_url ? [{ url: college.photo_url }] : [],
     },
   };
 }
