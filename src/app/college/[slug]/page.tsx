@@ -130,39 +130,103 @@ export default async function CollegePage({ params }: CollegePageProps) {
 
   const college = collegeRow as College | null;
 
-  // If no college found, show generic research CTA page
+  // If no college found, show "Did you mean?" suggestions
   if (!college) {
-    const readable = slug
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, (c: string) => c.toUpperCase());
+    const searchTerm = slug.replace(/-/g, " ");
+    const readable = searchTerm.replace(/\b\w/g, (c: string) => c.toUpperCase());
+
+    // Fuzzy match against seed data (always available)
+    let suggestions: { name: string; slug: string; location: string; acceptance_rate: number | null }[] = [];
+    const termLower = searchTerm.toLowerCase();
+    suggestions = COLLEGES_SEED.filter(
+      (c) =>
+        c.slug.includes(slug) ||
+        c.name.toLowerCase().includes(termLower) ||
+        termLower.split(" ").some((word) => word.length > 3 && c.name.toLowerCase().includes(word))
+    )
+      .slice(0, 3)
+      .map((c) => ({
+        name: c.name,
+        slug: c.slug,
+        location: c.location,
+        acceptance_rate: c.acceptance_rate,
+      }));
+
+    // Try Supabase fuzzy search for richer results
+    if (hasSupabase() && suggestions.length < 3) {
+      try {
+        const supabase = createServiceRoleClient();
+        const { data } = await supabase
+          .from("colleges")
+          .select("name, slug, location, acceptance_rate")
+          .or(`slug.ilike.%${slug}%,name.ilike.%${searchTerm}%`)
+          .limit(3);
+        if (data && data.length > 0) {
+          suggestions = data;
+        }
+      } catch {
+        // Use seed suggestions
+      }
+    }
+
     return (
       <div className="min-h-screen bg-white">
-        <section className="py-32 sm:py-40 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-32 sm:py-40">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <FadeIn>
               <span className="font-mono-label text-xs uppercase tracking-wider text-gold">
                 College Profile
               </span>
-              <h1 className="font-display text-3xl sm:text-4xl font-bold text-navy mt-4 mb-6">
-                {readable}
+              <h1 className="font-display text-3xl sm:text-4xl font-bold text-navy mt-4 mb-4">
+                We couldn&apos;t find &ldquo;{readable}&rdquo;
               </h1>
-              <p className="text-navy/60 font-body mb-8 max-w-xl mx-auto">
-                We don&apos;t have a full profile for this college yet, but our AI
-                can research it for your student in minutes. Get personalised
-                admissions data, scholarships, costs, and a step-by-step playbook.
-              </p>
+
+              {suggestions.length > 0 ? (
+                <>
+                  <p className="text-navy/60 font-body mb-10">
+                    Did you mean one of these?
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 text-left">
+                    {suggestions.map((s) => (
+                      <Link
+                        key={s.slug}
+                        href={`/college/${s.slug}`}
+                        className="ktc-card p-6 block group hover:shadow-lg hover:-translate-y-0.5 transition-all"
+                      >
+                        <h3 className="font-display text-lg font-bold text-navy group-hover:text-gold transition-colors mb-1">
+                          {s.name}
+                        </h3>
+                        <p className="font-body text-sm text-navy/50 mb-2">
+                          {s.location}
+                        </p>
+                        {s.acceptance_rate != null && (
+                          <p className="font-mono-label text-xs text-gold">
+                            {s.acceptance_rate}% acceptance rate
+                          </p>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <p className="text-navy/60 font-body mb-10">
+                  We don&apos;t have a profile for this college yet, but our AI
+                  can research it for your student in minutes.
+                </p>
+              )}
+
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link
                   href={`/search?college=${encodeURIComponent(readable)}`}
                   className="bg-gold hover:bg-gold/90 text-navy font-body font-medium px-8 py-4 rounded-md transition-colors"
                 >
-                  Research this college for my student &rarr;
+                  Research this college &rarr;
                 </Link>
                 <Link
-                  href="/coach/roadmap"
+                  href="/search"
                   className="bg-white hover:bg-cream text-navy font-body font-medium px-8 py-4 rounded-md transition-colors border border-card"
                 >
-                  Get your personalised roadmap
+                  Search all colleges
                 </Link>
               </div>
             </FadeIn>
