@@ -14,7 +14,7 @@ const STATS = [
 const STEPS = [
   {
     num: "01",
-    title: "Tell us about your student",
+    title: "Tell us about yourself",
     desc: "A quick, conversational wizard — not a form. Just the basics.",
   },
   {
@@ -140,7 +140,7 @@ export default function HomePage() {
               </h2>
               <p className="mt-4 text-navy/60 font-body max-w-xl mx-auto">
                 Our AI does the work of a private counsellor. Specific research
-                for your student, your college, your major.
+                for you, your college, your major.
               </p>
             </div>
           </FadeIn>
@@ -199,7 +199,7 @@ export default function HomePage() {
                   </p>
                   <p>
                     Everything a private college counsellor charges families
-                    $10,000 to $15,000 for — personalised to your student, your
+                    $10,000 to $15,000 for — personalised to you, your
                     target college, your timeline.
                   </p>
                 </div>
@@ -295,7 +295,7 @@ export default function HomePage() {
               <LeagueRedirectInput />
               <p className="mt-6 text-navy/40 text-sm font-body">
                 Ranked by program reputation, affordability, graduation rate,
-                and fit for your student.
+                and fit for you.
               </p>
             </div>
           </FadeIn>

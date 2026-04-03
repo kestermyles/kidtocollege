@@ -360,7 +360,7 @@ export default function ComparePage() {
               Want deeper research on any of these?
             </h2>
             <p className="text-navy/60 font-body mb-8">
-              Get a full AI research report personalised to your student — including
+              Get a full AI research report personalised to you — including
               scholarships, admissions strategy, and a step-by-step playbook.
             </p>
             <a href="/search">

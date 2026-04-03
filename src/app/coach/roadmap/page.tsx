@@ -277,7 +277,7 @@ export default function RoadmapPage() {
               </svg>
               <p className="font-body text-navy/60 text-sm">
                 <Link href="/auth" className="text-sage font-medium hover:underline">Sign in</Link>{" "}
-                to get a personalized roadmap tailored to your student&apos;s grade, goals, and timeline.
+                to get a personalized roadmap tailored to your grade, goals, and timeline.
               </p>
             </div>
           </FadeIn>

@@ -12,9 +12,9 @@ export interface RoleCopy {
 }
 
 const parentCopy: RoleCopy = {
-  wizardTitle: "Tell us about your student",
+  wizardTitle: "Tell us about yourself",
   wizardCollege: "Which college are you thinking about?",
-  wizardMajor: "What does your kid want to study?",
+  wizardMajor: "What do you want to study?",
   wizardActivities: "Pick everything that applies \u2014 every interest counts",
   dashboardTitle: "Your family\u2019s college dashboard",
   searchCta: "Find your college",

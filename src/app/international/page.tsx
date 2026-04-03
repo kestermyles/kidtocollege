@@ -16,17 +16,17 @@ export const metadata: Metadata = {
 
 const DESTINATIONS = [
   {
+    title: "Canada",
+    href: "/international/canada",
+    description: "World-class universities, lower tuition than many US schools, no language barrier",
+    flag: "🇨🇦",
+    color: "border-l-crimson",
+  },
+  {
     title: "United Kingdom",
     href: "/international/uk",
     description: "UCAS, Russell Group, A-levels & more",
     flag: "🇬🇧",
-    color: "border-l-crimson",
-  },
-  {
-    title: "Canada",
-    href: "/international/canada",
-    description: "Province-by-province guide, affordable tuition",
-    flag: "🇨🇦",
     color: "border-l-crimson",
   },
   {
