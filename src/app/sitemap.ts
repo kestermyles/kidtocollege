@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { COLLEGES_SEED } from "@/lib/colleges-seed";
+import { STATE_AID_DATA } from "@/lib/state-aid-data";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
@@ -113,5 +114,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...collegePages];
+  const stateAidPages: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/financial-aid`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    ...STATE_AID_DATA.map((s) => ({
+      url: `${BASE_URL}/financial-aid/${s.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
+
+  return [...staticPages, ...collegePages, ...stateAidPages];
 }
