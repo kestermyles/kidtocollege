@@ -354,6 +354,16 @@ export default async function CollegePage({ params }: CollegePageProps) {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+        <div className="absolute bottom-3 right-4 z-10">
+          <a
+            href="https://unsplash.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/50 hover:text-white/80 text-xs transition-colors"
+          >
+            Photo via Unsplash
+          </a>
+        </div>
         <Link
           href="/colleges"
           className="absolute top-4 left-4 z-20 flex items-center gap-1.5 text-white/90 hover:text-white text-sm font-medium bg-black/20 hover:bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full transition-all"
