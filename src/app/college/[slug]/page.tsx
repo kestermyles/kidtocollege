@@ -11,6 +11,24 @@ export const dynamic = "force-dynamic"; // bypass CDN cache until data confirmed
 // export const revalidate = 86400; // re-enable ISR once cache is cleared
 
 export async function generateStaticParams() {
+  // Try Supabase for full list, fall back to seed
+  if (
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  ) {
+    try {
+      const supabase = createServiceRoleClient();
+      const { data } = await supabase
+        .from("colleges")
+        .select("slug")
+        .order("slug");
+      if (data && data.length > 0) {
+        return data.map((c) => ({ slug: c.slug }));
+      }
+    } catch {
+      // Fall through to seed
+    }
+  }
   return COLLEGES_SEED.map((c) => ({ slug: c.slug }));
 }
 

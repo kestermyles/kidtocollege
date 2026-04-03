@@ -1,11 +1,12 @@
 import { MetadataRoute } from "next";
 import { COLLEGES_SEED } from "@/lib/colleges-seed";
 import { STATE_AID_DATA } from "@/lib/state-aid-data";
+import { createClient } from "@supabase/supabase-js";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -107,8 +108,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const collegePages: MetadataRoute.Sitemap = COLLEGES_SEED.map((c) => ({
-    url: `${BASE_URL}/college/${c.slug}`,
+  // Fetch all college slugs from Supabase, fall back to seed
+  let collegeSlugs: string[] = COLLEGES_SEED.map((c) => c.slug);
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (url && key) {
+    try {
+      const supabase = createClient(url, key);
+      const { data } = await supabase
+        .from("colleges")
+        .select("slug")
+        .order("slug");
+      if (data && data.length > 0) {
+        collegeSlugs = data.map((c) => c.slug);
+      }
+    } catch {
+      // Use seed slugs
+    }
+  }
+
+  const collegePages: MetadataRoute.Sitemap = collegeSlugs.map((slug) => ({
+    url: `${BASE_URL}/college/${slug}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.8,
