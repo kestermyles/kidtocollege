@@ -3,6 +3,7 @@ import { PhotoSection } from "@/components/PhotoSection";
 import { WizardPreview } from "@/components/WizardPreview";
 import { LeagueRedirectInput } from "@/components/LeagueRedirectInput";
 import Link from "next/link";
+import { AskSamButton } from "@/components/AskSamButton";
 
 const STATS = [
   { value: "4,000+", label: "Colleges" },
@@ -123,6 +124,7 @@ export default function HomePage() {
               >
                 Meet the Coach
               </Link>
+              <AskSamButton />
             </div>
           </FadeIn>
         </div>

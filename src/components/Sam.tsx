@@ -157,16 +157,17 @@ export default function Sam() {
       {/* Floating button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-4 right-4 sm:right-6 z-50 w-14 h-14 rounded-full bg-navy shadow-lg flex items-center justify-center transition-all hover:scale-105 active:scale-95"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-yellow-400 hover:bg-yellow-300 text-navy font-bold px-4 py-3 rounded-full shadow-xl transition-all hover:scale-105 active:scale-95"
+        style={{ color: "#0f2d52" }}
         aria-label="Chat with Sam"
       >
         {open ? (
-          <span className="text-white text-xl">&times;</span>
+          <span className="text-lg leading-none">&times;</span>
         ) : (
-          <div className="flex flex-col items-center">
-            <span className="text-gold font-bold text-lg leading-none">S</span>
-            <span className="text-white/60 text-xs leading-none">Sam</span>
-          </div>
+          <>
+            <span className="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold border-2 border-navy/20" style={{ backgroundColor: "#0f2d52", color: "#facc15" }}>S</span>
+            <span className="text-sm">Ask Sam</span>
+          </>
         )}
       </button>
     </>
