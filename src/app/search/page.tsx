@@ -15,8 +15,8 @@ export default async function SearchPage({
   const params = await searchParams;
   const college = typeof params.college === "string" ? params.college : "";
   const major = typeof params.major === "string" ? params.major : "";
-  const mode =
-    params.mode === "league" ? "league" : ("college" as "college" | "league");
+  const mode: "college" | "league" =
+    params.mode === "league" ? "league" : college ? "college" : "league";
 
   return (
     <>
