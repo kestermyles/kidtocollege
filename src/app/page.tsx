@@ -220,10 +220,10 @@ export default function HomePage() {
               </p>
             </div>
           </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {FEATURES.map((feature, i) => (
-              <FadeIn key={feature.title} delay={i * 0.08}>
-                <div className="ktc-card p-8">
+          <FadeIn>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {FEATURES.map((feature) => (
+                <div key={feature.title} className="ktc-card p-8">
                   <svg
                     className="w-8 h-8 text-gold mb-4"
                     fill="none"
@@ -244,9 +244,9 @@ export default function HomePage() {
                     {feature.desc}
                   </p>
                 </div>
-              </FadeIn>
-            ))}
-          </div>
+              ))}
+            </div>
+          </FadeIn>
         </div>
       </section>
 
