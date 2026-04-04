@@ -69,6 +69,15 @@ export default function CollegeFairsPage() {
           </p>
         </div>
 
+        {/* Disclaimer */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg px-5 py-4 mb-8">
+          <p className="text-sm text-amber-900">
+            <strong>Dates and venues are estimated</strong> based on typical annual schedules. Always verify at{" "}
+            <a href="https://www.nacacattend.org" target="_blank" rel="noopener noreferrer" className="underline font-medium">nacacattend.org</a>{" "}
+            before attending.
+          </p>
+        </div>
+
         {/* Filter */}
         <div className="flex gap-3 mb-8 items-center">
           <select
@@ -142,21 +151,6 @@ export default function CollegeFairsPage() {
           })}
         </div>
 
-        <div className="mt-8 bg-amber-50 border border-amber-200 rounded-lg px-5 py-4">
-          <p className="text-sm text-amber-900">
-            Dates and venues are based on typical NACAC and regional schedules.
-            Always verify at{" "}
-            <a
-              href="https://www.nacacnet.org/college-fairs/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              nacacnet.org
-            </a>{" "}
-            before attending.
-          </p>
-        </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
           <Link

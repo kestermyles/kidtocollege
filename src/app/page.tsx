@@ -118,39 +118,8 @@ export default function HomePage() {
               >
                 See your roadmap &rarr;
               </Link>
-              <Link
-                href="/search"
-                className="inline-block bg-white/10 hover:bg-white/20 text-white font-body font-medium px-8 py-4 rounded-md text-lg transition-colors border border-white/20"
-              >
-                Find your college
-              </Link>
               <AskSamButton />
             </div>
-            <p className="mt-4 font-body text-sm text-white/50">
-              <Link href="/roadmap" className="text-gold/80 hover:text-gold transition-colors">
-                New to KidToCollege? Start here &rarr;
-              </Link>
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ===== WIZARD PREVIEW ===== */}
-      <section className="py-20 sm:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn>
-            <div className="text-center mb-12">
-              <h2 className="font-display text-3xl sm:text-4xl font-bold text-navy">
-                Research any college in minutes
-              </h2>
-              <p className="mt-4 text-navy/60 font-body max-w-xl mx-auto">
-                Our AI does the work of a private counsellor. Specific research
-                for you, your college, your major.
-              </p>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <WizardPreview />
           </FadeIn>
         </div>
       </section>
@@ -278,6 +247,67 @@ export default function HomePage() {
               </FadeIn>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ===== SOCIAL PROOF ===== */}
+      <section className="py-20 sm:py-28 bg-navy">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <FadeIn>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-12">
+              Built for families who can&apos;t afford to get this wrong
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+              <div className="p-6">
+                <p className="font-mono-label text-gold text-3xl sm:text-4xl font-bold mb-2">
+                  2,942
+                </p>
+                <p className="font-body text-white/60 text-sm">
+                  colleges tracked
+                </p>
+              </div>
+              <div className="p-6">
+                <p className="font-mono-label text-gold text-3xl sm:text-4xl font-bold mb-2">
+                  $50B
+                </p>
+                <p className="font-body text-white/60 text-sm">
+                  in scholarships searchable
+                </p>
+              </div>
+              <div className="p-6">
+                <p className="font-mono-label text-gold text-3xl sm:text-4xl font-bold mb-2">
+                  100%
+                </p>
+                <p className="font-body text-white/60 text-sm">
+                  free &mdash; no paywalls, ever
+                </p>
+              </div>
+            </div>
+            <p className="font-display text-xl sm:text-2xl text-white/80 italic max-w-2xl mx-auto leading-relaxed">
+              &ldquo;Private counsellors charge up to $15,000 for exactly
+              what&apos;s here &mdash; for free.&rdquo;
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ===== WIZARD PREVIEW ===== */}
+      <section className="py-20 sm:py-28 bg-white border-t border-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-navy">
+                Research any college in minutes
+              </h2>
+              <p className="mt-4 text-navy/60 font-body max-w-xl mx-auto">
+                Our AI does the work of a private counsellor. Specific research
+                for you, your college, your major.
+              </p>
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.15}>
+            <WizardPreview />
+          </FadeIn>
         </div>
       </section>
 

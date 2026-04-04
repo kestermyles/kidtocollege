@@ -48,6 +48,12 @@ export function Footer() {
                 Leveling the playing field, one family at a time. Free to use.
                 100% independent.
               </p>
+              <Link
+                href="/about"
+                className="text-sm text-white/40 hover:text-white transition-colors mt-2 inline-block"
+              >
+                About us &rarr;
+              </Link>
             </div>
 
             {/* Link columns */}
