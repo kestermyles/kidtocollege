@@ -13,6 +13,7 @@ interface NavLink {
 }
 
 const NAV_LINKS: NavLink[] = [
+  { href: "/roadmap", label: "Roadmap" },
   { href: "/search", label: "Find a College" },
   { href: "/colleges", label: "Colleges" },
   { href: "/my-chances", label: "My Chances" },

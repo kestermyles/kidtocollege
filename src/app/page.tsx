@@ -113,19 +113,24 @@ export default function HomePage() {
           <FadeIn delay={0.4}>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/search"
+                href="/roadmap"
                 className="inline-block bg-gold hover:bg-gold/90 text-navy font-body font-medium px-8 py-4 rounded-md text-lg transition-colors"
               >
-                Find your college &rarr;
+                See your roadmap &rarr;
               </Link>
               <Link
-                href="/coach"
+                href="/search"
                 className="inline-block bg-white/10 hover:bg-white/20 text-white font-body font-medium px-8 py-4 rounded-md text-lg transition-colors border border-white/20"
               >
-                Meet the Coach
+                Find your college
               </Link>
               <AskSamButton />
             </div>
+            <p className="mt-4 font-body text-sm text-white/50">
+              <Link href="/roadmap" className="text-gold/80 hover:text-gold transition-colors">
+                New to KidToCollege? Start here &rarr;
+              </Link>
+            </p>
           </FadeIn>
         </div>
       </section>
