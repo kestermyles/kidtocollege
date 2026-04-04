@@ -29,8 +29,12 @@ const NAV_LINKS: NavLink[] = [
     href: "/more",
     label: "More",
     children: [
+      { href: "/discover", label: "What Should I Study?" },
       { href: "/scholarships", label: "Scholarships" },
       { href: "/compare", label: "Compare Colleges" },
+      { href: "/deadlines", label: "Deadlines" },
+      { href: "/college-fairs", label: "College Fairs" },
+      { href: "/financial-aid/calculator", label: "Net Price Calculator" },
       { href: "/international", label: "International" },
       { href: "/family", label: "Family" },
     ],

@@ -1,0 +1,61 @@
+export interface CollegeDeadline {
+  slug: string;
+  name: string;
+  ed: string | null;
+  ea: string | null;
+  rd: string;
+  fafsa: string;
+}
+
+export const COLLEGE_DEADLINES: CollegeDeadline[] = [
+  { slug: "harvard-university", name: "Harvard University", ed: null, ea: "Nov 1", rd: "Jan 1", fafsa: "Feb 1" },
+  { slug: "yale-university", name: "Yale University", ed: null, ea: "Nov 1", rd: "Jan 2", fafsa: "Mar 1" },
+  { slug: "princeton-university", name: "Princeton University", ed: null, ea: "Nov 1", rd: "Jan 1", fafsa: "Feb 1" },
+  { slug: "columbia-university", name: "Columbia University", ed: "Nov 1", ea: null, rd: "Jan 1", fafsa: "Feb 15" },
+  { slug: "mit", name: "MIT", ed: null, ea: "Nov 1", rd: "Jan 5", fafsa: "Feb 15" },
+  { slug: "stanford-university", name: "Stanford University", ed: null, ea: "Nov 1", rd: "Jan 5", fafsa: "Feb 15" },
+  { slug: "university-of-pennsylvania", name: "University of Pennsylvania", ed: "Nov 1", ea: null, rd: "Jan 5", fafsa: "Feb 15" },
+  { slug: "duke-university", name: "Duke University", ed: "Nov 1", ea: null, rd: "Jan 4", fafsa: "Feb 1" },
+  { slug: "northwestern-university", name: "Northwestern University", ed: "Nov 1", ea: null, rd: "Jan 3", fafsa: "Feb 15" },
+  { slug: "university-of-chicago", name: "University of Chicago", ed: "Nov 1", ea: "Nov 1", rd: "Jan 4", fafsa: "Feb 15" },
+  { slug: "ut-austin", name: "University of Texas at Austin", ed: null, ea: "Nov 1", rd: "Dec 1", fafsa: "Jan 15" },
+  { slug: "university-of-michigan-ann-arbor", name: "University of Michigan", ed: null, ea: "Nov 1", rd: "Feb 1", fafsa: "Feb 15" },
+  { slug: "university-of-california-los-angeles", name: "UCLA", ed: null, ea: null, rd: "Nov 30", fafsa: "Mar 2" },
+  { slug: "university-of-california-berkeley", name: "UC Berkeley", ed: null, ea: null, rd: "Nov 30", fafsa: "Mar 2" },
+  { slug: "university-of-virginia", name: "University of Virginia", ed: "Nov 1", ea: null, rd: "Jan 5", fafsa: "Feb 15" },
+  { slug: "georgia-institute-of-technology", name: "Georgia Tech", ed: null, ea: "Nov 1", rd: "Jan 4", fafsa: "Feb 15" },
+  { slug: "university-of-north-carolina-at-chapel-hill", name: "UNC Chapel Hill", ed: null, ea: "Oct 15", rd: "Jan 15", fafsa: "Mar 1" },
+  { slug: "new-york-university", name: "NYU", ed: "Nov 1", ea: null, rd: "Jan 5", fafsa: "Feb 15" },
+  { slug: "boston-university", name: "Boston University", ed: "Nov 1", ea: null, rd: "Jan 4", fafsa: "Feb 15" },
+  { slug: "university-of-florida", name: "University of Florida", ed: null, ea: null, rd: "Nov 1", fafsa: "Dec 15" },
+  { slug: "ohio-state-university-main-campus", name: "Ohio State University", ed: null, ea: "Nov 1", rd: "Feb 1", fafsa: "Feb 15" },
+  { slug: "purdue-university-main-campus", name: "Purdue University", ed: null, ea: "Nov 1", rd: "Jan 15", fafsa: "Feb 15" },
+  { slug: "penn-state-university-park", name: "Penn State", ed: null, ea: null, rd: "Nov 30", fafsa: "Feb 15" },
+  { slug: "university-of-wisconsin-madison", name: "UW Madison", ed: null, ea: "Nov 1", rd: "Feb 1", fafsa: "Feb 15" },
+  { slug: "university-of-washington-seattle-campus", name: "University of Washington", ed: null, ea: null, rd: "Nov 15", fafsa: "Feb 15" },
+  { slug: "texas-a-and-m-university-college-station", name: "Texas A&M University", ed: null, ea: null, rd: "Dec 1", fafsa: "Jan 15" },
+  { slug: "university-of-southern-california", name: "USC", ed: null, ea: null, rd: "Jan 15", fafsa: "Feb 15" },
+  { slug: "carnegie-mellon-university", name: "Carnegie Mellon", ed: "Nov 1", ea: null, rd: "Jan 4", fafsa: "Feb 15" },
+  { slug: "cornell-university", name: "Cornell University", ed: "Nov 1", ea: null, rd: "Jan 2", fafsa: "Feb 15" },
+  { slug: "rice-university", name: "Rice University", ed: "Nov 1", ea: null, rd: "Jan 4", fafsa: "Feb 15" },
+  { slug: "vanderbilt-university", name: "Vanderbilt University", ed: "Nov 1", ea: null, rd: "Jan 1", fafsa: "Feb 15" },
+  { slug: "emory-university", name: "Emory University", ed: "Nov 1", ea: null, rd: "Jan 1", fafsa: "Feb 15" },
+  { slug: "university-of-notre-dame", name: "University of Notre Dame", ed: null, ea: "Nov 1", rd: "Jan 1", fafsa: "Feb 15" },
+  { slug: "georgetown-university", name: "Georgetown University", ed: null, ea: "Nov 1", rd: "Jan 10", fafsa: "Feb 1" },
+  { slug: "university-of-california-san-diego", name: "UC San Diego", ed: null, ea: null, rd: "Nov 30", fafsa: "Mar 2" },
+  { slug: "university-of-california-davis", name: "UC Davis", ed: null, ea: null, rd: "Nov 30", fafsa: "Mar 2" },
+  { slug: "boston-college", name: "Boston College", ed: "Nov 1", ea: "Nov 1", rd: "Jan 2", fafsa: "Feb 1" },
+  { slug: "tufts-university", name: "Tufts University", ed: "Nov 1", ea: null, rd: "Jan 4", fafsa: "Feb 15" },
+  { slug: "university-of-miami", name: "University of Miami", ed: "Nov 1", ea: "Nov 1", rd: "Jan 1", fafsa: "Feb 15" },
+  { slug: "university-of-illinois-at-urbana-champaign", name: "UIUC", ed: null, ea: "Nov 1", rd: "Jan 5", fafsa: "Feb 15" },
+  { slug: "university-of-georgia", name: "University of Georgia", ed: null, ea: "Oct 15", rd: "Jan 1", fafsa: "Feb 15" },
+  { slug: "university-of-maryland-college-park", name: "University of Maryland", ed: null, ea: "Nov 1", rd: "Jan 20", fafsa: "Feb 15" },
+  { slug: "florida-state-university", name: "Florida State", ed: null, ea: null, rd: "Mar 1", fafsa: "Feb 15" },
+  { slug: "michigan-state-university", name: "Michigan State", ed: null, ea: null, rd: "Rolling", fafsa: "Feb 15" },
+  { slug: "indiana-university-bloomington", name: "Indiana University", ed: null, ea: "Nov 1", rd: "Feb 1", fafsa: "Feb 15" },
+  { slug: "university-of-minnesota-twin-cities", name: "University of Minnesota", ed: null, ea: null, rd: "Rolling", fafsa: "Feb 15" },
+  { slug: "clemson-university", name: "Clemson University", ed: null, ea: null, rd: "May 1", fafsa: "Feb 15" },
+  { slug: "virginia-tech", name: "Virginia Tech", ed: "Nov 1", ea: null, rd: "Jan 15", fafsa: "Feb 15" },
+  { slug: "auburn-university", name: "Auburn University", ed: null, ea: null, rd: "Feb 1", fafsa: "Feb 15" },
+  { slug: "university-of-pittsburgh-pittsburgh-campus", name: "University of Pittsburgh", ed: null, ea: null, rd: "Rolling", fafsa: "Feb 15" },
+];

@@ -318,6 +318,31 @@ export default function ComparePage() {
                     )}
                   />
                   <CompareRow
+                    label="Campus Setting"
+                    values={colleges.map((c) =>
+                      (c as unknown as Record<string, unknown>).campus_setting as string || "N/A"
+                    )}
+                  />
+                  <CompareRow
+                    label="D1 Sports"
+                    values={colleges.map((c) =>
+                      (c as unknown as Record<string, unknown>).has_d1_sports === true ? "Yes" : (c as unknown as Record<string, unknown>).has_d1_sports === false ? "No" : "N/A"
+                    )}
+                  />
+                  <CompareRow
+                    label="Greek Life"
+                    values={colleges.map((c) =>
+                      (c as unknown as Record<string, unknown>).has_greek_life === true ? "Yes" : (c as unknown as Record<string, unknown>).has_greek_life === false ? "No" : "N/A"
+                    )}
+                  />
+                  <CompareRow
+                    label="Median Earnings (6yr)"
+                    values={colleges.map((c) => {
+                      const v = (c as unknown as Record<string, unknown>).median_earnings_6yr as number | null;
+                      return v ? `$${v.toLocaleString()}` : "N/A";
+                    })}
+                  />
+                  <CompareRow
                     label="Programs"
                     values={colleges.map((c) =>
                       c.programs && c.programs.length > 0
