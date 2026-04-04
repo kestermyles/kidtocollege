@@ -10,7 +10,8 @@
     "seed:colleges": "tsx scripts/seed-all-colleges.ts",
     "enrich:programs": "tsx scripts/enrich-programs.ts",
     "enrich:photos": "tsx scripts/enrich-photos.ts",
-    "enrich:flags": "tsx scripts/enrich-flags.ts"
+    "enrich:flags": "tsx scripts/enrich-flags.ts",
+    "enrich:photos:cron": "tsx scripts/enrich-photos-cron.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",
