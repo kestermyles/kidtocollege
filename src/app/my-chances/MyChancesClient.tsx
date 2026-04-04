@@ -61,7 +61,7 @@ export default function MyChancesClient() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4 py-12">
+      <div className="max-w-3xl mx-auto px-4 pt-20 pb-12">
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-gray-900 mb-3">My Chances</h1>
           <p className="text-lg text-gray-600">Enter your academic profile and get an AI-powered estimate of your admission chances at your saved colleges — plus specific tips to improve them.</p>
