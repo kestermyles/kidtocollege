@@ -99,7 +99,7 @@ export default function MyChancesClient() {
 
           {error && <p className="mt-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">{error}</p>}
 
-          <button onClick={handleSubmit} disabled={loading} className="mt-6 w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
+          <button onClick={handleSubmit} disabled={loading} className="mt-6 w-full bg-yellow-400 hover:bg-yellow-300 disabled:bg-gray-200 text-gray-900 font-semibold py-3 px-6 rounded-xl transition-colors">
             {loading ? "Analysing your profile…" : "Check my chances →"}
           </button>
           <p className="mt-3 text-xs text-gray-400 text-center">AI estimates based on typical admission ranges — not guarantees.</p>

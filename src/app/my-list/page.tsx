@@ -264,7 +264,7 @@ export default function MyListPage() {
             My College List
           </h1>
           <p className="font-body text-navy/60 mb-8">
-            Sign up to build your personalised reach, target, and safety list.
+            Sign up to build your personalised Reach, On Target, and Safety list.
             Track applications and compare your options — free.
           </p>
           <Link
@@ -296,7 +296,7 @@ export default function MyListPage() {
             My College List
           </h1>
           <p className="font-body text-navy/60">
-            Build your personalised reach, target, and safety list
+            Build your personalised Reach, On Target, and Safety list
           </p>
         </div>
 
