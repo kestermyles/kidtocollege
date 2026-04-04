@@ -127,7 +127,7 @@ export default function CollegeListBuilder() {
               To categorise your colleges into Safety / On Target / Reach, we need your academic profile.
               It only takes 30 seconds.
             </p>
-            <a href="/my-chances" className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors">
+            <a href="/my-chances" className="inline-block bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors">
               Check my chances &rarr;
             </a>
           </div>

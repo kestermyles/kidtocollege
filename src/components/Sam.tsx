@@ -66,7 +66,7 @@ export default function Sam() {
     <>
       {/* Chat window */}
       {open && (
-        <div className="fixed bottom-20 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-h-[70vh] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
+        <div className="fixed bottom-16 right-4 sm:bottom-20 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-h-[70vh] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
           {/* Header */}
           <div className="bg-navy px-4 py-3 flex items-center justify-between flex-shrink-0">
             <div className="flex items-center gap-2.5">
@@ -157,7 +157,7 @@ export default function Sam() {
       {/* Floating button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-yellow-400 hover:bg-yellow-300 text-navy font-bold px-4 py-3 rounded-full shadow-xl transition-all hover:scale-105 active:scale-95"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2.5 bg-yellow-400 hover:bg-yellow-300 text-navy font-bold px-4 py-3 rounded-full shadow-xl transition-all hover:scale-105 active:scale-95"
         style={{ color: "#0f2d52" }}
         aria-label="Chat with Sam"
       >
