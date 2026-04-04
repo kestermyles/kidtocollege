@@ -22,15 +22,23 @@ export default function SignupGateModal({ collegeName, onClose, onSuccess }: Pro
     setLoading(true)
     setError("")
 
-    const { error: authError } =
+    const result =
       mode === "signup"
         ? await supabase.auth.signUp({ email, password })
         : await supabase.auth.signInWithPassword({ email, password })
 
-    if (authError) {
-      setError(authError.message)
+    if (result.error) {
+      setError(result.error.message)
       setLoading(false)
       return
+    }
+
+    if (mode === "signup") {
+      fetch("/api/welcome-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: result.data.user?.email }),
+      }).catch(() => {})
     }
 
     onSuccess()

@@ -39,7 +39,7 @@ export default function SignUpPage() {
       return;
     }
 
-    const { error: err } = await supabase.auth.signUp({
+    const { data, error: err } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -48,7 +48,14 @@ export default function SignUpPage() {
       },
     });
     if (err) setError(err.message);
-    else setMagicSent(true); // confirmation email sent
+    else {
+      setMagicSent(true);
+      fetch("/api/welcome-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: data.user?.email }),
+      }).catch(() => {});
+    }
     setLoading(false);
   }
 
