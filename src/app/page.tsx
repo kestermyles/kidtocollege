@@ -6,7 +6,7 @@ import Link from "next/link";
 import { AskSamButton } from "@/components/AskSamButton";
 
 const STATS = [
-  { value: "4,000+", label: "Colleges" },
+  { value: "2,942", label: "Colleges" },
   { value: "$50B", label: "In Scholarships" },
   { value: "100%", label: "Free" },
 ];
