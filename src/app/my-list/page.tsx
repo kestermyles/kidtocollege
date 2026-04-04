@@ -482,7 +482,7 @@ export default function MyListPage() {
               )}
               {target.length < 3 && (
                 <p className="text-sm font-body text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2 mb-2">
-                  Add at least 3 target schools
+                  Add at least 3 On Target schools
                 </p>
               )}
               {items.length > 12 && (
