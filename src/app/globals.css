@@ -58,6 +58,17 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration-thickness: 3px;
 }
 
+/* Ensure emoji render correctly across all browsers */
+.emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+    "Segoe UI Symbol", sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+  display: inline-block;
+}
+
 /* Focus styles for accessibility */
 *:focus-visible {
   outline: 2px solid var(--gold);

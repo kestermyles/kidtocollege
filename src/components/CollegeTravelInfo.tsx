@@ -134,34 +134,34 @@ export default function CollegeTravelInfo({ collegeLat, collegeLng, collegeState
         {distance !== null && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-white rounded-xl border border-gray-100 p-4">
-              <div className="text-xl mb-1">📍</div>
+              <div className="emoji text-xl mb-1" role="img" aria-label="Location">📍</div>
               <div className="text-xs text-gray-500 mb-1">Distance</div>
               <div className="text-sm font-bold text-gray-900">{distance.toLocaleString()} miles</div>
             </div>
             {sameState && (
               <div className="bg-green-50 rounded-xl border border-green-200 p-4">
-                <div className="text-xl mb-1">🏠</div>
+                <div className="emoji text-xl mb-1" role="img" aria-label="In-state">🏠</div>
                 <div className="text-xs text-gray-500 mb-1">In-state tuition</div>
                 <div className="text-sm font-bold text-green-700">You qualify</div>
               </div>
             )}
             {driveTime && (
               <div className="bg-white rounded-xl border border-gray-100 p-4">
-                <div className="text-xl mb-1">🚗</div>
+                <div className="emoji text-xl mb-1" role="img" aria-label="Drive">🚗</div>
                 <div className="text-xs text-gray-500 mb-1">Drive time</div>
                 <div className="text-sm font-bold text-gray-900">{driveTime}</div>
               </div>
             )}
             {flightEst && (
               <div className="bg-white rounded-xl border border-gray-100 p-4">
-                <div className="text-xl mb-1">✈️</div>
+                <div className="emoji text-xl mb-1" role="img" aria-label="Flight">✈️</div>
                 <div className="text-xs text-gray-500 mb-1">Est. flight cost</div>
                 <div className="text-sm font-bold text-gray-900">{flightEst} each way</div>
               </div>
             )}
             {!driveTime && !flightEst && distance > 0 && (
               <div className="bg-white rounded-xl border border-gray-100 p-4">
-                <div className="text-xl mb-1">✈️</div>
+                <div className="emoji text-xl mb-1" role="img" aria-label="Flight">✈️</div>
                 <div className="text-xs text-gray-500 mb-1">Travel</div>
                 <div className="text-sm font-bold text-gray-900">Flight recommended</div>
               </div>
@@ -171,7 +171,7 @@ export default function CollegeTravelInfo({ collegeLat, collegeLng, collegeState
 
         {!userState && (
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800">
-            📍 Select your home state above to see how far away this college is, drive time, and estimated flight costs.
+            <span className="emoji" role="img" aria-label="Pin">📍</span> Select your home state above to see how far away this college is, drive time, and estimated flight costs.
           </div>
         )}
       </div>

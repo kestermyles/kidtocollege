@@ -135,7 +135,7 @@ export default function RoadmapPage() {
                     {/* Card */}
                     <div className={`ktc-card p-6 flex-1 transition-opacity ${done ? "opacity-60" : ""}`}>
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xl">{step.icon}</span>
+                        <span className="emoji text-xl" role="img" aria-label={step.title}>{step.icon}</span>
                         <h2 className="font-display text-lg font-bold text-navy">
                           {step.title}
                         </h2>

@@ -53,7 +53,7 @@ export default function SignupGateModal({ collegeName, onClose, onSuccess }: Pro
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
 
         <div className="mb-6">
-          <div className="w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center text-2xl mb-4">🎓</div>
+          <div className="w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center text-2xl mb-4"><span className="emoji" role="img" aria-label="Graduation">🎓</span></div>
           <h2 className="text-xl font-bold text-gray-900 mb-1">
             Save {collegeName} to your list
           </h2>
