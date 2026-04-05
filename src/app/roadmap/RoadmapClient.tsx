@@ -120,10 +120,10 @@ export default function RoadmapPage() {
                   <div className="flex flex-col items-center flex-shrink-0 w-12">
                     <button
                       onClick={() => toggleStep(step.num)}
-                      className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
+                      className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold transition-all ring-4 ring-white ${
                         done
                           ? "bg-sage text-white"
-                          : "bg-gold/10 text-gold border-2 border-gold/30"
+                          : "bg-white text-gold border-2 border-gold/30"
                       }`}
                       title={done ? "Mark as incomplete" : "Mark as done"}
                     >
