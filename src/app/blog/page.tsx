@@ -4,7 +4,7 @@ import { FadeIn } from "@/components/FadeIn";
 import { blogPosts } from "@/lib/blog-posts";
 
 export const metadata: Metadata = {
-  title: "College Admissions Blog: Free Guides & Tips | KidToCollege",
+  title: "College Admissions Blog: Free Guides for Students & Families",
   description:
     "Expert guides on college admissions, scholarships, FAFSA, essays, and financial aid. Free, practical advice for students and families.",
 };
@@ -18,8 +18,8 @@ export default function BlogIndexPage() {
             Guides &amp; Articles
           </h1>
           <p className="font-body text-navy/60 mb-10">
-            Expert advice on college admissions, scholarships, essays, and
-            financial aid — free and practical.
+            Practical guides on college admissions, scholarships, essays, and
+            financial aid — researched, clear, and free.
           </p>
         </FadeIn>
 

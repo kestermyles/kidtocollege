@@ -97,13 +97,13 @@ export default function RoadmapClient() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="bg-navy py-20 sm:py-28">
+      <section className="bg-navy py-28 sm:py-32">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-4">
             Your College Roadmap
           </h1>
           <p className="font-body text-xl text-white/60 max-w-2xl mx-auto">
-            Everything you need to get into the right college &mdash; in the right order. Free, forever.
+            Everything you need to get into the right college &mdash; in the right order. Free to use.
           </p>
         </div>
       </section>
@@ -111,23 +111,21 @@ export default function RoadmapClient() {
       {/* Steps */}
       <section className="py-16 sm:py-20">
         <div className="max-w-2xl mx-auto px-4">
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gold/20 hidden sm:block" />
-
-            <div className="space-y-6">
-              {STEPS.map((step) => {
-                const done = completed.has(step.num);
-                const Icon = step.icon;
-                return (
-                  <div key={step.num} className="relative flex gap-5">
-                    {/* Step number */}
+          <div>
+            {STEPS.map((step, idx) => {
+              const done = completed.has(step.num);
+              const Icon = step.icon;
+              const isLast = idx === STEPS.length - 1;
+              return (
+                <div key={step.num}>
+                  <div className="flex gap-5">
+                    {/* Circle */}
                     <button
                       onClick={() => toggleStep(step.num)}
-                      className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold transition-all ring-4 ring-white ${
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all flex-shrink-0 ${
                         done
                           ? "bg-sage text-white"
-                          : "bg-gold/10 text-gold border-2 border-gold/30"
+                          : "border-2 border-amber-300 bg-amber-50 text-amber-600"
                       }`}
                       title={done ? "Mark as incomplete" : "Mark as done"}
                     >
@@ -158,9 +156,13 @@ export default function RoadmapClient() {
                       </Link>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                  {/* Line segment between circles — not behind them */}
+                  {!isLast && (
+                    <div className="w-px h-6 bg-amber-200 ml-[19px] hidden sm:block" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -91,7 +91,7 @@ export async function generateMetadata({
       .replace(/-/g, " ")
       .replace(/\b\w/g, (c: string) => c.toUpperCase());
     return {
-      title: `${readable} — Acceptance Rate, Costs & Admissions | KidToCollege`,
+      title: `${readable} — Acceptance Rate, Costs & Admissions`,
       description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${readable}. Get a free personalised admissions report in minutes.`,
       alternates: { canonical: canonicalUrl },
     };
@@ -113,11 +113,11 @@ export async function generateMetadata({
   ].filter(Boolean).join(" ");
 
   return {
-    title: `${college.name} — Acceptance Rate, Costs & Scholarships | KidToCollege`,
+    title: `${college.name} — Acceptance Rate, Costs & Scholarships`,
     description: descParts,
     alternates: { canonical: canonicalUrl },
     openGraph: {
-      title: `${college.name} — Acceptance Rate, Costs & Scholarships | KidToCollege`,
+      title: `${college.name} — Acceptance Rate, Costs & Scholarships`,
       description: descParts,
       images: college.photo_url ? [{ url: college.photo_url }] : [],
     },

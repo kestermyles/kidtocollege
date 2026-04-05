@@ -4,7 +4,7 @@ import { FadeIn } from "@/components/FadeIn";
 import { PhotoSection } from "@/components/PhotoSection";
 
 export const metadata: Metadata = {
-  title: "Free College Admissions Coach: Essays, Test Prep & Financial Aid | KidToCollege",
+  title: "Free College Admissions Coach: Essays, Test Prep & Financial Aid",
   description:
     "Your personal free college admissions coach — covering essays, SAT/ACT prep, interview practice, financial aid, letters of recommendation, and your full application checklist.",
 };

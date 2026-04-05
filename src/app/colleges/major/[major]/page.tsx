@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!major) return {};
 
   return {
-    title: `Best Colleges for ${major.label}: Rankings, Costs & Scholarships | KidToCollege`,
+    title: `Best Colleges for ${major.label}: Rankings, Costs & Scholarships`,
     description: `Find the best ${major.label.toLowerCase()} programs in the US. Compare acceptance rates, tuition, scholarships, and career outcomes for top ${major.label.toLowerCase()} colleges — free on KidToCollege.`,
     alternates: {
       canonical: `https://www.kidtocollege.com/colleges/major/${slug}`,

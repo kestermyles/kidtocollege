@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
 
 export const metadata: Metadata = {
-  title: "Why We Built KidToCollege: Free Access to College Counseling | KidToCollege",
+  title: "Why We Built KidToCollege: Free Access to College Counseling",
   description:
     "Private college counselors charge up to $15,000. We think every student deserves the same advantage. KidToCollege gives every family free expert college admissions tools.",
 };

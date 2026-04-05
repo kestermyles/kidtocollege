@@ -279,7 +279,7 @@ export default function HomePage() {
                   100%
                 </p>
                 <p className="font-body text-white/60 text-sm">
-                  free &mdash; no paywalls, ever
+                  free to use
                 </p>
               </div>
             </div>

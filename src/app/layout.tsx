@@ -28,6 +28,7 @@ export const metadata: Metadata = {
       "Get the same college admissions advantage as kids with $15,000 counselors — for free. Find colleges, scholarships, and your personalized roadmap to acceptance.",
     siteName: "KidToCollege",
     type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };
 

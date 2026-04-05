@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "FAFSA Guide: How to Pay Less for College | KidToCollege",
+  title: "FAFSA Guide: How to Pay Less for College",
   description:
     "Understand FAFSA, CSS Profile, Student Aid Index, merit scholarships, and financial aid appeals. A free, fact-checked guide to reducing what your family pays for college.",
   alternates: {
