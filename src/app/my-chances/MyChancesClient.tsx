@@ -25,6 +25,12 @@ export default function MyChancesClient() {
   const [hasFetched, setHasFetched] = useState(false)
 
   // College search
+  const [suggestOpen, setSuggestOpen] = useState(false)
+  const [suggestName, setSuggestName] = useState("")
+  const [suggestWebsite, setSuggestWebsite] = useState("")
+  const [suggestSent, setSuggestSent] = useState(false)
+  const [suggestLoading, setSuggestLoading] = useState(false)
+
   const [collegeQuery, setCollegeQuery] = useState("")
   const [selectedCollege, setSelectedCollege] = useState<{ name: string; slug: string } | null>(null)
   const [collegeVerified, setCollegeVerified] = useState(false)
@@ -183,6 +189,51 @@ export default function MyChancesClient() {
               </div>
               {collegeError && <p className="mt-1.5 text-xs text-red-500">{collegeError}</p>}
               <p className="mt-1 text-xs text-gray-400">Type to search and select from the list — or leave blank to find colleges by major</p>
+              {suggestSent ? (
+                <p className="mt-2 text-xs text-green-600">Thanks — we&apos;ll review and add it within 48 hours.</p>
+              ) : !suggestOpen ? (
+                <button onClick={() => setSuggestOpen(true)} className="mt-1.5 text-xs text-gray-400 hover:text-gray-600 underline underline-offset-2">
+                  Think a college is missing? Let us know &rarr;
+                </button>
+              ) : (
+                <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-100 space-y-2">
+                  <input
+                    type="text"
+                    value={suggestName}
+                    onChange={(e) => setSuggestName(e.target.value)}
+                    placeholder="College name"
+                    className="w-full border border-gray-200 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                  <input
+                    type="text"
+                    value={suggestWebsite}
+                    onChange={(e) => setSuggestWebsite(e.target.value)}
+                    placeholder="Website (optional, e.g. harvard.edu)"
+                    className="w-full border border-gray-200 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={async () => {
+                        if (!suggestName.trim()) return
+                        setSuggestLoading(true)
+                        await fetch("/api/suggest-college", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ collegeName: suggestName, website: suggestWebsite, page: "/my-chances" }),
+                        }).catch(() => {})
+                        setSuggestLoading(false)
+                        setSuggestSent(true)
+                        setSuggestOpen(false)
+                      }}
+                      disabled={suggestLoading || !suggestName.trim()}
+                      className="px-3 py-1.5 bg-gray-800 text-white text-xs rounded hover:bg-gray-700 disabled:opacity-40 transition-colors"
+                    >
+                      {suggestLoading ? "Sending..." : "Send request"}
+                    </button>
+                    <button onClick={() => setSuggestOpen(false)} className="px-3 py-1.5 text-xs text-gray-400 hover:text-gray-600">Cancel</button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
