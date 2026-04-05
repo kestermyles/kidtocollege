@@ -6,9 +6,9 @@ export const metadata: Metadata = {
   description:
     "Search thousands of scholarships by major, state, GPA, and background. Find free money for college you don't have to pay back — updated for 2025–26.",
   openGraph: {
-    title: "Scholarship Database — KidToCollege",
+    title: "Free Scholarship Search 2025–26: Find Money for College | KidToCollege",
     description:
-      "Find scholarships your family is missing. Federal, national, state, local, and hidden auto-merit awards.",
+      "Search thousands of scholarships by major, state, GPA, and background. Find free money for college you don't have to pay back.",
   },
 };
 

@@ -8,7 +8,10 @@ import Sam from "@/components/Sam";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kidtocollege.com"),
-  title: "Free College Admissions Help for Every Student | KidToCollege",
+  title: {
+    default: "Free College Admissions Help for Every Student | KidToCollege",
+    template: "%s | KidToCollege",
+  },
   description:
     "Get the same college admissions advantage as kids with $15,000 counselors — for free. Find colleges, scholarships, and your personalized roadmap to acceptance.",
   icons: {
