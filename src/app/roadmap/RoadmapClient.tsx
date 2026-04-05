@@ -115,7 +115,7 @@ export default function RoadmapPage() {
               const done = completed.has(step.num);
               const isLast = idx === STEPS.length - 1;
               return (
-                <div key={step.num} className="flex gap-5">
+                <div key={step.num} className="flex gap-5 items-stretch">
                   {/* Left column: circle + line */}
                   <div className="flex flex-col items-center flex-shrink-0 w-12">
                     <button
