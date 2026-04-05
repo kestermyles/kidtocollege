@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { COLLEGES_SEED } from "@/lib/colleges-seed";
 import { STATE_AID_DATA } from "@/lib/state-aid-data";
+import { MAJOR_PAGES } from "@/lib/major-pages-data";
 import { createClient } from "@supabase/supabase-js";
 
 const BASE_URL =
@@ -197,5 +198,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
-  return [...staticPages, ...collegePages, ...stateAidPages];
+  const majorPages: MetadataRoute.Sitemap = MAJOR_PAGES.map((m) => ({
+    url: `${BASE_URL}/colleges/major/${m.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...collegePages, ...stateAidPages, ...majorPages];
 }
