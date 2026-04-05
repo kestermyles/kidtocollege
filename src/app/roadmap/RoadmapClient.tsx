@@ -97,7 +97,7 @@ export default function RoadmapClient() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="bg-navy py-28 sm:py-32">
+      <section className="bg-navy min-h-[320px] flex flex-col items-center justify-center py-16">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-4">
             Your College Roadmap
@@ -158,7 +158,7 @@ export default function RoadmapClient() {
                   </div>
                   {/* Line segment between circles — not behind them */}
                   {!isLast && (
-                    <div className="w-px h-6 bg-amber-200 ml-[19px] hidden sm:block" />
+                    <div className="w-0.5 bg-amber-400 ml-[19px] hidden sm:block" style={{ height: '170px' }} />
                   )}
                 </div>
               );
