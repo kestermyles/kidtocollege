@@ -100,9 +100,33 @@ const PILLARS = [
   },
 ];
 
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is the college coach really free?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes — every coaching feature on KidToCollege is completely free. No paywalls, no premium tier, no credit card required.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What does the college coach cover?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The Coach covers essay writing, SAT/ACT test prep strategy, interview preparation, financial aid guidance, letters of recommendation, and a complete application checklist — the same services private counselors charge up to $15,000 for.",
+      },
+    },
+  ],
+};
+
 export default function CoachPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       {/* Hero */}
       <PhotoSection
         imageUrl="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80"
@@ -213,6 +237,17 @@ export default function CoachPage() {
             >
               Start with college research
             </Link>
+            <div className="flex flex-wrap gap-3 justify-center mt-6">
+              <Link href="/essays" className="font-body text-sm text-navy/60 hover:text-gold transition-colors">Essay prompts</Link>
+              <span className="text-navy/20">|</span>
+              <Link href="/my-chances" className="font-body text-sm text-navy/60 hover:text-gold transition-colors">My Chances</Link>
+              <span className="text-navy/20">|</span>
+              <Link href="/scholarships" className="font-body text-sm text-navy/60 hover:text-gold transition-colors">Scholarships</Link>
+              <span className="text-navy/20">|</span>
+              <Link href="/financial-aid/calculator" className="font-body text-sm text-navy/60 hover:text-gold transition-colors">Net price calculator</Link>
+              <span className="text-navy/20">|</span>
+              <Link href="/deadlines" className="font-body text-sm text-navy/60 hover:text-gold transition-colors">Deadlines</Link>
+            </div>
           </FadeIn>
         </div>
       </section>

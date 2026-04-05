@@ -182,6 +182,12 @@ export default function DeadlinesPage() {
           Deadlines are for the 2026-2027 application cycle. Always verify
           directly with each college.
         </p>
+
+        <div className="flex flex-wrap gap-3 mt-8">
+          <Link href="/colleges" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Browse colleges</Link>
+          <Link href="/essays" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Essay prompts</Link>
+          <Link href="/roadmap" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Your roadmap</Link>
+        </div>
       </div>
     </div>
   );

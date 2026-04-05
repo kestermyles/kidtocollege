@@ -11,6 +11,7 @@ const FOOTER_LINKS = {
   Resources: [
     { href: "/fafsa-guide", label: "FAFSA Guide" },
     { href: "/financial-aid", label: "State Aid Guides" },
+    { href: "/financial-aid/calculator", label: "Net Price Calculator" },
     { href: "/blog", label: "Blog" },
   ],
   Coach: [
@@ -25,10 +26,12 @@ const FOOTER_LINKS = {
     { href: "/international/europe", label: "Europe" },
     { href: "/international/global-scholarships", label: "Global Scholarships" },
   ],
-  More: [
-    { href: "/coach/interviews", label: "Interviews" },
-    { href: "/coach/recommendations", label: "Recommendations" },
-    { href: "/coach/checklist", label: "Checklist" },
+  Tools: [
+    { href: "/my-chances", label: "My Chances" },
+    { href: "/deadlines", label: "Deadlines" },
+    { href: "/essays", label: "Essay Prompts" },
+    { href: "/discover", label: "Major Quiz" },
+    { href: "/roadmap", label: "Roadmap" },
     { href: "/account", label: "My Account" },
   ],
 };

@@ -146,6 +146,14 @@ export default function MyChancesClient() {
             <p className="text-sm text-amber-700">Save colleges to your list first and we&apos;ll analyse your chances at each one. <a href="/colleges" className="underline font-semibold">Browse colleges →</a></p>
           </div>
         )}
+
+        {/* Cross-links */}
+        <div className="flex flex-wrap gap-3 mt-10 pt-6 border-t border-gray-200">
+          <a href="/colleges" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-blue-300 transition-colors">Browse colleges</a>
+          <a href="/coach" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-blue-300 transition-colors">The Coach</a>
+          <a href="/essays" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-blue-300 transition-colors">Essay prompts</a>
+          <a href="/scholarships" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-blue-300 transition-colors">Scholarships</a>
+        </div>
       </div>
     </main>
   )

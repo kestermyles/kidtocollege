@@ -421,6 +421,11 @@ export function ScholarshipsClient() {
                 Get personalised scholarship matches &rarr;
               </GoldButton>
             </a>
+            <div className="flex flex-wrap gap-3 justify-center mt-6">
+              <a href="/financial-aid/calculator" className="px-5 py-2.5 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Net price calculator</a>
+              <a href="/essays" className="px-5 py-2.5 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Essay prompts</a>
+              <a href="/coach" className="px-5 py-2.5 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">The Coach</a>
+            </div>
           </FadeIn>
         </div>
       </section>

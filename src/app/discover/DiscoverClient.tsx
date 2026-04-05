@@ -238,6 +238,11 @@ export default function DiscoverPage() {
                 Start college research &rarr;
               </Link>
             </div>
+            <div className="flex flex-wrap gap-3 mt-6">
+              <Link href="/colleges" className="px-4 py-2 border border-gray-200 rounded-md font-body text-xs text-navy/50 hover:border-gold/40 transition-colors">Browse colleges</Link>
+              <Link href="/my-chances" className="px-4 py-2 border border-gray-200 rounded-md font-body text-xs text-navy/50 hover:border-gold/40 transition-colors">Check your chances</Link>
+              <Link href="/scholarships" className="px-4 py-2 border border-gray-200 rounded-md font-body text-xs text-navy/50 hover:border-gold/40 transition-colors">Find scholarships</Link>
+            </div>
           </div>
         )}
       </div>
