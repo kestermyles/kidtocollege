@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { createClient } from "@/lib/supabase-browser"
 
 const MAJORS = ["Undecided","Computer Science","Engineering","Business","Biology / Pre-Med","Psychology","Economics","Political Science","Communications","Nursing","Education","Art & Design","Film & Media","Environmental Science","Mathematics","Philosophy","Sociology","History","English / Literature","Criminal Justice"]
@@ -24,6 +24,37 @@ export default function MyChancesClient() {
   const [savedColleges, setSavedColleges] = useState<string[]>([])
   const [hasFetched, setHasFetched] = useState(false)
 
+  // College search
+  const [collegeQuery, setCollegeQuery] = useState("")
+  const [selectedCollege, setSelectedCollege] = useState<{ name: string; slug: string } | null>(null)
+  const [collegeResults, setCollegeResults] = useState<{ name: string; slug: string }[]>([])
+  const [showCollegeDropdown, setShowCollegeDropdown] = useState(false)
+  const collegeDropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (collegeDropdownRef.current && !collegeDropdownRef.current.contains(e.target as Node)) {
+        setShowCollegeDropdown(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClick)
+    return () => document.removeEventListener("mousedown", handleClick)
+  }, [])
+
+  const searchColleges = async (query: string) => {
+    setCollegeQuery(query)
+    setSelectedCollege(null)
+    if (query.length < 3) { setCollegeResults([]); setShowCollegeDropdown(false); return }
+    const supabase = createClient()
+    const { data } = await supabase
+      .from("colleges")
+      .select("name, slug")
+      .ilike("name", `%${query}%`)
+      .limit(8)
+    setCollegeResults((data as { name: string; slug: string }[]) || [])
+    setShowCollegeDropdown(true)
+  }
+
   const fetchSavedColleges = async () => {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -42,7 +73,7 @@ export default function MyChancesClient() {
     const colleges = hasFetched ? savedColleges : await fetchSavedColleges()
     if (!hasFetched) { setSavedColleges(colleges); setHasFetched(true) }
     try {
-      const res = await fetch("/api/my-chances", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, savedColleges: colleges }) })
+      const res = await fetch("/api/my-chances", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, savedColleges: colleges, specificCollege: selectedCollege }) })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Something went wrong")
       setResults(data.results)
@@ -94,6 +125,45 @@ export default function MyChancesClient() {
                 <option value="">Select major…</option>
                 {MAJORS.map((m) => <option key={m} value={m}>{m}</option>)}
               </select>
+            </div>
+            {/* College search */}
+            <div className="sm:col-span-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Specific college <span className="text-gray-400 font-normal">(optional)</span></label>
+              <div className="relative" ref={collegeDropdownRef}>
+                <input
+                  type="text"
+                  value={selectedCollege ? selectedCollege.name : collegeQuery}
+                  onChange={(e) => searchColleges(e.target.value)}
+                  onFocus={() => { if (collegeResults.length > 0) setShowCollegeDropdown(true) }}
+                  placeholder="e.g. University of Texas at Austin"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {selectedCollege && (
+                  <button
+                    onClick={() => { setSelectedCollege(null); setCollegeQuery(""); setCollegeResults([]) }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    &times;
+                  </button>
+                )}
+                {showCollegeDropdown && collegeResults.length > 0 && (
+                  <div className="absolute z-10 top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                    {collegeResults.map((c) => (
+                      <button
+                        key={c.slug}
+                        onClick={() => {
+                          setSelectedCollege(c)
+                          setCollegeQuery(c.name)
+                          setShowCollegeDropdown(false)
+                        }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-gray-900 hover:bg-gray-50 transition-colors"
+                      >
+                        {c.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

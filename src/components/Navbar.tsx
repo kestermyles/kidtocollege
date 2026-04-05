@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase-browser";
 
 interface NavLink {
@@ -39,6 +41,10 @@ const NAV_LINKS: NavLink[] = [
 ];
 
 export function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -85,8 +91,23 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+          {/* Mobile left — back button or spacer */}
+          <div className="md:hidden w-9 flex-shrink-0">
+            {!isHome ? (
+              <button
+                onClick={() => router.back()}
+                className="flex items-center justify-center w-9 h-9 rounded-full hover:bg-gray-100 transition-colors"
+                aria-label="Go back"
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-600" />
+              </button>
+            ) : (
+              <div className="w-9" />
+            )}
+          </div>
+
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2 group md:mr-auto">
             <span className="text-navy font-display text-xl font-bold tracking-display">
               Kid<span className="text-gold">To</span>College
             </span>

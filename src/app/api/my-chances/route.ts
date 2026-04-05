@@ -4,12 +4,24 @@ import Anthropic from "@anthropic-ai/sdk"
 export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
-  const { gpa, sat, act, state, major, savedColleges } = await req.json()
+  const { gpa, sat, act, state, major, savedColleges, specificCollege } = await req.json()
   if (!gpa || !state || !major) return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
 
   const client = new Anthropic()
 
-  const collegeList: string[] = savedColleges?.length > 0 ? savedColleges.slice(0, 8) : ["University of Texas at Austin","Texas A&M University","University of California Los Angeles","University of Michigan","New York University","University of Florida"]
+  // If a specific college is provided, evaluate that first + similar colleges
+  // Otherwise use saved colleges or defaults
+  let collegeList: string[]
+  let specificCollegeNote = ""
+
+  if (specificCollege?.name) {
+    collegeList = [specificCollege.name]
+    specificCollegeNote = `\n\nThe student is specifically interested in ${specificCollege.name}. Evaluate this college first with extra detail — include its actual acceptance rate, cost of attendance, and any scholarships for ${major} students. Then suggest 3-5 similar colleges the student should also consider based on their profile.`
+  } else if (savedColleges?.length > 0) {
+    collegeList = savedColleges.slice(0, 8)
+  } else {
+    collegeList = ["University of Texas at Austin","Texas A&M University","University of California Los Angeles","University of Michigan","New York University","University of Florida"]
+  }
 
   const message = await client.messages.create({
     model: "claude-sonnet-4-5",
@@ -26,7 +38,7 @@ Student profile:
 - Intended major: ${major}
 
 Colleges to evaluate:
-${collegeList.map((c: string, i: number) => `${i + 1}. ${c}`).join("\n")}
+${collegeList.map((c: string, i: number) => `${i + 1}. ${c}`).join("\n")}${specificCollegeNote}
 
 For each college return:
 - college: college name

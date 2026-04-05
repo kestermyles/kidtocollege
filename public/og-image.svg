@@ -1,0 +1,10 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0f1f3d"/>
+  <rect width="1200" height="8" fill="#f59e0b"/>
+  <rect y="622" width="1200" height="8" fill="#f59e0b"/>
+  <text x="600" y="220" text-anchor="middle" font-family="Georgia, serif" font-size="96" font-weight="700" fill="#ffffff" letter-spacing="-2">Kid<tspan fill="#f59e0b">To</tspan>College</text>
+  <text x="600" y="310" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#f59e0b" letter-spacing="1">Free college admissions help for every student</text>
+  <line x1="480" y1="345" x2="720" y2="345" stroke="#f59e0b" stroke-width="1" opacity="0.4"/>
+  <text x="600" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="rgba(255,255,255,0.6)" letter-spacing="3">COLLEGES · SCHOLARSHIPS · ESSAYS · FINANCIAL AID</text>
+  <text x="600" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.3)" letter-spacing="2">kidtocollege.com</text>
+</svg>

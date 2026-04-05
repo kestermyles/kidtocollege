@@ -81,5 +81,7 @@ export async function GET(req: NextRequest) {
 
   const remaining = (count || 0) - processed;
 
+  console.log(`[enrich-photos] Processed: ${processed}, Remaining: ${remaining}, Time: ${new Date().toISOString()}`);
+
   return NextResponse.json({ processed, remaining });
 }

@@ -111,7 +111,7 @@ export function ResultsLoader({ resultId: initialResultId, searchId }: Props) {
 }
 
 const LOADING_FACTS = [
-  "Searching 125+ colleges for scholarships matched to your profile...",
+  "Searching 2,942 colleges for scholarships matched to your profile...",
   "Did you know? The average private college now costs over $100,000 for four years — we're finding ways to cut that for you.",
   "Checking merit aid thresholds, need-met percentages, and hidden departmental awards...",
   "The first FAFSA was filed in 1992. A lot has changed — we're on top of it.",
