@@ -27,6 +27,8 @@ export default function MyChancesClient() {
   // College search
   const [collegeQuery, setCollegeQuery] = useState("")
   const [selectedCollege, setSelectedCollege] = useState<{ name: string; slug: string } | null>(null)
+  const [collegeVerified, setCollegeVerified] = useState(false)
+  const [collegeError, setCollegeError] = useState("")
   const [collegeResults, setCollegeResults] = useState<{ name: string; slug: string }[]>([])
   const [showCollegeDropdown, setShowCollegeDropdown] = useState(false)
   const collegeDropdownRef = useRef<HTMLDivElement>(null)
@@ -44,6 +46,8 @@ export default function MyChancesClient() {
   const searchColleges = async (query: string) => {
     setCollegeQuery(query)
     setSelectedCollege(null)
+    setCollegeVerified(false)
+    setCollegeError("")
     if (query.length < 3) { setCollegeResults([]); setShowCollegeDropdown(false); return }
     const supabase = createClient()
     const { data } = await supabase
@@ -69,12 +73,22 @@ export default function MyChancesClient() {
     if (!form.gpa || !form.state || !form.major) { setError("Please fill in GPA, state, and intended major."); return }
     const gpaNum = parseFloat(form.gpa)
     if (isNaN(gpaNum) || gpaNum < 0 || gpaNum > 4.0) { setError("GPA must be between 0.0 and 4.0"); return }
+
+    // Clear unverified college text
+    let verifiedCollege = selectedCollege
+    if (collegeQuery && !collegeVerified) {
+      setCollegeError("Please select a college from the list, or leave the field blank.")
+      setCollegeQuery("")
+      setSelectedCollege(null)
+      verifiedCollege = null
+    }
+
     setError("")
     setLoading(true)
     const colleges = hasFetched ? savedColleges : await fetchSavedColleges()
     if (!hasFetched) { setSavedColleges(colleges); setHasFetched(true) }
     try {
-      const res = await fetch("/api/my-chances", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, savedColleges: colleges, specificCollege: selectedCollege }) })
+      const res = await fetch("/api/my-chances", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, savedColleges: colleges, specificCollege: verifiedCollege }) })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Something went wrong")
       setResults(data.results)
@@ -141,7 +155,7 @@ export default function MyChancesClient() {
                 />
                 {selectedCollege && (
                   <button
-                    onClick={() => { setSelectedCollege(null); setCollegeQuery(""); setCollegeResults([]) }}
+                    onClick={() => { setSelectedCollege(null); setCollegeQuery(""); setCollegeResults([]); setCollegeVerified(false); setCollegeError("") }}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
                     &times;
@@ -155,6 +169,8 @@ export default function MyChancesClient() {
                         onClick={() => {
                           setSelectedCollege(c)
                           setCollegeQuery(c.name)
+                          setCollegeVerified(true)
+                          setCollegeError("")
                           setShowCollegeDropdown(false)
                         }}
                         className="w-full text-left px-4 py-2.5 text-sm text-gray-900 hover:bg-gray-50 transition-colors"
@@ -165,6 +181,8 @@ export default function MyChancesClient() {
                   </div>
                 )}
               </div>
+              {collegeError && <p className="mt-1.5 text-xs text-red-500">{collegeError}</p>}
+              <p className="mt-1 text-xs text-gray-400">Type to search and select from the list — or leave blank to find colleges by major</p>
             </div>
           </div>
 
