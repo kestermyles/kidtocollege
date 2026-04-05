@@ -7,6 +7,7 @@ import { fetchScorecardData } from "@/lib/collegeScorecard";
 import { AddToListButton } from "@/components/AddToListButton";
 import { CollegeRequirements } from "@/components/CollegeRequirements";
 import CollegeTravelInfo from "@/components/CollegeTravelInfo";
+import { CollegeAIInsights } from "@/components/CollegeAIInsights";
 import type { College, ScholarshipResult } from "@/lib/types";
 
 export const revalidate = 86400;
@@ -770,6 +771,9 @@ export default async function CollegePage({ params }: CollegePageProps) {
           </div>
         </section>
       )}
+
+      {/* AI Insights */}
+      <CollegeAIInsights slug={slug} />
 
       {/* Quick links */}
       <section className="py-10 bg-cream">
