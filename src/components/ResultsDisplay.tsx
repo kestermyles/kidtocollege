@@ -100,14 +100,13 @@ function SectionHeader({
   subtitle?: string;
 }) {
   return (
-    <div className="mb-6">
-      <div className="flex items-center gap-3 mb-1">
-        <span className="font-mono text-xs text-gold font-bold tracking-widest uppercase">
+    <div className="mb-6 border-t border-gray-200 pt-8">
+      {number && (
+        <span className="text-xs font-mono text-amber-500 tracking-widest uppercase block mb-1">
           {number}
         </span>
-        <div className="flex-1 h-px bg-gold/20" />
-      </div>
-      <h2 className="font-display text-2xl md:text-3xl font-bold text-navy">
+      )}
+      <h2 className="font-display text-2xl font-semibold text-navy">
         {title}
       </h2>
       {subtitle && (
@@ -123,11 +122,11 @@ function SectionHeader({
 
 function StatPill({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex flex-col items-center p-3 bg-cream rounded-lg">
-      <span className="font-mono text-[11px] text-navy/50 uppercase tracking-wider">
+    <div className="flex flex-col items-center p-4 bg-gray-50 border border-gray-200 rounded-lg">
+      <span className="text-sm text-gray-500">
         {label}
       </span>
-      <span className="font-body font-semibold text-navy text-lg">
+      <span className="font-body font-semibold text-gray-900 text-lg">
         {value}
       </span>
     </div>
@@ -418,7 +417,7 @@ export function ResultsDisplay({
       {/* ================================================================ */}
       {/* REPORT BODY                                                      */}
       {/* ================================================================ */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 space-y-16">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 space-y-12">
         {/* -------------------------------------------------------------- */}
         {/* 01 — MATCH & ADMISSION                                         */}
         {/* -------------------------------------------------------------- */}
@@ -533,7 +532,7 @@ export function ResultsDisplay({
                       </div>
                       <Link
                         href={`/search?college=${encodeURIComponent(rc.name)}&major=${encodeURIComponent(major)}`}
-                        className="font-body text-sm text-gold hover:text-gold/80 font-medium transition-colors"
+                        className="text-amber-600 hover:text-amber-700 text-sm font-medium transition-colors"
                       >
                         Research this college &rarr;
                       </Link>
@@ -570,15 +569,15 @@ export function ResultsDisplay({
               </div>
 
               {/* Highlighted net cost */}
-              <div className="bg-navy rounded-lg p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                  <p className="font-mono text-xs text-white/50 uppercase tracking-wider">
+                  <p className="text-sm text-gray-500 uppercase tracking-wider">
                     Est. Total Cost After Aid
                   </p>
-                  <p className="font-display text-3xl md:text-4xl font-bold text-gold">
+                  <p className="font-display text-xl font-semibold text-amber-600">
                     {budget.estimated_net_after_aid}
                   </p>
-                  <p className="font-body text-xs text-white/40 mt-1">
+                  <p className="font-body text-xs text-gray-400 mt-1">
                     Includes tuition, room &amp; board, books &amp; living expenses
                   </p>
                 </div>

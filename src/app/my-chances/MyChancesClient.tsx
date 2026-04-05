@@ -246,53 +246,73 @@ export default function MyChancesClient() {
         </div>
 
         {results.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gray-900">Your Results</h2>
-            {results.map((r) => {
-              const cfg = likelihoodConfig(r.likelihood)
-              return (
-                <div key={r.slug} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <a href={`/college/${r.slug}`} className="text-lg font-bold text-blue-600 hover:underline">{r.college}</a>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className={`text-sm font-semibold px-3 py-1 rounded-full border ${cfg.colors}`}>{r.likelihood}</span>
-                      <span className="text-2xl font-bold text-gray-800">{r.percentage}%</span>
+          <div>
+            {/* Results header */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-1">
+                {selectedCollege ? selectedCollege.name : `${form.major} Programs`}
+              </h2>
+              <p className="text-sm text-gray-400">
+                Personalised report &middot; {form.gpa} GPA{form.sat ? ` · ${form.sat} SAT` : ""}{form.act ? ` · ${form.act} ACT` : ""} &middot; {form.state}
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {results.map((r, idx) => {
+                const cfg = likelihoodConfig(r.likelihood)
+                const isFirst = idx === 0 && selectedCollege
+                return (
+                  <div key={r.slug}>
+                    {/* Section divider */}
+                    {idx > 0 && <div className="border-t border-gray-200 mt-12" />}
+
+                    <div className={`bg-white rounded-xl border border-gray-200 p-4 ${isFirst ? "ring-1 ring-amber-200" : ""}`}>
+                      <div className="flex items-start justify-between gap-4 mb-3">
+                        <div>
+                          <a href={`/college/${r.slug}`} className="text-base font-semibold text-gray-900 hover:text-amber-600 transition-colors">{r.college}</a>
+                          {isFirst && <span className="ml-2 text-xs text-amber-500 font-medium">Your pick</span>}
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${cfg.colors}`}>{r.likelihood}</span>
+                          <span className="text-lg font-semibold text-gray-800">{r.percentage}%</span>
+                        </div>
+                      </div>
+                      <div className="w-full bg-gray-100 rounded-full h-1.5 mb-4">
+                        <div className={`h-1.5 rounded-full transition-all duration-700 ${cfg.bar}`} style={{ width: `${r.percentage}%` }} />
+                      </div>
+                      <p className="text-sm text-gray-600 mb-4 leading-relaxed">{r.reasoning}</p>
+                      {r.tips.length > 0 && (
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                          <p className="text-xs font-mono tracking-widest uppercase text-amber-500 mb-2">How to improve</p>
+                          <ul className="space-y-1.5">
+                            {r.tips.map((tip, i) => (
+                              <li key={i} className="text-sm text-gray-700 flex gap-2"><span className="text-amber-500 flex-shrink-0">&rarr;</span>{tip}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <div className="w-full bg-gray-100 rounded-full h-2 mb-4">
-                    <div className={`h-2 rounded-full transition-all duration-700 ${cfg.bar}`} style={{ width: `${r.percentage}%` }} />
-                  </div>
-                  <p className="text-sm text-gray-600 mb-3">{r.reasoning}</p>
-                  {r.tips.length > 0 && (
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1.5">How to improve your chances</p>
-                      <ul className="space-y-1">
-                        {r.tips.map((tip, i) => (
-                          <li key={i} className="text-sm text-gray-700 flex gap-2"><span className="text-blue-500 font-bold flex-shrink-0">→</span>{tip}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-            <p className="text-xs text-gray-400 text-center pt-2">Always verify requirements directly with each college.</p>
+                )
+              })}
+            </div>
+            <p className="text-xs text-gray-400 text-center mt-8">Always verify requirements directly with each college.</p>
           </div>
         )}
 
         {results.length === 0 && hasFetched && savedColleges.length === 0 && !loading && (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
-            <p className="text-amber-800 font-medium mb-2">No saved colleges found</p>
-            <p className="text-sm text-amber-700">Save colleges to your list first and we&apos;ll analyse your chances at each one. <a href="/colleges" className="underline font-semibold">Browse colleges →</a></p>
-          </div>
+          <p className="text-sm text-gray-400 italic text-center py-8">
+            Select a specific college above, or save colleges to your list to see your chances.{" "}
+            <a href="/colleges" className="text-amber-600 underline">Browse colleges &rarr;</a>
+          </p>
         )}
 
         {/* Cross-links */}
-        <div className="flex flex-wrap gap-3 mt-10 pt-6 border-t border-gray-200">
-          <a href="/colleges" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-blue-300 transition-colors">Browse colleges</a>
-          <a href="/coach" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-blue-300 transition-colors">The Coach</a>
-          <a href="/essays" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-blue-300 transition-colors">Essay prompts</a>
-          <a href="/scholarships" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-blue-300 transition-colors">Scholarships</a>
+        <div className="flex flex-wrap gap-3 mt-12 pt-6 border-t border-gray-200">
+          <a href="/colleges" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">Browse colleges</a>
+          <a href="/coach" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">The Coach</a>
+          <a href="/essays" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">Essay prompts</a>
+          <a href="/scholarships" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">Scholarships</a>
         </div>
       </div>
     </main>
