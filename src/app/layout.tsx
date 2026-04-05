@@ -8,9 +8,9 @@ import Sam from "@/components/Sam";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kidtocollege.com"),
-  title: "KidToCollege — Free College Guidance for Every Family",
+  title: "Free College Admissions Help for Every Student | KidToCollege",
   description:
-    "Private college counsellors charge up to $15,000. We think every kid deserves the same advantage — for free. AI-powered college research, scholarships, and coaching.",
+    "Get the same college admissions advantage as kids with $15,000 counselors — for free. Find colleges, scholarships, and your personalized roadmap to acceptance.",
   icons: {
     icon: [
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     shortcut: "/favicon-32x32.png",
   },
   openGraph: {
-    title: "KidToCollege — Free College Guidance for Every Family",
+    title: "Free College Admissions Help for Every Student | KidToCollege",
     description:
-      "Private college counsellors charge up to $15,000. We think every kid deserves the same advantage — for free.",
+      "Get the same college admissions advantage as kids with $15,000 counselors — for free. Find colleges, scholarships, and your personalized roadmap to acceptance.",
     siteName: "KidToCollege",
     type: "website",
   },

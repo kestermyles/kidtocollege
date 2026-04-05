@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Compare Colleges — KidToCollege",
+  title: "Compare Colleges Side by Side: Costs, Acceptance Rates & Aid | KidToCollege",
   description:
-    "Compare up to 3 colleges side by side. Acceptance rates, costs, graduation rates, programs, and more.",
+    "Compare any two colleges side by side — tuition, total cost of attendance, acceptance rate, financial aid, and student outcomes. Make a smarter college choice.",
   openGraph: {
-    title: "Compare Colleges — KidToCollege",
+    title: "Compare Colleges Side by Side | KidToCollege",
     description:
-      "Side-by-side comparison of colleges. Costs, outcomes, and fit — all in one view.",
+      "Compare any two colleges side by side — tuition, total cost of attendance, acceptance rate, financial aid, and student outcomes.",
   },
 };
 
