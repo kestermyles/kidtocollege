@@ -50,6 +50,7 @@ export default function MyChancesClient() {
       .from("colleges")
       .select("name, slug")
       .ilike("name", `%${query}%`)
+      .order("total_enrollment", { ascending: false, nullsFirst: false })
       .limit(8)
     setCollegeResults((data as { name: string; slug: string }[]) || [])
     setShowCollegeDropdown(true)
@@ -147,7 +148,7 @@ export default function MyChancesClient() {
                   </button>
                 )}
                 {showCollegeDropdown && collegeResults.length > 0 && (
-                  <div className="absolute z-10 top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto">
                     {collegeResults.map((c) => (
                       <button
                         key={c.slug}
