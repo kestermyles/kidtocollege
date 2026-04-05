@@ -110,19 +110,17 @@ export default function RoadmapPage() {
       {/* Steps */}
       <section className="py-16 sm:py-20">
         <div className="max-w-2xl mx-auto px-4">
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gold/20 hidden sm:block" />
-
-            <div className="space-y-6">
-              {STEPS.map((step) => {
-                const done = completed.has(step.num);
-                return (
-                  <div key={step.num} className="relative flex gap-5">
-                    {/* Step number */}
+          <div className="space-y-0">
+            {STEPS.map((step, idx) => {
+              const done = completed.has(step.num);
+              const isLast = idx === STEPS.length - 1;
+              return (
+                <div key={step.num} className="flex gap-5">
+                  {/* Left column: circle + line */}
+                  <div className="flex flex-col items-center flex-shrink-0 w-12">
                     <button
                       onClick={() => toggleStep(step.num)}
-                      className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold transition-all ${
+                      className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
                         done
                           ? "bg-sage text-white"
                           : "bg-gold/10 text-gold border-2 border-gold/30"
@@ -131,32 +129,34 @@ export default function RoadmapPage() {
                     >
                       {done ? "\u2713" : step.num}
                     </button>
-
-                    {/* Card */}
-                    <div className={`ktc-card p-6 flex-1 transition-opacity ${done ? "opacity-60" : ""}`}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="emoji text-xl" role="img" aria-label={step.title}>{step.icon}</span>
-                        <h2 className="font-display text-lg font-bold text-navy">
-                          {step.title}
-                        </h2>
-                        <span className="ml-auto px-2.5 py-0.5 rounded-full bg-navy/5 font-mono-label text-xs text-navy/40 flex-shrink-0">
-                          {step.badge}
-                        </span>
-                      </div>
-                      <p className="font-body text-sm text-navy/60 mb-4">
-                        {step.description}
-                      </p>
-                      <Link
-                        href={step.href}
-                        className="inline-block bg-gold hover:bg-gold/90 text-navy font-body font-medium text-sm px-5 py-2.5 rounded-md transition-all hover:translate-x-0.5"
-                      >
-                        {step.cta}
-                      </Link>
-                    </div>
+                    {/* Line stretches to fill card height */}
+                    <div className={`w-0.5 flex-1 bg-gold/20 ${isLast ? "mb-0" : ""}`} />
                   </div>
-                );
-              })}
-            </div>
+
+                  {/* Right column: card */}
+                  <div className={`ktc-card p-6 flex-1 mb-6 transition-opacity ${done ? "opacity-60" : ""} ${isLast ? "mb-0" : ""}`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="emoji text-xl" role="img" aria-label={step.title}>{step.icon}</span>
+                      <h2 className="font-display text-lg font-bold text-navy">
+                        {step.title}
+                      </h2>
+                      <span className="ml-auto px-2.5 py-0.5 rounded-full bg-navy/5 font-mono-label text-xs text-navy/40 flex-shrink-0">
+                        {step.badge}
+                      </span>
+                    </div>
+                    <p className="font-body text-sm text-navy/60 mb-4">
+                      {step.description}
+                    </p>
+                    <Link
+                      href={step.href}
+                      className="inline-block bg-gold hover:bg-gold/90 text-navy font-body font-medium text-sm px-5 py-2.5 rounded-md transition-all hover:translate-x-0.5"
+                    >
+                      {step.cta}
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
