@@ -97,31 +97,28 @@ export async function generateMetadata({
     };
   }
 
-  const cost = college.avg_cost_instate
-    ? `$${college.avg_cost_instate.toLocaleString()} in-state`
-    : "costs vary";
+  const costPart = college.avg_cost_instate
+    ? `$${college.avg_cost_instate.toLocaleString()}/year total cost of attendance`
+    : "View costs and financial aid";
 
-  const acceptance = college.acceptance_rate
+  const acceptPart = college.acceptance_rate
     ? `${college.acceptance_rate}% acceptance rate`
     : null;
 
-  const description = [
-    `${college.name} — ${acceptance ? acceptance + ", " : ""}${cost}.`,
-    college.programs?.length
-      ? `Popular programs: ${college.programs.slice(0, 3).join(", ")}.`
-      : "",
-    "Free AI-powered admissions research, scholarships, and personalised playbook.",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const descParts = [
+    `Explore ${college.name}:`,
+    acceptPart ? `${acceptPart},` : null,
+    `${costPart}, financial aid, scholarships, and how to get in.`,
+    "Free on KidToCollege.",
+  ].filter(Boolean).join(" ");
 
   return {
-    title: `${college.name} — Acceptance Rate, Costs & Admissions | KidToCollege`,
-    description,
+    title: `${college.name} — Acceptance Rate, Costs & Scholarships | KidToCollege`,
+    description: descParts,
     alternates: { canonical: canonicalUrl },
     openGraph: {
-      title: `${college.name} | KidToCollege`,
-      description,
+      title: `${college.name} — Acceptance Rate, Costs & Scholarships | KidToCollege`,
+      description: descParts,
       images: college.photo_url ? [{ url: college.photo_url }] : [],
     },
   };
@@ -363,16 +360,19 @@ export default async function CollegePage({ params }: CollegePageProps) {
       : defaultPhoto;
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
+  const city = college.location?.split(",")[0]?.trim() || "";
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CollegeOrUniversity",
+    "@type": "EducationalOrganization",
     name: college.name,
+    description: `${college.name} admissions information, costs, and scholarships`,
+    url: college.official_url || `${siteUrl}/college/${slug}`,
     address: {
       "@type": "PostalAddress",
-      addressLocality: college.location,
+      addressLocality: city,
       addressRegion: college.state,
+      addressCountry: "US",
     },
-    url: `${siteUrl}/college/${slug}`,
   };
 
   return (
@@ -405,6 +405,13 @@ export default async function CollegePage({ params }: CollegePageProps) {
         </Link>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 pt-32 w-full">
           <FadeIn>
+            <nav className="font-mono-label text-xs uppercase tracking-wider text-white/40 mb-4">
+              <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
+              {" / "}
+              <Link href="/colleges" className="hover:text-white/60 transition-colors">Colleges</Link>
+              {" / "}
+              <span className="text-white/60">{college.name}</span>
+            </nav>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
               {college.name}
             </h1>
@@ -763,6 +770,41 @@ export default async function CollegePage({ params }: CollegePageProps) {
           </div>
         </section>
       )}
+
+      {/* Quick links */}
+      <section className="py-10 bg-cream">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-display text-lg font-bold text-navy mb-4">
+            Next steps
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href={`/compare?colleges=${encodeURIComponent(college.name)}`}
+              className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white"
+            >
+              Compare with other colleges
+            </Link>
+            <Link
+              href="/my-chances"
+              className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white"
+            >
+              Check your chances
+            </Link>
+            <Link
+              href="/scholarships"
+              className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white"
+            >
+              Find scholarships
+            </Link>
+            <Link
+              href="/financial-aid/calculator"
+              className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white"
+            >
+              Net price calculator
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* CTAs */}
       <section className="py-16 sm:py-20 bg-navy">
