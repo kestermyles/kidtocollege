@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { COLLEGES_SEED } from "@/lib/colleges-seed";
 import { STATE_AID_DATA } from "@/lib/state-aid-data";
 import { MAJOR_PAGES } from "@/lib/major-pages-data";
+import { blogPosts } from "@/lib/blog-posts";
 import { createClient } from "@supabase/supabase-js";
 
 const BASE_URL =
@@ -205,5 +206,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...collegePages, ...stateAidPages, ...majorPages];
+  const blogPages: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    },
+    ...blogPosts.map((p) => ({
+      url: `${BASE_URL}/blog/${p.slug}`,
+      lastModified: new Date(p.updatedDate),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
+
+  return [...staticPages, ...collegePages, ...stateAidPages, ...majorPages, ...blogPages];
 }

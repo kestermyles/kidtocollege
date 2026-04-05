@@ -39,6 +39,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "KidToCollege",
+              url: "https://kidtocollege.com",
+              description:
+                "Free college admissions platform giving every student access to expert guidance",
+              contactPoint: {
+                "@type": "ContactPoint",
+                email: "hello@kidtocollege.com",
+                contactType: "customer support",
+              },
+            }),
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

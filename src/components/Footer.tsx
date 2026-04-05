@@ -11,6 +11,7 @@ const FOOTER_LINKS = {
   Resources: [
     { href: "/fafsa-guide", label: "FAFSA Guide" },
     { href: "/financial-aid", label: "State Aid Guides" },
+    { href: "/blog", label: "Blog" },
   ],
   Coach: [
     { href: "/coach/roadmap", label: "The Roadmap" },

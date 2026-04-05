@@ -362,6 +362,51 @@ export default function HomePage() {
         </div>
       </PhotoSection>
 
+      {/* ===== FROM OUR GUIDES ===== */}
+      <section className="py-16 sm:py-20 bg-white border-t border-card">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy text-center mb-10">
+              From our guides
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <Link
+                href="/blog/how-to-get-college-scholarships"
+                className="ktc-card p-6 block group hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              >
+                <h3 className="font-display text-base font-bold text-navy group-hover:text-gold transition-colors mb-2 leading-tight">
+                  How to Get College Scholarships: 12 Strategies That Work
+                </h3>
+                <p className="font-body text-sm text-navy/50">10 min read</p>
+              </Link>
+              <Link
+                href="/blog/fafsa-guide-2026-27"
+                className="ktc-card p-6 block group hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              >
+                <h3 className="font-display text-base font-bold text-navy group-hover:text-gold transition-colors mb-2 leading-tight">
+                  FAFSA 2026–27: Step-by-Step Filing Guide
+                </h3>
+                <p className="font-body text-sm text-navy/50">10 min read</p>
+              </Link>
+              <Link
+                href="/blog/how-to-write-common-app-essay"
+                className="ktc-card p-6 block group hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              >
+                <h3 className="font-display text-base font-bold text-navy group-hover:text-gold transition-colors mb-2 leading-tight">
+                  How to Write a Common App Essay That Gets You In
+                </h3>
+                <p className="font-body text-sm text-navy/50">9 min read</p>
+              </Link>
+            </div>
+            <p className="text-center mt-6">
+              <Link href="/blog" className="font-body text-sm text-gold hover:text-gold/80 font-medium">
+                View all guides &rarr;
+              </Link>
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ===== GRADUATION SECTION ===== */}
       <PhotoSection imageUrl="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?w=1920&q=80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center">
