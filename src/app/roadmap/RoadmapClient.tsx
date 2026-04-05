@@ -117,12 +117,12 @@ export default function RoadmapClient() {
               const Icon = step.icon;
               const isLast = idx === STEPS.length - 1;
               return (
-                <div key={step.num}>
-                  <div className="flex gap-5">
-                    {/* Circle */}
+                <div key={step.num} className="flex gap-5 items-start">
+                  {/* Left column — circle + line */}
+                  <div className="flex flex-col items-center flex-shrink-0">
                     <button
                       onClick={() => toggleStep(step.num)}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all flex-shrink-0 ${
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
                         done
                           ? "bg-sage text-white"
                           : "border-2 border-amber-300 bg-amber-50 text-amber-600"
@@ -131,35 +131,34 @@ export default function RoadmapClient() {
                     >
                       {done ? "\u2713" : step.num}
                     </button>
-
-                    {/* Card */}
-                    <div className={`ktc-card p-6 flex-1 transition-opacity ${done ? "opacity-60" : ""}`}>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-amber-50">
-                          <Icon className="w-5 h-5 text-amber-600" />
-                        </div>
-                        <h2 className="font-display text-lg font-bold text-navy">
-                          {step.title}
-                        </h2>
-                        <span className="ml-auto px-2.5 py-0.5 rounded-full bg-navy/5 font-mono-label text-xs text-navy/40 flex-shrink-0">
-                          {step.badge}
-                        </span>
-                      </div>
-                      <p className="font-body text-sm text-navy/60 mb-4">
-                        {step.description}
-                      </p>
-                      <Link
-                        href={step.href}
-                        className="inline-block bg-gold hover:bg-gold/90 text-navy font-body font-medium text-sm px-5 py-2.5 rounded-md transition-all hover:translate-x-0.5"
-                      >
-                        {step.cta}
-                      </Link>
-                    </div>
+                    {!isLast && (
+                      <div className="w-0.5 flex-1 bg-amber-400 min-h-[40px] hidden sm:block" />
+                    )}
                   </div>
-                  {/* Line segment between circles — not behind them */}
-                  {!isLast && (
-                    <div className="w-0.5 bg-amber-400 ml-[19px] hidden sm:block" style={{ height: '170px' }} />
-                  )}
+
+                  {/* Right column — card */}
+                  <div className={`ktc-card p-6 flex-1 mb-6 transition-opacity ${done ? "opacity-60" : ""}`}>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-amber-50">
+                        <Icon className="w-5 h-5 text-amber-600" />
+                      </div>
+                      <h2 className="font-display text-lg font-bold text-navy">
+                        {step.title}
+                      </h2>
+                      <span className="ml-auto px-2.5 py-0.5 rounded-full bg-navy/5 font-mono-label text-xs text-navy/40 flex-shrink-0">
+                        {step.badge}
+                      </span>
+                    </div>
+                    <p className="font-body text-sm text-navy/60 mb-4">
+                      {step.description}
+                    </p>
+                    <Link
+                      href={step.href}
+                      className="inline-block bg-gold hover:bg-gold/90 text-navy font-body font-medium text-sm px-5 py-2.5 rounded-md transition-all hover:translate-x-0.5"
+                    >
+                      {step.cta}
+                    </Link>
+                  </div>
                 </div>
               );
             })}
