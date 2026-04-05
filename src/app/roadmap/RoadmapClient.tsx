@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Compass, Building2, Target, DollarSign, Trophy, PenLine, type LucideIcon } from "lucide-react";
 
-const STEPS = [
+const STEPS: { num: number; icon: LucideIcon; title: string; description: string; cta: string; href: string; badge: string }[] = [
   {
     num: 1,
-    icon: "\ud83e\udded",
+    icon: Compass,
     title: "Figure out what you want",
     description: "Not sure what to study? Take our 3-minute quiz to discover majors that match your interests and personality.",
     cta: "Take the quiz \u2192",
@@ -15,7 +16,7 @@ const STEPS = [
   },
   {
     num: 2,
-    icon: "\ud83c\udfdb\ufe0f",
+    icon: Building2,
     title: "Find your colleges",
     description: "Search 2,942 colleges by location, size, cost, D1 sports, Greek life, and more. Build your list.",
     cta: "Browse colleges \u2192",
@@ -24,7 +25,7 @@ const STEPS = [
   },
   {
     num: 3,
-    icon: "\ud83c\udfaf",
+    icon: Target,
     title: "Check your chances",
     description: "Enter your GPA and test scores. Get a personalised Safety, On Target, and Reach list based on real admissions data.",
     cta: "Check my chances \u2192",
@@ -33,7 +34,7 @@ const STEPS = [
   },
   {
     num: 4,
-    icon: "\ud83d\udcb0",
+    icon: DollarSign,
     title: "Understand what you'll pay",
     description: "College sticker prices are misleading. See what you'll actually pay after grants, scholarships, and aid.",
     cta: "Calculate net price \u2192",
@@ -42,7 +43,7 @@ const STEPS = [
   },
   {
     num: 5,
-    icon: "\ud83c\udfc6",
+    icon: Trophy,
     title: "Find scholarships",
     description: "$50B in scholarships goes unclaimed every year. Search thousands of awards you actually qualify for.",
     cta: "Find scholarships \u2192",
@@ -51,7 +52,7 @@ const STEPS = [
   },
   {
     num: 6,
-    icon: "\u270d\ufe0f",
+    icon: PenLine,
     title: "Build your application",
     description: "Track deadlines, prep your essays with AI coaching, and get your application checklist. Don't miss a thing.",
     cta: "Start your application \u2192",
@@ -136,7 +137,9 @@ export default function RoadmapPage() {
                   {/* Right column: card */}
                   <div className={`ktc-card p-6 flex-1 mb-6 transition-opacity ${done ? "opacity-60" : ""} ${isLast ? "mb-0" : ""}`}>
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="emoji text-xl" role="img" aria-label={step.title}>{step.icon}</span>
+                      <div className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gold/10">
+                        <step.icon className="w-4 h-4 text-gold" />
+                      </div>
                       <h2 className="font-display text-lg font-bold text-navy">
                         {step.title}
                       </h2>
