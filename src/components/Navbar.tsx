@@ -150,7 +150,7 @@ export function Navbar() {
             )}
             {isSignedIn && (
               <Link
-                href="/my-list"
+                href="/my-colleges"
                 className="text-navy/70 hover:text-gold text-sm font-body font-medium transition-colors flex items-center gap-1.5"
               >
                 My List
@@ -250,7 +250,7 @@ export function Navbar() {
               )}
               {isSignedIn && (
                 <Link
-                  href="/my-list"
+                  href="/my-colleges"
                   onClick={() => setMobileOpen(false)}
                   className="block text-navy/70 hover:text-gold text-base font-body py-2"
                 >
