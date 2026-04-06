@@ -1,10 +1,10 @@
 'use server'
 
-import { createServerClient } from '@/lib/supabase/server'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { revalidatePath } from 'next/cache'
 
 export async function getMyColleges(userId: string) {
-  const supabase = createServerClient()
+  const supabase = createServerSupabaseClient()
   const { data } = await supabase
     .from('user_college_list')
     .select(`
@@ -23,7 +23,7 @@ export async function getMyColleges(userId: string) {
 }
 
 export async function addCollegeToList(userId: string, collegeId: string) {
-  const supabase = createServerClient()
+  const supabase = createServerSupabaseClient()
   const { data: existing } = await supabase
     .from('user_college_list')
     .select('position')
@@ -41,7 +41,7 @@ export async function addCollegeToList(userId: string, collegeId: string) {
 }
 
 export async function removeCollegeFromList(userId: string, collegeId: string) {
-  const supabase = createServerClient()
+  const supabase = createServerSupabaseClient()
   await supabase
     .from('user_college_list')
     .delete()
@@ -51,7 +51,7 @@ export async function removeCollegeFromList(userId: string, collegeId: string) {
 }
 
 export async function reorderColleges(userId: string, orderedIds: string[]) {
-  const supabase = createServerClient()
+  const supabase = createServerSupabaseClient()
   const updates = orderedIds.map((id, index) => ({
     id,
     user_id: userId,
@@ -61,7 +61,7 @@ export async function reorderColleges(userId: string, orderedIds: string[]) {
 }
 
 export async function updateCollegeStatus(userId: string, entryId: string, status: string) {
-  const supabase = createServerClient()
+  const supabase = createServerSupabaseClient()
   await supabase
     .from('user_college_list')
     .update({ status })

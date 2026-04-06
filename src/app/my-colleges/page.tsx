@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { createServerClient } from '@/lib/supabase/server'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { getMyColleges } from '@/lib/my-colleges'
 import CollegeListBoard from '@/components/my-colleges/CollegeListBoard'
 
@@ -9,7 +9,7 @@ export const metadata = {
 }
 
 export default async function MyCollegesPage() {
-  const supabase = createServerClient()
+  const supabase = createServerSupabaseClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/')
 
