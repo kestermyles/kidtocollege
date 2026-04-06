@@ -3,8 +3,8 @@ import { createClient } from "@supabase/supabase-js";
 
 export const maxDuration = 60;
 
-const MAX_PER_RUN = 45;
-const DELAY_MS = 1200;
+const MAX_PER_RUN = 20;
+const DELAY_MS = 800;
 
 async function getCollegePhoto(
   collegeName: string,
