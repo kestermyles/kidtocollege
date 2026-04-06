@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
+import { createClient } from "@supabase/supabase-js"
+import { createServerClient } from "@supabase/ssr"
+import { cookies } from "next/headers"
 
 export const maxDuration = 30
 
@@ -29,9 +32,42 @@ If asked about something outside your scope, say warmly: "That's a bit outside w
 Keep responses concise — 2-4 sentences for simple questions, slightly longer for complex ones. Always be encouraging and remember that many of the students using this platform are first-generation college students from lower-income families. Be the knowledgeable friend they might not otherwise have access to.`
 
 export async function POST(req: NextRequest) {
-  const { messages } = await req.json()
+  const { messages, pageContext } = await req.json()
   if (!messages || !Array.isArray(messages)) {
     return NextResponse.json({ error: "Invalid messages" }, { status: 400 })
+  }
+
+  // Fire-and-forget: log the question
+  const lastUserMsg = [...messages].reverse().find((m: { role: string }) => m.role === "user")
+  if (lastUserMsg) {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    if (url && serviceKey) {
+      // Get user ID if authenticated (best-effort)
+      let userId: string | null = null
+      try {
+        const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        if (anonKey) {
+          const cookieStore = await cookies()
+          const authClient = createServerClient(url, anonKey, {
+            cookies: {
+              get(name: string) { return cookieStore.get(name)?.value },
+              set() {},
+              remove() {},
+            },
+          })
+          const { data: { user } } = await authClient.auth.getUser()
+          userId = user?.id ?? null
+        }
+      } catch {}
+
+      const supa = createClient(url, serviceKey)
+      supa.from("sam_questions").insert({
+        user_id: userId,
+        question: lastUserMsg.content,
+        page_context: pageContext || null,
+      }).then(() => {}).catch(() => {})
+    }
   }
 
   const client = new Anthropic()

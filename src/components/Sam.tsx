@@ -51,7 +51,7 @@ export default function Sam() {
       const res = await fetch("/api/sam", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: newMessages, pageContext: window.location.pathname }),
       })
       const data = await res.json()
       setMessages([...newMessages, { role: "assistant", content: data.message }])
