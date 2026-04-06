@@ -15,18 +15,16 @@ export default async function SamQuestionsAdmin() {
 
   const supa = createServiceRoleClient()
 
-  const [{ count }, { data: recent }, { data: grouped }] = await Promise.all([
+  const [{ count }, { data: recent }] = await Promise.all([
     supa.from("sam_questions").select("*", { count: "exact", head: true }),
     supa
       .from("sam_questions")
       .select("id, question, asked_at, page_context, user_id")
       .order("asked_at", { ascending: false })
       .limit(100),
-    supa.rpc("get_top_sam_questions") as { data: { question: string; ask_count: number }[] | null },
   ])
 
-  // Client-side grouping fallback if RPC doesn't exist
-  const topQuestions = grouped ?? getTopByExactMatch(recent ?? [])
+  const topQuestions = getTopByExactMatch(recent ?? [])
 
   return (
     <div className="min-h-screen bg-white pt-24 pb-20">

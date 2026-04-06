@@ -62,11 +62,13 @@ export async function POST(req: NextRequest) {
       } catch {}
 
       const supa = createClient(url, serviceKey)
-      supa.from("sam_questions").insert({
-        user_id: userId,
-        question: lastUserMsg.content,
-        page_context: pageContext || null,
-      }).then(() => {}).catch(() => {})
+      Promise.resolve(
+        supa.from("sam_questions").insert({
+          user_id: userId,
+          question: lastUserMsg.content,
+          page_context: pageContext || null,
+        })
+      ).catch(() => {})
     }
   }
 
