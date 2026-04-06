@@ -134,23 +134,17 @@ export default function CoachPage() {
         className="min-h-[70vh] flex items-center"
       >
         <div className="max-w-4xl mx-auto px-6 py-32 text-center">
-          <FadeIn>
-            <p className="font-mono-label text-gold text-sm tracking-widest uppercase mb-4">
-              The Coach
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-6">
-              Your personal college counsellor.{" "}
-              <span className="text-gold">Free.</span>
-            </h1>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <p className="font-body text-xl md:text-2xl text-white/85 max-w-2xl mx-auto leading-relaxed">
-              Private counsellors charge up to $15,000. Everything they do, we
-              do here — for every family, at no cost.
-            </p>
-          </FadeIn>
+          <p className="font-mono-label text-gold text-sm tracking-widest uppercase mb-4">
+            The Coach
+          </p>
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+            The $15,000 counsellor.{" "}
+            <span className="text-gold italic">Free.</span>
+          </h1>
+          <p className="font-body text-xl md:text-2xl text-white/85 max-w-2xl mx-auto leading-relaxed">
+            Everything a private college counsellor does — roadmaps, essays,
+            test prep, interviews, financial aid — for every family, at no cost.
+          </p>
         </div>
       </PhotoSection>
 
