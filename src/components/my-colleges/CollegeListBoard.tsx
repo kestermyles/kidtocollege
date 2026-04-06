@@ -1,17 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
+import { useState } from 'react'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
+import { Navigation } from 'lucide-react'
 import { useMyColleges } from '@/hooks/useMyColleges'
 import CollegeListCard from './CollegeListCard'
 import FilterSortBar from './FilterSortBar'
 import AddCollegeSearch from './AddCollegeSearch'
+import RoadTripPlanner from './RoadTripPlanner'
 
-export default function CollegeListBoard({ initialItems }: {
+export default function CollegeListBoard({ initialItems, homeCity }: {
   initialItems: any[]
+  homeCity?: string
 }) {
   const { items, sortMode, setSortMode, handleDragEnd, handleRemove, handleStatusChange } = useMyColleges(initialItems)
   const isDragDisabled = sortMode !== 'custom'
+  const [showTrip, setShowTrip] = useState(false)
+
+  const tripStops = items
+    .filter((i: any) => i.colleges)
+    .map((i: any) => ({
+      id: i.id,
+      name: i.colleges.name,
+      location: i.colleges.location,
+    }))
 
   return (
     <div>
@@ -23,7 +36,18 @@ export default function CollegeListBoard({ initialItems }: {
         </div>
       )}
 
-      <FilterSortBar sortMode={sortMode} onSortChange={setSortMode} />
+      <div className="flex items-center justify-between mb-4">
+        <FilterSortBar sortMode={sortMode} onSortChange={setSortMode} />
+        {items.length >= 2 && (
+          <button
+            onClick={() => setShowTrip(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-navy hover:text-gold transition-colors whitespace-nowrap"
+          >
+            <Navigation size={14} />
+            Plan a campus visit road trip &rarr;
+          </button>
+        )}
+      </div>
 
       {items.length === 0 ? (
         <div className="text-center py-20 text-gray-400">
@@ -62,6 +86,14 @@ export default function CollegeListBoard({ initialItems }: {
             </Droppable>
           </DragDropContext>
         </>
+      )}
+
+      {showTrip && (
+        <RoadTripPlanner
+          colleges={tripStops}
+          defaultOrigin={homeCity || ''}
+          onClose={() => setShowTrip(false)}
+        />
       )}
     </div>
   )

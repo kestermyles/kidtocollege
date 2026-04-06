@@ -15,6 +15,17 @@ export default async function MyCollegesPage() {
 
   const colleges = await getMyColleges(user.id)
 
+  // Try to get home_zip from the user's most recent search
+  let homeCity = ''
+  const { data: recentSearch } = await supabase
+    .from('searches')
+    .select('state')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
+  if (recentSearch?.state) homeCity = recentSearch.state
+
   return (
     <main className="max-w-3xl mx-auto px-4 py-10">
       <div className="mb-8">
@@ -23,6 +34,7 @@ export default async function MyCollegesPage() {
       </div>
       <CollegeListBoard
         initialItems={colleges}
+        homeCity={homeCity}
       />
     </main>
   )
