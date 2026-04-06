@@ -130,7 +130,7 @@ export default function CoachPage() {
       {/* Hero */}
       <PhotoSection
         imageUrl="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80"
-        overlayOpacity="bg-navy/70"
+        overlayOpacity="bg-black/50"
         className="min-h-[70vh] flex items-center"
       >
         <div className="max-w-4xl mx-auto px-6 py-32 text-center">

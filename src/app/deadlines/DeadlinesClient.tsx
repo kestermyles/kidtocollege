@@ -46,7 +46,7 @@ function DeadlineBadge({ dateStr }: { dateStr: string | null }) {
 export default function DeadlinesPage() {
   const [myColleges, setMyColleges] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true);
 
   useEffect(() => {
     const supabase = createClient();
@@ -56,9 +56,9 @@ export default function DeadlinesPage() {
           .then((r) => r.json())
           .then((d) => {
             if (d.items) {
-              setMyColleges(
-                d.items.map((i: { college_slug: string }) => i.college_slug)
-              );
+              const slugs = d.items.map((i: { college_slug: string }) => i.college_slug);
+              setMyColleges(slugs);
+              if (slugs.length > 0) setShowAll(false);
             }
           })
           .catch(() => {});

@@ -103,7 +103,7 @@ export default function RoadmapPage() {
             Your College Roadmap
           </h1>
           <p className="font-body text-xl text-white/60 max-w-2xl mx-auto">
-            Everything you need to get into the right college &mdash; in the right order. Free, forever.
+            Everything you need to get into the right college &mdash; in the right order. Free to use.
           </p>
         </div>
       </section>

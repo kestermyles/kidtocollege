@@ -72,7 +72,7 @@ export default function HomePage() {
     <>
       {/* ===== HERO ===== */}
       <section
-        className="parallax-section relative min-h-screen flex items-center"
+        className="parallax-section relative"
         style={{
           backgroundImage:
             "url(https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=1600&q=80)",
