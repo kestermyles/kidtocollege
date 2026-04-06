@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export type SortMode = 'custom' | 'affordability' | 'scholarships'
@@ -10,6 +10,10 @@ export function useMyColleges(initialItems: any[]) {
   const router = useRouter()
   const [items, setItems] = useState(initialItems)
   const [sortMode, setSortMode] = useState<SortMode>('custom')
+
+  useEffect(() => {
+    setItems(initialItems)
+  }, [initialItems])
 
   const handleDragEnd = useCallback(async (result: any) => {
     if (!result.destination) return
