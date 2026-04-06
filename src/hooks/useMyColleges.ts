@@ -2,11 +2,11 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
-import { reorderColleges, updateCollegeStatus, removeCollegeFromList } from '@/lib/my-colleges'
+import { removeCollegeFromList, updateCollegeStatus } from '@/lib/my-colleges'
 
-export type SortMode = 'custom' | 'suitability' | 'affordability' | 'scholarships' | 'distance' | 'deadline'
+export type SortMode = 'custom' | 'affordability' | 'scholarships'
 
-export function useMyColleges(initialItems: any[], userId: string, userProfile?: any) {
+export function useMyColleges(initialItems: any[], userId: string) {
   const [items, setItems] = useState(initialItems)
   const [sortMode, setSortMode] = useState<SortMode>('custom')
 
@@ -16,17 +16,16 @@ export function useMyColleges(initialItems: any[], userId: string, userProfile?:
     const [moved] = reordered.splice(result.source.index, 1)
     reordered.splice(result.destination.index, 0, moved)
     setItems(reordered)
-    await reorderColleges(userId, reordered.map(i => i.id))
-  }, [items, userId])
+  }, [items])
 
-  const handleRemove = useCallback(async (collegeId: string) => {
-    setItems(prev => prev.filter(i => i.college_id !== collegeId))
-    await removeCollegeFromList(userId, collegeId)
+  const handleRemove = useCallback(async (itemId: string) => {
+    setItems(prev => prev.filter(i => i.id !== itemId))
+    await removeCollegeFromList(userId, itemId)
   }, [userId])
 
-  const handleStatusChange = useCallback(async (entryId: string, status: string) => {
-    setItems(prev => prev.map(i => i.id === entryId ? { ...i, status } : i))
-    await updateCollegeStatus(userId, entryId, status)
+  const handleStatusChange = useCallback(async (itemId: string, status: string) => {
+    setItems(prev => prev.map(i => i.id === itemId ? { ...i, application_status: status } : i))
+    await updateCollegeStatus(userId, itemId, status)
   }, [userId])
 
   const sortedItems = useMemo(() => {
@@ -37,18 +36,12 @@ export function useMyColleges(initialItems: any[], userId: string, userProfile?:
       switch (sortMode) {
         case 'affordability':
         case 'scholarships':
-          return (ca.avg_net_price ?? 99999) - (cb.avg_net_price ?? 99999)
-        case 'suitability': {
-          const userSAT = userProfile?.sat_total ?? 1000
-          const aGap = Math.abs(((ca.sat_reading_75 ?? 600) + (ca.sat_math_75 ?? 600)) - userSAT)
-          const bGap = Math.abs(((cb.sat_reading_75 ?? 600) + (cb.sat_math_75 ?? 600)) - userSAT)
-          return aGap - bGap
-        }
+          return (ca?.avg_cost_instate ?? 99999) - (cb?.avg_cost_instate ?? 99999)
         default:
           return 0
       }
     })
-  }, [items, sortMode, userProfile])
+  }, [items, sortMode])
 
   return {
     items: sortedItems,

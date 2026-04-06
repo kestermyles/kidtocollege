@@ -25,9 +25,9 @@ export default function AddCollegeSearch({ userId, currentCount }: {
         const supabase = createClient()
         const { data } = await supabase
           .from('colleges')
-          .select('id, name, slug, city, state')
+          .select('slug, name, location, state')
           .ilike('name', `%${query}%`)
-          .order('name')
+          .order('total_enrollment', { ascending: false, nullsFirst: false })
           .limit(6)
         setResults(data ?? [])
       } catch {}
@@ -37,9 +37,9 @@ export default function AddCollegeSearch({ userId, currentCount }: {
 
   const handleAdd = async (college: any) => {
     if (currentCount >= 20) return
-    setAdding(college.id)
+    setAdding(college.slug)
     try {
-      await addCollegeToList(userId, college.id)
+      await addCollegeToList(userId, college.slug)
       setQuery('')
       setResults([])
     } catch {}
@@ -63,14 +63,14 @@ export default function AddCollegeSearch({ userId, currentCount }: {
         <div className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
           {results.map((college: any) => (
             <button
-              key={college.id}
+              key={college.slug}
               onClick={() => handleAdd(college)}
               disabled={!!adding}
               className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 text-left transition-colors"
             >
               <div>
                 <div className="text-sm font-medium text-gray-900">{college.name}</div>
-                <div className="text-xs text-gray-500">{college.city}, {college.state}</div>
+                <div className="text-xs text-gray-500">{college.location}</div>
               </div>
               <Plus size={16} className="text-gray-400 flex-shrink-0" />
             </button>

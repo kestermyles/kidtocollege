@@ -3,10 +3,9 @@
 import { SortMode } from '@/hooks/useMyColleges'
 
 const SORT_OPTIONS: { value: SortMode; label: string }[] = [
-  { value: 'custom',       label: '✋ My Order' },
-  { value: 'suitability',  label: '🎯 Best Fit' },
-  { value: 'affordability',label: '💰 Affordability' },
-  { value: 'scholarships', label: '🏆 Best Aid' },
+  { value: 'custom',        label: 'My Order' },
+  { value: 'affordability',  label: 'Affordability' },
+  { value: 'scholarships',  label: 'Best Aid' },
 ]
 
 export default function FilterSortBar({ sortMode, onSortChange }: {

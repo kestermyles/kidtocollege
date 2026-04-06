@@ -7,12 +7,11 @@ import CollegeListCard from './CollegeListCard'
 import FilterSortBar from './FilterSortBar'
 import AddCollegeSearch from './AddCollegeSearch'
 
-export default function CollegeListBoard({ initialItems, userId, userProfile }: {
+export default function CollegeListBoard({ initialItems, userId }: {
   initialItems: any[]
   userId: string
-  userProfile?: any
 }) {
-  const { items, sortMode, setSortMode, handleDragEnd, handleRemove, handleStatusChange } = useMyColleges(initialItems, userId, userProfile)
+  const { items, sortMode, setSortMode, handleDragEnd, handleRemove, handleStatusChange } = useMyColleges(initialItems, userId)
   const isDragDisabled = sortMode !== 'custom'
 
   return (
@@ -21,7 +20,7 @@ export default function CollegeListBoard({ initialItems, userId, userProfile }: 
 
       {items.length >= 15 && (
         <div className="mb-4 px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-700">
-          💡 Counselors recommend applying to 10–12 colleges. You have {items.length}.
+          Counselors recommend applying to 10-12 colleges. You have {items.length}.
         </div>
       )}
 
@@ -51,8 +50,7 @@ export default function CollegeListBoard({ initialItems, userId, userProfile }: 
                             index={index}
                             isDragging={snapshot.isDragging}
                             isDragDisabled={isDragDisabled}
-                            userProfile={userProfile}
-                            onRemove={() => handleRemove(item.college_id)}
+                            onRemove={() => handleRemove(item.id)}
                             onStatusChange={(status: string) => handleStatusChange(item.id, status)}
                           />
                         </div>

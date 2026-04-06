@@ -4,7 +4,7 @@ import { getMyColleges } from '@/lib/my-colleges'
 import CollegeListBoard from '@/components/my-colleges/CollegeListBoard'
 
 export const metadata = {
-  title: 'My College List | KidToCollege',
+  title: 'My College List',
   description: 'Track and compare your shortlisted colleges in one place.'
 }
 
@@ -13,10 +13,7 @@ export default async function MyCollegesPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/')
 
-  const [colleges, profileResult] = await Promise.all([
-    getMyColleges(user.id),
-    supabase.from('profiles').select('sat_total, act_score, gpa, home_zip').eq('id', user.id).single()
-  ])
+  const colleges = await getMyColleges(user.id)
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-10">
@@ -27,7 +24,6 @@ export default async function MyCollegesPage() {
       <CollegeListBoard
         initialItems={colleges}
         userId={user.id}
-        userProfile={profileResult.data}
       />
     </main>
   )

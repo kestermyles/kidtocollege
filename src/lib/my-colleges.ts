@@ -3,69 +3,83 @@
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { revalidatePath } from 'next/cache'
 
-export async function getMyColleges(userId: string) {
+async function getOrCreateList(userId: string) {
   const supabase = createServerSupabaseClient()
+  let { data: list } = await supabase
+    .from('college_lists')
+    .select('id')
+    .eq('user_id', userId)
+    .single()
+
+  if (!list) {
+    const { data: newList } = await supabase
+      .from('college_lists')
+      .insert({ user_id: userId })
+      .select('id')
+      .single()
+    list = newList
+  }
+
+  return { supabase, listId: list?.id ?? null }
+}
+
+export async function getMyColleges(userId: string) {
+  const { supabase, listId } = await getOrCreateList(userId)
+  if (!listId) return []
+
   const { data } = await supabase
-    .from('user_college_list')
+    .from('college_list_items')
     .select(`
-      id, position, status, added_at,
-      college_id,
+      id, college_slug, category, application_status, notes, added_at,
       colleges (
-        id, name, slug, city, state,
-        admission_rate, avg_net_price,
-        sat_math_75, sat_reading_75, act_75,
+        name, slug, location, state,
+        acceptance_rate, avg_cost_instate,
         photo_url
       )
     `)
-    .eq('user_id', userId)
-    .order('position', { ascending: true })
+    .eq('list_id', listId)
+    .order('added_at', { ascending: true })
+
   return data ?? []
 }
 
-export async function addCollegeToList(userId: string, collegeId: string) {
-  const supabase = createServerSupabaseClient()
-  const { data: existing } = await supabase
-    .from('user_college_list')
-    .select('position')
-    .eq('user_id', userId)
-    .order('position', { ascending: false })
-    .limit(1)
-  const nextPosition = (existing?.[0]?.position ?? -1) + 1
-  const { error } = await supabase.from('user_college_list').insert({
-    user_id: userId,
-    college_id: collegeId,
-    position: nextPosition
-  })
+export async function addCollegeToList(userId: string, collegeSlug: string) {
+  const { supabase, listId } = await getOrCreateList(userId)
+  if (!listId) throw new Error('Failed to create list')
+
+  const { error } = await supabase
+    .from('college_list_items')
+    .upsert(
+      { list_id: listId, college_slug: collegeSlug, category: 'unknown' },
+      { onConflict: 'list_id,college_slug' }
+    )
+
   if (error) throw error
   revalidatePath('/my-colleges')
 }
 
-export async function removeCollegeFromList(userId: string, collegeId: string) {
-  const supabase = createServerSupabaseClient()
+export async function removeCollegeFromList(userId: string, itemId: string) {
+  const { supabase, listId } = await getOrCreateList(userId)
+  if (!listId) return
+
   await supabase
-    .from('user_college_list')
+    .from('college_list_items')
     .delete()
-    .eq('user_id', userId)
-    .eq('college_id', collegeId)
+    .eq('id', itemId)
+    .eq('list_id', listId)
+
   revalidatePath('/my-colleges')
 }
 
-export async function reorderColleges(userId: string, orderedIds: string[]) {
-  const supabase = createServerSupabaseClient()
-  const updates = orderedIds.map((id, index) => ({
-    id,
-    user_id: userId,
-    position: index
-  }))
-  await supabase.from('user_college_list').upsert(updates)
-}
+export async function updateCollegeStatus(userId: string, itemId: string, applicationStatus: string) {
+  const { supabase, listId } = await getOrCreateList(userId)
+  if (!listId) return
 
-export async function updateCollegeStatus(userId: string, entryId: string, status: string) {
-  const supabase = createServerSupabaseClient()
   await supabase
-    .from('user_college_list')
-    .update({ status })
-    .eq('id', entryId)
-    .eq('user_id', userId)
+    .from('college_list_items')
+    .update({ application_status: applicationStatus })
+    .eq('id', itemId)
+    .eq('list_id', listId)
+
   revalidatePath('/my-colleges')
 }
