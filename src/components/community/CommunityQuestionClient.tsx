@@ -222,9 +222,17 @@ export default function CommunityQuestionClient({
       {/* Reply box */}
       {isLoggedIn ? (
         <div className="ktc-card p-5">
-          <h3 className="font-display text-sm font-bold text-navy mb-3">
-            Add your answer
+          <h3 className="font-display text-sm font-bold text-navy mb-1">
+            Have experience with this? Help others.
           </h3>
+          <p className="font-body text-xs text-navy/50 mb-3">
+            Real advice from real families makes all the difference — share yours.
+          </p>
+          {communityAnswers.length === 0 && (
+            <p className="font-body text-sm text-navy/60 bg-gold/5 border border-gold/20 rounded-lg px-4 py-3 mb-3">
+              Be the first to share your experience. Your story could be exactly what another family needs to hear.
+            </p>
+          )}
           <textarea
             value={replyBody}
             onChange={(e) => setReplyBody(e.target.value)}

@@ -48,7 +48,7 @@ export default async function CommunityPage() {
                 College Admissions Q&amp;A
               </h1>
               <p className="font-body text-navy/60 mt-2">
-                Ask anything. Sam answers every question instantly.
+                Real questions from real families — answered by Sam, enriched by the community.
               </p>
             </div>
             <Link
