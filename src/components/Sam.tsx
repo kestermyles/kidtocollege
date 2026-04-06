@@ -35,6 +35,12 @@ export default function Sam() {
   }, [open])
 
   useEffect(() => {
+    const handler = () => setOpen(true)
+    window.addEventListener("open-sam", handler)
+    return () => window.removeEventListener("open-sam", handler)
+  }, [])
+
+  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, loading])
 
