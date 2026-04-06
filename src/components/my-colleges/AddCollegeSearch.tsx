@@ -2,14 +2,14 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { Search, Plus } from 'lucide-react'
-import { addCollegeToList } from '@/lib/my-colleges'
 import { createClient } from '@/lib/supabase-browser'
 
-export default function AddCollegeSearch({ userId, currentCount }: {
-  userId: string
+export default function AddCollegeSearch({ currentCount }: {
   currentCount: number
 }) {
+  const router = useRouter()
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
@@ -39,10 +39,22 @@ export default function AddCollegeSearch({ userId, currentCount }: {
     if (currentCount >= 20) return
     setAdding(college.slug)
     try {
-      await addCollegeToList(userId, college.slug)
-      setQuery('')
-      setResults([])
-    } catch {}
+      const res = await fetch('/api/list', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ collegeSlug: college.slug }),
+      })
+      if (!res.ok) {
+        const err = await res.json()
+        console.error('Failed to add college:', err)
+      } else {
+        setQuery('')
+        setResults([])
+        router.refresh()
+      }
+    } catch (e) {
+      console.error('Failed to add college:', e)
+    }
     setAdding(null)
   }
 

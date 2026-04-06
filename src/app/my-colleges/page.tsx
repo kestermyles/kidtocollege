@@ -23,7 +23,6 @@ export default async function MyCollegesPage() {
       </div>
       <CollegeListBoard
         initialItems={colleges}
-        userId={user.id}
       />
     </main>
   )

@@ -2,11 +2,12 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
-import { removeCollegeFromList, updateCollegeStatus } from '@/lib/my-colleges'
+import { useRouter } from 'next/navigation'
 
 export type SortMode = 'custom' | 'affordability' | 'scholarships'
 
-export function useMyColleges(initialItems: any[], userId: string) {
+export function useMyColleges(initialItems: any[]) {
+  const router = useRouter()
   const [items, setItems] = useState(initialItems)
   const [sortMode, setSortMode] = useState<SortMode>('custom')
 
@@ -20,13 +21,28 @@ export function useMyColleges(initialItems: any[], userId: string) {
 
   const handleRemove = useCallback(async (itemId: string) => {
     setItems(prev => prev.filter(i => i.id !== itemId))
-    await removeCollegeFromList(userId, itemId)
-  }, [userId])
+    try {
+      const res = await fetch(`/api/list?itemId=${itemId}`, { method: 'DELETE' })
+      if (!res.ok) console.error('Failed to remove college:', await res.json())
+      else router.refresh()
+    } catch (e) {
+      console.error('Failed to remove college:', e)
+    }
+  }, [router])
 
   const handleStatusChange = useCallback(async (itemId: string, status: string) => {
     setItems(prev => prev.map(i => i.id === itemId ? { ...i, application_status: status } : i))
-    await updateCollegeStatus(userId, itemId, status)
-  }, [userId])
+    try {
+      const res = await fetch('/api/list', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId, applicationStatus: status }),
+      })
+      if (!res.ok) console.error('Failed to update status:', await res.json())
+    } catch (e) {
+      console.error('Failed to update status:', e)
+    }
+  }, [])
 
   const sortedItems = useMemo(() => {
     if (sortMode === 'custom') return items

@@ -7,16 +7,15 @@ import CollegeListCard from './CollegeListCard'
 import FilterSortBar from './FilterSortBar'
 import AddCollegeSearch from './AddCollegeSearch'
 
-export default function CollegeListBoard({ initialItems, userId }: {
+export default function CollegeListBoard({ initialItems }: {
   initialItems: any[]
-  userId: string
 }) {
-  const { items, sortMode, setSortMode, handleDragEnd, handleRemove, handleStatusChange } = useMyColleges(initialItems, userId)
+  const { items, sortMode, setSortMode, handleDragEnd, handleRemove, handleStatusChange } = useMyColleges(initialItems)
   const isDragDisabled = sortMode !== 'custom'
 
   return (
     <div>
-      <AddCollegeSearch userId={userId} currentCount={items.length} />
+      <AddCollegeSearch currentCount={items.length} />
 
       {items.length >= 15 && (
         <div className="mb-4 px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-700">
