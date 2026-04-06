@@ -362,19 +362,20 @@ export default async function CollegePage({ params }: CollegePageProps) {
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
   const city = college.location?.split(",")[0]?.trim() || "";
-  const jsonLd = {
+  const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
+    "@type": "CollegeOrUniversity",
     name: college.name,
-    description: `${college.name} admissions information, costs, and scholarships`,
-    url: college.official_url || `${siteUrl}/college/${slug}`,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: city,
-      addressRegion: college.state,
-      addressCountry: "US",
-    },
+    url: `${siteUrl}/college/${slug}`,
+    description: `${college.name} admissions information, costs, and scholarships — ${college.location}.`,
   };
+  if (city || college.state) {
+    const address: Record<string, string> = { "@type": "PostalAddress", addressCountry: "US" };
+    if (city) address.addressLocality = city;
+    if (college.state) address.addressRegion = college.state;
+    jsonLd.address = address;
+  }
+  if (college.official_url) jsonLd.sameAs = college.official_url;
 
   return (
     <div className="min-h-screen bg-white">
