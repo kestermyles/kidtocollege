@@ -38,7 +38,7 @@ export default async function CommunityPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader title="Community Q&A" subtitle="Real questions from real families — answered by Sam, enriched by the community." />
+      <PageHeader title="Community Q&A" subtitle="Real questions, answered by Sam and the community." />
       <div className="max-w-3xl mx-auto px-4 pt-8 pb-20">
         <div className="flex justify-end mb-6">
           <Link

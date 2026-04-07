@@ -98,7 +98,7 @@ export default function RoadmapPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader title="Your College Roadmap" subtitle="Everything you need to get into college — in the right order." />
+      <PageHeader title="Your College Roadmap" subtitle="Everything you need, in the right order." />
 
       {/* Steps */}
       <section className="py-16 sm:py-20">

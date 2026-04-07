@@ -23,7 +23,7 @@ export default async function SearchPage({
     <>
       <PageHeader
         title="Find the right college. Fund it fully."
-        subtitle="Tell us about yourself — we'll find the best colleges for your profile, surface every scholarship, and build a step-by-step admissions playbook."
+        subtitle="Tell us about yourself — we'll find your best colleges, scholarships, and admissions playbook."
       />
 
       {/* Wizard card overlapping into white area */}
