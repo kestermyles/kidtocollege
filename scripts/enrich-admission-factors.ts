@@ -102,8 +102,13 @@ Replace each value with the actual weight from their CDS C7. Only use these four
         .map((b) => (b as { type: "text"; text: string }).text)
         .join("")
 
-      const cleaned = stripMarkdown(text)
-      const data = JSON.parse(cleaned)
+      const rawText = stripMarkdown(text)
+
+      // Extract JSON object from response even if there's surrounding text
+      const jsonMatch = rawText.match(/\{[\s\S]*\}/)
+      if (!jsonMatch) throw new Error("No JSON object found")
+      const cleanText = jsonMatch[0]
+      const data = JSON.parse(cleanText)
 
       if (!data.factors || !data.cds_year) {
         console.log(`  [warn] ${college.name} — invalid response structure`)
@@ -111,13 +116,17 @@ Replace each value with the actual weight from their CDS C7. Only use these four
         continue
       }
 
+      const year = typeof data.cds_year === "string"
+        ? parseInt(data.cds_year.split("-")[0], 10)
+        : data.cds_year
+
       // Upsert factors
       const rows = Object.entries(data.factors).map(([factor, weight]) => ({
         college_slug: college.slug,
         factor,
         weight: weight as string,
         source: "cds",
-        cds_year: data.cds_year,
+        cds_year: year,
         updated_at: new Date().toISOString(),
       }))
 
@@ -128,7 +137,7 @@ Replace each value with the actual weight from their CDS C7. Only use these four
       if (upsertError) {
         console.log(`  [error] ${college.name} — upsert failed: ${upsertError.message}`)
       } else {
-        console.log(`  [done] ${college.name} — CDS ${data.cds_year}, ${rows.length} factors`)
+        console.log(`  [done] ${college.name} — CDS ${year}, ${rows.length} factors`)
         processed++
       }
     } catch (err: any) {
