@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { Wizard } from "@/components/Wizard";
+import { PageHeader } from "@/components/PageHeader";
 
 export const metadata: Metadata = {
   title: "Find Your College — KidToCollege",
@@ -20,19 +21,10 @@ export default async function SearchPage({
 
   return (
     <>
-      {/* Dark navy header band */}
-      <section className="bg-navy py-16 pb-20">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h1 className="font-display text-3xl md:text-4xl font-bold text-white mb-3">
-            Find the right college. Fund it fully.
-          </h1>
-          <p className="font-body text-white/60 text-lg max-w-xl mx-auto">
-            Tell us about yourself — we&apos;ll find the best colleges for
-            your profile, surface every scholarship, and build a step-by-step
-            admissions playbook.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        title="Find the right college. Fund it fully."
+        subtitle="Tell us about yourself — we'll find the best colleges for your profile, surface every scholarship, and build a step-by-step admissions playbook."
+      />
 
       {/* Wizard card overlapping into white area */}
       <section className="bg-white pb-20">
