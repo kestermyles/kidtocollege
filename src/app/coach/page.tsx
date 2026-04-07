@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
-import { PhotoSection } from "@/components/PhotoSection";
+import { PageHeader } from "@/components/PageHeader";
 
 export const metadata: Metadata = {
   title: "Free College Admissions Coach: Essays, Test Prep & Financial Aid",
@@ -127,26 +127,7 @@ export default function CoachPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
-      {/* Hero */}
-      <PhotoSection
-        imageUrl="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80"
-        overlayOpacity="bg-black/50"
-        className="min-h-[70vh] flex items-center"
-      >
-        <div className="max-w-4xl mx-auto px-6 py-32 text-center">
-          <p className="font-mono-label text-gold text-sm tracking-widest uppercase mb-4">
-            The Coach
-          </p>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-            The $15,000 counsellor.{" "}
-            <span className="text-gold italic">Free.</span>
-          </h1>
-          <p className="font-body text-xl md:text-2xl text-white/85 max-w-2xl mx-auto leading-relaxed">
-            Everything a private college counsellor does — roadmaps, essays,
-            test prep, interviews, financial aid — for every family, at no cost.
-          </p>
-        </div>
-      </PhotoSection>
+      <PageHeader title="The Coach" subtitle="Your personal AI college counsellor." />
 
       {/* Coaching Pillars */}
       <section className="py-24 bg-white">

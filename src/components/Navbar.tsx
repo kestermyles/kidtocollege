@@ -120,19 +120,19 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-6">
             {NAV_LINKS.filter((l) => !l.authOnly || isSignedIn).map((link, i) => (
               <React.Fragment key={link.href}>
-                {/* Insert My Colleges pill after Roadmap (first item) */}
+                {/* Insert My Colleges after Roadmap (first item) */}
                 {i === 1 && isSignedIn && (
                   <Link
                     href="/my-colleges"
-                    className={`relative border-2 border-yellow-400 text-navy text-sm font-body font-medium px-3 py-1 rounded-full transition-colors ${
+                    className={`relative text-sm font-medium font-body ${
                       pathname === "/my-colleges"
-                        ? "bg-yellow-400"
-                        : "hover:bg-yellow-400"
+                        ? "text-navy border-b-2 border-yellow-400 pb-0.5"
+                        : "text-navy/70 hover:text-navy transition-colors"
                     }`}
                   >
                     My Colleges
                     {listCount > 0 && (
-                      <span className="absolute -top-1.5 -right-1.5 inline-flex items-center justify-center w-5 h-5 rounded-full bg-navy text-gold text-[10px] font-bold">
+                      <span className="absolute -top-1.5 -right-2.5 inline-flex items-center justify-center w-5 h-5 rounded-full bg-navy text-gold text-[10px] font-bold">
                         {listCount}
                       </span>
                     )}
@@ -163,10 +163,10 @@ export function Navbar() {
                 ) : (
                   <Link
                     href={link.href}
-                    className={`text-sm font-body transition-colors ${
+                    className={`relative text-sm font-medium font-body ${
                       pathname === link.href || pathname.startsWith(link.href + "/")
-                        ? "text-navy font-semibold"
-                        : "text-navy/60 font-medium hover:text-navy/90"
+                        ? "text-navy border-b-2 border-yellow-400 pb-0.5"
+                        : "text-navy/70 hover:text-navy transition-colors"
                     }`}
                   >
                     {link.label}
