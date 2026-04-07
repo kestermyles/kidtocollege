@@ -89,7 +89,7 @@ export function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-white shadow-sm border-b border-gray-200"
-          : "bg-white/80 backdrop-blur-sm"
+          : "bg-white border-b border-gray-100"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -124,7 +124,7 @@ export function Navbar() {
                 {i === 1 && isSignedIn && (
                   <Link
                     href="/my-colleges"
-                    className="relative bg-yellow-400 hover:bg-yellow-300 text-navy text-sm font-body font-semibold px-4 py-1.5 rounded-full transition-colors"
+                    className="relative bg-yellow-400 hover:bg-yellow-300 text-navy text-sm font-body font-medium px-3 py-1 rounded-full transition-colors"
                   >
                     My Colleges
                     {listCount > 0 && (
