@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase-browser"
 import { FadeIn } from "@/components/FadeIn"
-import Link from "next/link"
+import { PageHeader } from "@/components/PageHeader"
 
 export default function CommunityAskPage() {
   const router = useRouter()
@@ -81,20 +81,10 @@ export default function CommunityAskPage() {
   if (!userId) return null
 
   return (
-    <div className="min-h-screen bg-white pt-24 pb-20">
-      <div className="max-w-2xl mx-auto px-4">
+    <div className="min-h-screen bg-white">
+      <PageHeader title="Ask a Question" />
+      <div className="max-w-2xl mx-auto px-4 pt-8 pb-20">
         <FadeIn>
-          <nav className="font-mono-label text-xs uppercase tracking-wider text-navy/40 mb-6">
-            <Link href="/community" className="hover:text-navy/60 transition-colors">
-              Community
-            </Link>
-            {" / "}
-            <span className="text-navy/60">Ask a Question</span>
-          </nav>
-
-          <h1 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-6">
-            Ask the community
-          </h1>
 
           <div className="space-y-4">
             <div>

@@ -84,7 +84,7 @@ export default function CollegesBrowsePage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-navy mb-2">
+          <h1 className="font-display text-3xl font-bold text-navy mb-2">
             Browse All Colleges
           </h1>
           <p className="font-body text-navy/60">

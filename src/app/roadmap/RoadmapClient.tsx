@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Compass, Building2, Target, DollarSign, Trophy, PenLine, type LucideIcon } from "lucide-react";
+import { PageHeader } from "@/components/PageHeader";
 
 const STEPS: { num: number; icon: LucideIcon; title: string; description: string; cta: string; href: string; badge: string }[] = [
   {
@@ -96,17 +97,7 @@ export default function RoadmapPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero */}
-      <section className="bg-navy py-20 sm:py-28">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-4">
-            Your College Roadmap
-          </h1>
-          <p className="font-body text-xl text-white/60 max-w-2xl mx-auto">
-            Everything you need to get into the right college &mdash; in the right order. Free to use.
-          </p>
-        </div>
-      </section>
+      <PageHeader title="Your College Roadmap" subtitle="Everything you need, in the right order." />
 
       {/* Steps */}
       <section className="py-16 sm:py-20">

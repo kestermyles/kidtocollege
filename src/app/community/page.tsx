@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { createServiceRoleClient } from "@/lib/supabase-server"
 import { FadeIn } from "@/components/FadeIn"
+import { PageHeader } from "@/components/PageHeader"
 
 export const metadata: Metadata = {
   title: "Community Q&A — College Admissions Help",
@@ -36,29 +37,17 @@ export default async function CommunityPage() {
     .limit(50)
 
   return (
-    <div className="min-h-screen bg-white pt-24 pb-20">
-      <div className="max-w-3xl mx-auto px-4">
-        <FadeIn>
-          <div className="flex items-start justify-between mb-10">
-            <div>
-              <span className="font-mono-label text-xs uppercase tracking-wider text-gold">
-                Community
-              </span>
-              <h1 className="font-display text-3xl sm:text-4xl font-bold text-navy mt-2">
-                College Admissions Q&amp;A
-              </h1>
-              <p className="font-body text-navy/60 mt-2">
-                Real questions from real families — answered by Sam, enriched by the community.
-              </p>
-            </div>
-            <Link
-              href="/community/ask"
-              className="flex-shrink-0 bg-gold hover:bg-gold/90 text-navy font-body font-medium px-6 py-3 rounded-md transition-colors text-sm"
-            >
-              Ask a Question
-            </Link>
-          </div>
-        </FadeIn>
+    <div className="min-h-screen bg-white">
+      <PageHeader title="Community Q&A" subtitle="Real questions from real families — answered by Sam." />
+      <div className="max-w-3xl mx-auto px-4 pt-8 pb-20">
+        <div className="flex justify-end mb-6">
+          <Link
+            href="/community/ask"
+            className="bg-gold hover:bg-gold/90 text-navy font-body font-medium px-6 py-3 rounded-md transition-colors text-sm"
+          >
+            Ask a Question
+          </Link>
+        </div>
 
         {!questions || questions.length === 0 ? (
           <FadeIn>

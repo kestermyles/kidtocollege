@@ -140,7 +140,7 @@ export function Navbar() {
                 )}
                 {link.children ? (
                   <div className="relative group">
-                    <button className="text-navy/70 hover:text-gold text-sm font-body font-medium transition-colors flex items-center gap-1">
+                    <button className="text-navy/60 hover:text-navy/90 text-sm font-body font-medium transition-colors flex items-center gap-1">
                       {link.label}
                       <svg className="w-3 h-3 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -163,10 +163,10 @@ export function Navbar() {
                 ) : (
                   <Link
                     href={link.href}
-                    className={`text-sm font-body font-medium transition-colors ${
+                    className={`text-sm font-body transition-colors ${
                       pathname === link.href || pathname.startsWith(link.href + "/")
-                        ? "text-navy border-b-2 border-yellow-400 pb-0.5"
-                        : "text-navy/70 hover:text-gold"
+                        ? "text-navy font-semibold"
+                        : "text-navy/60 font-medium hover:text-navy/90"
                     }`}
                   >
                     {link.label}

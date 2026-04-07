@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { createClient } from "@/lib/supabase-browser"
+import { PageHeader } from "@/components/PageHeader"
 
 const MAJORS = ["Undecided","Computer Science","Engineering","Business","Biology / Pre-Med","Psychology","Economics","Political Science","Communications","Nursing","Education","Art & Design","Film & Media","Environmental Science","Mathematics","Philosophy","Sociology","History","English / Literature","Criminal Justice"]
 
@@ -113,11 +114,8 @@ export default function MyChancesClient() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4 pt-20 pb-12">
-        <div className="mb-10">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">My Chances</h1>
-          <p className="text-lg text-gray-600">Enter your academic profile and get an AI-powered estimate of your admission chances at your saved colleges — plus specific tips to improve them.</p>
-        </div>
+      <PageHeader title="My Chances" subtitle="See how you stack up at any college." />
+      <div className="max-w-3xl mx-auto px-4 pt-10 pb-12">
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

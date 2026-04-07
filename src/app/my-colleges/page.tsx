@@ -29,7 +29,7 @@ export default async function MyCollegesPage() {
   return (
     <main className="max-w-3xl mx-auto px-4 pt-24 pb-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">My College List</h1>
+        <h1 className="font-display text-3xl font-bold text-navy">My College List</h1>
         <p className="text-gray-500 mt-1">Add up to 20 colleges, drag to reorder, track your applications</p>
       </div>
       <CollegeListBoard
