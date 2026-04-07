@@ -124,7 +124,9 @@ export function Navbar() {
                 {i === 1 && isSignedIn && (
                   <Link
                     href="/my-colleges"
-                    className="relative bg-yellow-400 hover:bg-yellow-300 text-navy text-sm font-body font-medium px-3 py-1 rounded-full transition-colors"
+                    className={`relative bg-yellow-400 hover:bg-yellow-300 text-navy text-sm font-body font-medium px-3 py-1 rounded-full transition-colors ${
+                      pathname === "/my-colleges" ? "ring-2 ring-navy/20" : ""
+                    }`}
                   >
                     My Colleges
                     {listCount > 0 && (
@@ -159,7 +161,11 @@ export function Navbar() {
                 ) : (
                   <Link
                     href={link.href}
-                    className="text-navy/70 hover:text-gold text-sm font-body font-medium transition-colors"
+                    className={`text-sm font-body font-medium transition-colors ${
+                      pathname === link.href || pathname.startsWith(link.href + "/")
+                        ? "text-navy border-b-2 border-yellow-400 pb-0.5"
+                        : "text-navy/70 hover:text-gold"
+                    }`}
                   >
                     {link.label}
                   </Link>
