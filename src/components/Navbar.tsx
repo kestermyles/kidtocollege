@@ -124,7 +124,7 @@ export function Navbar() {
                 {i === 1 && isSignedIn && (
                   <Link
                     href="/my-colleges"
-                    className={`relative text-sm font-medium font-body ${
+                    className={`relative pr-4 text-sm font-medium font-body ${
                       pathname === "/my-colleges"
                         ? "text-navy border-b-2 border-yellow-400 pb-0.5"
                         : "text-navy/70 hover:text-navy transition-colors"
