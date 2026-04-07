@@ -110,7 +110,23 @@ Replace each value with the actual weight from their CDS C7. Only use these four
       const cleanText = jsonMatch[0]
       const data = JSON.parse(cleanText)
 
-      if (!data.factors || !data.cds_year) {
+      // Handle both {factors: {...}} and flat {gpa: ..., class_rank: ...}
+      let factors = data.factors
+      if (!factors) {
+        const knownFactors = ["gpa","class_rank","test_scores",
+          "recommendation","extracurriculars","first_generation",
+          "geographic_residence","state_residency","volunteer_work",
+          "work_experience","talent_ability","character_personal",
+          "alumni_relation","racial_ethnic_status"]
+        const flat = Object.fromEntries(
+          Object.entries(data).filter(([k]) => knownFactors.includes(k))
+        )
+        if (Object.keys(flat).length >= 3) {
+          factors = flat
+        }
+      }
+
+      if (!factors || Object.keys(factors).length === 0) {
         console.log(`  [warn] ${college.name} — invalid response structure: ${JSON.stringify(data).substring(0, 200)}`)
         await sleep(DELAY_MS)
         continue
@@ -118,10 +134,10 @@ Replace each value with the actual weight from their CDS C7. Only use these four
 
       const year = typeof data.cds_year === "string"
         ? parseInt(data.cds_year.split("-")[0], 10)
-        : data.cds_year
+        : data.cds_year || new Date().getFullYear()
 
       // Upsert factors
-      const rows = Object.entries(data.factors).map(([factor, weight]) => ({
+      const rows = Object.entries(factors).map(([factor, weight]) => ({
         college_slug: college.slug,
         factor,
         weight: weight as string,
