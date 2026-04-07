@@ -9,6 +9,8 @@ import { CollegeRequirements } from "@/components/CollegeRequirements";
 import CollegeTravelInfo from "@/components/CollegeTravelInfo";
 import { CollegeAIInsights } from "@/components/CollegeAIInsights";
 import type { College, ScholarshipResult } from "@/lib/types";
+import { CollegeAdmissionFactors } from "@/components/CollegeAdmissionFactors";
+import { CollegeYourIn } from "@/components/CollegeYourIn";
 
 export const revalidate = 86400;
 
@@ -470,6 +472,12 @@ export default async function CollegePage({ params }: CollegePageProps) {
           </FadeIn>
         </div>
       </section>
+
+      {/* Admission Factors */}
+      <CollegeAdmissionFactors slug={slug} />
+
+      {/* Your In */}
+      <CollegeYourIn collegeSlug={slug} collegeName={college.name} />
 
       {/* Programs */}
       {college.programs && college.programs.length > 0 && (
