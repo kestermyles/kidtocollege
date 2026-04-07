@@ -82,31 +82,16 @@ async function main() {
         max_tokens: 800,
         tools: [{ type: "web_search_20250305" as any, name: "web_search", max_uses: 3 }],
         system:
-          "You are a college admissions data researcher. Return only valid JSON, no other text, no markdown.",
+          "You are a JSON-only API. You never write explanations or natural language. You only output raw JSON objects.",
         messages: [
           {
             role: "user",
-            content: `Find the most recent Common Data Set (CDS) for ${college.name}. Look at Section C7: Relative Importance of Academic and Nonacademic Factors. Return ONLY this JSON object with no other text:
-{
-  "cds_year": 2024,
-  "factors": {
-    "gpa": "very_important",
-    "class_rank": "important",
-    "test_scores": "considered",
-    "recommendation": "important",
-    "extracurriculars": "considered",
-    "first_generation": "considered",
-    "geographic_residence": "important",
-    "state_residency": "not_considered",
-    "volunteer_work": "considered",
-    "work_experience": "considered",
-    "talent_ability": "important",
-    "character_personal": "very_important",
-    "alumni_relation": "considered",
-    "racial_ethnic_status": "not_considered"
-  }
-}
-Use only: very_important, important, considered, not_considered. If a factor is not in their CDS use not_considered.`,
+            content: `You must respond with ONLY a JSON object. No explanation, no preamble, no markdown, no code fences. Just the raw JSON object starting with { and ending with }.
+
+Search for the Common Data Set (CDS) for ${college.name} and find Section C7. Return this exact JSON structure:
+{"cds_year":2024,"factors":{"gpa":"very_important","class_rank":"important","test_scores":"considered","recommendation":"important","extracurriculars":"considered","first_generation":"considered","geographic_residence":"important","state_residency":"not_considered","volunteer_work":"considered","work_experience":"considered","talent_ability":"important","character_personal":"very_important","alumni_relation":"considered","racial_ethnic_status":"not_considered"}}
+
+Replace each value with the actual weight from their CDS C7. Only use these four values: very_important, important, considered, not_considered. Start your response with { immediately.`,
           },
         ],
       })
