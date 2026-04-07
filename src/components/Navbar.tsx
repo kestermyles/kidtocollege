@@ -124,8 +124,10 @@ export function Navbar() {
                 {i === 1 && isSignedIn && (
                   <Link
                     href="/my-colleges"
-                    className={`relative bg-yellow-400 hover:bg-yellow-300 text-navy text-sm font-body font-medium px-3 py-1 rounded-full transition-colors ${
-                      pathname === "/my-colleges" ? "ring-2 ring-navy/20" : ""
+                    className={`relative border-2 border-yellow-400 text-navy text-sm font-body font-medium px-3 py-1 rounded-full transition-colors ${
+                      pathname === "/my-colleges"
+                        ? "bg-yellow-400"
+                        : "hover:bg-yellow-400"
                     }`}
                   >
                     My Colleges
