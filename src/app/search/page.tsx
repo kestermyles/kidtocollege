@@ -28,7 +28,7 @@ export default async function SearchPage({
 
       {/* Wizard card overlapping into white area */}
       <section className="bg-white pb-20">
-        <div className="max-w-3xl mx-auto px-4 -mt-10">
+        <div className="max-w-3xl mx-auto px-4 pt-8">
           <Wizard
             initialCollege={college}
             initialMajor={major}
