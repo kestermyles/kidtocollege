@@ -7,6 +7,7 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 import Link from "next/link";
 import type { SavedCollege, SearchRecord } from "@/lib/types";
+import StudentProfileCard from "@/components/account/StudentProfileCard";
 
 const QUICK_LINKS = [
   { href: "/my-chances", label: "My Chances", desc: "Check your admission odds" },
@@ -234,6 +235,11 @@ export default function AccountPage() {
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Student Profile */}
+        <div className="mt-6">
+          <StudentProfileCard />
         </div>
       </div>
     </div>
