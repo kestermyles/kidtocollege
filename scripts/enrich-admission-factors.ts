@@ -111,7 +111,7 @@ Replace each value with the actual weight from their CDS C7. Only use these four
       const data = JSON.parse(cleanText)
 
       if (!data.factors || !data.cds_year) {
-        console.log(`  [warn] ${college.name} — invalid response structure`)
+        console.log(`  [warn] ${college.name} — invalid response structure: ${JSON.stringify(data).substring(0, 200)}`)
         await sleep(DELAY_MS)
         continue
       }
