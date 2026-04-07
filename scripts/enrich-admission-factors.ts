@@ -110,6 +110,12 @@ Replace each value with the actual weight from their CDS C7. Only use these four
       const cleanText = jsonMatch[0]
       const data = JSON.parse(cleanText)
 
+      if (data.error || data.status === "not_found") {
+        console.log(`  [skip] ${college.name} — no CDS published`)
+        await sleep(DELAY_MS)
+        continue
+      }
+
       // Handle both {factors: {...}} and flat {gpa: ..., class_rank: ...}
       let factors = data.factors
       if (!factors) {
