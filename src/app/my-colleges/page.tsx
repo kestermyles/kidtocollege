@@ -27,7 +27,7 @@ export default async function MyCollegesPage() {
   if (recentSearch?.state) homeCity = recentSearch.state
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-10">
+    <main className="max-w-3xl mx-auto px-4 pt-24 pb-10">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">My College List</h1>
         <p className="text-gray-500 mt-1">Add up to 20 colleges, drag to reorder, track your applications</p>
