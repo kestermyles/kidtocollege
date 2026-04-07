@@ -87,11 +87,11 @@ export default async function CommunityPage() {
                 <FadeIn key={q.id}>
                   <Link
                     href={`/community/${q.slug}`}
-                    className="block ktc-card p-5 group hover:shadow-md hover:-translate-y-0.5 transition-all"
+                    className="block ktc-card py-5 pl-4 pr-5 border-l-2 border-transparent hover:border-yellow-400 group hover:shadow-md hover:-translate-y-0.5 transition-all"
                   >
                     <div className="flex items-start gap-3">
                       <div className="flex-1 min-w-0">
-                        <h2 className="font-display text-base font-bold text-navy group-hover:text-gold transition-colors leading-snug">
+                        <h2 className="font-display text-lg font-semibold text-navy group-hover:text-gold transition-colors leading-snug">
                           {q.title}
                         </h2>
                         <div className="flex items-center gap-3 mt-2 text-xs font-body text-navy/40">

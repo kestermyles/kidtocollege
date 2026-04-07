@@ -167,7 +167,7 @@ export default function CollegesBrowsePage() {
                 <Link
                   key={c.slug}
                   href={`/college/${c.slug}`}
-                  className="ktc-card p-5 block group hover:shadow-lg hover:-translate-y-0.5 transition-all"
+                  className="ktc-card p-4 block group hover:shadow-lg hover:-translate-y-0.5 transition-all"
                 >
                   <h3 className="font-display text-base font-bold text-navy group-hover:text-gold transition-colors mb-1 leading-tight">
                     {c.name}

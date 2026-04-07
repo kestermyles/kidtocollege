@@ -78,10 +78,10 @@ export default function HomePage() {
             "url(https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=1600&q=80)",
         }}
       >
-        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-black/55" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 w-full">
           <FadeIn>
-            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black text-white max-w-4xl leading-tight">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black text-white max-w-4xl leading-tight text-shadow-hero">
               Every kid deserves a shot at the{" "}
               <span className="text-gold italic">right college</span>
             </h1>

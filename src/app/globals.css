@@ -75,6 +75,11 @@ h1, h2, h3, h4, h5, h6 {
   outline-offset: 2px;
 }
 
+/* Hero text shadow for contrast over photos */
+.text-shadow-hero {
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+}
+
 /* Selection */
 ::selection {
   background: rgba(242, 169, 0, 0.2);
