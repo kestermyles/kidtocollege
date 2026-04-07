@@ -387,19 +387,41 @@ export default async function CollegePage({ params }: CollegePageProps) {
       />
       {/* Full-bleed hero */}
       <section
-        className="parallax-section relative min-h-[50vh] sm:min-h-[60vh] flex items-end"
+        className="parallax-section relative min-h-[220px] sm:min-h-[260px] flex items-end"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-        <div className="absolute bottom-3 right-4 z-10">
-          <a
-            href="https://unsplash.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/50 hover:text-white/80 text-xs transition-colors"
-          >
-            Photo via Unsplash
-          </a>
+        <div className="absolute bottom-3 right-4 z-10 text-white/50 text-xs">
+          {college.photo_credit_name && college.photo_credit_url ? (
+            <>
+              <a
+                href={`${college.photo_credit_url}?utm_source=kidtocollege&utm_medium=referral`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white/80 transition-colors"
+              >
+                Photo by {college.photo_credit_name}
+              </a>
+              <span> on </span>
+              <a
+                href="https://unsplash.com?utm_source=kidtocollege&utm_medium=referral"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white/80 transition-colors"
+              >
+                Unsplash
+              </a>
+            </>
+          ) : (
+            <a
+              href="https://unsplash.com?utm_source=kidtocollege&utm_medium=referral"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white/80 transition-colors"
+            >
+              Photo via Unsplash
+            </a>
+          )}
         </div>
         <Link
           href="/colleges"
@@ -457,18 +479,20 @@ export default async function CollegePage({ params }: CollegePageProps) {
               />
             </div>
             <div className="mt-6 flex flex-wrap gap-3 justify-center">
-              {college.official_url && (
+              <AddToListButton collegeSlug={slug} />
+            </div>
+            {college.official_url && (
+              <div className="mt-3 text-center">
                 <a
                   href={college.official_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-navy hover:bg-navy/90 text-white font-body font-medium px-6 py-3 rounded-md transition-colors text-sm"
+                  className="text-sm text-navy/50 hover:text-navy underline underline-offset-2"
                 >
-                  Official Website &rarr;
+                  Official website &#8599;
                 </a>
-              )}
-              <AddToListButton collegeSlug={slug} />
-            </div>
+              </div>
+            )}
           </FadeIn>
         </div>
       </section>
@@ -628,18 +652,11 @@ export default async function CollegePage({ params }: CollegePageProps) {
                   </div>
                 )}
               </div>
-              <p className="text-xs font-body text-navy/40 mt-4">
-                Data from{" "}
-                <a
-                  href="https://collegescorecard.ed.gov"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gold hover:text-gold/80 underline underline-offset-2"
-                >
-                  U.S. Department of Education College Scorecard
-                </a>
-                . Figures represent recent cohorts and may not reflect current
-                outcomes.
+              <p className="text-xs font-body text-navy/50 italic mt-4">
+                Earnings data: U.S. Department of Education College Scorecard.
+                Figures reflect federal aid recipients only — actual median
+                earnings may be higher at schools where many students receive
+                grants rather than loans.
               </p>
             </FadeIn>
           </div>

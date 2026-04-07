@@ -6,11 +6,17 @@ export const maxDuration = 60;
 const MAX_PER_RUN = 20;
 const DELAY_MS = 800;
 
+interface PhotoResult {
+  url: string;
+  creditName: string | null;
+  creditUrl: string | null;
+}
+
 async function getCollegePhoto(
   collegeName: string,
   city: string,
   apiKey: string
-): Promise<string | null> {
+): Promise<PhotoResult | null> {
   const query = encodeURIComponent(`${collegeName} campus`);
   const res = await fetch(
     `https://api.unsplash.com/search/photos?query=${query}&per_page=1&orientation=landscape&client_id=${apiKey}`
@@ -18,14 +24,29 @@ async function getCollegePhoto(
   if (res.status === 403 || res.status === 429) return null;
   if (!res.ok) return null;
   const data = await res.json();
-  if (data.results?.[0]?.urls?.regular) return data.results[0].urls.regular;
+  const result = data.results?.[0];
+  if (result?.urls?.regular) {
+    return {
+      url: result.urls.regular,
+      creditName: result.user?.name ?? null,
+      creditUrl: result.user?.links?.html ?? null,
+    };
+  }
 
   const res2 = await fetch(
     `https://api.unsplash.com/search/photos?query=${encodeURIComponent(city + " university campus")}&per_page=1&orientation=landscape&client_id=${apiKey}`
   );
   if (!res2.ok) return null;
   const data2 = await res2.json();
-  return data2.results?.[0]?.urls?.regular ?? null;
+  const result2 = data2.results?.[0];
+  if (result2?.urls?.regular) {
+    return {
+      url: result2.urls.regular,
+      creditName: result2.user?.name ?? null,
+      creditUrl: result2.user?.links?.html ?? null,
+    };
+  }
+  return null;
 }
 
 function sleep(ms: number) {
@@ -72,7 +93,15 @@ export async function GET(req: NextRequest) {
 
     await supabase
       .from("colleges")
-      .update({ photo_url: photo || defaultPhoto })
+      .update(
+        photo
+          ? {
+              photo_url: photo.url,
+              photo_credit_name: photo.creditName,
+              photo_credit_url: photo.creditUrl,
+            }
+          : { photo_url: defaultPhoto }
+      )
       .eq("slug", college.slug);
 
     processed++;

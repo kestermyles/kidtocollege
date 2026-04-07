@@ -12,18 +12,39 @@ const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY!
 const DELAY_MS = 300
 const DEFAULT_PHOTO = "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80"
 
-async function getCollegePhoto(collegeName: string, city: string): Promise<string | null> {
+interface PhotoResult {
+  url: string
+  creditName: string | null
+  creditUrl: string | null
+}
+
+async function getCollegePhoto(collegeName: string, city: string): Promise<PhotoResult | null> {
   const query = encodeURIComponent(`${collegeName} campus`)
   const res = await fetch(`https://api.unsplash.com/search/photos?query=${query}&per_page=1&orientation=landscape&client_id=${UNSPLASH_ACCESS_KEY}`)
   if (!res.ok) return null
   const data = await res.json()
-  if (data.results?.[0]?.urls?.regular) return data.results[0].urls.regular
+  const result = data.results?.[0]
+  if (result?.urls?.regular) {
+    return {
+      url: result.urls.regular,
+      creditName: result.user?.name ?? null,
+      creditUrl: result.user?.links?.html ?? null,
+    }
+  }
 
   // fallback: city campus
   const res2 = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(city + " university campus")}&per_page=1&orientation=landscape&client_id=${UNSPLASH_ACCESS_KEY}`)
   if (!res2.ok) return null
   const data2 = await res2.json()
-  return data2.results?.[0]?.urls?.regular ?? null
+  const result2 = data2.results?.[0]
+  if (result2?.urls?.regular) {
+    return {
+      url: result2.urls.regular,
+      creditName: result2.user?.name ?? null,
+      creditUrl: result2.user?.links?.html ?? null,
+    }
+  }
+  return null
 }
 
 function sleep(ms: number) { return new Promise(r => setTimeout(r, ms)) }
@@ -47,7 +68,11 @@ async function main() {
     const city = college.location?.split(",")?.[0] ?? ""
     const photo = await getCollegePhoto(college.name, city)
     if (photo) {
-      await supabase.from("colleges").update({ photo_url: photo }).eq("slug", college.slug)
+      await supabase.from("colleges").update({
+        photo_url: photo.url,
+        photo_credit_name: photo.creditName,
+        photo_credit_url: photo.creditUrl,
+      }).eq("slug", college.slug)
       updated++
       if (updated % 25 === 0) console.log(`  ${updated}/${colleges.length} updated`)
     } else {

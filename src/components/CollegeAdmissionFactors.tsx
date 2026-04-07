@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from "next/cache"
 import { createServiceRoleClient } from "@/lib/supabase-server"
 
 const FACTOR_LABELS: Record<string, string> = {
@@ -18,6 +19,7 @@ const FACTOR_LABELS: Record<string, string> = {
 }
 
 export async function CollegeAdmissionFactors({ slug }: { slug: string }) {
+  noStore()
   const svc = createServiceRoleClient()
 
   const { data: factors } = await svc

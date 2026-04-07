@@ -2,7 +2,8 @@
  * Enrich colleges with CDS admission factors via Anthropic web search.
  *
  * Usage:
- *   npx tsx scripts/enrich-admission-factors.ts --batch=50 --start=0
+ *   npx tsx scripts/enrich-admission-factors.ts
+ *   npx tsx scripts/enrich-admission-factors.ts --slugs=mit,stanford,harvard
  *
  * Requires env vars: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ANTHROPIC_API_KEY
  */
@@ -10,16 +11,9 @@
 import { createClient } from "@supabase/supabase-js"
 import Anthropic from "@anthropic-ai/sdk"
 
-const args = Object.fromEntries(
-  process.argv.slice(2).map((a) => {
-    const [k, v] = a.replace("--", "").split("=")
-    return [k, parseInt(v) || 0]
-  })
-)
-
-const BATCH = args.batch || 50
-const START = args.start || 0
-const DELAY_MS = 1500
+const DELAY_MS = 1000
+const SLUGS_ARG = process.argv.find((a) => a.startsWith("--slugs="))
+const SLUGS = SLUGS_ARG ? SLUGS_ARG.replace("--slugs=", "").split(",") : null
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -36,28 +30,124 @@ function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms))
 }
 
-function stripMarkdown(text: string): string {
-  return text.replace(/```json\s*/gi, "").replace(/```\s*/gi, "").trim()
+const VALID_WEIGHTS = new Set([
+  "very_important", "important", "considered", "not_considered",
+])
+const VALID_FACTORS = new Set([
+  "gpa", "class_rank", "test_scores", "recommendation",
+  "extracurriculars", "first_generation", "geographic_residence",
+  "state_residency", "volunteer_work", "work_experience",
+  "talent_ability", "character_personal", "alumni_relation",
+  "racial_ethnic_status",
+])
+
+async function fetchFactors(
+  collegeName: string
+): Promise<{ cdsYear: number; factors: Record<string, string> } | null> {
+  const response = await anthropic.messages.create({
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 500,
+    tools: [{ type: "web_search_20250305" as any, name: "web_search" }],
+    system:
+      "You are a JSON-only API. Return only raw JSON.",
+    messages: [
+      {
+        role: "user",
+        content: `Search for ${collegeName} Common Data Set Section C7 admission factors. Return ONLY this JSON object:
+{"cds_year":2024,"factors":{"gpa":"very_important","class_rank":"important","test_scores":"considered","recommendation":"important","extracurriculars":"considered","first_generation":"considered","geographic_residence":"important","state_residency":"not_considered","volunteer_work":"considered","work_experience":"considered","talent_ability":"important","character_personal":"very_important","alumni_relation":"considered","racial_ethnic_status":"not_considered"}}
+Use actual values from the CDS. Start with { immediately.`,
+      },
+    ],
+  })
+
+  const text = response.content
+    .filter((b) => b.type === "text")
+    .map((b) => (b as { type: "text"; text: string }).text)
+    .join("")
+    .replace(/```json\s*/gi, "")
+    .replace(/```\s*/gi, "")
+    .trim()
+
+  const jsonMatch = text.match(/\{[\s\S]*\}/)
+  if (!jsonMatch) return null
+
+  const data = JSON.parse(jsonMatch[0])
+
+  if (data.error || data.status === "not_found") return null
+
+  // Handle both {factors: {...}} and flat {gpa: ..., class_rank: ...}
+  let factors = data.factors
+  if (!factors) {
+    const flat = Object.fromEntries(
+      Object.entries(data).filter(([k]) => VALID_FACTORS.has(k))
+    )
+    if (Object.keys(flat).length >= 3) {
+      factors = flat
+    }
+  }
+
+  if (!factors || Object.keys(factors).length === 0) return null
+
+  // Validate weights
+  const cleaned: Record<string, string> = {}
+  for (const [k, v] of Object.entries(factors)) {
+    if (VALID_FACTORS.has(k) && VALID_WEIGHTS.has(v as string)) {
+      cleaned[k] = v as string
+    }
+  }
+
+  if (Object.keys(cleaned).length < 3) return null
+
+  // Parse year — handle both integer and "2024-2025" format
+  const rawYear = data.cds_year
+  const cdsYear =
+    typeof rawYear === "string"
+      ? parseInt(rawYear.split("-")[0], 10)
+      : rawYear || new Date().getFullYear()
+
+  return { cdsYear, factors: cleaned }
 }
 
 async function main() {
-  console.log(`[enrich] Fetching colleges (start=${START}, batch=${BATCH})...`)
+  let colleges: { slug: string; name: string }[]
 
-  const { data: colleges, error } = await supabase
-    .from("colleges")
-    .select("slug, name")
-    .order("total_enrollment", { ascending: false, nullsFirst: false })
-    .range(START, START + BATCH - 1)
+  if (SLUGS) {
+    console.log(`[enrich] Processing ${SLUGS.length} specific slugs...`)
+    const { data, error } = await supabase
+      .from("colleges")
+      .select("slug, name")
+      .in("slug", SLUGS)
 
-  if (error || !colleges) {
-    console.error("Failed to fetch colleges:", error)
-    process.exit(1)
+    if (error || !data) {
+      console.error("Failed to fetch colleges:", error)
+      process.exit(1)
+    }
+
+    colleges = data
+  } else {
+    console.log(`[enrich] Fetching top 300 traditional 4-year colleges...`)
+    const { data, error } = await supabase
+      .from("colleges")
+      .select("slug, name, official_url")
+      .not("official_url", "is", null)
+      .gte("total_enrollment", 3000)
+      .or("acceptance_rate.is.null,acceptance_rate.lt.95")
+      .order("total_enrollment", { ascending: false, nullsFirst: false })
+      .limit(300)
+
+    if (error || !data) {
+      console.error("Failed to fetch colleges:", error)
+      process.exit(1)
+    }
+
+    colleges = data
   }
 
   console.log(`[enrich] Found ${colleges.length} colleges to process`)
 
-  let processed = 0
+  let done = 0
   let skipped = 0
+  let errors = 0
 
   for (const college of colleges) {
     // Check if already enriched for recent year
@@ -75,80 +165,21 @@ async function main() {
     }
 
     try {
-      console.log(`  [fetch] ${college.name}...`)
+      const result = await fetchFactors(college.name)
 
-      const response = await anthropic.messages.create({
-        model: "claude-sonnet-4-5",
-        max_tokens: 800,
-        tools: [{ type: "web_search_20250305" as any, name: "web_search", max_uses: 3 }],
-        system:
-          "You are a JSON-only API. You never write explanations or natural language. You only output raw JSON objects.",
-        messages: [
-          {
-            role: "user",
-            content: `You must respond with ONLY a JSON object. No explanation, no preamble, no markdown, no code fences. Just the raw JSON object starting with { and ending with }.
-
-Search for the Common Data Set (CDS) for ${college.name} and find Section C7. Return this exact JSON structure:
-{"cds_year":2024,"factors":{"gpa":"very_important","class_rank":"important","test_scores":"considered","recommendation":"important","extracurriculars":"considered","first_generation":"considered","geographic_residence":"important","state_residency":"not_considered","volunteer_work":"considered","work_experience":"considered","talent_ability":"important","character_personal":"very_important","alumni_relation":"considered","racial_ethnic_status":"not_considered"}}
-
-Replace each value with the actual weight from their CDS C7. Only use these four values: very_important, important, considered, not_considered. Start your response with { immediately.`,
-          },
-        ],
-      })
-
-      // Extract text from response
-      const text = response.content
-        .filter((b) => b.type === "text")
-        .map((b) => (b as { type: "text"; text: string }).text)
-        .join("")
-
-      const rawText = stripMarkdown(text)
-
-      // Extract JSON object from response even if there's surrounding text
-      const jsonMatch = rawText.match(/\{[\s\S]*\}/)
-      if (!jsonMatch) throw new Error("No JSON object found")
-      const cleanText = jsonMatch[0]
-      const data = JSON.parse(cleanText)
-
-      if (data.error || data.status === "not_found") {
-        console.log(`  [skip] ${college.name} — no CDS published`)
+      if (!result) {
+        console.log(`  [skip] ${college.name} — no CDS found`)
+        skipped++
         await sleep(DELAY_MS)
         continue
       }
 
-      // Handle both {factors: {...}} and flat {gpa: ..., class_rank: ...}
-      let factors = data.factors
-      if (!factors) {
-        const knownFactors = ["gpa","class_rank","test_scores",
-          "recommendation","extracurriculars","first_generation",
-          "geographic_residence","state_residency","volunteer_work",
-          "work_experience","talent_ability","character_personal",
-          "alumni_relation","racial_ethnic_status"]
-        const flat = Object.fromEntries(
-          Object.entries(data).filter(([k]) => knownFactors.includes(k))
-        )
-        if (Object.keys(flat).length >= 3) {
-          factors = flat
-        }
-      }
-
-      if (!factors || Object.keys(factors).length === 0) {
-        console.log(`  [warn] ${college.name} — invalid response structure: ${JSON.stringify(data).substring(0, 200)}`)
-        await sleep(DELAY_MS)
-        continue
-      }
-
-      const year = typeof data.cds_year === "string"
-        ? parseInt(data.cds_year.split("-")[0], 10)
-        : data.cds_year || new Date().getFullYear()
-
-      // Upsert factors
-      const rows = Object.entries(factors).map(([factor, weight]) => ({
+      const rows = Object.entries(result.factors).map(([factor, weight]) => ({
         college_slug: college.slug,
         factor,
-        weight: weight as string,
+        weight,
         source: "cds",
-        cds_year: year,
+        cds_year: result.cdsYear,
         updated_at: new Date().toISOString(),
       }))
 
@@ -158,18 +189,20 @@ Replace each value with the actual weight from their CDS C7. Only use these four
 
       if (upsertError) {
         console.log(`  [error] ${college.name} — upsert failed: ${upsertError.message}`)
+        errors++
       } else {
-        console.log(`  [done] ${college.name} — CDS ${year}, ${rows.length} factors`)
-        processed++
+        console.log(`  [done] ${college.name} — CDS ${result.cdsYear}, ${rows.length} factors`)
+        done++
       }
     } catch (err: any) {
       console.log(`  [error] ${college.name} — ${err.message || err}`)
+      errors++
     }
 
     await sleep(DELAY_MS)
   }
 
-  console.log(`\n[enrich] Complete. Processed: ${processed}, Skipped: ${skipped}, Errors: ${colleges.length - processed - skipped}`)
+  console.log(`\n[enrich] Complete. Done: ${done}, Skipped: ${skipped}, Errors: ${errors}`)
 }
 
 main()
