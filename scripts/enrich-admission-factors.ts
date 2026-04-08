@@ -1,5 +1,5 @@
 /**
- * Enrich colleges with CDS admission factors via Anthropic web search.
+ * Enrich colleges with CDS admission factors via Anthropic (Haiku, from training data).
  *
  * Usage:
  *   npx tsx scripts/enrich-admission-factors.ts
@@ -45,17 +45,16 @@ async function fetchFactors(
   collegeName: string
 ): Promise<{ cdsYear: number; factors: Record<string, string> } | null> {
   const response = await anthropic.messages.create({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 500,
-    tools: [{ type: "web_search_20250305" as any, name: "web_search" }],
+    model: "claude-haiku-3-5-20251001",
+    max_tokens: 400,
     system:
       "You are a JSON-only API. Return only raw JSON.",
     messages: [
       {
         role: "user",
-        content: `Search for ${collegeName} Common Data Set Section C7 admission factors. Return ONLY this JSON object:
+        content: `From your training data, what does ${collegeName}'s Common Data Set Section C7 show for admission factor weights? Return ONLY the JSON object, no other text.
 {"cds_year":2024,"factors":{"gpa":"very_important","class_rank":"important","test_scores":"considered","recommendation":"important","extracurriculars":"considered","first_generation":"considered","geographic_residence":"important","state_residency":"not_considered","volunteer_work":"considered","work_experience":"considered","talent_ability":"important","character_personal":"very_important","alumni_relation":"considered","racial_ethnic_status":"not_considered"}}
-Use actual values from the CDS. Start with { immediately.`,
+Replace each value with the actual weight. Start with { immediately.`,
       },
     ],
   })

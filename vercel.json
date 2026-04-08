@@ -10,10 +10,5 @@
       "maxDuration": 60
     }
   },
-  "crons": [
-    {
-      "path": "/api/cron/enrich-photos",
-      "schedule": "0 * * * *"
-    }
-  ]
+  "crons": []
 }
