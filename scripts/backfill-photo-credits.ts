@@ -3,7 +3,7 @@
  * that already have a photo_url but no credit data.
  *
  * Extracts the Unsplash photo ID from the existing photo_url
- * and fetches photographer info via the Unsplash API.
+ * and fetches photographer info via GET /photos/{id}.
  *
  * Usage:
  *   npx tsx scripts/backfill-photo-credits.ts
@@ -20,21 +20,29 @@ const supabase = createClient(
 )
 
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY!
-const DELAY_MS = 400
+const DELAY_MS = 200
+const MAX_PER_RUN = 40
 
 function extractPhotoId(photoUrl: string): string | null {
-  // Unsplash URLs look like:
-  // https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80
-  const match = photoUrl.match(/unsplash\.com\/(photo-[a-zA-Z0-9_-]+)/)
-  return match ? match[1] : null
+  // URL: https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=1920&q=80
+  // Strip query params, take last path segment, strip "photo-" prefix
+  try {
+    const withoutParams = photoUrl.split("?")[0]
+    const segments = withoutParams.split("/")
+    const lastSegment = segments[segments.length - 1]
+    if (!lastSegment || !lastSegment.startsWith("photo-")) return null
+    return lastSegment.replace("photo-", "")
+  } catch {
+    return null
+  }
 }
 
 async function getPhotoCredit(
   photoId: string
 ): Promise<{ name: string; url: string } | "__RATE_LIMITED__" | null> {
-  const res = await fetch(
-    `https://api.unsplash.com/photos/${photoId}?client_id=${UNSPLASH_ACCESS_KEY}`
-  )
+  const res = await fetch(`https://api.unsplash.com/photos/${photoId}`, {
+    headers: { Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}` },
+  })
   if (res.status === 403 || res.status === 429) return "__RATE_LIMITED__"
   if (!res.ok) return null
   const data = await res.json()
@@ -58,15 +66,17 @@ async function main() {
     .from("colleges")
     .select("slug, name, photo_url")
     .not("photo_url", "is", null)
+    .neq("photo_url", "")
     .is("photo_credit_name", null)
     .order("name")
+    .limit(MAX_PER_RUN)
 
   if (error || !colleges) {
     console.error("Fetch failed:", error)
     process.exit(1)
   }
 
-  console.log(`Found ${colleges.length} colleges needing photo credits`)
+  console.log(`Found ${colleges.length} colleges needing photo credits (max ${MAX_PER_RUN} per run)`)
 
   let updated = 0
   let skipped = 0
@@ -74,7 +84,7 @@ async function main() {
   for (const college of colleges) {
     const photoId = extractPhotoId(college.photo_url)
     if (!photoId) {
-      console.log(`  [skip] ${college.name} — can't extract photo ID`)
+      console.log(`  [skip] ${college.name} — can't extract photo ID from ${college.photo_url}`)
       skipped++
       continue
     }
@@ -92,18 +102,17 @@ async function main() {
           photo_credit_url: credit.url,
         })
         .eq("slug", college.slug)
+      console.log(`  [ok] ${college.name} — Photo by ${credit.name}`)
       updated++
-      if (updated % 25 === 0)
-        console.log(`  ${updated}/${colleges.length} updated`)
     } else {
-      console.log(`  [skip] ${college.name} — API returned no credit`)
+      console.log(`  [skip] ${college.name} — no user data in response`)
       skipped++
     }
 
     await sleep(DELAY_MS)
   }
 
-  console.log(`Done! ${updated} updated, ${skipped} skipped`)
+  console.log(`\nDone! ${updated} updated, ${skipped} skipped`)
 }
 
 main().catch((err) => {
