@@ -238,6 +238,9 @@ export default function GoalsSetupPage() {
                     <div>
                       <label className="block font-body text-xs text-navy/50 mb-1">Deadline</label>
                       <input type="date" value={c.deadline} onChange={e => updateDeadline(c.slug, e.target.value)} className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs font-body text-navy focus:outline-none focus:ring-2 focus:ring-gold" />
+                      <p className="text-xs text-gray-400 mt-1">
+                        Based on typical published deadlines — always confirm exact dates directly with the college.
+                      </p>
                     </div>
                   </div>
                 </div>
