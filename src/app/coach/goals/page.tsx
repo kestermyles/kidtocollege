@@ -16,10 +16,10 @@ const STRATEGIES = [
 ]
 
 const DEFAULT_DEADLINES: Record<string, Record<string, string>> = {
-  EA: { default: "2025-11-01" },
-  ED: { default: "2025-11-01" },
-  RD: { default: "2026-01-01" },
-  rolling: { default: "2026-03-01" },
+  EA: { default: "2026-11-01" },
+  ED: { default: "2026-11-01" },
+  RD: { default: "2027-01-01" },
+  rolling: { default: "2027-03-01" },
 }
 
 interface TargetCollege {
@@ -37,7 +37,7 @@ export default function GoalsSetupPage() {
   const [saving, setSaving] = useState(false)
 
   // Step 1
-  const [gradYear, setGradYear] = useState(2026)
+  const [gradYear, setGradYear] = useState(2027)
   const [gpa, setGpa] = useState("")
   const [satScore, setSatScore] = useState("")
   const [actScore, setActScore] = useState("")
