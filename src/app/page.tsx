@@ -3,7 +3,7 @@ import { PhotoSection } from "@/components/PhotoSection";
 import { WizardPreview } from "@/components/WizardPreview";
 import { LeagueRedirectInput } from "@/components/LeagueRedirectInput";
 import Link from "next/link";
-import { AskSamButton } from "@/components/AskSamButton";
+
 
 const STATS = [
   { value: "2,942", label: "Colleges" },
@@ -118,7 +118,6 @@ export default function HomePage() {
               >
                 See your roadmap &rarr;
               </Link>
-              <AskSamButton />
             </div>
           </FadeIn>
         </div>

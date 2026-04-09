@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { getStudentContext } from "@/lib/student-context";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -23,12 +24,13 @@ export async function POST(request: Request) {
     } = await request.json();
 
     const anthropic = getClient();
+    const studentCtx = await getStudentContext();
 
     if (action === "next-question") {
       const response = await anthropic.messages.create({
         model: "claude-sonnet-4-5",
         max_tokens: 200,
-        system: `You are a warm, professional college interviewer conducting a ${interviewType} interview for ${college}. You have a list of planned questions but you can deviate naturally. Keep responses to 1-2 sentences. Sound conversational, not robotic. If the student said something interesting, ask one brief follow-up before moving to the next planned question. Never use markdown.`,
+        system: `You are a warm, professional college interviewer conducting a ${interviewType} interview for ${college}. You have a list of planned questions but you can deviate naturally. Keep responses to 1-2 sentences. Sound conversational, not robotic. If the student said something interesting, ask one brief follow-up before moving to the next planned question. Never use markdown.${studentCtx ? ` ${studentCtx}` : ""}`,
         messages: [
           {
             role: "user",

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { getStudentContext } from "@/lib/student-context";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -14,11 +15,12 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const anthropic = getClient();
+    const studentCtx = await getStudentContext();
 
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-5",
       max_tokens: 2000,
-      system: `You are an expert SAT/ACT test prep strategist. Create a personalized study plan. Return ONLY valid JSON — no markdown, no code fences. Start with { and end with }.`,
+      system: `You are an expert SAT/ACT test prep strategist. Create a personalized study plan. Return ONLY valid JSON — no markdown, no code fences. Start with { and end with }.${studentCtx ? ` ${studentCtx}` : ""}`,
       messages: [
         {
           role: "user",

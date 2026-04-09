@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { getStudentContext } from "@/lib/student-context";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -27,11 +28,12 @@ export async function POST(request: Request) {
     }
 
     const anthropic = getClient();
+    const studentCtx = await getStudentContext();
 
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-5",
       max_tokens: 2000,
-      system: `You are a college admissions data analyst. Given a student's GPA and optional SAT score, assess where they fall in the admitted student profile for each college listed. Use your knowledge of published Common Data Set information, IPEDS data, and publicly available admissions statistics.
+      system: `You are a college admissions data analyst. Given a student's GPA and optional SAT score, assess where they fall in the admitted student profile for each college listed. Use your knowledge of published Common Data Set information, IPEDS data, and publicly available admissions statistics.${studentCtx ? ` ${studentCtx}` : ""}
 
 Return ONLY valid JSON — no markdown, no code fences. Start with { and end with }.
 

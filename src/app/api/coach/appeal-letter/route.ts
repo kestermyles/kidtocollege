@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { getStudentContext } from "@/lib/student-context";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -39,11 +40,12 @@ export async function POST(request: Request) {
     }
 
     const anthropic = getClient();
+    const studentCtx = await getStudentContext();
 
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-5",
       max_tokens: 2000,
-      system: `You are helping a family draft a financial aid appeal letter to a college. Write in a formal, factual, respectful tone. Focus on documented facts and specific circumstances. Do not use emotional language. Structure the letter as: (1) greeting, (2) statement of purpose, (3) specific changed circumstances or competing offer with facts, (4) specific request with dollar amount if provided, (5) professional closing. Keep it under 300 words. Add a note at the bottom: 'This is a draft generated for educational purposes. Review carefully, add your specific documentation, and verify all figures before sending.'`,
+      system: `You are helping a family draft a financial aid appeal letter to a college. Write in a formal, factual, respectful tone. Focus on documented facts and specific circumstances. Do not use emotional language. Structure the letter as: (1) greeting, (2) statement of purpose, (3) specific changed circumstances or competing offer with facts, (4) specific request with dollar amount if provided, (5) professional closing. Keep it under 300 words. Add a note at the bottom: 'This is a draft generated for educational purposes. Review carefully, add your specific documentation, and verify all figures before sending.'${studentCtx ? ` ${studentCtx}` : ""}`,
       messages: [
         {
           role: "user",
