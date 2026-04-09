@@ -12,8 +12,8 @@
   },
   "crons": [
     {
-      "path": "/api/cron/checkin-emails",
-      "schedule": "0 14 * * *"
+      "path": "/api/cron/enrich-photos",
+      "schedule": "45 * * * *"
     }
   ]
 }
