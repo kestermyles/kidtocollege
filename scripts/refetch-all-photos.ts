@@ -104,7 +104,7 @@ async function main() {
       }
     }
 
-    if (photo && photo !== "__RATE_LIMITED__") {
+    if (photo && typeof photo !== "string") {
       await supabase
         .from("colleges")
         .update({
