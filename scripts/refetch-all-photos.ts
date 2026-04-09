@@ -65,6 +65,41 @@ async function fetchPhoto(
   return null
 }
 
+const FALLBACK_QUERIES = [
+  "university campus aerial",
+  "college library students",
+  "university lecture hall",
+  "students studying campus",
+  "college campus architecture",
+]
+
+async function fetchFallbackPhoto(): Promise<PhotoResult | "__RATE_LIMITED__" | null> {
+  for (const query of FALLBACK_QUERIES) {
+    const res = await fetch(
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=10&orientation=landscape`,
+      { headers: { Authorization: `Client-ID ${UNSPLASH_KEY}` } }
+    )
+
+    if (res.status === 429 || res.status === 403) return "__RATE_LIMITED__"
+    if (!res.ok) continue
+
+    const data = await res.json()
+    const results = data.results || []
+    if (results.length === 0) continue
+
+    const randomIndex = Math.floor(Math.random() * Math.min(results.length, 8))
+    const pick = results[randomIndex]
+    if (pick?.urls?.regular) {
+      return {
+        url: pick.urls.regular,
+        creditName: pick.user?.name ?? null,
+        creditUrl: pick.user?.links?.html ?? null,
+      }
+    }
+  }
+  return null
+}
+
 async function main() {
   if (!UNSPLASH_KEY) {
     console.error("UNSPLASH_ACCESS_KEY not set")
@@ -112,6 +147,19 @@ async function main() {
           console.log(`  [429] Still rate limited — skipping ${college.name}`)
           processed++
           continue
+        }
+      }
+
+      // Try fallback if no specific photo found
+      if (!photo || typeof photo === "string") {
+        photo = await fetchFallbackPhoto()
+        if (photo === "__RATE_LIMITED__") {
+          console.log(`  [429] Rate limited on fallback for ${college.name} — waiting 60s...`)
+          await sleep(RETRY_WAIT_MS)
+          photo = await fetchFallbackPhoto()
+        }
+        if (photo && typeof photo !== "string") {
+          console.log(`  [fallback] ${college.name} — Photo by ${photo.creditName}`)
         }
       }
 
