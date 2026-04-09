@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    background: #FAFAF7;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .bar-top, .bar-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #F5A623;
+  }
+  .bar-top { top: 0; }
+  .bar-bottom { bottom: 0; }
+  .logo {
+    font-size: 72px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+  .logo .navy { color: #1B2A4A; }
+  .logo .gold { color: #F5A623; }
+  .tagline {
+    font-size: 26px;
+    font-weight: 500;
+    color: #1B2A4A;
+    margin-bottom: 36px;
+    letter-spacing: -0.3px;
+  }
+  .pills {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .pill {
+    background: #F5A623;
+    color: #1B2A4A;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 999px;
+    letter-spacing: -0.2px;
+  }
+  .url {
+    font-size: 16px;
+    color: #999;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+  <div class="bar-top"></div>
+  <div class="bar-bottom"></div>
+  <div class="logo">
+    <span class="navy">Kid</span><span class="gold">To</span><span class="navy">College</span>
+  </div>
+  <div class="tagline">Free college admissions help for every student</div>
+  <div class="pills">
+    <div class="pill">2,942 Colleges</div>
+    <div class="pill">$50B Scholarships</div>
+    <div class="pill">100% Free</div>
+  </div>
+  <div class="url">kidtocollege.com</div>
+</body>
+</html>
