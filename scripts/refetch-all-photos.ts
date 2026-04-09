@@ -71,64 +71,77 @@ async function main() {
     process.exit(1)
   }
 
-  const { data: colleges, error } = await supabase
+  // Get total count first
+  const { count } = await supabase
     .from("colleges")
-    .select("slug, name, location")
-    .order("name")
+    .select("*", { count: "exact", head: true })
 
-  if (error || !colleges) {
-    console.error("Failed to fetch colleges:", error)
-    process.exit(1)
-  }
-
-  const total = colleges.length
+  const total = count || 0
   console.log(`Processing all ${total} colleges...`)
 
   let updated = 0
+  let processed = 0
   const defaultPhoto = "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80"
+  const BATCH = 1000
 
-  for (let i = 0; i < colleges.length; i++) {
-    const college = colleges[i]
-    const city = college.location?.split(",")?.[0] ?? ""
+  for (let offset = 0; ; offset += BATCH) {
+    const { data: colleges, error } = await supabase
+      .from("colleges")
+      .select("slug, name, location")
+      .order("name")
+      .range(offset, offset + BATCH - 1)
 
-    let photo = await fetchPhoto(college.name, city)
+    if (error) {
+      console.error("Fetch failed:", error)
+      process.exit(1)
+    }
 
-    // On rate limit, wait 60s and retry once
-    if (photo === "__RATE_LIMITED__") {
-      console.log(`  [429] Rate limited at ${college.name} — waiting 60s...`)
-      await sleep(RETRY_WAIT_MS)
-      photo = await fetchPhoto(college.name, city)
+    if (!colleges || colleges.length === 0) break
+
+    for (const college of colleges) {
+      const city = college.location?.split(",")?.[0] ?? ""
+
+      let photo = await fetchPhoto(college.name, city)
+
+      // On rate limit, wait 60s and retry once
       if (photo === "__RATE_LIMITED__") {
-        console.log(`  [429] Still rate limited — skipping ${college.name}`)
-        continue
+        console.log(`  [429] Rate limited at ${college.name} — waiting 60s...`)
+        await sleep(RETRY_WAIT_MS)
+        photo = await fetchPhoto(college.name, city)
+        if (photo === "__RATE_LIMITED__") {
+          console.log(`  [429] Still rate limited — skipping ${college.name}`)
+          processed++
+          continue
+        }
       }
-    }
 
-    if (photo && typeof photo !== "string") {
-      await supabase
-        .from("colleges")
-        .update({
-          photo_url: photo.url,
-          photo_credit_name: photo.creditName,
-          photo_credit_url: photo.creditUrl,
-        })
-        .eq("slug", college.slug)
-      updated++
-    } else {
-      await supabase
-        .from("colleges")
-        .update({ photo_url: defaultPhoto })
-        .eq("slug", college.slug)
-    }
+      if (photo && typeof photo !== "string") {
+        await supabase
+          .from("colleges")
+          .update({
+            photo_url: photo.url,
+            photo_credit_name: photo.creditName,
+            photo_credit_url: photo.creditUrl,
+          })
+          .eq("slug", college.slug)
+        updated++
+      } else {
+        await supabase
+          .from("colleges")
+          .update({ photo_url: defaultPhoto })
+          .eq("slug", college.slug)
+      }
 
-    if ((i + 1) % 100 === 0) {
-      console.log(`[${i + 1}/${total}] complete`)
-    }
+      processed++
+      if (processed % 100 === 0) {
+        console.log(`[${processed}/${total}] complete`)
+      }
 
-    await sleep(DELAY_MS)
+      await sleep(DELAY_MS)
+    }
   }
 
-  console.log(`\nDone — ${updated} updated out of ${total} total`)
+  console.log(`\nDone — ${updated} updated out of ${processed} total`)
 }
 
 main().catch((err) => {
