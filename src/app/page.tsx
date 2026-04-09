@@ -57,7 +57,7 @@ const FEATURES = [
   },
   {
     title: "Community College Gateway",
-    desc: "The 2+2 transfer route: same degree, lower cost. Always shown as the smart path it is.",
+    desc: "The 2+2 transfer route: same degree, lower cost. A route some students take to reduce costs while earning the same degree.",
     icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6",
   },
   {

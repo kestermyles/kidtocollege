@@ -509,7 +509,7 @@ export default function FAFSAGuidePage() {
               {
                 num: "1",
                 title: "Need-Based Aid",
-                text: "Driven by your SAI. Accessed through the FAFSA and CSS Profile. Includes federal Pell Grants, institutional grants, subsidised loans, and work-study. Available at many schools even for middle- and higher-income families, depending on the school's endowment and aid policy. Always worth applying for — even if you assume you won't qualify.",
+                text: "Driven by your SAI. Accessed through the FAFSA and CSS Profile. Includes federal Pell Grants, institutional grants, subsidised loans, and work-study. Available at many schools even for middle- and higher-income families, depending on the school's endowment and aid policy. Families who don't expect to qualify sometimes are — filing is free and takes little additional time.",
               },
               {
                 num: "2",
