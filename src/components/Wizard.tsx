@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Compass, GraduationCap } from "lucide-react";
 import { COLLEGES_SEED } from "@/lib/colleges-seed";
+import { createClient } from "@/lib/supabase-browser";
 import type { WizardData } from "@/lib/types";
+import SignupGateModal from "@/components/SignupGateModal";
 
 /* ───────────── constants ───────────── */
 
@@ -180,6 +182,7 @@ export function Wizard({
   const [direction, setDirection] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [showSignupGate, setShowSignupGate] = useState(false);
 
 
   const [form, setForm] = useState<WizardData>({
@@ -294,6 +297,17 @@ export function Wizard({
   };
 
   const handleSubmit = async () => {
+    // Gate: logged-out users get 1 free report
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      const count = parseInt(localStorage.getItem("ktc_report_count") || "0", 10);
+      if (count >= 1) {
+        setShowSignupGate(true);
+        return;
+      }
+    }
+
     setSubmitting(true);
     setErrorMsg("");
     try {
@@ -332,6 +346,11 @@ export function Wizard({
         setErrorMsg(result.error || `Server error (${res.status})`);
         setSubmitting(false);
         return;
+      }
+      // Increment report count for logged-out users
+      if (!user) {
+        const count = parseInt(localStorage.getItem("ktc_report_count") || "0", 10);
+        localStorage.setItem("ktc_report_count", String(count + 1));
       }
       // Redirect immediately — report generates in background
       router.push(`/results?searchId=${result.searchId}`);
@@ -772,6 +791,17 @@ export function Wizard({
           {RENDERERS[step]()}
         </motion.div>
       </AnimatePresence>
+
+      {showSignupGate && (
+        <SignupGateModal
+          collegeName={form.college || "your college"}
+          onClose={() => setShowSignupGate(false)}
+          onSuccess={() => {
+            setShowSignupGate(false);
+            localStorage.removeItem("ktc_report_count");
+          }}
+        />
+      )}
     </div>
   );
 }
