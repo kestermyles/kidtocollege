@@ -387,7 +387,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
       />
       {/* Full-bleed hero */}
       <section
-        className="parallax-section relative min-h-[600px] sm:min-h-[660px] flex items-end"
+        className="parallax-section relative"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
@@ -445,14 +445,10 @@ export default async function CollegePage({ params }: CollegePageProps) {
               {college.location}
             </p>
           </FadeIn>
-        </div>
-      </section>
 
-      {/* Key stats */}
-      <section className="py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          {/* Stats cards inside hero */}
+          <FadeIn delay={0.1}>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mt-10">
               <StatCard
                 label="Acceptance Rate"
                 value={formatPercent(college.acceptance_rate)}
@@ -478,22 +474,28 @@ export default async function CollegePage({ params }: CollegePageProps) {
                 }
               />
             </div>
-            <div className="mt-6 flex flex-wrap gap-3 justify-center">
-              <AddToListButton collegeSlug={slug} />
-            </div>
-            {college.official_url && (
-              <div className="mt-3 text-center">
-                <a
-                  href={college.official_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-navy/50 hover:text-navy underline underline-offset-2"
-                >
-                  Official website &#8599;
-                </a>
-              </div>
-            )}
           </FadeIn>
+        </div>
+      </section>
+
+      {/* Actions */}
+      <section className="py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap gap-3 justify-center">
+            <AddToListButton collegeSlug={slug} />
+          </div>
+          {college.official_url && (
+            <div className="mt-3 text-center">
+              <a
+                href={college.official_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-navy/50 hover:text-navy underline underline-offset-2"
+              >
+                Official website &#8599;
+              </a>
+            </div>
+          )}
         </div>
       </section>
 
