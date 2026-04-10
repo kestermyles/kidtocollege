@@ -387,7 +387,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
       />
       {/* Full-bleed hero */}
       <section
-        className="parallax-section relative min-h-[520px]"
+        className="parallax-section relative min-h-[760px]"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
@@ -429,70 +429,75 @@ export default async function CollegePage({ params }: CollegePageProps) {
         >
           &larr; All Colleges
         </Link>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 pt-32 w-full">
-          <FadeIn>
-            <nav className="font-mono-label text-xs uppercase tracking-wider text-white/40 mb-4">
-              <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
-              {" / "}
-              <Link href="/colleges" className="hover:text-white/60 transition-colors">Colleges</Link>
-              {" / "}
-              <span className="text-white/60">{college.name}</span>
-            </nav>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
-              {college.name}
-            </h1>
-            <p className="mt-2 text-white/70 font-body text-lg">
-              {college.location}
-            </p>
-          </FadeIn>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-between min-h-[760px] pt-32 pb-8">
+          {/* Top: name + breadcrumb */}
+          <div>
+            <FadeIn>
+              <nav className="font-mono-label text-xs uppercase tracking-wider text-white/40 mb-4">
+                <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
+                {" / "}
+                <Link href="/colleges" className="hover:text-white/60 transition-colors">Colleges</Link>
+                {" / "}
+                <span className="text-white/60">{college.name}</span>
+              </nav>
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
+                {college.name}
+              </h1>
+              <p className="mt-2 text-white/70 font-body text-lg">
+                {college.location}
+              </p>
+            </FadeIn>
+          </div>
 
-          {/* Stats cards inside hero */}
-          <FadeIn delay={0.1}>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mt-10">
-              <StatCard
-                label="Acceptance Rate"
-                value={formatPercent(college.acceptance_rate)}
-              />
-              <StatCard
-                label="Avg Cost (In-State)"
-                value={formatCurrency(college.avg_cost_instate)}
-              />
-              <StatCard
-                label="Avg Cost (Out-of-State)"
-                value={formatCurrency(college.avg_cost_outstate)}
-              />
-              <StatCard
-                label="Graduation Rate"
-                value={formatPercent(college.graduation_rate)}
-              />
-              <StatCard
-                label="Total Enrollment"
-                value={
-                  college.total_enrollment
-                    ? college.total_enrollment.toLocaleString()
-                    : "N/A"
-                }
-              />
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.15}>
-            <div className="mt-6 flex flex-wrap gap-3 justify-center [&_button]:border-white/60 [&_button]:text-white [&_button]:hover:border-white [&_button]:hover:text-white">
-              <AddToListButton collegeSlug={slug} />
-            </div>
-            {college.official_url && (
-              <div className="mt-3 text-center">
-                <a
-                  href={college.official_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-white/50 hover:text-white/80 underline underline-offset-2"
-                >
-                  Official website &#8599;
-                </a>
+          {/* Bottom: stats + button */}
+          <div>
+            <FadeIn delay={0.1}>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <StatCard
+                  label="Acceptance Rate"
+                  value={formatPercent(college.acceptance_rate)}
+                />
+                <StatCard
+                  label="Avg Cost (In-State)"
+                  value={formatCurrency(college.avg_cost_instate)}
+                />
+                <StatCard
+                  label="Avg Cost (Out-of-State)"
+                  value={formatCurrency(college.avg_cost_outstate)}
+                />
+                <StatCard
+                  label="Graduation Rate"
+                  value={formatPercent(college.graduation_rate)}
+                />
+                <StatCard
+                  label="Total Enrollment"
+                  value={
+                    college.total_enrollment
+                      ? college.total_enrollment.toLocaleString()
+                      : "N/A"
+                  }
+                />
               </div>
-            )}
-          </FadeIn>
+            </FadeIn>
+
+            <FadeIn delay={0.15}>
+              <div className="mt-6 flex flex-wrap gap-3 justify-center [&_button]:border-white/60 [&_button]:text-white [&_button]:hover:border-white [&_button]:hover:text-white">
+                <AddToListButton collegeSlug={slug} />
+              </div>
+              {college.official_url && (
+                <div className="mt-3 text-center">
+                  <a
+                    href={college.official_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-white/50 hover:text-white/80 underline underline-offset-2"
+                  >
+                    Official website &#8599;
+                  </a>
+                </div>
+              )}
+            </FadeIn>
+          </div>
         </div>
       </section>
 
