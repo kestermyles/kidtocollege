@@ -429,7 +429,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
         >
           &larr; All Colleges
         </Link>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 pt-32 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 pt-32 w-full">
           <FadeIn>
             <nav className="font-mono-label text-xs uppercase tracking-wider text-white/40 mb-4">
               <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
@@ -475,27 +475,24 @@ export default async function CollegePage({ params }: CollegePageProps) {
               />
             </div>
           </FadeIn>
-        </div>
-      </section>
 
-      {/* Actions */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap gap-3 justify-center">
-            <AddToListButton collegeSlug={slug} />
-          </div>
-          {college.official_url && (
-            <div className="mt-3 text-center">
-              <a
-                href={college.official_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-navy/50 hover:text-navy underline underline-offset-2"
-              >
-                Official website &#8599;
-              </a>
+          <FadeIn delay={0.15}>
+            <div className="mt-6 flex flex-wrap gap-3 justify-center">
+              <AddToListButton collegeSlug={slug} />
             </div>
-          )}
+            {college.official_url && (
+              <div className="mt-3 text-center">
+                <a
+                  href={college.official_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-white/50 hover:text-white/80 underline underline-offset-2"
+                >
+                  Official website &#8599;
+                </a>
+              </div>
+            )}
+          </FadeIn>
         </div>
       </section>
 
