@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Parallax sections */
 .parallax-section {
-  background-attachment: fixed;
+  background-attachment: scroll;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
