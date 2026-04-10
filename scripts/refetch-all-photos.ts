@@ -66,17 +66,17 @@ async function fetchPhoto(
 }
 
 const FALLBACK_QUERIES = [
-  "university campus aerial",
-  "college library students",
-  "university lecture hall",
-  "students studying campus",
-  "college campus architecture",
+  "american university campus quad students",
+  "US college campus brick building",
+  "university campus architecture USA",
+  "college library interior USA",
+  "american campus students walking",
 ]
 
 async function fetchFallbackPhoto(): Promise<PhotoResult | "__RATE_LIMITED__" | null> {
   for (const query of FALLBACK_QUERIES) {
     const res = await fetch(
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=10&orientation=landscape`,
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=5&orientation=landscape`,
       { headers: { Authorization: `Client-ID ${UNSPLASH_KEY}` } }
     )
 
@@ -87,7 +87,7 @@ async function fetchFallbackPhoto(): Promise<PhotoResult | "__RATE_LIMITED__" | 
     const results = data.results || []
     if (results.length === 0) continue
 
-    const randomIndex = Math.floor(Math.random() * Math.min(results.length, 8))
+    const randomIndex = Math.floor(Math.random() * Math.min(results.length, 5))
     const pick = results[randomIndex]
     if (pick?.urls?.regular) {
       return {
