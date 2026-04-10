@@ -79,6 +79,14 @@ export default function HomePage() {
         }}
       >
         <div className="absolute inset-0 bg-black/55" />
+        <a
+          href="https://unsplash.com/@thoughtcatalog?utm_source=kidtocollege&utm_medium=referral"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute bottom-3 right-4 text-white/50 text-xs hover:text-white/80 z-20"
+        >
+          Photo by Thought Catalog on Unsplash
+        </a>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 w-full">
           <FadeIn>
             <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black text-white max-w-4xl leading-tight text-shadow-hero">
