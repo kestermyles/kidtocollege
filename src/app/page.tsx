@@ -124,7 +124,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== HOW IT WORKS ===== */}
-      <PhotoSection imageUrl="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80">
+      <PhotoSection imageUrl="https://images.unsplash.com/photo-1760111085279-6c4b6d831acc?w=1920&q=80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
           <FadeIn>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-white text-center mb-16">
