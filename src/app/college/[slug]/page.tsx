@@ -387,7 +387,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
       />
       {/* Full-bleed hero */}
       <section
-        className="parallax-section relative"
+        className="parallax-section relative min-h-[520px]"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
@@ -477,7 +477,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
           </FadeIn>
 
           <FadeIn delay={0.15}>
-            <div className="mt-6 flex flex-wrap gap-3 justify-center">
+            <div className="mt-6 flex flex-wrap gap-3 justify-center [&_button]:border-white/60 [&_button]:text-white [&_button]:hover:border-white [&_button]:hover:text-white">
               <AddToListButton collegeSlug={slug} />
             </div>
             {college.official_url && (
