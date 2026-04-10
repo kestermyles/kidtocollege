@@ -15,7 +15,7 @@ export function PhotoSection({
 }: PhotoSectionProps) {
   return (
     <section
-      className={`parallax-section relative ${className}`}
+      className={`parallax-section relative min-h-[500px] ${className}`}
       style={{ backgroundImage: `url(${imageUrl})` }}
     >
       <div className={`absolute inset-0 ${overlayOpacity}`} />
