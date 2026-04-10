@@ -72,7 +72,7 @@ export default function HomePage() {
     <>
       {/* ===== HERO ===== */}
       <section
-        className="parallax-section relative"
+        className="parallax-section relative min-h-[800px]"
         style={{
           backgroundImage:
             "url(https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=1600&q=80)",
@@ -121,11 +121,9 @@ export default function HomePage() {
             </div>
           </FadeIn>
         </div>
-      </section>
 
-      {/* ===== HOW IT WORKS ===== */}
-      <PhotoSection imageUrl="https://images.unsplash.com/photo-1760111085279-6c4b6d831acc?w=1920&q=80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        {/* ===== HOW IT WORKS ===== */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
           <FadeIn>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-white text-center mb-16">
               How it works
@@ -149,7 +147,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </PhotoSection>
+      </section>
 
       {/* ===== COACH TEASER ===== */}
       <section className="py-20 sm:py-28 bg-white">
