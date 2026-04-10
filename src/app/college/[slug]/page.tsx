@@ -9,6 +9,7 @@ import { CollegeRequirements } from "@/components/CollegeRequirements";
 import CollegeTravelInfo from "@/components/CollegeTravelInfo";
 import { CollegeAIInsights } from "@/components/CollegeAIInsights";
 import type { College, ScholarshipResult } from "@/lib/types";
+import { CollegeAdmissionFactors } from "@/components/CollegeAdmissionFactors";
 import { CollegeYourIn } from "@/components/CollegeYourIn";
 
 export const revalidate = 86400;
@@ -361,30 +362,6 @@ export default async function CollegePage({ params }: CollegePageProps) {
       ? college.photo_url
       : defaultPhoto;
 
-  // Fetch admission factors for hero
-  const FACTOR_LABELS: Record<string, string> = {
-    gpa: "GPA", class_rank: "Class Rank", test_scores: "Test Scores",
-    recommendation: "Recommendations", extracurriculars: "Extracurriculars",
-    first_generation: "First Generation", geographic_residence: "Geographic Diversity",
-    state_residency: "State Residency", volunteer_work: "Volunteer Work",
-    work_experience: "Work Experience", talent_ability: "Talent / Ability",
-    character_personal: "Character", alumni_relation: "Legacy",
-    racial_ethnic_status: "Racial / Ethnic Status",
-  };
-  let admissionFactors: { factor: string; weight: string }[] = [];
-  if (hasSupabase()) {
-    try {
-      const supabase = createServiceRoleClient();
-      const { data } = await supabase
-        .from("college_admission_factors")
-        .select("factor, weight")
-        .eq("college_slug", slug)
-        .in("weight", ["very_important", "important"])
-        .order("weight", { ascending: true });
-      admissionFactors = data || [];
-    } catch {}
-  }
-
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
   const city = college.location?.split(",")[0]?.trim() || "";
   const jsonLd: Record<string, unknown> = {
@@ -410,7 +387,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
       />
       {/* Full-bleed hero */}
       <section
-        className="parallax-section relative min-h-[480px] sm:min-h-[540px] flex items-end"
+        className="parallax-section relative min-h-[600px] sm:min-h-[660px] flex items-end"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
@@ -468,33 +445,11 @@ export default async function CollegePage({ params }: CollegePageProps) {
               {college.location}
             </p>
           </FadeIn>
-          {admissionFactors.length > 0 && (
-            <FadeIn delay={0.1}>
-              <div className="mt-6">
-                <p className="font-mono-label text-xs uppercase tracking-wider text-white/40 mb-2">
-                  What they weigh most
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {admissionFactors.filter(f => f.weight === "very_important").map(f => (
-                    <span key={f.factor} className="bg-white/20 text-white text-xs font-body px-2.5 py-1 rounded-full backdrop-blur-sm">
-                      {FACTOR_LABELS[f.factor] || f.factor}
-                    </span>
-                  ))}
-                  {admissionFactors.filter(f => f.weight === "important").map(f => (
-                    <span key={f.factor} className="border border-white/30 text-white/70 text-xs font-body px-2.5 py-1 rounded-full">
-                      {FACTOR_LABELS[f.factor] || f.factor}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-xs text-white/30 font-body mt-2">Source: Common Data Set</p>
-              </div>
-            </FadeIn>
-          )}
         </div>
       </section>
 
       {/* Key stats */}
-      <section className="py-12 sm:py-16 -mt-16 relative z-10">
+      <section className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -541,6 +496,9 @@ export default async function CollegePage({ params }: CollegePageProps) {
           </FadeIn>
         </div>
       </section>
+
+      {/* Admission Factors */}
+      <CollegeAdmissionFactors slug={slug} />
 
       {/* Your In */}
       <CollegeYourIn collegeSlug={slug} collegeName={college.name} />
