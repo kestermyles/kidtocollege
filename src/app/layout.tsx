@@ -5,7 +5,6 @@ import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/react";
 import Sam from "@/components/Sam";
-import InstallPromptBanner from "@/components/InstallPromptBanner";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kidtocollege.com"),
@@ -85,7 +84,6 @@ export default function RootLayout({
           <Sam />
         </Providers>
         <Analytics />
-        <InstallPromptBanner />
       </body>
     </html>
   );
