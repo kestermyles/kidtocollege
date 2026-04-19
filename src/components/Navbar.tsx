@@ -17,6 +17,7 @@ interface NavLink {
 
 const NAV_LINKS: NavLink[] = [
   { href: "/roadmap", label: "Roadmap" },
+  { href: "/checklist", label: "Checklist", authOnly: true },
   { href: "/search", label: "Explore Colleges" },
   { href: "/my-chances", label: "My Chances" },
   { href: "/community", label: "Community" },
@@ -120,8 +121,8 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-6">
             {NAV_LINKS.filter((l) => !l.authOnly || isSignedIn).map((link, i) => (
               <React.Fragment key={link.href}>
-                {/* Insert My Colleges after Roadmap (first item) */}
-                {i === 1 && isSignedIn && (
+                {/* Insert My Colleges after Roadmap + Checklist */}
+                {i === 2 && isSignedIn && (
                   <Link
                     href="/my-colleges"
                     className={`relative pr-4 text-sm font-medium font-body ${
