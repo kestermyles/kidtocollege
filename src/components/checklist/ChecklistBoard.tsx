@@ -213,14 +213,14 @@ export default function ChecklistBoard({
             )
           })}
         </div>
-        <button
-          disabled
-          title="PDF export coming soon"
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-400 border border-card rounded-full cursor-not-allowed"
+        <a
+          href="/downloads/college-planning-checklist.pdf"
+          download
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-navy border border-card rounded-full hover:border-navy/40 transition-colors"
         >
           <Download size={12} />
-          Download PDF (soon)
-        </button>
+          Download PDF
+        </a>
       </div>
 
       {gradeTasks.length === 0 ? (

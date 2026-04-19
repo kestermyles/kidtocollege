@@ -14,6 +14,10 @@
     {
       "path": "/api/cron/enrich-photos",
       "schedule": "45 * * * *"
+    },
+    {
+      "path": "/api/cron/checklist-reminders",
+      "schedule": "0 14 * * *"
     }
   ]
 }
