@@ -29,6 +29,7 @@ const NAV_LINKS: NavLink[] = [
       { href: "/fafsa-guide", label: "FAFSA Guide" },
       { href: "/financial-aid", label: "State Aid Guides" },
       { href: "/financial-aid/calculator", label: "Net Price Calculator" },
+      { href: "/net-price-estimator", label: "Net Price Estimator" },
       { href: "/scholarships", label: "Scholarships" },
       { href: "/compare", label: "Compare Colleges" },
       { href: "/colleges", label: "Browse All Colleges" },
