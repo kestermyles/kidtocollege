@@ -8,6 +8,7 @@ import {
   INCOME_RANGES,
   type EstimatorInputs,
   type EstimatorResults,
+  type Housing,
   type Residency,
 } from '@/lib/estimator-calc'
 import ResultsDisplay from './ResultsDisplay'
@@ -23,12 +24,13 @@ type CollegeOption = {
   npc_url: string | null
 }
 
-type Step = 1 | 2 | 3 | 4
+type Step = 1 | 2 | 3 | 4 | 5
 
 export default function EstimatorForm() {
   const [step, setStep] = useState<Step>(1)
   const [college, setCollege] = useState<CollegeOption | null>(null)
   const [residency, setResidency] = useState<Residency>('in-state')
+  const [housing, setHousing] = useState<Housing>('on-campus')
   const [isVeteran, setIsVeteran] = useState(false)
   const [isFirstGen, setIsFirstGen] = useState(false)
   const [incomeMidpoint, setIncomeMidpoint] = useState<number | null>(null)
@@ -45,8 +47,10 @@ export default function EstimatorForm() {
       case 2:
         return true
       case 3:
-        return incomeMidpoint !== null && siblings >= 0
+        return true
       case 4:
+        return incomeMidpoint !== null && siblings >= 0
+      case 5:
         return true
     }
   }
@@ -82,6 +86,7 @@ export default function EstimatorForm() {
         college={{ name: college.name, slug: college.slug, npc_url: college.npc_url }}
         inputs={{
           residency,
+          housing,
           familyIncome: incomeMidpoint,
           incomeLabel: selectedIncomeLabel,
           siblings,
@@ -111,7 +116,11 @@ export default function EstimatorForm() {
       )}
 
       {step === 3 && (
-        <StepThree
+        <StepHousing housing={housing} onChange={setHousing} />
+      )}
+
+      {step === 4 && (
+        <StepFinances
           incomeMidpoint={incomeMidpoint}
           siblings={siblings}
           onIncomeChange={setIncomeMidpoint}
@@ -119,10 +128,11 @@ export default function EstimatorForm() {
         />
       )}
 
-      {step === 4 && college && (
-        <StepFour
+      {step === 5 && college && (
+        <StepReview
           college={college}
           residency={residency}
+          housing={housing}
           isVeteran={isVeteran}
           isFirstGen={isFirstGen}
           incomeLabel={selectedIncomeLabel}
@@ -140,7 +150,7 @@ export default function EstimatorForm() {
           <ChevronLeft size={16} /> Back
         </button>
 
-        {step < 4 ? (
+        {step < 5 ? (
           <button
             type="button"
             onClick={() => canAdvance(step) && setStep(((step + 1) as Step))}
@@ -164,15 +174,15 @@ export default function EstimatorForm() {
 }
 
 function ProgressBar({ step }: { step: Step }) {
-  const labels = ['College', 'Situation', 'Finances', 'Review']
+  const labels = ['College', 'Situation', 'Housing', 'Finances', 'Review']
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between text-xs font-medium text-navy/60 mb-2">
-        <span>Step {step} of 4</span>
+        <span>Step {step} of 5</span>
         <span>{labels[step - 1]}</span>
       </div>
       <div className="flex gap-1.5">
-        {[1, 2, 3, 4].map(n => (
+        {[1, 2, 3, 4, 5].map(n => (
           <div
             key={n}
             className={`h-1.5 flex-1 rounded-full ${n <= step ? 'bg-gold' : 'bg-card'}`}
@@ -343,7 +353,65 @@ function StepTwo({
   )
 }
 
-function StepThree({
+function StepHousing({
+  housing,
+  onChange,
+}: {
+  housing: Housing
+  onChange: (h: Housing) => void
+}) {
+  const options: { value: Housing; title: string; description: string }[] = [
+    {
+      value: 'on-campus',
+      title: 'On-campus housing',
+      description: 'Dorms, residence halls, or campus apartments',
+    },
+    {
+      value: 'off-campus',
+      title: 'Off-campus housing',
+      description: 'Apartment or house near campus',
+    },
+    {
+      value: 'commuter',
+      title: 'Living at home',
+      description: 'Commuting from family home (save $12,000–15,000/year)',
+    },
+  ]
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="font-display text-xl font-bold text-navy mb-1">Where will you live?</h2>
+        <p className="text-sm text-gray-500">
+          Your housing choice shapes real-world costs, even though our estimate uses the college&apos;s average.
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        {options.map(o => {
+          const active = o.value === housing
+          return (
+            <button
+              key={o.value}
+              type="button"
+              onClick={() => onChange(o.value)}
+              className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                active
+                  ? 'border-gold bg-gold/5'
+                  : 'border-card hover:border-navy/30'
+              }`}
+            >
+              <div className="font-semibold text-navy">{o.title}</div>
+              <div className="text-sm text-gray-600 mt-1">{o.description}</div>
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function StepFinances({
   incomeMidpoint,
   siblings,
   onIncomeChange,
@@ -400,9 +468,10 @@ function StepThree({
   )
 }
 
-function StepFour({
+function StepReview({
   college,
   residency,
+  housing,
   isVeteran,
   isFirstGen,
   incomeLabel,
@@ -410,11 +479,14 @@ function StepFour({
 }: {
   college: CollegeOption
   residency: Residency
+  housing: Housing
   isVeteran: boolean
   isFirstGen: boolean
   incomeLabel: string
   siblings: number
 }) {
+  const housingLabel =
+    housing === 'on-campus' ? 'On-campus' : housing === 'off-campus' ? 'Off-campus' : 'Living at home'
   return (
     <div>
       <h2 className="font-display text-xl font-bold text-navy mb-1">Review your answers</h2>
@@ -425,6 +497,7 @@ function StepFour({
       <div className="divide-y divide-card border border-card rounded-lg">
         <SummaryRow label="College" value={college.name} />
         <SummaryRow label="Residency" value={residency === 'in-state' ? 'In-state' : 'Out-of-state'} />
+        <SummaryRow label="Housing" value={housingLabel} />
         <SummaryRow label="Family income" value={incomeLabel || '—'} />
         <SummaryRow label="Siblings in college" value={String(siblings)} />
         {isFirstGen && <SummaryRow label="First-generation" value="Yes" />}

@@ -3,6 +3,10 @@
 // tuition + fees + room + board + books. We add a flat personal-expenses bump only.
 
 export type Residency = 'in-state' | 'out-of-state'
+// Informational only — does not affect calculation. COA from Scorecard already
+// averages room/board, so housing choice changes real-world out-of-pocket
+// cost but not the published estimate. Kept here so the form + results share a type.
+export type Housing = 'on-campus' | 'off-campus' | 'commuter'
 
 export interface EstimatorInputs {
   collegeName: string

@@ -1,8 +1,8 @@
 'use client'
 
-import { Printer, RotateCcw, ExternalLink, AlertTriangle, Info } from 'lucide-react'
+import { Printer, RotateCcw, ExternalLink, AlertTriangle, Info, Home, PiggyBank } from 'lucide-react'
 import Link from 'next/link'
-import { formatUSD, type EstimatorResults, type Residency } from '@/lib/estimator-calc'
+import { formatUSD, type EstimatorResults, type Housing, type Residency } from '@/lib/estimator-calc'
 
 export default function ResultsDisplay({
   results,
@@ -14,6 +14,7 @@ export default function ResultsDisplay({
   college: { name: string; slug: string; npc_url: string | null }
   inputs: {
     residency: Residency
+    housing: Housing
     familyIncome: number
     incomeLabel: string
     siblings: number
@@ -25,6 +26,8 @@ export default function ResultsDisplay({
     : 0
 
   const handlePrint = () => window.print()
+  const housingLabel =
+    inputs.housing === 'on-campus' ? 'On-campus' : inputs.housing === 'off-campus' ? 'Off-campus' : 'Living at home'
 
   return (
     <div className="space-y-6">
@@ -32,7 +35,7 @@ export default function ResultsDisplay({
         <div>
           <h2 className="font-display text-2xl font-bold text-navy">{college.name}</h2>
           <p className="text-sm text-gray-500">
-            {inputs.residency === 'in-state' ? 'In-state' : 'Out-of-state'} · {inputs.incomeLabel}
+            {inputs.residency === 'in-state' ? 'In-state' : 'Out-of-state'} · {housingLabel} · {inputs.incomeLabel}
             {inputs.siblings > 0 && ` · ${inputs.siblings} sibling${inputs.siblings > 1 ? 's' : ''} in college`}
           </p>
         </div>
@@ -59,6 +62,8 @@ export default function ResultsDisplay({
       <AboutEstimateBanner />
 
       <CostBreakdownPanel results={results} />
+
+      <HousingContext housing={inputs.housing} collegeName={college.name} />
 
       <FourYearProjection results={results} />
 
@@ -165,6 +170,52 @@ function CostBreakdownPanel({ results }: { results: EstimatorResults }) {
         <div className="flex items-center justify-between px-4 py-3 bg-navy text-white text-sm font-semibold">
           <span>Estimated year 1 total</span>
           <span>{formatUSD(y1.total)}</span>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function HousingContext({ housing, collegeName }: { housing: Housing; collegeName: string }) {
+  if (housing === 'commuter') {
+    return (
+      <section className="rounded-lg border-2 border-sage/40 bg-sage/5 p-4">
+        <div className="flex items-start gap-2">
+          <PiggyBank size={18} className="text-sage shrink-0 mt-0.5" />
+          <div>
+            <h3 className="font-display text-base font-bold text-navy">Significant savings — living at home</h3>
+            <p className="text-sm text-navy/85 mt-1 leading-relaxed">
+              By living at home, you can potentially save $12,000–$15,000 per year compared to on-campus housing. The estimate above still includes {collegeName}&apos;s average room and board in the published cost of attendance, but your actual out-of-pocket costs will be significantly lower. Factor in commuting costs (gas, parking, time) when making your decision.
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+  if (housing === 'on-campus') {
+    return (
+      <section className="rounded-lg border border-navy/15 bg-navy/5 p-4">
+        <div className="flex items-start gap-2">
+          <Home size={18} className="text-navy shrink-0 mt-0.5" />
+          <div>
+            <h3 className="font-display text-base font-bold text-navy">On-campus housing</h3>
+            <p className="text-sm text-navy/85 mt-1 leading-relaxed">
+              This estimate includes {collegeName}&apos;s average room and board costs. Your actual costs may vary based on dorm selection and meal plan.
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+  return (
+    <section className="rounded-lg border border-navy/15 bg-navy/5 p-4">
+      <div className="flex items-start gap-2">
+        <Home size={18} className="text-navy shrink-0 mt-0.5" />
+        <div>
+          <h3 className="font-display text-base font-bold text-navy">Off-campus housing</h3>
+          <p className="text-sm text-navy/85 mt-1 leading-relaxed">
+            Our estimate uses {collegeName}&apos;s average room and board. Off-campus costs vary widely by location and may be higher or lower than this estimate.
+          </p>
         </div>
       </div>
     </section>
