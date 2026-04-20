@@ -1,8 +1,8 @@
 'use client'
 
-import { Printer, RotateCcw, ExternalLink, AlertTriangle } from 'lucide-react'
+import { Printer, RotateCcw, ExternalLink, AlertTriangle, Info } from 'lucide-react'
 import Link from 'next/link'
-import { formatUSD, type EstimatorResults, type Housing, type Residency } from '@/lib/estimator-calc'
+import { formatUSD, type EstimatorResults, type Residency } from '@/lib/estimator-calc'
 
 export default function ResultsDisplay({
   results,
@@ -11,10 +11,9 @@ export default function ResultsDisplay({
   onRestart,
 }: {
   results: EstimatorResults
-  college: { name: string; slug: string }
+  college: { name: string; slug: string; npc_url: string | null }
   inputs: {
     residency: Residency
-    housing: Housing
     familyIncome: number
     incomeLabel: string
     siblings: number
@@ -33,7 +32,7 @@ export default function ResultsDisplay({
         <div>
           <h2 className="font-display text-2xl font-bold text-navy">{college.name}</h2>
           <p className="text-sm text-gray-500">
-            {inputs.residency === 'in-state' ? 'In-state' : 'Out-of-state'} · {housingLabel(inputs.housing)} · {inputs.incomeLabel}
+            {inputs.residency === 'in-state' ? 'In-state' : 'Out-of-state'} · {inputs.incomeLabel}
             {inputs.siblings > 0 && ` · ${inputs.siblings} sibling${inputs.siblings > 1 ? 's' : ''} in college`}
           </p>
         </div>
@@ -57,7 +56,9 @@ export default function ResultsDisplay({
 
       <HeadlineNumbers results={results} savingsPct={savingsPct} />
 
-      <StickerBreakdown results={results} />
+      <AboutEstimateBanner />
+
+      <CostBreakdownPanel results={results} />
 
       <FourYearProjection results={results} />
 
@@ -68,10 +69,6 @@ export default function ResultsDisplay({
       <Disclaimer />
     </div>
   )
-}
-
-function housingLabel(h: Housing): string {
-  return h === 'on-campus' ? 'On-campus' : h === 'off-campus' ? 'Off-campus' : 'Commuter'
 }
 
 function HeadlineNumbers({
@@ -132,39 +129,44 @@ function Stat({
   )
 }
 
-function StickerBreakdown({ results }: { results: EstimatorResults }) {
+function AboutEstimateBanner() {
+  return (
+    <div className="flex items-start gap-2 rounded-lg border border-navy/15 bg-navy/5 p-4">
+      <Info size={16} className="text-navy shrink-0 mt-0.5" />
+      <p className="text-sm text-navy/85 leading-relaxed">
+        <strong>About this estimate:</strong> We use the college&apos;s published cost of attendance,
+        which already includes tuition, room, board, books, and basic fees. We&apos;ve added $2,500/year
+        for personal expenses like entertainment, toiletries, and miscellaneous purchases.
+      </p>
+    </div>
+  )
+}
+
+function CostBreakdownPanel({ results }: { results: EstimatorResults }) {
   const y1 = results.sticker.yearly
-  const rows: { label: string; value: number }[] = [
-    { label: 'Tuition & fees', value: y1.tuition },
-    { label: 'Housing', value: y1.housing },
-    { label: 'Meals', value: y1.meals },
-    { label: 'Books & supplies', value: y1.books },
-    { label: 'Transportation', value: y1.transportation },
-    { label: 'Personal expenses', value: y1.personal },
-  ]
   return (
     <section>
       <h3 className="font-display text-lg font-bold text-navy mb-3">Year 1 cost breakdown</h3>
       <div className="border border-card rounded-lg overflow-hidden">
-        {rows.map((r, i) => (
-          <div
-            key={r.label}
-            className={`flex items-center justify-between px-4 py-2.5 text-sm ${
-              i % 2 === 1 ? 'bg-cream/50' : 'bg-white'
-            }`}
-          >
-            <span className="text-gray-600">{r.label}</span>
-            <span className="font-medium text-navy">{formatUSD(r.value)}</span>
+        <div className="flex items-center justify-between px-4 py-2.5 text-sm bg-white">
+          <div>
+            <span className="text-gray-600">Tuition, room, board, books &amp; fees</span>
+            <span className="text-xs text-gray-400 ml-1">(from college data)</span>
           </div>
-        ))}
+          <span className="font-medium text-navy">{formatUSD(y1.coa)}</span>
+        </div>
+        <div className="flex items-center justify-between px-4 py-2.5 text-sm bg-cream/50 border-t border-card">
+          <div>
+            <span className="text-gray-600">Personal expenses</span>
+            <span className="text-xs text-gray-400 ml-1">(entertainment, toiletries, misc.)</span>
+          </div>
+          <span className="font-medium text-navy">{formatUSD(y1.personal)}</span>
+        </div>
         <div className="flex items-center justify-between px-4 py-3 bg-navy text-white text-sm font-semibold">
-          <span>Total year 1</span>
+          <span>Estimated year 1 total</span>
           <span>{formatUSD(y1.total)}</span>
         </div>
       </div>
-      <p className="text-xs text-gray-400 mt-2">
-        Tuition uses published average cost of attendance. Other categories are flat estimates — actual costs vary.
-      </p>
     </section>
   )
 }
@@ -231,19 +233,24 @@ function SavingsSummary({
   )
 }
 
-function NextSteps({ college }: { college: { name: string; slug: string } }) {
-  const npcSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(`${college.name} net price calculator`)}`
+function NextSteps({ college }: { college: { name: string; slug: string; npc_url: string | null } }) {
+  const officialNpc =
+    college.npc_url ??
+    `https://www.google.com/search?q=${encodeURIComponent(`${college.name} net price calculator`)}`
+  const npcLabel = college.npc_url
+    ? `Visit ${college.name}'s official NPC`
+    : `Search for ${college.name}'s NPC`
   return (
     <section className="print:hidden">
       <h3 className="font-display text-lg font-bold text-navy mb-3">Verify with official sources</h3>
       <div className="grid sm:grid-cols-2 gap-2">
         <a
-          href={npcSearchUrl}
+          href={officialNpc}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-between gap-2 border border-card rounded-lg px-3 py-2.5 text-sm hover:border-navy/40"
         >
-          <span className="text-navy font-medium">{college.name} official NPC</span>
+          <span className="text-navy font-medium">{npcLabel}</span>
           <ExternalLink size={14} className="text-gray-400" />
         </a>
         <Link

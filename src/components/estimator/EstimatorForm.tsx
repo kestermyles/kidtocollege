@@ -8,7 +8,6 @@ import {
   INCOME_RANGES,
   type EstimatorInputs,
   type EstimatorResults,
-  type Housing,
   type Residency,
 } from '@/lib/estimator-calc'
 import ResultsDisplay from './ResultsDisplay'
@@ -21,6 +20,7 @@ type CollegeOption = {
   acceptance_rate: number | null
   avg_cost_instate: number | null
   avg_cost_outstate: number | null
+  npc_url: string | null
 }
 
 type Step = 1 | 2 | 3 | 4
@@ -29,7 +29,6 @@ export default function EstimatorForm() {
   const [step, setStep] = useState<Step>(1)
   const [college, setCollege] = useState<CollegeOption | null>(null)
   const [residency, setResidency] = useState<Residency>('in-state')
-  const [housing, setHousing] = useState<Housing>('on-campus')
   const [isVeteran, setIsVeteran] = useState(false)
   const [isFirstGen, setIsFirstGen] = useState(false)
   const [incomeMidpoint, setIncomeMidpoint] = useState<number | null>(null)
@@ -58,7 +57,6 @@ export default function EstimatorForm() {
       collegeName: college.name,
       collegeSlug: college.slug,
       residency,
-      housing,
       familyIncome: incomeMidpoint,
       siblingsInCollege: siblings,
       isVeteran,
@@ -81,10 +79,9 @@ export default function EstimatorForm() {
     return (
       <ResultsDisplay
         results={results}
-        college={{ name: college.name, slug: college.slug }}
+        college={{ name: college.name, slug: college.slug, npc_url: college.npc_url }}
         inputs={{
           residency,
-          housing,
           familyIncome: incomeMidpoint,
           incomeLabel: selectedIncomeLabel,
           siblings,
@@ -105,11 +102,9 @@ export default function EstimatorForm() {
       {step === 2 && (
         <StepTwo
           residency={residency}
-          housing={housing}
           isVeteran={isVeteran}
           isFirstGen={isFirstGen}
           onResidencyChange={setResidency}
-          onHousingChange={setHousing}
           onVeteranChange={setIsVeteran}
           onFirstGenChange={setIsFirstGen}
         />
@@ -128,7 +123,6 @@ export default function EstimatorForm() {
         <StepFour
           college={college}
           residency={residency}
-          housing={housing}
           isVeteran={isVeteran}
           isFirstGen={isFirstGen}
           incomeLabel={selectedIncomeLabel}
@@ -215,7 +209,7 @@ function StepOne({
         const supabase = createClient()
         const { data } = await supabase
           .from('colleges')
-          .select('slug, name, location, state, acceptance_rate, avg_cost_instate, avg_cost_outstate')
+          .select('slug, name, location, state, acceptance_rate, avg_cost_instate, avg_cost_outstate, npc_url')
           .ilike('name', `%${query}%`)
           .order('total_enrollment', { ascending: false, nullsFirst: false })
           .limit(8)
@@ -296,20 +290,16 @@ function StepOne({
 
 function StepTwo({
   residency,
-  housing,
   isVeteran,
   isFirstGen,
   onResidencyChange,
-  onHousingChange,
   onVeteranChange,
   onFirstGenChange,
 }: {
   residency: Residency
-  housing: Housing
   isVeteran: boolean
   isFirstGen: boolean
   onResidencyChange: (r: Residency) => void
-  onHousingChange: (h: Housing) => void
   onVeteranChange: (v: boolean) => void
   onFirstGenChange: (v: boolean) => void
 }) {
@@ -317,7 +307,7 @@ function StepTwo({
     <div className="space-y-6">
       <div>
         <h2 className="font-display text-xl font-bold text-navy mb-1">Your situation</h2>
-        <p className="text-sm text-gray-500 mb-4">Tell us about residency and where you will live.</p>
+        <p className="text-sm text-gray-500 mb-4">Residency drives the published cost we use.</p>
       </div>
 
       <Fieldset label="Residency">
@@ -328,19 +318,6 @@ function StepTwo({
           options={[
             { value: 'in-state', label: 'In-state' },
             { value: 'out-of-state', label: 'Out-of-state' },
-          ]}
-        />
-      </Fieldset>
-
-      <Fieldset label="Housing plan">
-        <RadioGroup
-          name="housing"
-          value={housing}
-          onChange={v => onHousingChange(v as Housing)}
-          options={[
-            { value: 'on-campus', label: 'On-campus' },
-            { value: 'off-campus', label: 'Off-campus' },
-            { value: 'commuter', label: 'Commuter (living at home)' },
           ]}
         />
       </Fieldset>
@@ -426,7 +403,6 @@ function StepThree({
 function StepFour({
   college,
   residency,
-  housing,
   isVeteran,
   isFirstGen,
   incomeLabel,
@@ -434,17 +410,11 @@ function StepFour({
 }: {
   college: CollegeOption
   residency: Residency
-  housing: Housing
   isVeteran: boolean
   isFirstGen: boolean
   incomeLabel: string
   siblings: number
 }) {
-  const housingLabels: Record<Housing, string> = {
-    'on-campus': 'On-campus',
-    'off-campus': 'Off-campus',
-    commuter: 'Commuter (living at home)',
-  }
   return (
     <div>
       <h2 className="font-display text-xl font-bold text-navy mb-1">Review your answers</h2>
@@ -455,7 +425,6 @@ function StepFour({
       <div className="divide-y divide-card border border-card rounded-lg">
         <SummaryRow label="College" value={college.name} />
         <SummaryRow label="Residency" value={residency === 'in-state' ? 'In-state' : 'Out-of-state'} />
-        <SummaryRow label="Housing" value={housingLabels[housing]} />
         <SummaryRow label="Family income" value={incomeLabel || '—'} />
         <SummaryRow label="Siblings in college" value={String(siblings)} />
         {isFirstGen && <SummaryRow label="First-generation" value="Yes" />}

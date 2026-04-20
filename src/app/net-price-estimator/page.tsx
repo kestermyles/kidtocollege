@@ -24,12 +24,10 @@ export default function NetPriceEstimatorPage() {
       <section className="mt-10">
         <h2 className="font-display text-xl font-bold text-navy mb-3">What this estimator includes</h2>
         <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-navy/80 list-disc pl-5">
-          <li>Tuition and fees (from published college data)</li>
-          <li>Room and board estimates</li>
-          <li>Books and supplies</li>
-          <li>Transportation</li>
-          <li>Personal expenses</li>
+          <li>Published cost of attendance (tuition, room, board, books, fees)</li>
+          <li>$2,500/year for personal expenses</li>
           <li>Rough need-based aid based on income bracket</li>
+          <li>3% annual inflation across 4 years</li>
         </ul>
         <p className="text-xs text-gray-500 mt-3">
           Not included: merit scholarships, outside scholarships, program-specific aid (veterans, first-gen initiatives), state grants, institutional work-study.
@@ -49,7 +47,7 @@ function TopDisclaimer() {
         <div>
           <h2 className="font-display text-base font-bold text-navy">Estimates only — not financial advice</h2>
           <p className="text-sm text-navy/80 mt-1 leading-relaxed">
-            This calculator provides ballpark estimates for planning purposes. It is not a guarantee of actual costs or aid offers. Always verify with each college&apos;s official Net Price Calculator and financial aid office.
+            This calculator provides ballpark estimates for planning purposes. It is not a guarantee of actual costs or aid offers. Our estimates use each college&apos;s published cost of attendance (which includes tuition, room, board, books, and fees) plus $2,500/year for personal expenses. Actual aid varies significantly based on individual circumstances, merit scholarships, and college policies. Always verify with each college&apos;s official Net Price Calculator and financial aid office for accurate, personalized information.
           </p>
         </div>
       </div>
