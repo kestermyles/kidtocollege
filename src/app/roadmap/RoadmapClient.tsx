@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Compass, Building2, Target, DollarSign, Trophy, PenLine, type LucideIcon } from "lucide-react";
+import { Compass, Building2, Target, DollarSign, Trophy, PenLine, AlertTriangle, type LucideIcon } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 
 const STEPS: { num: number; icon: LucideIcon; title: string; description: string; cta: string; href: string; badge: string }[] = [
@@ -61,6 +61,65 @@ const STEPS: { num: number; icon: LucideIcon; title: string; description: string
     href: "/coach",
     badge: "Ongoing",
   },
+];
+
+type TimelineItem = { when: string; what: string };
+type TimelineGrade = { grade: string; emphasis?: string; items: TimelineItem[] };
+
+const TIMELINE: TimelineGrade[] = [
+  {
+    grade: "9th Grade",
+    items: [
+      { when: "Fall", what: "Focus on adjustment and exploration. Join 2-3 clubs or activities that genuinely interest you. Build relationships with teachers." },
+      { when: "Winter", what: "Meet with your counselor to understand your school's course offerings and graduation requirements." },
+      { when: "Spring", what: "Choose rigorous courses for sophomore year. Take the most challenging classes you can handle while maintaining strong grades." },
+    ],
+  },
+  {
+    grade: "10th Grade",
+    items: [
+      { when: "Fall", what: "Continue with extracurriculars and deepen involvement. Consider taking your first AP or Honors course." },
+      { when: "October", what: "Take the PSAT for practice (does not count for National Merit)." },
+      { when: "Spring", what: "Identify 1-2 activities where you can pursue leadership roles junior year." },
+    ],
+  },
+  {
+    grade: "11th Grade",
+    emphasis: "The most critical year",
+    items: [
+      { when: "Summer before", what: "Begin college research. Make a broad list of 15-20 schools." },
+      { when: "September", what: "Meet with your counselor about testing timeline and college list." },
+      { when: "October", what: "Take PSAT/NMSQT (counts for National Merit Scholarship)." },
+      { when: "Dec - Jan", what: "Take first SAT or ACT. Register 6-8 weeks in advance." },
+      { when: "Feb - Apr", what: "Build college list to 10-12 schools. Schedule campus visits for spring break." },
+      { when: "Mar - May", what: "Retake SAT/ACT if needed. Goal: be done with testing before summer." },
+      { when: "Apr - May", what: "Ask teachers for recommendation letters in person before summer break." },
+      { when: "Summer", what: "Write Common App essay. Narrow college list to 5-7 schools. Create resume/activity list." },
+    ],
+  },
+  {
+    grade: "12th Grade",
+    items: [
+      { when: "August 1", what: "Common App opens. Create account immediately." },
+      { when: "Aug - Sep", what: "Finalize college list. Complete all essays and short answers." },
+      { when: "October", what: "Submit Early Decision/Early Action applications (deadlines typically Nov 1)." },
+      { when: "October 1", what: "FAFSA opens. Complete it ASAP even if your family has high income." },
+      { when: "November", what: "Submit Regular Decision applications (deadlines typically Jan 1-15)." },
+      { when: "Dec - Mar", what: "Decisions arrive. Review financial aid packages carefully." },
+      { when: "April", what: "Compare aid packages. Visit accepted student days if possible." },
+      { when: "May 1", what: "National decision deadline. Submit deposit to ONE school only." },
+    ],
+  },
+];
+
+const MILESTONES: string[] = [
+  "October (Junior Year): PSAT/NMSQT for National Merit",
+  "Spring (Junior Year): Request recommendation letters",
+  "August 1 (Senior Year): Common App opens",
+  "October 1 (Senior Year): FAFSA opens",
+  "November 1: Early Decision/Early Action deadline",
+  "January 1-15: Regular Decision deadlines",
+  "May 1: National decision day",
 ];
 
 const QUICK_TOOLS = [
@@ -174,6 +233,63 @@ export default function RoadmapPage() {
                 </span>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Year-by-Year Timeline */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="font-display text-2xl font-bold text-navy">Year-by-year timeline</h2>
+            <p className="font-body text-sm text-navy/60 mt-1">What to work on each year of high school.</p>
+          </div>
+
+          <div className="space-y-6">
+            {TIMELINE.map((g) => (
+              <div key={g.grade} className="ktc-card p-6">
+                <div className="flex items-baseline justify-between flex-wrap gap-2 mb-4">
+                  <h3 className="font-display text-lg font-bold text-navy">{g.grade}</h3>
+                  {g.emphasis && (
+                    <span className="text-xs font-mono-label uppercase tracking-wide text-crimson font-semibold">
+                      {g.emphasis}
+                    </span>
+                  )}
+                </div>
+                <div className="divide-y divide-card">
+                  {g.items.map((it, i) => (
+                    <div key={i} className="grid sm:grid-cols-[140px_1fr] gap-1 sm:gap-4 py-2.5">
+                      <div className="font-mono-label text-xs uppercase tracking-wide text-gold font-semibold sm:pt-0.5">
+                        {it.when}
+                      </div>
+                      <div className="font-body text-sm text-navy/80 leading-relaxed">
+                        {it.what}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Critical Milestones */}
+      <section className="pb-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="ktc-card p-6 border-2 border-crimson/30 bg-crimson/5">
+            <div className="flex items-center gap-2 mb-4">
+              <AlertTriangle className="w-5 h-5 text-crimson" />
+              <h2 className="font-display text-lg font-bold text-navy">Cannot miss these deadlines</h2>
+            </div>
+            <ul className="space-y-2">
+              {MILESTONES.map((m) => (
+                <li key={m} className="flex items-start gap-2 font-body text-sm text-navy/80">
+                  <span className="text-crimson font-bold mt-0.5">•</span>
+                  <span>{m}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { TEN_QUALITIES_FRAMEWORK } from "@/lib/coach-prompts";
 
 export const maxDuration = 30;
 
@@ -20,7 +21,9 @@ Your approach:
 - Push them away from cliches and toward authentic, surprising details
 - Keep responses concise and conversational (2-4 sentences)
 - If they share a draft, give specific, actionable feedback
-- Remind them of the word limit when relevant`;
+- Remind them of the word limit when relevant
+
+${TEN_QUALITIES_FRAMEWORK}`;
 
   const response = await client.messages.create({
     model: "claude-sonnet-4-5",
