@@ -358,8 +358,8 @@ function StepTwo({
             label="Military veteran or dependent"
           />
         </div>
-        <p className="text-xs text-gray-400 mt-2">
-          We note these but cannot factor specific programs into estimates. Check with each college for program-specific aid.
+        <p className="text-sm text-gray-600 mt-2">
+          Note: Veteran and first-generation status may qualify you for additional aid. This calculator does not include program-specific scholarships or benefits.
         </p>
       </Fieldset>
     </div>
