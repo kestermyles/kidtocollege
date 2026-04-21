@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "seed:colleges": "tsx scripts/seed-all-colleges.ts",
+    "seed:scholarships": "tsx scripts/seed-scholarships.ts",
     "enrich:programs": "tsx scripts/enrich-programs.ts",
     "enrich:photos": "tsx scripts/enrich-photos.ts",
     "enrich:flags": "tsx scripts/enrich-flags.ts",

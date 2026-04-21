@@ -193,18 +193,22 @@ export default function HomePage() {
             <FadeIn delay={0.15}>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  "The Roadmap",
-                  "The Essay",
-                  "Test Prep",
-                  "Interviews",
-                  "Recommendations",
-                  "Financial Aid",
+                  { label: "The Roadmap", href: "/coach/roadmap" },
+                  { label: "The Essay", href: "/coach/essay" },
+                  { label: "Test Prep", href: "/coach/test-prep" },
+                  { label: "Interviews", href: "/coach/interviews" },
+                  { label: "Recommendations", href: "/coach/recommendations" },
+                  { label: "Financial Aid", href: "/coach/financial-aid" },
                 ].map((pillar) => (
-                  <div key={pillar} className="ktc-card p-5 text-center">
-                    <span className="font-display text-base font-bold text-navy">
-                      {pillar}
+                  <Link
+                    key={pillar.label}
+                    href={pillar.href}
+                    className="ktc-card p-5 text-center block group hover:shadow-lg hover:-translate-y-0.5 transition-all"
+                  >
+                    <span className="font-display text-base font-bold text-navy group-hover:text-gold transition-colors">
+                      {pillar.label}
                     </span>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </FadeIn>

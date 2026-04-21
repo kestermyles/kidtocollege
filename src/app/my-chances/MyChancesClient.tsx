@@ -57,10 +57,11 @@ export default function MyChancesClient() {
     setCollegeError("")
     if (query.length < 3) { setCollegeResults([]); setShowCollegeDropdown(false); return }
     const supabase = createClient()
+    const slugQuery = query.toLowerCase().replace(/ /g, "-")
     const { data } = await supabase
       .from("colleges")
       .select("name, slug")
-      .ilike("name", `%${query}%`)
+      .or(`name.ilike.%${query}%,slug.ilike.%${slugQuery}%`)
       .order("total_enrollment", { ascending: false, nullsFirst: false })
       .limit(8)
     setCollegeResults((data as { name: string; slug: string }[]) || [])
@@ -306,11 +307,17 @@ export default function MyChancesClient() {
         )}
 
         {/* Cross-links */}
-        <div className="flex flex-wrap gap-3 mt-12 pt-6 border-t border-gray-200">
-          <a href="/colleges" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">Browse colleges</a>
-          <a href="/coach" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">The Coach</a>
-          <a href="/essays" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">Essay prompts</a>
-          <a href="/scholarships" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">Scholarships</a>
+        <div className="mt-12 pt-6 border-t border-gray-200">
+          <a href="/matches" className="block p-4 rounded-lg bg-amber-50 border border-amber-200 hover:border-amber-400 transition-colors mb-3">
+            <p className="text-sm font-semibold text-gray-900">Want a full portfolio of colleges ranked for you?</p>
+            <p className="text-xs text-gray-500 mt-0.5">My Matches ranks every college on financial fit, chances, major, and culture &rarr;</p>
+          </a>
+          <div className="flex flex-wrap gap-3">
+            <a href="/colleges" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">Browse colleges</a>
+            <a href="/coach" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">The Coach</a>
+            <a href="/essays" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">Essay prompts</a>
+            <a href="/scholarships" className="px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-600 hover:border-amber-300 transition-colors">Scholarships</a>
+          </div>
         </div>
       </div>
     </main>

@@ -4,6 +4,7 @@ import { FadeIn } from "@/components/FadeIn";
 import { createServiceRoleClient } from "@/lib/supabase-server";
 import { COLLEGES_SEED } from "@/lib/colleges-seed";
 import { MAJOR_PAGES, getMajorBySlug } from "@/lib/major-pages-data";
+import { careersForMajor, OUTLOOK_LABELS } from "@/lib/careers-data";
 import { notFound } from "next/navigation";
 
 export const revalidate = 86400;
@@ -190,6 +191,48 @@ export default async function MajorPage({ params }: PageProps) {
               <p className="font-body text-sm text-navy/60">{major.careerPaths}</p>
             </div>
           </FadeIn>
+
+          {careersForMajor(slug).length > 0 && (
+            <FadeIn>
+              <div className="mt-8">
+                <div className="flex items-baseline justify-between gap-4 mb-4">
+                  <h3 className="font-display text-xl font-bold text-navy">
+                    Real careers, real salaries
+                  </h3>
+                  <Link
+                    href={`/careers?major=${slug}`}
+                    className="font-body text-sm text-gold hover:text-gold/80 whitespace-nowrap"
+                  >
+                    See all &rarr;
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {careersForMajor(slug).slice(0, 6).map((c) => {
+                    const outlook = OUTLOOK_LABELS[c.outlookLabel];
+                    return (
+                      <Link
+                        key={c.slug}
+                        href={`/careers/${c.slug}`}
+                        className="ktc-card p-4 block group hover:shadow-lg hover:-translate-y-0.5 transition-all bg-white"
+                      >
+                        <div className="flex items-start justify-between gap-3 mb-1">
+                          <span className="font-display text-sm font-bold text-navy group-hover:text-gold transition-colors leading-tight">
+                            {c.title}
+                          </span>
+                          <span className="font-mono-label text-gold font-bold text-sm shrink-0">
+                            ${Math.round(c.medianSalary / 1000)}K
+                          </span>
+                        </div>
+                        <span className={`inline-block text-[10px] font-body font-medium px-2 py-0.5 rounded-full border ${outlook.color}`}>
+                          {c.outlookPct > 0 ? "+" : ""}{c.outlookPct}% by 2032
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </FadeIn>
+          )}
         </div>
       </section>
 

@@ -1,16 +1,23 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/components/FadeIn";
 import { PhotoSection } from "@/components/PhotoSection";
 import { GoldButton } from "@/components/GoldButton";
 import {
-  scholarships,
+  scholarships as staticScholarships,
   SCHOLARSHIP_TYPES,
   US_STATES,
   DEADLINE_MONTHS,
 } from "@/lib/scholarships-data";
+import type { Scholarship } from "@/lib/types";
+
+type ScholarshipWithMatch = Scholarship & {
+  slug?: string;
+  match_score?: number;
+  match_reasons?: string[];
+};
 
 const AMOUNT_RANGES = [
   { label: "Any amount", min: 0, max: Infinity },
@@ -39,6 +46,15 @@ function getTypeBadge(type: string) {
   return found || { label: type, color: "bg-gray-200 text-navy" };
 }
 
+function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 export function ScholarshipsClient() {
   const [amountIdx, setAmountIdx] = useState(0);
   const [typeFilter, setTypeFilter] = useState("");
@@ -47,6 +63,64 @@ export function ScholarshipsClient() {
   const [deadlineFilter, setDeadlineFilter] = useState("");
   const [saved, setSaved] = useState<Set<string>>(new Set());
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const [matchForMe, setMatchForMe] = useState(false);
+  const [remoteScholarships, setRemoteScholarships] = useState<ScholarshipWithMatch[] | null>(null);
+  const [userSignedIn, setUserSignedIn] = useState(false);
+
+  const fetchScholarships = useCallback(async () => {
+    try {
+      const url = `/api/scholarships${matchForMe ? "?match=1" : ""}`;
+      const res = await fetch(url);
+      if (!res.ok) return;
+      const data = await res.json();
+      const rows = (data.scholarships ?? []) as Array<ScholarshipWithMatch & {
+        amount_text?: string;
+      }>;
+      if (rows.length === 0) {
+        setRemoteScholarships(null);
+        return;
+      }
+      setRemoteScholarships(
+        rows.map((r) => ({
+          slug: r.slug,
+          name: r.name,
+          amount: r.amount_text ?? r.amount,
+          type: r.type,
+          eligibility: r.eligibility,
+          deadline: (r as unknown as { deadline_text?: string }).deadline_text ?? r.deadline,
+          url: r.url,
+          subject: r.subject ?? undefined,
+          state: r.state ?? undefined,
+          match_score: r.match_score,
+          match_reasons: r.match_reasons,
+        }))
+      );
+    } catch {
+      setRemoteScholarships(null);
+    }
+  }, [matchForMe]);
+
+  const fetchSaves = useCallback(async () => {
+    try {
+      const res = await fetch("/api/scholarships/saves");
+      if (!res.ok) return;
+      const data = await res.json();
+      setUserSignedIn(true);
+      setSaved(new Set((data.saves ?? []).map((s: { scholarship_slug: string }) => s.scholarship_slug)));
+    } catch {
+      setUserSignedIn(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchScholarships();
+  }, [fetchScholarships]);
+
+  useEffect(() => {
+    fetchSaves();
+  }, [fetchSaves]);
+
+  const scholarships: ScholarshipWithMatch[] = remoteScholarships ?? staticScholarships;
 
   const toggleSubject = (subject: string) => {
     setSelectedSubjects((prev) => {
@@ -79,13 +153,35 @@ export function ScholarshipsClient() {
     });
   }, [amountIdx, typeFilter, selectedSubjects, stateFilter, deadlineFilter]);
 
-  const toggleSave = (name: string) => {
+  const toggleSave = async (item: ScholarshipWithMatch) => {
+    const slug = item.slug ?? slugify(item.name);
+    const isSaved = saved.has(slug);
     setSaved((prev) => {
       const next = new Set(prev);
-      if (next.has(name)) next.delete(name);
-      else next.add(name);
+      if (isSaved) next.delete(slug);
+      else next.add(slug);
       return next;
     });
+    if (!userSignedIn) return;
+    try {
+      if (isSaved) {
+        await fetch(`/api/scholarships/saves?scholarship_slug=${encodeURIComponent(slug)}`, { method: "DELETE" });
+      } else {
+        await fetch("/api/scholarships/saves", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ scholarship_slug: slug }),
+        });
+      }
+    } catch {
+      // revert on failure
+      setSaved((prev) => {
+        const next = new Set(prev);
+        if (isSaved) next.add(slug);
+        else next.delete(slug);
+        return next;
+      });
+    }
   };
 
   const clearFilters = () => {
@@ -241,6 +337,19 @@ export function ScholarshipsClient() {
                   </select>
                 </div>
 
+                {userSignedIn && (
+                  <button
+                    onClick={() => setMatchForMe(!matchForMe)}
+                    className={`px-4 py-2 text-sm font-body rounded-md border transition-colors ${
+                      matchForMe
+                        ? "bg-gold text-navy border-gold font-medium"
+                        : "bg-white text-navy/70 border-gray-200 hover:border-gold/40"
+                    }`}
+                  >
+                    {matchForMe ? "★ Matched for me" : "Match for me"}
+                  </button>
+                )}
+
                 {hasFilters && (
                   <button
                     onClick={clearFilters}
@@ -341,19 +450,27 @@ export function ScholarshipsClient() {
                 const badge = getTypeBadge(scholarship.type);
                 return (
                   <FadeIn key={scholarship.name} delay={Math.min(i * 0.03, 0.3)}>
-                    <div className="ktc-card p-6 flex flex-col h-full">
+                    <div className="ktc-card p-6 flex flex-col h-full relative">
+                      {matchForMe && scholarship.match_score != null && (
+                        <div className="absolute top-3 right-3 flex flex-col items-end">
+                          <span className="font-mono-label text-gold text-lg font-bold leading-none">
+                            {scholarship.match_score}
+                          </span>
+                          <span className="text-[9px] font-body uppercase tracking-wider text-navy/40">fit</span>
+                        </div>
+                      )}
                       <div className="flex items-start justify-between gap-3 mb-3">
-                        <h3 className="font-display text-lg font-bold text-navy leading-snug">
+                        <h3 className="font-display text-lg font-bold text-navy leading-snug pr-10">
                           {scholarship.name}
                         </h3>
                         <button
-                          onClick={() => toggleSave(scholarship.name)}
+                          onClick={() => toggleSave(scholarship)}
                           className={`shrink-0 p-1.5 rounded transition-colors ${
-                            saved.has(scholarship.name) ? "text-gold" : "text-navy/30 hover:text-gold"
+                            saved.has(scholarship.slug ?? slugify(scholarship.name)) ? "text-gold" : "text-navy/30 hover:text-gold"
                           }`}
-                          aria-label={saved.has(scholarship.name) ? `Unsave ${scholarship.name}` : `Save ${scholarship.name}`}
+                          aria-label={saved.has(scholarship.slug ?? slugify(scholarship.name)) ? `Unsave ${scholarship.name}` : `Save ${scholarship.name}`}
                         >
-                          <svg className="w-5 h-5" fill={saved.has(scholarship.name) ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <svg className="w-5 h-5" fill={saved.has(scholarship.slug ?? slugify(scholarship.name)) ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
                           </svg>
                         </button>
@@ -385,6 +502,15 @@ export function ScholarshipsClient() {
                         </svg>
                         <span>Deadline: {scholarship.deadline}</span>
                       </div>
+                      {matchForMe && scholarship.match_reasons && scholarship.match_reasons.length > 0 && (
+                        <ul className="flex flex-wrap gap-1 mb-4">
+                          {scholarship.match_reasons.slice(0, 3).map((r) => (
+                            <li key={r} className="text-[11px] font-body text-navy/60 bg-card/60 rounded px-2 py-0.5">
+                              {r}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                       <a
                         href={scholarship.url}
                         target="_blank"

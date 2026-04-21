@@ -47,7 +47,8 @@ export default function CollegesBrowsePage() {
       .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
 
     if (search.length >= 2) {
-      query = query.ilike("name", `%${search}%`);
+      const slugQuery = search.toLowerCase().replace(/ /g, "-");
+      query = query.or(`name.ilike.%${search}%,slug.ilike.%${slugQuery}%`);
     }
     if (stateFilter) {
       query = query.eq("state", stateFilter);
@@ -83,13 +84,21 @@ export default function CollegesBrowsePage() {
     <div className="min-h-screen bg-white pt-24 pb-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="font-display text-3xl font-bold text-navy mb-2">
-            Browse All Colleges
-          </h1>
-          <p className="font-body text-navy/60">
-            {total.toLocaleString()} colleges across the United States
-          </p>
+        <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="font-display text-3xl font-bold text-navy mb-2">
+              Browse All Colleges
+            </h1>
+            <p className="font-body text-navy/60">
+              {total.toLocaleString()} colleges across the United States
+            </p>
+          </div>
+          <Link
+            href="/matches"
+            className="mt-1 px-4 py-2 rounded-md bg-gold/10 border border-gold/40 font-body text-sm text-navy hover:bg-gold/20 transition-colors"
+          >
+            Rank them for me &rarr;
+          </Link>
         </div>
 
         {/* Filters */}

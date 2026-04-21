@@ -209,12 +209,20 @@ export default function DiscoverPage() {
                   <p className="font-body text-sm text-navy/60 mb-4">
                     {m.description}
                   </p>
-                  <Link
-                    href={`/search?major=${encodeURIComponent(m.name)}&mode=league`}
-                    className="text-gold font-body text-sm font-medium hover:text-gold/80"
-                  >
-                    Find colleges strong in {m.name} &rarr;
-                  </Link>
+                  <div className="flex flex-wrap gap-x-5 gap-y-2">
+                    <Link
+                      href={`/search?major=${encodeURIComponent(m.name)}&mode=league`}
+                      className="text-gold font-body text-sm font-medium hover:text-gold/80"
+                    >
+                      Find colleges strong in {m.name} &rarr;
+                    </Link>
+                    <Link
+                      href={`/careers?major=${m.slug}`}
+                      className="text-navy/70 font-body text-sm font-medium hover:text-gold"
+                    >
+                      See careers &rarr;
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>
