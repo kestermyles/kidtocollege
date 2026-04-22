@@ -151,7 +151,7 @@ export function ScholarshipsClient() {
       }
       return true;
     });
-  }, [amountIdx, typeFilter, selectedSubjects, stateFilter, deadlineFilter]);
+  }, [amountIdx, typeFilter, selectedSubjects, stateFilter, deadlineFilter, scholarships]);
 
   const toggleSave = async (item: ScholarshipWithMatch) => {
     const slug = item.slug ?? slugify(item.name);
