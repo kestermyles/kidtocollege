@@ -3,6 +3,7 @@ import Anthropic from "@anthropic-ai/sdk"
 import { createClient } from "@supabase/supabase-js"
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
+import { ESSAY_BRAINSTORMING_SUPPORT } from "@/lib/coach-prompts"
 
 export const maxDuration = 30
 
@@ -29,7 +30,9 @@ You CANNOT and MUST NOT:
 
 If asked about something outside your scope, say warmly: "That's a bit outside what I can help with, but I'd suggest speaking with [appropriate professional]. What I can definitely help with is your college journey — what would you like to know?"
 
-Keep responses concise — 2-4 sentences for simple questions, slightly longer for complex ones. Always be encouraging and remember that many of the students using this platform are first-generation college students from lower-income families. Be the knowledgeable friend they might not otherwise have access to.`
+Keep responses concise — 2-4 sentences for simple questions, slightly longer for complex ones. Always be encouraging and remember that many of the students using this platform are first-generation college students from lower-income families. Be the knowledgeable friend they might not otherwise have access to.
+
+${ESSAY_BRAINSTORMING_SUPPORT}`
 
 export async function POST(req: NextRequest) {
   const { messages, pageContext } = await req.json()

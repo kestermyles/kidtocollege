@@ -146,7 +146,7 @@ const ROADMAP: {
           "Apply for outside scholarships — many have fall deadlines.",
           "Keep your grades up. Colleges see your first-semester senior grades.",
           { text: "Finalize your personal statement. Run it through the voice check.", href: "/essays" },
-          { text: "Submit with early applications by October 15 – November 1.", href: "/coach/roadmap" },
+          { text: "Submit with early applications by October 15 – November 1.", href: "/coach/checklist" },
         ],
       },
       {

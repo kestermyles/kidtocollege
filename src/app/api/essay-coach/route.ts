@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { TEN_QUALITIES_FRAMEWORK } from "@/lib/coach-prompts";
+import { TEN_QUALITIES_FRAMEWORK, ESSAY_BRAINSTORMING_SUPPORT } from "@/lib/coach-prompts";
 
 export const maxDuration = 30;
 
@@ -23,7 +23,9 @@ Your approach:
 - If they share a draft, give specific, actionable feedback
 - Remind them of the word limit when relevant
 
-${TEN_QUALITIES_FRAMEWORK}`;
+${TEN_QUALITIES_FRAMEWORK}
+
+${ESSAY_BRAINSTORMING_SUPPORT}`;
 
   const response = await client.messages.create({
     model: "claude-sonnet-4-5",
