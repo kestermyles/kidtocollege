@@ -3,6 +3,13 @@ export interface BlogSection {
   body: string;
 }
 
+export interface BlogSeries {
+  name: string;
+  slug: string;
+  part: number;
+  total: number;
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -15,6 +22,14 @@ export interface BlogPost {
   intro: string;
   tags: string[];
   sections: BlogSection[];
+  excerpt?: string;
+  series?: BlogSeries;
+}
+
+export function getSeriesPosts(seriesSlug: string): BlogPost[] {
+  return blogPosts
+    .filter((p) => p.series?.slug === seriesSlug)
+    .sort((a, b) => (a.series?.part ?? 0) - (b.series?.part ?? 0));
 }
 
 export const blogPosts: BlogPost[] = [
