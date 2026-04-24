@@ -8,10 +8,12 @@ import { FadeIn } from "@/components/FadeIn";
 // export const metadata omitted because this is a client component —
 // metadata is set via generateMetadata or a head.tsx in production.
 
+type MilestoneItem = string | { text: string; href: string };
+
 const ROADMAP: {
   grade: string;
   color: string;
-  terms: { term: string; items: string[] }[];
+  terms: { term: string; items: MilestoneItem[] }[];
 }[] = [
   {
     grade: "Freshman Year (9th Grade)",
@@ -107,6 +109,9 @@ const ROADMAP: {
           "Start drafting your Common App personal statement. Even a rough draft helps.",
           "File the FAFSA as soon as it opens (October of senior year) — get familiar now.",
           "Look into fly-in programs and diversity recruitment weekends.",
+          { text: "Review Common App essay prompts for next year.", href: "/blog/common-app-prompts-2026-2027" },
+          { text: "Start essay brainstorming — don't write yet, just list experiences.", href: "/essays" },
+          { text: "Talk to teachers about possible essay topics.", href: "/blog/talk-first-method-college-essays" },
         ],
       },
       {
@@ -118,6 +123,9 @@ const ROADMAP: {
           "Prepare your activities list — the Common App gives you 10 slots.",
           "Visit remaining colleges if possible. Demonstrated interest can matter.",
           "Organize financial documents for FAFSA and CSS Profile.",
+          { text: "Draft your Common App personal statement using the talk-first method.", href: "/blog/talk-first-method-college-essays" },
+          { text: "Get feedback on your draft from trusted readers.", href: "/essays" },
+          { text: "Revise for specificity — show don't tell.", href: "/blog/show-dont-tell-college-essays" },
         ],
       },
     ],
@@ -137,6 +145,8 @@ const ROADMAP: {
           "Write and polish supplemental essays for each school.",
           "Apply for outside scholarships — many have fall deadlines.",
           "Keep your grades up. Colleges see your first-semester senior grades.",
+          { text: "Finalize your personal statement. Run it through the voice check.", href: "/essays" },
+          { text: "Submit with early applications by October 15 – November 1.", href: "/coach/roadmap" },
         ],
       },
       {
@@ -174,7 +184,7 @@ function AccordionSection({
 }: {
   grade: string;
   color: string;
-  terms: { term: string; items: string[] }[];
+  terms: { term: string; items: MilestoneItem[] }[];
   isOpen: boolean;
   onToggle: () => void;
 }) {
@@ -220,14 +230,27 @@ function AccordionSection({
                     {t.term}
                   </h4>
                   <ul className="space-y-2">
-                    {t.items.map((item, j) => (
-                      <li key={j} className="flex items-start gap-3">
-                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
-                        <span className="font-body text-navy/75 text-[15px] leading-relaxed">
-                          {item}
-                        </span>
-                      </li>
-                    ))}
+                    {t.items.map((item, j) => {
+                      const isLinked = typeof item !== "string";
+                      const text = typeof item === "string" ? item : item.text;
+                      return (
+                        <li key={j} className="flex items-start gap-3">
+                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
+                          {isLinked ? (
+                            <Link
+                              href={item.href}
+                              className="font-body text-navy/75 text-[15px] leading-relaxed hover:text-gold transition-colors underline underline-offset-2 decoration-gold/30 hover:decoration-gold"
+                            >
+                              {text}
+                            </Link>
+                          ) : (
+                            <span className="font-body text-navy/75 text-[15px] leading-relaxed">
+                              {text}
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               ))}

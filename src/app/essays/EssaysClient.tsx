@@ -396,7 +396,7 @@ export default function EssaysPage() {
                 title: "The voice test",
                 items: [
                   "If I read this out loud, does it sound like me talking to a friend?",
-                  "Would someone who knows me well recognise this as my writing?",
+                  "Would someone who knows me well recognize this as my writing?",
                   "Am I using words I'd actually say in conversation?",
                 ],
               },
