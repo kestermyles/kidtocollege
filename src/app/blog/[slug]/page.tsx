@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FadeIn } from "@/components/FadeIn";
-import { blogPosts, getBlogPost } from "@/lib/blog-posts";
+import { blogPosts, getBlogPost, getSeriesPosts } from "@/lib/blog-posts";
+import { SeriesNavigation } from "@/components/SeriesNavigation";
 
 export function generateStaticParams() {
   return blogPosts.map((p) => ({ slug: p.slug }));
@@ -39,6 +40,17 @@ export default async function BlogPostPage({ params }: PageProps) {
     .filter((p) => p.slug !== slug)
     .sort(() => 0.5 - Math.random())
     .slice(0, 3);
+
+  // Series navigation context — only computed when this post is part of a series.
+  const seriesSiblings = post.series ? getSeriesPosts(post.series.slug) : [];
+  const currentIndex = post.series
+    ? seriesSiblings.findIndex((p) => p.slug === post.slug)
+    : -1;
+  const previousPost = currentIndex > 0 ? seriesSiblings[currentIndex - 1] : undefined;
+  const nextPost =
+    currentIndex >= 0 && currentIndex < seriesSiblings.length - 1
+      ? seriesSiblings[currentIndex + 1]
+      : undefined;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -152,6 +164,26 @@ export default async function BlogPostPage({ params }: PageProps) {
               )}
             </div>
           ))}
+
+          {/* Series navigation */}
+          {post.series && (
+            <SeriesNavigation
+              currentPart={post.series.part}
+              totalParts={post.series.total}
+              seriesTitle={post.series.name}
+              seriesSlug={post.series.slug}
+              previousUrl={previousPost ? `/blog/${previousPost.slug}` : undefined}
+              previousTitle={
+                previousPost
+                  ? `Part ${previousPost.series?.part}: ${previousPost.title}`
+                  : undefined
+              }
+              nextUrl={nextPost ? `/blog/${nextPost.slug}` : undefined}
+              nextTitle={
+                nextPost ? `Part ${nextPost.series?.part}: ${nextPost.title}` : undefined
+              }
+            />
+          )}
 
           {/* Bottom links */}
           <div className="flex flex-wrap gap-3 mb-12 pt-6 border-t border-card">

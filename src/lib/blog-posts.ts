@@ -487,6 +487,292 @@ export const blogPosts: BlogPost[] = [
       { h2: "The Bottom Line", body: "Freshman year is about foundation, not pressure. Build strong grades. Explore activities. Develop good habits. Build relationships. These things take time, which is why you start now.\n\nStudents who do this finish strong. Students who coast freshman year and panic junior year finish stressed. You get to choose which story you write." },
     ],
   },
+  {
+    slug: "common-app-prompts-2026-2027",
+    title: "Common App Essay Prompts 2026-2027: The Complete Guide",
+    metaTitle: "Common App Essay Prompts 2026-2027: What Each One Really Asks",
+    metaDescription: "The Common App essay prompts for 2026-2027 haven't changed. Here's what each prompt is actually asking, which one fits your story, and when to start.",
+    publishedDate: "2026-02-04",
+    updatedDate: "2026-02-04",
+    readTime: "8 min read",
+    h1: "Common App Essay Prompts 2026-2027: The Complete Guide",
+    intro: "The Common App just confirmed essay prompts aren't changing for 2026-2027. Good news if you're a junior (class of 2027) — you can start thinking about this now instead of panicking in August. Not that you need to write anything today. Giving yourself months to figure out what story you want to tell makes a difference. My kid started brainstorming in March of junior year, didn't touch it for six weeks, came back to it in May. That's normal.",
+    tags: ["college essays", "common app", "essay prompts", "college admissions"],
+    excerpt: "The Common App essay prompts for 2026-2027 stay the same. What each prompt asks, how to choose, and when to start thinking about this.",
+    series: {
+      name: "The Complete Guide to Writing College Essays in 2026",
+      slug: "college-essay-guide-2026",
+      part: 1,
+      total: 6,
+    },
+    sections: [
+      {
+        h2: "The Seven Prompts",
+        body: "Prompt 1 — Background or Identity: \"Some students have a background, identity, interest, or talent that is so meaningful they believe their application would be incomplete without it. If this sounds like you, then please share your story.\"\n\nThis isn't asking for demographic information. It's asking: what part of who you are needs to be understood for your application to make sense? Could be your family background. Could be where you grew up. Could be something you're deeply invested in. Could be how you see the world. About 18% of students choose this prompt.\n\nPrompt 2 — Challenges or Setbacks: \"The lessons we take from obstacles we encounter can be fundamental to later success. Recount a time when you faced a challenge, setback, or failure. How did it affect you, and what did you learn from the experience?\"\n\nThe challenge doesn't have to be dramatic. Failing a test counts. Getting cut from a team counts. What you learned matters more than the size of the obstacle. This is the second most popular prompt — about 23% of students use it.\n\nPrompt 3 — Questioning Beliefs: \"Reflect on a time when you questioned or challenged a belief or idea. What prompted your thinking? What was the outcome?\"\n\nCan you think critically and change your mind? That's what this asks. You don't have to have changed the world. You just have to show you can reconsider your own assumptions. Only about 3% of students choose this one. It's specific.\n\nPrompt 4 — Gratitude: \"Reflect on something that someone has done for you that has made you happy or thankful in a surprising way. How has this gratitude affected or motivated you?\"\n\nLeast-chosen prompt (about 3%). But it works if someone genuinely did something unexpected that changed your perspective. The key word is \"surprising.\" Not predictable gratitude. Something that caught you off guard.\n\nPrompt 5 — Personal Growth: \"Discuss an accomplishment, event, or realization that sparked a period of personal growth and a new understanding of yourself or others.\"\n\nAbout 20% of students use this. Third most popular. The \"accomplishment\" doesn't have to be impressive. Could be finishing a difficult book. Having a hard conversation. Understanding something you'd been confused about for years.\n\nPrompt 6 — Intellectual Curiosity: \"Describe a topic, idea, or concept you find so engaging that it makes you lose all track of time. Why does it captivate you? What or who do you turn to when you want to learn more?\"\n\nWorks well if there's something you genuinely geek out about. Marine biology, skateboard design, obscure historical events, whatever. The specificity matters more than the prestige of the topic. Only about 5% of students choose this.\n\nPrompt 7 — Your Choice: \"Share an essay on any topic of your choice. It can be one you've already written, one that responds to a different prompt, or one of your own design.\"\n\nMost popular prompt — 28% of students use it. Choose this when you have a clear story that matters to you but doesn't fit the other six categories.",
+      },
+      {
+        h2: "Which Prompt Do Most Students Choose?",
+        body: "Data from the 2025-2026 application cycle:\n\n— Topic of your choice: 28%\n— Facing adversity: 23%\n— Personal growth: 20%\n— Background / identity / interest / talent: 18%\n— Intellectual curiosity: 5%\n— Gratitude: 3%\n— Challenging an idea: 3%\n\nNo prompt is \"better\" than another. Choose based on which question you can answer most honestly and specifically.",
+      },
+      {
+        h2: "How to Choose Your Prompt",
+        body: "The prompt is just a container. Pick the one that fits your story, not the one that sounds most impressive.\n\nThree questions that help:\n\nWhich question feels most natural? If you're forcing your story to fit a prompt, wrong prompt.\n\nWhich question lets you be specific? If your answer could apply to thousands of other students, go deeper or choose a different topic.\n\nWhich question connects to something you think about? Not something that sounds good. Something you actually care about.",
+      },
+      {
+        h2: "When to Start",
+        body: "Don't wait until August when applications open. Don't wait until the week before the deadline. Start thinking now.\n\nMy kid started brainstorming in March, didn't look at it for six weeks, came back to it in May. That's how this works. Essays that sound authentic come from months of thinking, not one weekend of panic-writing.\n\nYou don't have to write a full draft today. Read through the prompts. Write down three experiences for each one that might work. Let it sit for a week. Come back and see which stories still feel important.\n\nThat's brainstorming. That's the work that leads to good essays.",
+      },
+      {
+        h2: "What To Do Now",
+        body: "If you're a junior (class of 2027): Read through the seven prompts. Pick two or three that feel possible. For each prompt, write down 3-5 experiences that might work. Don't write the essay yet — just brainstorm experiences. Let it sit for a couple weeks. Come back and see which experiences still feel significant.\n\nIf you're a sophomore or freshman: Just be aware these prompts exist. When something happens that makes you think or feel or change, notice it. You might write about it later.\n\nIf you're a senior and haven't started: You still have time, but start now. Pick the prompt that feels most obvious. Write a messy first draft. Get feedback. Revise.",
+      },
+      {
+        h2: "Free Resources",
+        body: "The Common App has official essay writing resources including video tutorials breaking down each prompt.\n\nKidToCollege exists to help you navigate this process without paying for expensive counselors. Use the Essay Coach to work through drafts. Check the College Roadmap to see when you should be working on this.",
+      },
+    ],
+  },
+  {
+    slug: "what-makes-college-essays-work",
+    title: "What Makes College Essays Actually Work (And What Doesn't)",
+    metaTitle: "What Makes College Essays Actually Work (And What Doesn't)",
+    metaDescription: "The fundamentals of strong vs weak college essays — what admissions officers actually care about, and why specificity beats impressive topics every time.",
+    publishedDate: "2026-02-11",
+    updatedDate: "2026-02-11",
+    readTime: "8 min read",
+    h1: "What Makes College Essays Actually Work (And What Doesn't)",
+    intro: "Your essay isn't getting you into college by itself. Your grades matter more. Your courses matter more. Your test scores (if you submit them) matter more. The essay is the only part where admissions officers hear your actual voice. Not your counselor's description of you. Not your teacher's recommendation. You. It adds context. It shows depth. It reveals who you are beyond your GPA. That's why it matters. Not because it's make-or-break. Because it's the most you piece of your application.",
+    tags: ["college essays", "writing tips", "college admissions", "essay advice"],
+    excerpt: "The fundamentals of strong vs weak essays — what admissions officers actually care about and what makes you stand out.",
+    series: {
+      name: "The Complete Guide to Writing College Essays in 2026",
+      slug: "college-essay-guide-2026",
+      part: 2,
+      total: 6,
+    },
+    sections: [
+      {
+        h2: "What Makes Essays Strong",
+        body: "Specific details matter more than impressive topics. \"I learned about responsibility\" could be written by anyone. \"The first time I closed the restaurant alone, I checked the walk-in freezer door three times. Then I went back and checked it again because I couldn't remember if I'd actually locked it or just thought about locking it. It was 11:47 PM. My manager had left at 11.\" That's specific. That's yours.\n\nYour essay should sound like you, not like a textbook. Read it out loud. If you stumble over words you'd never say in conversation, change them. If it sounds like something you'd read in a book instead of something you'd say to a friend, you've over-edited.\n\nShow what happened, then what you learned. Not just \"this happened to me and I learned X.\" Show us the moment. The details. What you saw, heard, felt. Then show us what shifted. What you understood that you didn't understand before.\n\nAnswer the actual prompt. Sounds obvious. A lot of students write good essays that don't actually answer the question asked. Read the prompt. Make sure your essay responds to it.",
+      },
+      {
+        h2: "What Makes Essays Weak",
+        body: "Writing about other people instead of yourself. If you're writing three paragraphs about your coach's philosophy, you're writing their essay. Admissions officers want to admit you, not your coach. You can write about people who influenced you. But the essay needs to be about how they changed you, not about how great they are.\n\nUsing generic language. \"I learned the value of hard work\" could be anyone. \"I learned that prepping vegetables at 5 AM on a Saturday requires a different kind of commitment than I thought I had\" is specific to you.\n\nTrying to sound impressive. Using words you'd never say in conversation makes you disappear from your own writing. Don't write the way you think admissions officers want you to write. Write the way you actually think.\n\nNot including actual details. If I can't picture what happened — what you saw, what you heard, what you felt — you're summarizing, not showing.",
+      },
+      {
+        h2: "The Essay's Real Purpose",
+        body: "The best essays aren't the most impressive. They're the most honest. You don't need to have done something extraordinary. You need to write something true about who you are.\n\nA strong essay about working the register at a hardware store beats a weak essay about volunteering in Guatemala. A strong essay about teaching your younger sibling to ride a bike beats a weak essay about winning a state championship.\n\nThe topic matters less than the honesty and specificity of how you tell the story.",
+      },
+      {
+        h2: "Common Questions",
+        body: "Do I need to write about my intended major? No. Your Common App personal statement doesn't have to connect to your major at all. You can want to study neuroscience and write an essay about your summer job at a restaurant. The personal statement is about you as a person, not you as a future major. Save major-specific content for supplemental essays if schools ask for it.\n\nCan I write about sports? Yes, but be careful. \"I learned teamwork and perseverance from basketball\" has been written 10,000 times. If sports matter to you, get specific. What exact moment taught you something? What happened on Tuesday, March 12th during practice that changed how you see the world? Generic sports essays are weak. Specific sports essays can work.\n\nHow long should my essay be? The Common App personal statement has a 650-word limit. You don't have to hit exactly 650, but aim for 550-650. Much shorter and you're probably not developing your idea fully. Much longer and you need to edit.\n\nCan I be funny? If humor is part of your actual voice, yes. But don't force it. A failed attempt at humor is worse than no humor. And don't use humor to avoid being honest or vulnerable.\n\nShould I write about trauma or hardship? Only if you want to and only if you can write about it honestly without it becoming your whole identity in the essay. You're not required to share difficult experiences. But if something hard shaped who you are and you want to write about it, you can. The key: show growth or insight, not just suffering.",
+      },
+      {
+        h2: "What Actually Stands Out",
+        body: "The essays that work aren't the most polished. They're the most real.\n\nSomeone wrote about being the only person in their family who couldn't speak Mandarin, and learning to make dumplings with their grandmother using only gestures.\n\nSomeone wrote about working early shift at a donut shop and realizing the regular who came in every morning at 5:47 was coming from a night shift at the hospital, not going to an early job.\n\nSomeone wrote about failing their driver's test twice and what it felt like to keep showing up knowing the same examiner would be there.\n\nNone of these are impressive. All of them are real. And they're told in voices that sound like actual teenagers. That's what stands out. Truth.",
+      },
+      {
+        h2: "Next Steps",
+        body: "Now that you know what makes essays work, the next question is: how do you write one without AI taking over? That's Part 3 of this series.",
+      },
+    ],
+  },
+  {
+    slug: "using-ai-for-college-essays",
+    title: "Using AI for College Essays: Where's The Line?",
+    metaTitle: "Using AI for College Essays: Where's The Line in 2026?",
+    metaDescription: "AI tools can help with college essays — but there's a line between helpful brainstorming and letting AI write for you. Here's exactly where that line is.",
+    publishedDate: "2026-02-18",
+    updatedDate: "2026-02-18",
+    readTime: "8 min read",
+    h1: "Using AI for College Essays: Where's The Line?",
+    intro: "AI writing tools exist. ChatGPT, Claude, Gemini. They're free, they're good at generating text, and students are using them for college essays. I'm navigating this with my own kid right now (currently in high school, currently stressed about this exact thing). There's a line between using AI as a brainstorming tool and letting it write your essay. One helps. One hurts.",
+    tags: ["college essays", "AI", "writing tips", "authenticity"],
+    excerpt: "AI tools can help with college essays — but there's a line between helpful brainstorming and letting AI write for you. Here's where that line is.",
+    series: {
+      name: "The Complete Guide to Writing College Essays in 2026",
+      slug: "college-essay-guide-2026",
+      part: 3,
+      total: 6,
+    },
+    sections: [
+      {
+        h2: "Appropriate AI Use",
+        body: "Brainstorming topics: \"I'm thinking about writing about my job at the library or when I taught my younger brother to read. Which Common App prompt would fit better?\" This is fine. You're asking AI to help you think through your options. You're not asking it to write anything.\n\nUnderstanding prompts: \"The Common App asks about 'intellectual curiosity.' What does that actually mean?\" Also fine. AI can break down confusing language. You're using it like a dictionary.\n\nGrammar and clarity: \"Is this sentence clear? Does this paragraph make sense?\" Yes, use AI for this. Same as you'd use Grammarly or spell-check. It's editing support, not writing.\n\nGetting unstuck on structure: \"I have this experience with my debate team but I don't know how to start the essay. What are some possible opening approaches?\" This is helpful. AI can suggest options. Then you choose which approach feels right and you write the actual opening.",
+      },
+      {
+        h2: "Inappropriate AI Use",
+        body: "Writing full drafts: \"Write a 650-word college essay about overcoming challenges.\" No. This is asking AI to impersonate you. Whatever it generates won't sound like you because it isn't you.\n\nGenerating paragraphs: \"Write three paragraphs about what I learned from volunteering at the hospital.\" Still no. Even if you give AI details about your experience, the way it describes those details won't sound like you describing them.\n\nHeavy rewriting: \"Take my essay and rewrite it to sound better.\" This is where a lot of students get into trouble. They write something authentic, then ask AI to \"improve\" it, and AI polishes away their actual voice.\n\nFabricating or embellishing: \"Write about an experience where I taught English to refugees.\" Never. If you didn't do it, don't write about it. AI can't invent your lived experiences. Don't ask it to.",
+      },
+      {
+        h2: "Why Your Voice Matters",
+        body: "Admissions officers can often tell when an essay has been AI-assisted. Not always through detection software (though some schools are experimenting with that). More often through pattern recognition.\n\nWhen you've read thousands of essays, you develop a sense for what authentic teenage writing sounds like. You notice overly polished prose that doesn't match the rest of the application. Generic phrasing that sounds interchangeable. Certain sentence patterns AI tools favor. Lack of specific sensory details that come from real memory. Perfect grammar with no personality.\n\nEven if you never get caught, there's a bigger problem. An AI-written essay doesn't tell admissions officers who you are. It tells them who AI thinks you should sound like. Which is generic, polished, and forgettable.",
+      },
+      {
+        h2: "The Voice Test",
+        body: "Read your essay out loud. Actually out loud, not in your head.\n\nDoes it sound like something you would say to a friend? Or does it sound like something you'd read in a textbook?\n\nIf you stumble over words you'd never use in conversation, you've over-edited. If you wouldn't use these phrases when explaining this story to someone you trust, rewrite it.\n\nYour essay should be clean, organized, and grammatically correct. But it should still sound like a 17-year-old wrote it. Because a 17-year-old did.",
+      },
+      {
+        h2: "What AI Can't Do",
+        body: "AI can't remember what only you experienced. What your school cafeteria smells like at 7:15 AM. What the freezer room at your job sounds like when you're the last person there. What your hands felt like the first time you tried to teach your little brother to tie his shoes.\n\nThese details are yours. AI didn't experience them. Other students didn't experience them. You did. When you write about checking the freezer door three times at 11:47 PM, that's something only you can write about.\n\nAI can't capture your actual voice. AI writing has a pattern. It uses certain transitions. It favors certain sentence structures. It's smooth and correct and completely interchangeable. Your voice is not smooth. It has quirks. It has rhythm. It sounds like you.\n\nAI can't know what matters to you. AI can guess what might be important based on patterns in training data. But it doesn't actually know what keeps you up at night or what you think about during boring classes or what you hope changes about your life. Only you know that. And that's what your essay should reveal.",
+      },
+      {
+        h2: "College Policies on AI",
+        body: "This is evolving fast. Some schools explicitly ban AI-generated content in application materials. Some schools allow limited AI use for brainstorming and grammar checking but require that the writing be your own. Many schools are adding honor statements where you certify that the essay represents your own work.\n\nThe safest approach: write the essay yourself. Use AI for brainstorming, for understanding prompts, for grammar help. Not for writing.",
+      },
+      {
+        h2: "The Biggest Risk",
+        body: "The biggest risk isn't getting caught using AI. The biggest risk is writing an essay that sounds like everyone else's essay. Whether that's because AI wrote it, or because you tried to sound impressive instead of honest, or because you copied the tone from sample essays you found online, or because you used words you thought admissions officers wanted to hear.\n\nThe result is the same. Your essay blends in instead of standing out. And you disappear from your own application.",
+      },
+      {
+        h2: "What's Next",
+        body: "You know where the line is with AI. Now the question is: how do you actually capture your voice on paper? That's Part 4 — The Talk-First Method.",
+      },
+    ],
+  },
+  {
+    slug: "talk-first-method-college-essays",
+    title: "The Talk-First Method: Writing Essays That Sound Like You",
+    metaTitle: "The Talk-First Method: Writing College Essays That Sound Like You",
+    metaDescription: "The practical method for capturing your authentic voice in a college essay — talk first, type second. How to write without AI flattening your personality.",
+    publishedDate: "2026-02-25",
+    updatedDate: "2026-02-25",
+    readTime: "7 min read",
+    h1: "The Talk-First Method: Writing Essays That Sound Like You",
+    intro: "Stop typing and start talking. The best way to write an essay that sounds like you? Talk first, type second.",
+    tags: ["college essays", "writing tips", "authenticity", "essay methods"],
+    excerpt: "The practical method for capturing your authentic voice — talk first, type second. How to write essays without AI flattening your personality.",
+    series: {
+      name: "The Complete Guide to Writing College Essays in 2026",
+      slug: "college-essay-guide-2026",
+      part: 4,
+      total: 6,
+    },
+    sections: [
+      {
+        h2: "The Talk-First Method",
+        body: "Pick your topic. You don't need an outline. Just know generally what you want to write about.\n\nOpen your phone's voice recorder.\n\nImagine you're telling this story to your best friend. Not to an admissions officer. Not to a teacher. To someone who actually knows you and cares about what you're saying.\n\nTalk for 5-10 minutes. Don't stop. Don't edit yourself mid-sentence. Just tell the story the way you'd tell it out loud.\n\nTranscribe it. Your phone can do this automatically, or use a free tool like Otter.ai.\n\nThat's your first draft. Seriously.\n\nNow clean it up. Remove the \"um\"s and \"like\"s. Add paragraph breaks where you paused. Fix grammar and spelling. Organize it so it flows logically. But the bone structure — the way you explained things, the words you chose, the order you told the story — stays.",
+      },
+      {
+        h2: "Why This Works",
+        body: "You think differently when you talk.\n\nWhen you're typing, you're thinking about grammar, about sounding smart, about what admissions officers want to hear. You edit yourself before the words even hit the page.\n\nWhen you're talking, you're thinking about the story. What happened. How it felt. What mattered. You're more specific. More honest. Less worried about being impressive.\n\nThat's what makes a college essay good. Not impressive. Honest.",
+      },
+      {
+        h2: "How AI Can Actually Help (Without Writing For You)",
+        body: "Scenario 1 — You're stuck choosing between topics. Good use: \"I have three possible essay topics: my summer job at the hardware store, teaching my younger sister to code, the first time I drove alone after getting my license. Can you help me think through which might work best? For each topic, what questions should I ask myself?\"\n\nAI might respond with questions that help you think: What specific moment stands out from the hardware store? Was there a breakthrough moment when teaching your sister? Where were you going that first time you drove alone?\n\nThis is helpful. You're using AI as a thinking partner, not as a writer.\n\nScenario 2 — You don't understand what a prompt is asking. Good use: \"The Common App asks about 'a topic, idea, or concept you find so engaging that it makes you lose all track of time.' What are they actually looking for?\" AI can break down the prompt into simpler language and explain what admissions officers are hoping to learn about you. That's using AI as a tutor.\n\nScenario 3 — You've written a draft and you're not sure if it makes sense. Good use: \"I've written an essay about working at a restaurant. Can you read this and tell me: Is my main point clear? Are there places where I'm confusing? Do I answer the prompt?\" AI can give you feedback about clarity and structure.\n\nBad use: \"Take my essay and rewrite it to make it better.\" The first request is asking for feedback. The second is asking AI to do your writing. There's a difference.",
+      },
+      {
+        h2: "Better Feedback Than AI",
+        body: "Actual humans who know you give better feedback than AI.\n\nYour English teacher already knows what your writing sounds like. They'll catch if this doesn't sound like you.\n\nYour school counselor has read hundreds of these. They know what works.\n\nYour parents know you. They can tell if you're being real or if you're performing.\n\nYour friends will call you out if you're trying too hard to sound smart.\n\nThese people can't write your essay for you either. But they can ask questions, point out where you need more detail, catch where you're being vague, and remind you of stories you've forgotten. And they'll do it without flattening your voice into generic AI prose.",
+      },
+      {
+        h2: "Practice Exercise",
+        body: "Pick something mundane from your day. Not something dramatic. Something boring.\n\nEating breakfast. Getting ready for school. Waiting for the bus. Doing homework.\n\nRecord yourself talking about it for 2-3 minutes. What did you see, hear, smell? What were you thinking? Don't summarize. Don't explain what it meant. Just describe what happened.\n\nThen transcribe it. Read it. Notice how it sounds different from how you usually write. More specific. More honest. More you. That's the voice you want in your college essay.",
+      },
+      {
+        h2: "What's Next",
+        body: "You know how to capture your voice. Now you need to know the single most important writing technique for college essays: show don't tell. That's Part 5.",
+      },
+    ],
+  },
+  {
+    slug: "show-dont-tell-college-essays",
+    title: "Show Don't Tell: What It Actually Means (With Real Examples)",
+    metaTitle: "Show Don't Tell for College Essays: What It Really Means",
+    metaDescription: "The most repeated college essay advice finally explained — what \"show don't tell\" means, how to do it, and before/after examples that actually land.",
+    publishedDate: "2026-03-04",
+    updatedDate: "2026-03-04",
+    readTime: "10 min read",
+    h1: "Show Don't Tell: What It Actually Means (With Real Examples)",
+    intro: "\"Show don't tell.\" You've heard this a hundred times. Every essay guide says it. Every English teacher says it. What does it mean? How do you actually do it?",
+    tags: ["college essays", "writing tips", "show don't tell", "essay examples"],
+    excerpt: "The most repeated college essay advice finally explained — what show don't tell means, how to do it, with before and after examples.",
+    series: {
+      name: "The Complete Guide to Writing College Essays in 2026",
+      slug: "college-essay-guide-2026",
+      part: 5,
+      total: 6,
+    },
+    sections: [
+      {
+        h2: "The Core Difference",
+        body: "Telling = summarizing what happened or what you learned. Showing = letting the reader experience the moment with you.\n\nTelling: \"I was nervous before my presentation. But I overcame my fear and did well.\"\n\nShowing: \"My note cards were damp from holding them too tight. I'd numbered them 1 through 7, and I kept checking that they were still in order even though I'd checked thirty seconds ago. When Mr. Harrison called my name, I stood up and my chair scraped the floor louder than I expected. Twenty-three faces turned to look at me. I'd counted them during the previous presentation. The first sentence of my speech was supposed to be funny, but when I opened my mouth, nothing came out. Just silence. Then Jordan coughed from the back row — not a real cough, more like a laugh-cough — and I realized they're not waiting for me to be perfect. They're just waiting for me to start. So I did.\"\n\nThe first version tells you what happened. The second puts you in the room.",
+      },
+      {
+        h2: "The Sensory Detail Method",
+        body: "Your memory stores experiences with sensory information. What you saw, heard, smelled, touched, tasted. AI doesn't have those memories. Other students don't have those memories. Only you do.\n\nWhen you're writing about an experience, close your eyes and go back to that specific moment.\n\nWhat did you see? Not just \"the classroom.\" But: \"The classroom with the broken blind on the third window that let in a stripe of afternoon sun that hit Mr. Chen's desk at exactly 2:15.\"\n\nWhat did you hear? Not just \"it was noisy.\" But: \"The air conditioning unit that rattled every seven seconds. Someone's pencil tapping. The muffled sound of the band practicing in the room below us.\"\n\nWhat did you smell? Not just \"it smelled bad.\" But: \"That specific school smell — industrial floor cleaner and old textbooks and something faintly like cafeteria food even though we were two hallways away from the lunchroom.\"\n\nWhat did your hands feel? Not just \"I was nervous.\" But: \"My hands were sweating so much the paper stuck to my palms. I kept wiping them on my jeans, leaving dark patches on the denim.\"\n\nWhat were you thinking? Not just \"I was worried.\" But: \"I kept trying to remember if I'd cited the sources correctly. Had I used MLA or APA format? I'd checked three times last night but now I couldn't remember which one was right.\"\n\nThese specific details are what make your essay sound like only you could have written it.",
+      },
+      {
+        h2: "Common Telling Phrases (How To Fix Them)",
+        body: "\"I learned the importance of responsibility.\" This is abstract. It could mean anything.\n\nBetter: \"The first time I closed the restaurant alone, I checked the walk-in freezer door three times. Then I went back and checked it again because I couldn't remember if I'd actually locked it or just thought about locking it. It was 11:47 PM. My manager had left at 11. He'd said, 'You've got this,' but I didn't feel like I had it. I had a sticky note on my phone with twelve things to check before leaving. I'd checked eleven. The last one was 'turn off the fryers.' I stood in front of the switch for a full minute, flipped it off, took a photo of the off position, then finally let myself leave.\" Now we see what responsibility actually felt like for you.\n\n\"My grandfather inspired me.\" Who is your grandfather to the reader? Nobody. Why should they care?\n\nBetter: \"My grandfather kept a composition notebook in the glove compartment of his truck. Every time he taught me something about fixing cars, he'd write it down in my handwriting. Not his. Mine. 'So you'll remember you knew this,' he'd say. The first entry is from when I was twelve: 'Check oil when engine is cold. Dipstick goes all the way down.' The most recent entry is from last month: 'Spark plugs in a V6 are a pain. The back three especially. Give yourself two hours.' There are forty-seven entries now. When I turned sixteen and got my license, he handed me the notebook. 'That's your inheritance,' he said. 'Everything I know about engines that you're not going to look up on YouTube.'\" Now your grandfather is real. We understand why he matters.\n\n\"I overcame my anxiety about public speaking.\" How? What changed? What did it feel like?\n\nBetter: \"I was the last person to present in English class. By choice. I'd been volunteering to go last since September. It was April now. I'd watched twenty-three other presentations. Mrs. Kowalski called my name. I stood up. My outline was on my phone, but when I looked at it, the words blurred. I couldn't read my own notes. So I put the phone face-down on the desk and just started talking. About the green light. About how it doesn't matter if Gatsby ever reaches it because wanting it is the whole point. I talked for four minutes without looking at my notes once. When I finished, someone in the back — I think it was Marcus — said, 'Huh. Yeah.' Not exactly applause, but I'd take it.\" You didn't say you overcame anxiety. You showed us what it felt like.\n\n\"I'm passionate about environmental science.\" Saying you're passionate doesn't make me believe it.\n\nBetter: \"I've been tracking pH levels in the creek behind my school for two and a half years. Every other Tuesday, I collect water samples in a mason jar I labeled with a Sharpie. Month 1: 7.2. Month 8: 6.9. Month 14: 6.5. Month 20: 6.1. Last month: 5.8. I made a graph. The line goes steadily down. I showed it to my teacher. She said, 'You should show the city council.' So I signed up for public comment at their next meeting. I have three minutes to explain why a creek behind a high school matters. I've been timing my presentation. I'm at three minutes forty seconds. I need to cut forty seconds.\" You didn't tell me you're passionate. You showed me two and a half years of data collection. I believe you.",
+      },
+      {
+        h2: "The \"What Actually Happened\" Rule",
+        body: "After you write a paragraph, ask yourself: what actually happened here?\n\nIf your answer is vague — \"I volunteered,\" \"I learned something,\" \"I faced a challenge\" — you're telling.\n\nIf your answer is specific — \"I checked the freezer door three times because I couldn't remember if I'd locked it,\" \"I talked for four minutes without looking at my notes\" — you're showing.",
+      },
+      {
+        h2: "Dialogue Brings Scenes To Life",
+        body: "Real dialogue is one of the fastest ways to show instead of tell.\n\nTelling: \"My coach helped me understand that failure isn't the end.\"\n\nShowing: \"After I false-started for the third time, Coach pulled me aside. She didn't yell. She just asked, 'What are you thinking about right before the gun goes off?' I said, 'Don't false-start.' She nodded. 'Right. So you're thinking about the one thing you don't want to do.' I didn't know what to say to that. She said, 'Next time, think about your first three steps. Where your feet go. Not what they don't do.' I false-started one more time that season. But after that, I didn't.\"\n\nThe dialogue makes it real. You don't need word-for-word accuracy. You're not recording a transcript. You're capturing what the conversation felt like.",
+      },
+      {
+        h2: "The Read-Aloud Test",
+        body: "Most effective way to catch places where you're telling instead of showing: read your essay out loud. Actually do it. Not in your head. Out loud.\n\nWhen you read out loud, you'll notice: sentences that are too long (you run out of breath), words that feel weird in your mouth (words you'd never actually say), places where you're summarizing instead of showing (sounds generic), parts that don't flow (you stumble).\n\nIf you trip over a sentence while reading it, your reader will trip over it too. Fix it.",
+      },
+      {
+        h2: "What's Next",
+        body: "You know how to show instead of tell. But there are still common mistakes that make even well-written essays invisible. That's Part 6 — the final part of this series.",
+      },
+    ],
+  },
+  {
+    slug: "college-essay-mistakes-to-avoid",
+    title: "College Essay Mistakes That Make You Invisible",
+    metaTitle: "College Essay Mistakes That Make You Invisible (2026 Guide)",
+    metaDescription: "The common mistakes that make even well-written college essays blend in. What to avoid and how to fix it when your essay sounds like everyone else's.",
+    publishedDate: "2026-03-11",
+    updatedDate: "2026-03-11",
+    readTime: "9 min read",
+    h1: "College Essay Mistakes That Make You Invisible",
+    intro: "You can write a grammatically perfect essay that follows all the rules and still be completely forgettable. These are the mistakes that make you invisible.",
+    tags: ["college essays", "writing tips", "essay mistakes", "college admissions"],
+    excerpt: "The common mistakes that make even well-written essays blend in — what to avoid and how to fix it when your essay sounds like everyone else's.",
+    series: {
+      name: "The Complete Guide to Writing College Essays in 2026",
+      slug: "college-essay-guide-2026",
+      part: 6,
+      total: 6,
+    },
+    sections: [
+      {
+        h2: "Mistake 1: Writing About Someone Else",
+        body: "A lot of students want to write about someone who inspired them. That's fine. But if your essay is mostly about them, you're writing their college essay. Admissions officers want to admit you. Not your grandfather, no matter how interesting he is.\n\nWrong focus: \"My uncle came to America from Mexico in 1997. He didn't speak English. He worked three jobs. He saved money for eight years and started his own landscaping business. He now employs fifteen people. He's the hardest-working person I know.\" That's your uncle's story. Where are you in it?\n\nRight focus: \"Every Sunday, my uncle brings his work crew to our house for dinner. My mom makes enough food for twenty people even though there are usually twelve. I help serve. Last month, I was pouring water for Carlos — he's been with my uncle for six years — and he said something in Spanish to my uncle. My uncle laughed and translated: 'He says you pour water like you've never done hard work in your life.' He was right. I hadn't. The next Saturday, I asked my uncle if I could work with the crew. He said yes. I spent eight hours pulling weeds in someone's backyard in July. In Texas. Carlos didn't say anything when I quit at hour six, but my uncle did: 'Now you know what water costs.' I've worked the last four Saturdays. I still pour water at Sunday dinners. But now I know what I'm pouring.\"\n\nNow the essay is about you. What you learned from your uncle. The relationship. He's in the story, but you're at the center.",
+      },
+      {
+        h2: "Mistake 2: Using Words You'd Never Say",
+        body: "Unless you actually use the word \"endeavored\" in conversation (you don't), don't use it in your essay.\n\nThesaurus version: \"I endeavored to ameliorate the situation by utilizing collaborative strategies to facilitate meaningful dialogue among stakeholders.\"\n\nHuman version: \"I tried to fix it by getting everyone in the room to actually talk to each other.\"\n\nThe second version is clearer, more honest, and sounds like a human being wrote it. Your essay should be polished. It should be grammatically correct. But it should sound like you, not like a college professor.\n\nRead it out loud. If you stumble over words you wouldn't use when talking to a friend, change them.",
+      },
+      {
+        h2: "Mistake 3: Being Vague About Details",
+        body: "Vague: \"I spent the summer volunteering at a hospital. It was a rewarding experience that taught me a lot about healthcare.\" What did you actually do? What did you see? What happened?\n\nSpecific: \"I volunteered in the pediatric wing every Tuesday and Thursday from June through August. My job was to restock supply carts and deliver meal trays. On my third shift, I delivered lunch to Room 304. The kid — I think his name was Oliver — was probably seven. He asked me if the chicken nuggets were the kind shaped like dinosaurs. They weren't. He looked so disappointed that I went back to the cafeteria and asked if they had the dinosaur kind. They didn't. But one of the cafeteria workers cut the regular nuggets into rough dinosaur shapes with a knife. Oliver said they were 'pretty good for not-real dinosaurs.' I started checking with the cafeteria before every shift to see if they had dinosaur nuggets. They never did. But after that, someone was always willing to cut them into shapes.\"\n\nSpecific details make the story real. Room 304. Oliver's disappointment about dinosaur shapes. The cafeteria worker cutting them with a knife. \"Pretty good for not-real dinosaurs.\" Those details are what make it yours.",
+      },
+      {
+        h2: "The Read-Aloud Test",
+        body: "Most effective way to catch these mistakes: read your essay out loud. Actually do it. Not in your head. Out loud.\n\nWhen you read out loud, you'll notice: sentences that are too long (you run out of breath), words that feel weird in your mouth (words you'd never actually say), places where you're summarizing instead of showing (sounds generic), parts that don't flow (you stumble).\n\nIf you trip over a sentence while reading it, your reader will trip over it too. Fix it.",
+      },
+      {
+        h2: "What If Nothing Interesting Has Happened",
+        body: "\"My life is boring. I don't have anything to write about.\" You don't need to have climbed Everest or survived a tragedy or won a championship. You need to write honestly about your actual life.\n\n\"Boring\" topics that make good essays: your job at the grocery store, teaching your younger sibling something, a conversation with your grandparent, the time you got lost in your own neighborhood, failing your driver's test twice, your family's weird tradition, something you built in your garage.\n\nThese aren't impressive topics. But if you write about them with specific details — what actually happened, what you saw and heard and felt — they work. A strong essay about working a register at a hardware store beats a weak essay about volunteering in Guatemala.",
+      },
+      {
+        h2: "The Universal Truth About Specificity",
+        body: "The more specific you are, the more universal your story becomes. This sounds backwards, but it's true.\n\n\"I learned about hard work\" is too vague. Nobody connects with it. \"I learned that pulling weeds in a Texas backyard in July requires a different kind of commitment than I thought I had\" is specific. But people who've never pulled weeds in Texas still connect with it. Because they've done something that required more commitment than they expected. They know what it feels like to realize a task is harder than you thought.\n\nSpecificity is what makes your story yours. But it's also what makes it human.",
+      },
+      {
+        h2: "You've Reached The End",
+        body: "This is the final part of the series. You now know: what the Common App prompts are asking, what makes essays work (and what doesn't), where the line is with AI, how to capture your voice with the talk-first method, how to show instead of tell, and what mistakes make you invisible.\n\nNow go write your essay. Your actual, honest, specific essay. The tools are free. The prompts are available. You have time. You've got this.",
+      },
+    ],
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
