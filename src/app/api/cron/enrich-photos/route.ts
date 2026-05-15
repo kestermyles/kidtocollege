@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { COLLEGE_PHOTO_OVERRIDES } from "@/lib/college-photo-overrides";
 
 export const maxDuration = 60;
 
@@ -73,12 +74,17 @@ export async function GET(req: NextRequest) {
 
   const supabase = createClient(url, key);
 
-  const { data: colleges, count } = await supabase
+  const overrideSlugs = Object.keys(COLLEGE_PHOTO_OVERRIDES);
+  let query = supabase
     .from("colleges")
     .select("slug, name, location", { count: "exact" })
     .is("photo_url", null)
     .order("name")
     .limit(MAX_PER_RUN);
+  if (overrideSlugs.length > 0) {
+    query = query.not("slug", "in", `(${overrideSlugs.join(",")})`);
+  }
+  const { data: colleges, count } = await query;
 
   if (!colleges || colleges.length === 0) {
     return NextResponse.json({ processed: 0, remaining: 0, message: "All colleges have photos" });

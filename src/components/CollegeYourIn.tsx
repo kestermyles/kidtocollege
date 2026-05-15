@@ -182,7 +182,7 @@ export function CollegeYourIn({
               ✦
             </span>
             <span className="font-display text-base font-semibold text-navy">
-              Your In
+              Your edge
             </span>
           </div>
 

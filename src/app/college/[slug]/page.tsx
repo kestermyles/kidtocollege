@@ -11,6 +11,7 @@ import { CollegeAIInsights } from "@/components/CollegeAIInsights";
 import type { College, ScholarshipResult } from "@/lib/types";
 import { CollegeAdmissionFactors } from "@/components/CollegeAdmissionFactors";
 import { CollegeYourIn } from "@/components/CollegeYourIn";
+import { getOverridePhoto } from "@/lib/college-photo-overrides";
 // NPCCalculator is WIP in an untracked components/npc/ directory; the
 // section that used it is hidden below until the component lands.
 
@@ -359,10 +360,18 @@ export default async function CollegePage({ params }: CollegePageProps) {
   }
 
   const defaultPhoto = "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80";
+  const photoOverride = getOverridePhoto(slug);
   const heroImage =
-    college.photo_url && college.photo_url !== defaultPhoto
+    photoOverride?.url ??
+    (college.photo_url && college.photo_url !== defaultPhoto
       ? college.photo_url
-      : defaultPhoto;
+      : defaultPhoto);
+  const heroCreditName = photoOverride
+    ? photoOverride.creditName
+    : college.photo_credit_name;
+  const heroCreditUrl = photoOverride
+    ? photoOverride.creditUrl
+    : college.photo_credit_url;
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.kidtocollege.com";
   const city = college.location?.split(",")[0]?.trim() || "";
@@ -394,15 +403,15 @@ export default async function CollegePage({ params }: CollegePageProps) {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
         <div className="absolute bottom-3 right-4 z-10 text-white/50 text-xs">
-          {college.photo_credit_name && college.photo_credit_url ? (
+          {heroCreditName && heroCreditUrl ? (
             <>
               <a
-                href={`${college.photo_credit_url}?utm_source=kidtocollege&utm_medium=referral`}
+                href={`${heroCreditUrl}?utm_source=kidtocollege&utm_medium=referral`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white/80 transition-colors"
               >
-                Photo by {college.photo_credit_name}
+                Photo by {heroCreditName}
               </a>
               <span> on </span>
               <a
