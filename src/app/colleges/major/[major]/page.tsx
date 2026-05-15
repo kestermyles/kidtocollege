@@ -199,6 +199,42 @@ export default async function MajorPage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* Overview / longform (top majors only) */}
+      {major.overview && (
+        <section className="py-12 sm:py-16">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-6">
+                About {major.label.toLowerCase()} as a major
+              </h2>
+              <p className="font-body text-navy/80 leading-relaxed text-lg">
+                {major.overview}
+              </p>
+              {(major.salaryRange || major.studyPath) && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                  {major.salaryRange && (
+                    <div className="ktc-card p-5">
+                      <h3 className="font-mono-label text-xs uppercase tracking-wider text-gold mb-2">
+                        Salary range
+                      </h3>
+                      <p className="font-body text-sm text-navy/80">{major.salaryRange}</p>
+                    </div>
+                  )}
+                  {major.studyPath && (
+                    <div className="ktc-card p-5">
+                      <h3 className="font-mono-label text-xs uppercase tracking-wider text-gold mb-2">
+                        Study path
+                      </h3>
+                      <p className="font-body text-sm text-navy/80">{major.studyPath}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </FadeIn>
+          </div>
+        </section>
+      )}
+
       {/* How to choose */}
       <section className="py-12 sm:py-16 bg-cream">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
