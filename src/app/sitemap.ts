@@ -278,6 +278,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
+  const howToPages: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/how-to-get-into`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    ...HOW_TO_GET_IN.map((e) => ({
+      url: `${BASE_URL}/how-to-get-into/${e.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+  ];
+
   return [
     ...staticPages,
     ...collegePages,
@@ -285,5 +300,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...majorPages,
     ...blogPages,
     ...bestCollegesPages,
+    ...howToPages,
   ];
 }
