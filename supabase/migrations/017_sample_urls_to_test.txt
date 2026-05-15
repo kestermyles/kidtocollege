@@ -1,0 +1,106 @@
+Sample URLs to test (first 20)
+==================================================
+
+Open each in your browser. A working page shows the College Board NPC form
+for the named college. A 404 or wrong school = miss.
+
+Belanger School of Nursing
+  slug:      belanger-school-of-nursing
+  shortname: bsn
+  url:       https://npc.collegeboard.org/student/app/bsn
+
+California Institute of Technology
+  slug:      caltech
+  shortname: california
+  url:       https://npc.collegeboard.org/student/app/california
+
+Minerva University
+  slug:      minerva-university
+  shortname: minerva
+  url:       https://npc.collegeboard.org/student/app/minerva
+
+Massachusetts Institute of Technology
+  slug:      mit
+  shortname: mit
+  url:       https://npc.collegeboard.org/student/app/mit
+
+Columbia University in the City of New York
+  slug:      columbia-university-in-the-city-of-new-york
+  shortname: columbiauniversityinthecityofnewyork
+  url:       https://npc.collegeboard.org/student/app/columbiauniversityinthecityofnewyork
+
+Curtis Institute of Music
+  slug:      curtis-institute-of-music
+  shortname: cim
+  url:       https://npc.collegeboard.org/student/app/cim
+
+Northeastern University
+  slug:      northeastern-university
+  shortname: northeastern
+  url:       https://npc.collegeboard.org/student/app/northeastern
+
+Vanderbilt University
+  slug:      vanderbilt-university
+  shortname: vanderbilt
+  url:       https://npc.collegeboard.org/student/app/vanderbilt
+
+Colby College
+  slug:      colby-college
+  shortname: colby
+  url:       https://npc.collegeboard.org/student/app/colby
+
+Bowdoin College
+  slug:      bowdoin-college
+  shortname: bowdoin
+  url:       https://npc.collegeboard.org/student/app/bowdoin
+
+Pomona College
+  slug:      pomona-college
+  shortname: pomona
+  url:       https://npc.collegeboard.org/student/app/pomona
+
+Washington University of Science and Technology
+  slug:      washington-university-of-science-and-technology
+  shortname: wust
+  url:       https://npc.collegeboard.org/student/app/wust
+
+Swarthmore College
+  slug:      swarthmore-college
+  shortname: swarthmore
+  url:       https://npc.collegeboard.org/student/app/swarthmore
+
+Rice University
+  slug:      rice-university
+  shortname: rice
+  url:       https://npc.collegeboard.org/student/app/rice
+
+Williams College
+  slug:      williams-college
+  shortname: williams
+  url:       https://npc.collegeboard.org/student/app/williams
+
+University of California, Los Angeles
+  slug:      ucla
+  shortname: ucla
+  url:       https://npc.collegeboard.org/student/app/ucla
+
+Barnard College
+  slug:      barnard-college
+  shortname: barnard
+  url:       https://npc.collegeboard.org/student/app/barnard
+
+Amherst College
+  slug:      amherst-college
+  shortname: amherst
+  url:       https://npc.collegeboard.org/student/app/amherst
+
+New York University
+  slug:      new-york-university
+  shortname: nyu
+  url:       https://npc.collegeboard.org/student/app/nyu
+
+The Juilliard School
+  slug:      the-juilliard-school
+  shortname: js
+  url:       https://npc.collegeboard.org/student/app/js
+

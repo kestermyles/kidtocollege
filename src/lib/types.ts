@@ -108,6 +108,10 @@ export interface College {
   graduation_rate_4yr?: number | null;
   loan_default_rate?: number | null;
   scorecard_last_updated?: string | null;
+  avg_grant_percentage?: number | null;
+  meets_full_need?: boolean | null;
+  merit_aid_available?: boolean | null;
+  no_loan_threshold?: number | null;
 }
 
 export interface SavedCollege {

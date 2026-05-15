@@ -1,31 +1,4 @@
-// Inline net-price approximation. The fuller `./npc-calculator` module is
-// WIP locally and not yet committed — this fallback keeps the build green
-// until it lands.
-interface CollegeAidProfile {
-  costOfAttendance: number;
-  avgGrantPercentage: number;
-  meetsFullNeed: boolean;
-  meritAidAvailable: boolean;
-  noLoanThreshold?: number;
-}
-interface NPCInput {
-  familyIncome: number;
-  assets: number;
-  gpa: number;
-  satScore?: number;
-  numInHousehold: number;
-  numInCollege: number;
-  stateResident?: string;
-}
-function simulateNPC(input: NPCInput, aid: CollegeAidProfile): { netPrice: number } {
-  const sticker = aid.costOfAttendance;
-  const grantPct = Math.max(0, Math.min(80, aid.avgGrantPercentage)) / 100;
-  const needBased = sticker * grantPct;
-  const incomeTilt = input.familyIncome < 60000 ? 0.2 : input.familyIncome < 120000 ? 0.1 : 0;
-  const meritBoost = aid.meritAidAvailable && input.gpa >= 3.7 ? 0.08 : 0;
-  const totalAid = Math.min(sticker, needBased + sticker * (incomeTilt + meritBoost));
-  return { netPrice: Math.max(0, Math.round(sticker - totalAid)) };
-}
+import { simulateNPC, type CollegeAidProfile, type NPCInput } from "./npc-calculator";
 
 export interface StudentProfile {
   gpa: number;

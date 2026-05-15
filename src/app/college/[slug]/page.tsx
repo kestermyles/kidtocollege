@@ -12,8 +12,7 @@ import type { College, ScholarshipResult } from "@/lib/types";
 import { CollegeAdmissionFactors } from "@/components/CollegeAdmissionFactors";
 import { CollegeYourIn } from "@/components/CollegeYourIn";
 import { getOverridePhoto } from "@/lib/college-photo-overrides";
-// NPCCalculator is WIP in an untracked components/npc/ directory; the
-// section that used it is hidden below until the component lands.
+import NPCCalculator from "@/components/npc/NPCCalculator";
 
 export const revalidate = 86400;
 
@@ -678,8 +677,32 @@ export default async function CollegePage({ params }: CollegePageProps) {
         </section>
       )}
 
-      {/* Net Price Calculator section: hidden — depends on the WIP
-          components/npc/NPCCalculator. Reinstate once that lands in main. */}
+      {/* Net Price Calculator */}
+      {college.avg_cost_instate != null && (
+        <section className="py-12 sm:py-16 bg-cream">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-2">
+                What will you actually pay?
+              </h2>
+              <p className="text-sm font-body text-navy/50 mb-6">
+                Personalized cost estimate based on your family&apos;s finances and academic profile
+              </p>
+              <NPCCalculator
+                college={{
+                  name: college.name,
+                  slug: slug,
+                  avg_cost_instate: college.avg_cost_instate,
+                  avg_grant_percentage: college.avg_grant_percentage ?? null,
+                  meets_full_need: college.meets_full_need ?? null,
+                  merit_aid_available: college.merit_aid_available ?? null,
+                  no_loan_threshold: college.no_loan_threshold ?? null,
+                }}
+              />
+            </FadeIn>
+          </div>
+        </section>
+      )}
 
       {/* Scholarships from cached AI results */}
       {cachedScholarships.length > 0 && (
