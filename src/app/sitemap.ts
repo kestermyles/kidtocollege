@@ -3,6 +3,7 @@ import { COLLEGES_SEED } from "@/lib/colleges-seed";
 import { STATE_AID_DATA } from "@/lib/state-aid-data";
 import { MAJOR_PAGES } from "@/lib/major-pages-data";
 import { blogPosts } from "@/lib/blog-posts";
+import { BEST_COLLEGES_TOPICS } from "@/lib/best-colleges-data";
 import { createClient } from "@supabase/supabase-js";
 
 const BASE_URL =
@@ -262,5 +263,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
-  return [...staticPages, ...collegePages, ...stateAidPages, ...majorPages, ...blogPages];
+  const bestCollegesPages: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/best-colleges`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    ...BEST_COLLEGES_TOPICS.map((t) => ({
+      url: `${BASE_URL}/best-colleges/${t.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+  ];
+
+  return [
+    ...staticPages,
+    ...collegePages,
+    ...stateAidPages,
+    ...majorPages,
+    ...blogPages,
+    ...bestCollegesPages,
+  ];
 }
