@@ -4,6 +4,7 @@ import { STATE_AID_DATA } from "@/lib/state-aid-data";
 import { MAJOR_PAGES } from "@/lib/major-pages-data";
 import { blogPosts } from "@/lib/blog-posts";
 import { BEST_COLLEGES_TOPICS } from "@/lib/best-colleges-data";
+import { HOW_TO_GET_IN } from "@/lib/how-to-get-in-data";
 import { createClient } from "@supabase/supabase-js";
 
 const BASE_URL =
