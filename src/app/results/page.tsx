@@ -4,7 +4,7 @@ import { ResultsLoader } from "./ResultsLoader";
 export const metadata: Metadata = {
   title: "Your Research Report — KidToCollege",
   description:
-    "Your personalised college research report with scholarships, admissions data, budget breakdown, and a step-by-step playbook.",
+    "Your personalized college research report with scholarships, admissions data, budget breakdown, and a step-by-step playbook.",
 };
 
 export default async function ResultsPage({

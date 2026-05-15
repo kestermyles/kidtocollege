@@ -387,9 +387,9 @@ export default function FinancialAidPage() {
             </h2>
             <div className="font-body text-navy/70 space-y-4 leading-relaxed">
               <p>
-                Outside scholarships are awards from organisations other than
+                Outside scholarships are awards from organizations other than
                 your college — community groups, employers, foundations, and
-                national organisations.
+                national organizations.
               </p>
               <ul className="space-y-3 mt-4">
                 <li className="flex items-start gap-3">
@@ -436,7 +436,7 @@ export default function FinancialAidPage() {
               </p>
               <p>
                 If your family situation is complicated (estrangement, abuse,
-                homelessness), talk to your school counsellor or the college&apos;s
+                homelessness), talk to your school counselor or the college&apos;s
                 financial aid office about a <strong>dependency override</strong>.
                 These are handled case by case and require documentation.
               </p>

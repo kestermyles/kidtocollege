@@ -13,6 +13,14 @@ const US_STATES = [
 
 const PAGE_SIZE = 24;
 
+// Schools pinned to the top of the unfiltered default view.
+// Order here is the display order.
+const FEATURED_SLUGS = [
+  "ut-austin",
+  "texas-am-university",
+  "rice-university",
+];
+
 interface CollegeRow {
   slug: string;
   name: string;
@@ -36,6 +44,14 @@ export default function CollegesBrowsePage() {
   const fetchColleges = useCallback(async () => {
     setLoading(true);
     const supabase = createClient();
+
+    const isUnfilteredFirstPage =
+      page === 0 &&
+      search.length < 2 &&
+      !stateFilter &&
+      !filterGreek &&
+      !filterD1 &&
+      !filterSetting;
 
     let query = supabase
       .from("colleges")
@@ -64,7 +80,28 @@ export default function CollegesBrowsePage() {
     }
 
     const { data, count } = await query;
-    setColleges((data as CollegeRow[]) || []);
+    let rows = (data as CollegeRow[]) || [];
+
+    // Pin featured schools to the top of the default first page only.
+    if (isUnfilteredFirstPage) {
+      const featuredFetch = await supabase
+        .from("colleges")
+        .select("slug, name, location, state, acceptance_rate, avg_cost_instate")
+        .in("slug", FEATURED_SLUGS);
+      const featuredById = new Map(
+        (featuredFetch.data || []).map((c) => [c.slug, c as CollegeRow])
+      );
+      const ordered = FEATURED_SLUGS
+        .map((s) => featuredById.get(s))
+        .filter(Boolean) as CollegeRow[];
+      const featuredSet = new Set(ordered.map((c) => c.slug));
+      rows = [
+        ...ordered,
+        ...rows.filter((c) => !featuredSet.has(c.slug)),
+      ].slice(0, PAGE_SIZE);
+    }
+
+    setColleges(rows);
     setTotal(count || 0);
     setLoading(false);
   }, [page, search, stateFilter, filterGreek, filterD1, filterSetting]);

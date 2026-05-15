@@ -58,7 +58,7 @@ export default function SignupGateModal({ collegeName, onClose, onSuccess }: Pro
             Save {collegeName} to your list
           </h2>
           <p className="text-sm text-gray-500">
-            Create a free account to save colleges, track your chances, and build your personalised admissions playbook.
+            Create a free account to save colleges, track your chances, and build your personalized admissions playbook.
           </p>
         </div>
 

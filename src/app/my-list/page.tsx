@@ -264,7 +264,7 @@ export default function MyListPage() {
             My College List
           </h1>
           <p className="font-body text-navy/60 mb-8">
-            Sign up to build your personalised Reach, On Target, and Safety list.
+            Sign up to build your personalized Reach, On Target, and Safety list.
             Track applications and compare your options — free.
           </p>
           <Link
@@ -296,7 +296,7 @@ export default function MyListPage() {
             My College List
           </h1>
           <p className="font-body text-navy/60">
-            Build your personalised Reach, On Target, and Safety list
+            Build your personalized Reach, On Target, and Safety list
           </p>
         </div>
 
@@ -487,7 +487,7 @@ export default function MyListPage() {
               )}
               {items.length > 12 && (
                 <p className="text-sm font-body text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2 mb-2">
-                  Most counsellors recommend 8–12 schools
+                  Most counselors recommend 8–12 schools
                 </p>
               )}
               <p className="text-xs font-body text-navy/40 mt-3">

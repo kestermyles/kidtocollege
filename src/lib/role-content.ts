@@ -18,7 +18,7 @@ const parentCopy: RoleCopy = {
   wizardActivities: "Pick everything that applies \u2014 every interest counts",
   dashboardTitle: "Your family\u2019s college dashboard",
   searchCta: "Find your college",
-  coachIntro: "Your personal college counsellor. Free.",
+  coachIntro: "Your personal college counselor. Free.",
   essayLabel: "This is their essay. We just help them make it great.",
   checklistDesc: "Track your student\u2019s progress",
   savedLabel: "Saved colleges",

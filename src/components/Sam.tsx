@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import AskSamMarkdown from "./AskSamMarkdown"
 
 interface Message {
   role: "user" | "assistant"
@@ -93,10 +94,16 @@ export default function Sam() {
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                   m.role === "user"
-                    ? "bg-blue-600 text-white rounded-br-sm"
-                    : "bg-gray-100 text-gray-800 rounded-bl-sm"
+                    ? "bg-navy text-white rounded-br-sm"
+                    : "bg-cream text-navy rounded-bl-sm"
                 }`}>
-                  {m.content}
+                  {m.role === "assistant" ? (
+                    <div className="sam-markdown">
+                      <AskSamMarkdown content={m.content} />
+                    </div>
+                  ) : (
+                    m.content
+                  )}
                 </div>
               </div>
             ))}
@@ -121,7 +128,7 @@ export default function Sam() {
                     <button
                       key={q}
                       onClick={() => send(q)}
-                      className="text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 px-2.5 py-1.5 rounded-full border border-blue-200 transition-colors text-left"
+                      className="text-xs bg-gold/10 text-navy hover:bg-gold/20 px-2.5 py-1.5 rounded-full border border-gold/40 transition-colors text-left"
                     >
                       {q}
                     </button>
@@ -143,12 +150,12 @@ export default function Sam() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && send(input)}
                 placeholder="Ask anything about college admissions…"
-                className="flex-1 text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold/60 focus:border-transparent"
               />
               <button
                 onClick={() => send(input)}
                 disabled={loading || !input.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-200 text-white rounded-xl px-3 py-2 text-sm font-semibold transition-colors"
+                className="bg-gold hover:bg-gold/90 disabled:bg-gray-200 disabled:text-gray-400 text-navy rounded-xl px-3 py-2 text-sm font-semibold transition-colors"
               >
                 &rarr;
               </button>

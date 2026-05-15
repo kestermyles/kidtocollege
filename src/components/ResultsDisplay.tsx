@@ -321,7 +321,7 @@ export function ResultsDisplay({
             <FadeIn>
               <CircularScore score={match_score} size={160} strokeWidth={12} />
               <p className="text-sm text-white/60 mt-2 text-center max-w-xs mx-auto">
-                Your personalised fit score — based on your GPA, budget, major, and goals
+                Your personalized fit score — based on your GPA, budget, major, and goals
               </p>
             </FadeIn>
             <FadeIn delay={0.15}>
@@ -429,7 +429,7 @@ export function ResultsDisplay({
               subtitle="How you stack up against admitted students"
             />
             <p className="text-sm text-gray-500 mb-6">
-              Your match score is personalised to you — it reflects how well this college fits your academic profile, budget, and goals. It is not a general college ranking.
+              Your match score is personalized to you — it reflects how well this college fits your academic profile, budget, and goals. It is not a general college ranking.
             </p>
             <div className="ktc-card p-6 md:p-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -871,7 +871,7 @@ export function ResultsDisplay({
             <SectionHeader
               number="08"
               title="Essay Angles"
-              subtitle="Personalised essay topic suggestions"
+              subtitle="Personalized essay topic suggestions"
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {essay_angles.map((angle: string, i: number) => (

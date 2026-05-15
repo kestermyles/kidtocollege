@@ -89,7 +89,7 @@ const SCHOLARSHIPS = [
     destination: "Germany",
     type: "Undergraduate, Master's, PhD, and research",
     description:
-      "The German Academic Exchange Service (DAAD) is the world's largest funding organisation for international academic exchange. DAAD offers scholarships for virtually every level of study and research in Germany — from summer courses to full PhD funding. Over 150,000 students and researchers are supported each year.",
+      "The German Academic Exchange Service (DAAD) is the world's largest funding organization for international academic exchange. DAAD offers scholarships for virtually every level of study and research in Germany — from summer courses to full PhD funding. Over 150,000 students and researchers are supported each year.",
     eligibility:
       "Open to students and researchers of all nationalities. Specific requirements vary by program. Most require a completed bachelor's degree for master's scholarships.",
     coverage:

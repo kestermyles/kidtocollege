@@ -155,11 +155,11 @@ export function CollegeYourIn({
             <div className="flex items-center gap-2 mb-2">
               <span className="text-gold">✦</span>
               <span className="font-display text-base font-semibold text-navy">
-                Your In
+                Your edge
               </span>
             </div>
             <p className="font-body text-sm text-navy/50 mb-3">
-              Sign in to see your personalised angles for this school.
+              Sign in to see your personalized angles for this school.
             </p>
             <Link
               href="/account"
@@ -244,7 +244,7 @@ export function CollegeYourIn({
               onClick={handleGenerate}
               className="bg-gold hover:bg-gold/90 text-navy font-body font-medium px-5 py-2 rounded-md transition-colors text-sm"
             >
-              See your angles &rarr;
+              Find my angles for this school &rarr;
             </button>
           )}
         </div>

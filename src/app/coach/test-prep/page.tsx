@@ -166,12 +166,12 @@ export default function TestPrepPage() {
         </div>
       </section>
 
-      {/* Personalised Study Plan */}
+      {/* Personalized Study Plan */}
       <section className="py-20 bg-white border-t border-gray-200">
         <div className="max-w-3xl mx-auto px-6">
           <FadeIn>
             <p className="font-mono-label text-gold text-xs tracking-widest uppercase mb-2">
-              Personalised Study Plan
+              Personalized Study Plan
             </p>
             <h2 className="font-display text-3xl font-bold text-navy mb-2">
               Build your SAT/ACT roadmap
@@ -492,7 +492,7 @@ export default function TestPrepPage() {
               <p className="text-sm text-navy/50 italic mt-4">
                 Even if you do not qualify for National Merit, the PSAT gives you
                 a realistic SAT score prediction and connects you with Khan
-                Academy for personalised practice.
+                Academy for personalized practice.
               </p>
             </div>
           </FadeIn>

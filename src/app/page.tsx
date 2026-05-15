@@ -5,12 +5,6 @@ import { LeagueRedirectInput } from "@/components/LeagueRedirectInput";
 import Link from "next/link";
 
 
-const STATS = [
-  { value: "2,942", label: "Colleges" },
-  { value: "$50B", label: "In Scholarships" },
-  { value: "100%", label: "Free" },
-];
-
 const STEPS = [
   {
     num: "01",
@@ -19,7 +13,7 @@ const STEPS = [
   },
   {
     num: "02",
-    title: "Get your AI research report",
+    title: "Get your research report",
     desc: "Specific to one college, one major, one student. Not generic matching.",
   },
   {
@@ -30,14 +24,14 @@ const STEPS = [
   {
     num: "04",
     title: "Coach your way to admission",
-    desc: "Essays, test prep, financial aid, interviews — the full private counsellor experience.",
+    desc: "Essays, test prep, financial aid, interviews — the full private counselor experience.",
   },
 ];
 
 const FEATURES = [
   {
-    title: "AI College Research",
-    desc: "Deep research on any college + any major. Acceptance rates, costs, what admissions actually values.",
+    title: "Deep College Research",
+    desc: "Specific research on any college + any major. Acceptance rates, costs, what admissions actually values.",
     icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
   },
   {
@@ -47,7 +41,7 @@ const FEATURES = [
   },
   {
     title: "The Coach",
-    desc: "Everything a $15K private counsellor does — roadmaps, essays, test prep, interviews, financial aid — free.",
+    desc: "Everything a $15K private counselor does — roadmaps, essays, test prep, interviews, financial aid — free.",
     icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
   },
   {
@@ -78,7 +72,9 @@ export default function HomePage() {
             "url(https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=1600&q=80)",
         }}
       >
-        <div className="absolute inset-0 bg-black/55" />
+        {/* Layered overlay: dark navy base + gradient for legibility on bright bg */}
+        <div className="absolute inset-0 bg-navy/75" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
         <a
           href="https://unsplash.com/@thoughtcatalog?utm_source=kidtocollege&utm_medium=referral"
           target="_blank"
@@ -95,38 +91,33 @@ export default function HomePage() {
             </h1>
           </FadeIn>
           <FadeIn delay={0.15}>
-            <p className="mt-6 text-lg sm:text-xl text-white/80 max-w-2xl font-body font-light leading-relaxed">
-              Private college counsellors charge up to $15,000. We think every
+            <p className="mt-6 text-lg sm:text-xl text-white/85 max-w-2xl font-body font-light leading-relaxed">
+              Private college counselors charge $10,000 to $15,000. We think every
               kid deserves the same advantage — for free.
             </p>
           </FadeIn>
 
-          {/* Stats bar */}
-          <FadeIn delay={0.3}>
-            <div className="mt-10 flex flex-wrap gap-8 sm:gap-12">
-              {STATS.map((stat) => (
-                <div key={stat.label}>
-                  <span className="font-mono-label text-gold text-2xl sm:text-3xl font-bold">
-                    {stat.value}
-                  </span>
-                  <span className="block text-white/60 text-sm font-body mt-1">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-
           {/* CTAs */}
-          <FadeIn delay={0.4}>
+          <FadeIn delay={0.3}>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/roadmap"
-                className="inline-block bg-gold hover:bg-gold/90 text-navy font-body font-medium px-8 py-4 rounded-md text-lg transition-colors"
+                href="/my-chances"
+                className="inline-block bg-gold hover:bg-gold/90 text-navy font-body font-semibold px-8 py-4 rounded-md text-lg transition-colors shadow-lg"
               >
-                See your roadmap &rarr;
+                See your chances &rarr;
+              </Link>
+              <Link
+                href="/colleges"
+                className="inline-block bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur font-body font-medium px-8 py-4 rounded-md text-lg transition-colors"
+              >
+                Browse 2,900+ colleges
               </Link>
             </div>
+          </FadeIn>
+          <FadeIn delay={0.4}>
+            <p className="mt-6 text-sm text-white/60 font-body">
+              Free forever. No paywalls. No selling your data.
+            </p>
           </FadeIn>
         </div>
 
@@ -167,7 +158,7 @@ export default function HomePage() {
                   The Coach
                 </span>
                 <h2 className="font-display text-3xl sm:text-4xl font-bold text-navy mt-3 mb-6">
-                  The $15,000 counsellor.{" "}
+                  The $15,000 counselor.{" "}
                   <span className="text-gold italic">Free.</span>
                 </h2>
                 <div className="space-y-4 text-navy/70 font-body">
@@ -177,8 +168,8 @@ export default function HomePage() {
                     strategy. A live application checklist.
                   </p>
                   <p>
-                    Everything a private college counsellor charges families
-                    $10,000 to $15,000 for — personalised to you, your
+                    Everything a private college counselor charges families
+                    $10,000 to $15,000 for — personalized to you, your
                     target college, your timeline.
                   </p>
                 </div>
@@ -293,7 +284,7 @@ export default function HomePage() {
               </div>
             </div>
             <p className="font-display text-xl sm:text-2xl text-white/80 italic max-w-2xl mx-auto leading-relaxed">
-              &ldquo;Private counsellors charge up to $15,000 for exactly
+              &ldquo;Private counselors charge up to $15,000 for exactly
               what&apos;s here &mdash; for free.&rdquo;
             </p>
           </FadeIn>
@@ -309,8 +300,8 @@ export default function HomePage() {
                 Research any college in minutes
               </h2>
               <p className="mt-4 text-navy/60 font-body max-w-xl mx-auto">
-                Our AI does the work of a private counsellor. Specific research
-                for you, your college, your major.
+                Specific research for you, your college, your major — the
+                work of a private counselor, in minutes.
               </p>
             </div>
           </FadeIn>
@@ -330,7 +321,7 @@ export default function HomePage() {
               </h2>
               <p className="mt-4 text-navy/60 font-body max-w-xl mx-auto">
                 Enter a subject and we&apos;ll rank the best colleges for you.
-                Personalised to your profile.
+                Personalized to your profile.
               </p>
             </div>
           </FadeIn>

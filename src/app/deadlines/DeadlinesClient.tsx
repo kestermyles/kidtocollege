@@ -82,7 +82,7 @@ export default function DeadlinesPage() {
           <p className="font-body text-navy/60">
             {myColleges.length > 0
               ? `Showing deadlines for ${myDeadlines.length} colleges on your list`
-              : "Add colleges to your list to see personalised deadlines"}
+              : "Add colleges to your list to see personalized deadlines"}
           </p>
         </div>
 

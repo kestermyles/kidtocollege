@@ -29,7 +29,7 @@ const STEPS: { num: number; icon: LucideIcon; title: string; description: string
     num: 3,
     icon: Target,
     title: "Check your chances",
-    description: "Enter your GPA and test scores. Get a personalised Safety, On Target, and Reach list based on real admissions data.",
+    description: "Enter your GPA and test scores. Get a personalized Safety, On Target, and Reach list based on real admissions data.",
     cta: "Check my chances \u2192",
     href: "/my-chances",
     badge: "5 minutes",

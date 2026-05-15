@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
             <span style="font-size: 22px; font-weight: 700;">Kid<span style="color: #f59e0b;">To</span>College</span>
           </div>
           <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">You're in. \ud83c\udf89</h1>
-          <p style="color: #555; font-size: 16px; margin-bottom: 24px;">Private college counsellors charge up to $15,000. Everything they do, you now have \u2014 for free.</p>
+          <p style="color: #555; font-size: 16px; margin-bottom: 24px;">Private college counselors charge up to $15,000. Everything they do, you now have \u2014 for free.</p>
           <div style="background: #f9f7f2; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
             <p style="font-weight: 600; margin-bottom: 12px;">Here's what to do next:</p>
             <ol style="margin: 0; padding-left: 20px; color: #555; line-height: 1.8;">

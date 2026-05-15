@@ -217,10 +217,11 @@ function StepOne({
       setLoading(true)
       try {
         const supabase = createClient()
+        const slugQuery = query.toLowerCase().replace(/ /g, '-')
         const { data } = await supabase
           .from('colleges')
           .select('slug, name, location, state, acceptance_rate, avg_cost_instate, avg_cost_outstate, npc_url')
-          .ilike('name', `%${query}%`)
+          .or(`name.ilike.%${query}%,slug.ilike.%${slugQuery}%`)
           .order('total_enrollment', { ascending: false, nullsFirst: false })
           .limit(8)
         setResults((data ?? []) as CollegeOption[])

@@ -536,7 +536,7 @@ export function ScholarshipsClient() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-4">
-              Want scholarships personalised to you?
+              Want scholarships personalized to you?
             </h2>
             <p className="text-navy/60 font-body mb-8">
               Our AI research engine finds scholarships specific to your
@@ -544,7 +544,7 @@ export function ScholarshipsClient() {
             </p>
             <a href="/search">
               <GoldButton size="lg">
-                Get personalised scholarship matches &rarr;
+                Get personalized scholarship matches &rarr;
               </GoldButton>
             </a>
             <div className="flex flex-wrap gap-3 justify-center mt-6">

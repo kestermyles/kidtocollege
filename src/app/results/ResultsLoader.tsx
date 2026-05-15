@@ -115,7 +115,7 @@ const LOADING_FACTS = [
   "Did you know? The average private college now costs over $100,000 for four years — we're finding ways to cut that for you.",
   "Checking merit aid thresholds, need-met percentages, and hidden departmental awards...",
   "The first FAFSA was filed in 1992. A lot has changed — we're on top of it.",
-  "Private college counsellors charge up to $15,000. This report is free.",
+  "Private college counselors charge up to $15,000. This report is free.",
 ];
 
 function PendingScreen({ pollCount }: { pollCount: number }) {

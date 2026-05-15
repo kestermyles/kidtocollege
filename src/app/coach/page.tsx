@@ -14,7 +14,7 @@ const PILLARS = [
     title: "My Plan",
     href: "/coach/checklist",
     description:
-      "Your personalised checklist — every task, deadline, and document tracked in one place.",
+      "Your personalized checklist — every task, deadline, and document tracked in one place.",
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -58,7 +58,7 @@ const PILLARS = [
     title: "Appeal Letter",
     href: "/coach/appeal-letter",
     description:
-      "Learn when and how to appeal your financial aid offer. Generate a personalised appeal letter with AI.",
+      "Learn when and how to appeal your financial aid offer. Generate a personalized appeal letter with AI.",
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -149,7 +149,7 @@ export default function CoachPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
-      <PageHeader title="The Coach" subtitle="Your personal AI college counsellor." />
+      <PageHeader title="The Coach" subtitle="Your personal AI college counselor." />
 
       {/* Coaching Pillars */}
       <section className="py-24 bg-white">
@@ -159,7 +159,7 @@ export default function CoachPage() {
               Eight pillars
             </p>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-navy text-center mb-4">
-              The full private counsellor experience
+              The full private counselor experience
             </h2>
             <p className="font-body text-navy/60 text-center max-w-2xl mx-auto mb-16">
               Each section gives you the same depth, strategy, and tools that

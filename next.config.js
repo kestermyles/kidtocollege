@@ -22,6 +22,15 @@ const nextConfig = withPWA({
       bodySizeLimit: "2mb",
     },
   },
+  async redirects() {
+    return [
+      {
+        source: "/colleges/:slug",
+        destination: "/college/:slug",
+        permanent: true,
+      },
+    ]
+  },
 })
 
 module.exports = nextConfig

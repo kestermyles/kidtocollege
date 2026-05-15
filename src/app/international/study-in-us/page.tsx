@@ -346,9 +346,9 @@ export default function StudyInUSPage() {
               </p>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <strong className="text-navy">Counsellor profile:</strong> If
+                  <strong className="text-navy">Counselor profile:</strong> If
                   your school does not use the Common App system (most
-                  international schools do not), your school counsellor will need
+                  international schools do not), your school counselor will need
                   to create an account and submit your school profile, transcript,
                   and recommendation through the system. Brief them early.
                 </li>

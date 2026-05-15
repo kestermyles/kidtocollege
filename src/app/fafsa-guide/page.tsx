@@ -519,7 +519,7 @@ export default function FAFSAGuidePage() {
               {
                 num: "3",
                 title: "Private Scholarships",
-                text: "External awards from individuals, companies, community organisations, and foundations. Requires proactive research and applications. Important: check each school's outside scholarship policy before applying — some schools reduce their own institutional grants when outside awards are received.",
+                text: "External awards from individuals, companies, community organizations, and foundations. Requires proactive research and applications. Important: check each school's outside scholarship policy before applying — some schools reduce their own institutional grants when outside awards are received.",
               },
               {
                 num: "4",
@@ -642,7 +642,7 @@ export default function FAFSAGuidePage() {
               </h3>
               <p className="font-body text-navy/70 mb-4">
                 Focus on awards from verifiable sources — local businesses,
-                community organisations, professional associations, and
+                community organizations, professional associations, and
                 foundations. Free databases:
               </p>
               <ul className="space-y-2 font-body text-sm text-navy/70">

@@ -471,7 +471,7 @@ export function VoiceInterview() {
             Analyzing your interview...
           </h3>
           <p className="font-body text-sm text-navy/50">
-            Our AI is reviewing your answers and preparing personalised feedback.
+            Our AI is reviewing your answers and preparing personalized feedback.
           </p>
         </div>
       ) : feedback ? (

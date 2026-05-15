@@ -299,7 +299,7 @@ export default function RecommendationsPage() {
             <div className="font-body text-navy/70 space-y-4 leading-relaxed">
               <p>
                 Most colleges require <strong>two teacher recommendations</strong>{" "}
-                and one <strong>counsellor recommendation</strong>. Some allow or
+                and one <strong>counselor recommendation</strong>. Some allow or
                 encourage additional letters.
               </p>
               <ul className="space-y-3 mt-4">
@@ -309,7 +309,7 @@ export default function RecommendationsPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
-                  <span><strong>1 counsellor letter:</strong> Your school counsellor provides context about your school and circumstances.</span>
+                  <span><strong>1 counselor letter:</strong> Your school counselor provides context about your school and circumstances.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-2 w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />

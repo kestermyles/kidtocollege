@@ -227,7 +227,7 @@ export default async function CareerDetailPage({ params }: PageProps) {
         <section className="p-6 rounded-lg bg-gold/10 border border-gold/30">
           <h3 className="font-display text-lg font-bold text-navy mb-1">See how you stack up</h3>
           <p className="font-body text-sm text-navy/70 mb-4">
-            Get your personalised match score for colleges strong in this path.
+            Get your personalized match score for colleges strong in this path.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link

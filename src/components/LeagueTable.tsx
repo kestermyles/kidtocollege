@@ -184,7 +184,7 @@ export function LeagueTable({ rows, major }: LeagueTableProps) {
                       {col.label}
                       {col.key === "match_score" && (
                         <span
-                          title="Your personalised fit score based on your academic profile, budget, and goals. Not a general college ranking."
+                          title="Your personalized fit score based on your academic profile, budget, and goals. Not a general college ranking."
                           className="ml-1 cursor-help inline-flex items-center justify-center w-4 h-4 rounded-full border border-current text-xs opacity-60 hover:opacity-100"
                         >
                           ?

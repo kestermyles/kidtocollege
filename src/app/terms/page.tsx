@@ -191,7 +191,7 @@ export default function TermsOfUsePage() {
             <p>
               KidToCollege is 100% independent. We are not affiliated with, endorsed by, or
               paid by any college, university, scholarship body, or educational
-              organisation. The Service does not receive compensation for recommending or
+              organization. The Service does not receive compensation for recommending or
               featuring any institution.
             </p>
           </section>

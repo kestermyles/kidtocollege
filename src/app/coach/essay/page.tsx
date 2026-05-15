@@ -150,7 +150,7 @@ export default function EssayPage() {
             <div className="font-body text-navy/70 space-y-4 leading-relaxed">
               <p>
                 They want to hear <em>your</em> voice — not your parent&apos;s, not
-                your counsellor&apos;s, not ChatGPT&apos;s. They can tell the difference
+                your counselor&apos;s, not ChatGPT&apos;s. They can tell the difference
                 instantly.
               </p>
               <ul className="space-y-3 mt-4">

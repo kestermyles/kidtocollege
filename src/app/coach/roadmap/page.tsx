@@ -24,7 +24,7 @@ const ROADMAP: {
         items: [
           "Focus on building strong study habits — they matter more than any single grade.",
           "Join 2-3 extracurricular activities that genuinely interest you.",
-          "Introduce yourself to your school counsellor and learn what resources are available.",
+          "Introduce yourself to your school counselor and learn what resources are available.",
           "Start a simple filing system for awards, certificates, and important documents.",
           "If your school offers honors courses, consider taking one in your strongest subject.",
         ],
@@ -159,7 +159,7 @@ const ROADMAP: {
           "Visit admitted students days for your top choices.",
           "Commit to a college by May 1 (National Decision Day).",
           "Send a deposit and complete housing paperwork.",
-          "Thank your recommenders, counsellors, and mentors.",
+          "Thank your recommenders, counselors, and mentors.",
         ],
       },
       {
@@ -283,7 +283,7 @@ export default function RoadmapPage() {
           <FadeIn delay={0.2}>
             <p className="font-body text-xl text-white/75 max-w-2xl mx-auto">
               Every semester, every season, every move. This is exactly what a
-              private counsellor maps out for their families — and now it is
+              private counselor maps out for their families — and now it is
               yours.
             </p>
           </FadeIn>

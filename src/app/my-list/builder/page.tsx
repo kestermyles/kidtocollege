@@ -95,7 +95,7 @@ export default function CollegeListBuilder() {
           <h1 className="text-4xl font-bold text-gray-900 mb-3">Build Your College List</h1>
           <p className="text-lg text-gray-600">
             The smartest strategy is 4 Safety schools, 4 On Target schools, and 4 Reach schools.
-            Every top counsellor gives the same advice &mdash; and it&apos;s free here.
+            Every top counselor gives the same advice &mdash; and it&apos;s free here.
           </p>
         </div>
 
@@ -202,7 +202,7 @@ export default function CollegeListBuilder() {
 
         <div className="bg-navy rounded-2xl p-6 text-center mt-8">
           <p className="text-white font-semibold mb-1">Want help building this list?</p>
-          <p className="text-white/70 text-sm mb-4">Run My Chances to get your personalised Safety / On Target / Reach breakdown.</p>
+          <p className="text-white/70 text-sm mb-4">Run My Chances to get your personalized Safety / On Target / Reach breakdown.</p>
           <div className="flex gap-3 justify-center">
             <a href="/my-chances" className="bg-gold text-navy font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-gold/90 transition-colors">
               Check my chances

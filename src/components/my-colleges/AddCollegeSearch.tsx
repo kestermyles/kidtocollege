@@ -23,10 +23,11 @@ export default function AddCollegeSearch({ currentCount }: {
       setLoading(true)
       try {
         const supabase = createClient()
+        const slugQuery = query.toLowerCase().replace(/ /g, '-')
         const { data } = await supabase
           .from('colleges')
           .select('slug, name, location, state')
-          .ilike('name', `%${query}%`)
+          .or(`name.ilike.%${query}%,slug.ilike.%${slugQuery}%`)
           .order('total_enrollment', { ascending: false, nullsFirst: false })
           .limit(6)
         setResults(data ?? [])

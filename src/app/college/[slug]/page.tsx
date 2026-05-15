@@ -11,6 +11,7 @@ import { CollegeAIInsights } from "@/components/CollegeAIInsights";
 import type { College, ScholarshipResult } from "@/lib/types";
 import { CollegeAdmissionFactors } from "@/components/CollegeAdmissionFactors";
 import { CollegeYourIn } from "@/components/CollegeYourIn";
+import NPCCalculator from "@/components/npc/NPCCalculator";
 
 export const revalidate = 86400;
 
@@ -95,7 +96,7 @@ export async function generateMetadata({
       .replace(/\b\w/g, (c: string) => c.toUpperCase());
     return {
       title: `${readable} — Acceptance Rate, Costs & Admissions`,
-      description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${readable}. Get a free personalised admissions report in minutes.`,
+      description: `Acceptance rate, tuition costs, graduation rate and earnings data for ${readable}. Get a free personalized admissions report in minutes.`,
       alternates: { canonical: canonicalUrl },
     };
   }
@@ -667,6 +668,33 @@ export default async function CollegePage({ params }: CollegePageProps) {
         </section>
       )}
 
+      {/* Net Price Calculator */}
+      {college.avg_cost_instate != null && (
+        <section className="py-12 sm:py-16 bg-cream">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-2">
+                What will you actually pay?
+              </h2>
+              <p className="text-sm font-body text-navy/50 mb-6">
+                Personalized cost estimate based on your family&apos;s finances and academic profile
+              </p>
+              <NPCCalculator
+                college={{
+                  name: college.name,
+                  slug: slug,
+                  avg_cost_instate: college.avg_cost_instate,
+                  avg_grant_percentage: college.avg_grant_percentage ?? null,
+                  meets_full_need: college.meets_full_need ?? null,
+                  merit_aid_available: college.merit_aid_available ?? null,
+                  no_loan_threshold: college.no_loan_threshold ?? null,
+                }}
+              />
+            </FadeIn>
+          </div>
+        </section>
+      )}
+
       {/* Scholarships from cached AI results */}
       {cachedScholarships.length > 0 && (
         <section className="py-12 sm:py-16">
@@ -848,7 +876,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
               Ready to dig deeper?
             </h2>
             <p className="text-white/60 font-body mb-8">
-              Get your personalised research report for{" "}
+              Get your personalized research report for{" "}
               {college.name} — scholarships, admissions strategy, costs, and a
               step-by-step playbook.
             </p>
@@ -863,7 +891,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
                 href="/coach/roadmap"
                 className="bg-white/10 hover:bg-white/20 text-white font-body font-medium px-8 py-4 rounded-md transition-colors border border-white/20"
               >
-                Get your personalised roadmap
+                Get your personalized roadmap
               </Link>
             </div>
           </FadeIn>

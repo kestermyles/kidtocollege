@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/PageHeader";
 export const metadata: Metadata = {
   title: "Find Your College — KidToCollege",
   description:
-    "Answer a few quick questions and get a personalised college report with scholarships, admissions tips, and a step-by-step playbook.",
+    "Answer a few quick questions and get a personalized college report with scholarships, admissions tips, and a step-by-step playbook.",
 };
 
 export default async function SearchPage({

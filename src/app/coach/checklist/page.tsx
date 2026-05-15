@@ -70,7 +70,7 @@ export default function ChecklistPage() {
       <div className="min-h-screen bg-white pt-24 pb-20">
         <div className="max-w-2xl mx-auto px-4 text-center py-20">
           <h1 className="font-display text-2xl font-bold text-navy mb-3">Your college plan</h1>
-          <p className="font-body text-navy/50 mb-6">Set up your goals to generate your personalised plan.</p>
+          <p className="font-body text-navy/50 mb-6">Set up your goals to generate your personalized plan.</p>
           <Link href="/coach/goals" className="inline-block bg-gold hover:bg-gold/90 text-navy font-body font-medium px-8 py-3 rounded-md transition-colors text-sm">
             Set up your goals &rarr;
           </Link>

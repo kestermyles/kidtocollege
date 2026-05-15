@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
             </h2>
             <p>We use the information you provide to:</p>
             <ul className="list-disc pl-6 mt-3 space-y-1">
-              <li>Generate personalised AI research reports, scholarship recommendations, and coaching content</li>
+              <li>Generate personalized AI research reports, scholarship recommendations, and coaching content</li>
               <li>Save your searches, saved colleges, checklists, and essay drafts to your account</li>
               <li>Improve the accuracy, quality, and relevance of our service</li>
               <li>Maintain and secure the platform</li>
