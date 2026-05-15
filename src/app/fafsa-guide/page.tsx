@@ -47,11 +47,62 @@ export default function FAFSAGuidePage() {
     },
   };
 
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "When does the FAFSA open for 2026-27?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The 2026-27 FAFSA opens December 1, 2025. The federal deadline is June 30, 2027, but state and college deadlines are much earlier — many in February or March. File as close to December 1 as possible.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do I have to file FAFSA every year?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Aid is awarded for one academic year at a time, so you'll file every year your student is enrolled. After year one, you can use the IRS Data Retrieval Tool to import most income data automatically.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What is the Student Aid Index (SAI)?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "SAI is the new number that replaced the Expected Family Contribution (EFC) in 2024-25. It's a single index calculated from your FAFSA that colleges use to decide how much need-based aid you qualify for. Lower SAI means more aid.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Should I file FAFSA if I think I make too much for aid?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Many merit scholarships, work-study programs, and federal unsubsidized loans require a FAFSA on file regardless of income. Plus, what counts as 'too much' varies wildly by school — your real SAI may surprise you.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What's the difference between FAFSA and CSS Profile?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "FAFSA is the federal form, used by every accredited college and run by the Department of Education. The CSS Profile is an additional form used by about 250 mostly private colleges — it asks for more detail (home equity, non-custodial parent income, etc.) to award their own institutional aid.",
+        },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
 
       {/* ─── SECTION A — Hero ─── */}

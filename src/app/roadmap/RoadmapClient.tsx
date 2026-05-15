@@ -207,6 +207,14 @@ export default function RoadmapPage() {
                     >
                       {step.cta}
                     </Link>
+                    {step.num === 1 && (
+                      <Link
+                        href="/colleges"
+                        className="ml-3 inline-block text-sm text-navy/50 hover:text-gold font-body font-medium transition-colors"
+                      >
+                        Skip — I already know my major &rarr;
+                      </Link>
+                    )}
                   </div>
                 </div>
               );

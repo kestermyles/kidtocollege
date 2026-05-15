@@ -4,6 +4,52 @@ import { WizardPreview } from "@/components/WizardPreview";
 import { LeagueRedirectInput } from "@/components/LeagueRedirectInput";
 import Link from "next/link";
 
+const HOMEPAGE_FAQ = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is KidToCollege actually free?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes — every feature is free forever. No paywalls, no premium tier, no selling your data. The site is editorially independent and not affiliated with any college, lender, or test-prep company.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What does KidToCollege do that a private counselor does?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Everything a $10,000-$15,000 private counselor would do: build a college list, predict your admission chances, draft and edit essays, navigate financial aid and FAFSA, find scholarships you qualify for, track deadlines, and give a personalized roadmap from where you are today to acceptance day.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How accurate is the admission chances predictor?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "It uses each college's reported admission data — GPA range, test score band, acceptance rate. It gives a realistic probability, not a guarantee. Treat it as a planning tool: 'this looks like a safety' or 'this is a reach.'",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Who built KidToCollege?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Kester, a parent who moved his family from the UK to Texas and was baffled by the cost of US college. He built the tool he wished he had — and opened it up so every family has the same access wealthy families have always had.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need to create an account?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Most features work without an account. You only need to sign in to save colleges to your list, track checklist progress, or get personalized roadmap and email updates.",
+      },
+    },
+  ],
+};
 
 const STEPS = [
   {
@@ -64,6 +110,10 @@ const FEATURES = [
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOMEPAGE_FAQ) }}
+      />
       {/* ===== HERO ===== */}
       <section
         className="parallax-section relative min-h-[800px]"
