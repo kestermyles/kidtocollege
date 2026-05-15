@@ -493,7 +493,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
 
             <FadeIn delay={0.15}>
               <div className="mt-6 flex flex-wrap gap-3 justify-center [&_button]:border-white/60 [&_button]:text-white [&_button]:hover:border-white [&_button]:hover:text-white">
-                <AddToListButton collegeSlug={slug} />
+                <AddToListButton collegeSlug={slug} collegeName={college.name} />
               </div>
               {college.official_url && (
                 <div className="mt-3 text-center">

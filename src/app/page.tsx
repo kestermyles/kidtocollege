@@ -119,6 +119,14 @@ export default function HomePage() {
               Free forever. No paywalls. No selling your data.
             </p>
           </FadeIn>
+          <FadeIn delay={0.5}>
+            <Link
+              href="/about"
+              className="mt-3 inline-block text-sm text-gold/90 hover:text-gold font-body font-medium border-b border-gold/30 hover:border-gold transition-colors"
+            >
+              Why I built this &rarr;
+            </Link>
+          </FadeIn>
         </div>
 
         {/* ===== HOW IT WORKS ===== */}
@@ -268,10 +276,10 @@ export default function HomePage() {
               </div>
               <div className="p-6">
                 <p className="font-mono-label text-gold text-3xl sm:text-4xl font-bold mb-2">
-                  $50B
+                  $50B+
                 </p>
                 <p className="font-body text-white/60 text-sm">
-                  in scholarships searchable
+                  annual aid landscape covered
                 </p>
               </div>
               <div className="p-6">

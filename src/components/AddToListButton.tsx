@@ -3,12 +3,20 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-browser";
+import SignupGateModal from "./SignupGateModal";
 
-export function AddToListButton({ collegeSlug }: { collegeSlug: string }) {
+export function AddToListButton({
+  collegeSlug,
+  collegeName,
+}: {
+  collegeSlug: string;
+  collegeName?: string;
+}) {
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null);
   const [onList, setOnList] = useState(false);
   const [adding, setAdding] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [gateOpen, setGateOpen] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -28,8 +36,7 @@ export function AddToListButton({ collegeSlug }: { collegeSlug: string }) {
     });
   }, [collegeSlug]);
 
-  async function handleAdd() {
-    if (!isSignedIn) return;
+  async function addToList() {
     setAdding(true);
     const res = await fetch("/api/list", {
       method: "POST",
@@ -44,18 +51,21 @@ export function AddToListButton({ collegeSlug }: { collegeSlug: string }) {
     setAdding(false);
   }
 
-  if (isSignedIn === null) return null;
-
-  if (!isSignedIn) {
-    return (
-      <Link
-        href={`/auth/signup?next=/my-list`}
-        className="inline-flex items-center gap-2 font-body text-sm px-6 py-3 rounded-md border border-card text-navy hover:border-gold hover:text-gold transition-all"
-      >
-        Add to My List
-      </Link>
-    );
+  async function handleAdd() {
+    if (!isSignedIn) {
+      setGateOpen(true);
+      return;
+    }
+    await addToList();
   }
+
+  async function handleGateSuccess() {
+    setGateOpen(false);
+    setIsSignedIn(true);
+    await addToList();
+  }
+
+  if (isSignedIn === null) return null;
 
   if (onList) {
     return (
@@ -79,12 +89,21 @@ export function AddToListButton({ collegeSlug }: { collegeSlug: string }) {
   }
 
   return (
-    <button
-      onClick={handleAdd}
-      disabled={adding}
-      className="inline-flex items-center gap-2 font-body text-sm font-medium px-6 py-3 rounded-md border border-card text-navy hover:border-gold hover:text-gold transition-all disabled:opacity-50"
-    >
-      {adding ? "Adding..." : "Add to My List"}
-    </button>
+    <>
+      <button
+        onClick={handleAdd}
+        disabled={adding}
+        className="inline-flex items-center gap-2 font-body text-sm font-medium px-6 py-3 rounded-md border border-card text-navy hover:border-gold hover:text-gold transition-all disabled:opacity-50"
+      >
+        {adding ? "Adding..." : "Add to My List"}
+      </button>
+      {gateOpen && (
+        <SignupGateModal
+          collegeName={collegeName || "this college"}
+          onClose={() => setGateOpen(false)}
+          onSuccess={handleGateSuccess}
+        />
+      )}
+    </>
   );
 }

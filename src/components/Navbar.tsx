@@ -16,27 +16,41 @@ interface NavLink {
 }
 
 const NAV_LINKS: NavLink[] = [
+  { href: "/about", label: "Why we built this" },
+  {
+    href: "/find-colleges",
+    label: "Find Colleges",
+    children: [
+      { href: "/search", label: "Explore Colleges" },
+      { href: "/colleges", label: "Browse All Colleges" },
+      { href: "/matches", label: "My Matches" },
+      { href: "/my-chances", label: "My Chances" },
+      { href: "/compare", label: "Compare Colleges" },
+      { href: "/discover", label: "What Should I Study?" },
+    ],
+  },
   { href: "/roadmap", label: "Roadmap" },
-  { href: "/checklist", label: "Checklist", authOnly: true },
-  { href: "/search", label: "Explore Colleges" },
-  { href: "/matches", label: "My Matches" },
-  { href: "/my-chances", label: "My Chances" },
-  { href: "/community", label: "Community" },
   { href: "/coach", label: "Coach" },
+  {
+    href: "/money",
+    label: "Money",
+    children: [
+      { href: "/scholarships", label: "Scholarships" },
+      { href: "/fafsa-guide", label: "FAFSA Guide" },
+      { href: "/net-price-estimator", label: "Net Price Estimator" },
+      { href: "/financial-aid", label: "State Aid Guides" },
+      { href: "/financial-aid/calculator", label: "Financial Aid Calculator" },
+    ],
+  },
+  { href: "/community", label: "Community" },
   {
     href: "/more",
     label: "More",
     children: [
-      { href: "/fafsa-guide", label: "FAFSA Guide" },
-      { href: "/financial-aid", label: "State Aid Guides" },
-      { href: "/net-price-estimator", label: "Net Price Estimator" },
-      { href: "/scholarships", label: "Scholarships" },
-      { href: "/compare", label: "Compare Colleges" },
-      { href: "/colleges", label: "Browse All Colleges" },
+      { href: "/checklist", label: "Checklist" },
       { href: "/deadlines", label: "Deadlines" },
       { href: "/college-fairs", label: "College Fairs" },
       { href: "/my-colleges", label: "Plan Campus Visits" },
-      { href: "/discover", label: "What Should I Study?" },
       { href: "/careers", label: "Career Explorer" },
       { href: "/essays", label: "Essay Prompts & Coach" },
       { href: "/international", label: "International" },

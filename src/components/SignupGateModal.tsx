@@ -53,7 +53,7 @@ export default function SignupGateModal({ collegeName, onClose, onSuccess }: Pro
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
 
         <div className="mb-6">
-          <div className="w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center text-2xl mb-4"><span className="emoji" role="img" aria-label="Graduation">🎓</span></div>
+          <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center text-2xl mb-4"><span className="emoji" role="img" aria-label="Graduation">🎓</span></div>
           <h2 className="text-xl font-bold text-gray-900 mb-1">
             Save {collegeName} to your list
           </h2>
@@ -69,7 +69,7 @@ export default function SignupGateModal({ collegeName, onClose, onSuccess }: Pro
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/40"
           />
           <input
             type="password"
@@ -77,7 +77,7 @@ export default function SignupGateModal({ collegeName, onClose, onSuccess }: Pro
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/40"
           />
         </div>
 
@@ -86,7 +86,7 @@ export default function SignupGateModal({ collegeName, onClose, onSuccess }: Pro
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full bg-yellow-400 hover:bg-yellow-300 disabled:bg-gray-200 text-gray-900 font-bold py-3 rounded-xl mb-3 transition-colors text-sm"
+          className="w-full bg-gold hover:bg-gold/90 disabled:bg-gray-200 text-navy font-bold py-3 rounded-xl mb-3 transition-colors text-sm"
         >
           {loading ? "Just a moment\u2026" : mode === "signup" ? "Create free account \u2192" : "Sign in \u2192"}
         </button>
