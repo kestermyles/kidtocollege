@@ -297,6 +297,9 @@ export default async function HowToGetIntoPage({ params }: PageProps) {
                 Other schools
               </Link>
             </div>
+            <p className="font-body text-xs text-navy/40 mt-6">
+              Last updated: November 2025. Acceptance rate and cost data refreshed nightly from college reporting.
+            </p>
           </FadeIn>
         </div>
       </section>

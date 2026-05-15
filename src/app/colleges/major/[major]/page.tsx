@@ -320,12 +320,18 @@ export default async function MajorPage({ params }: PageProps) {
       {/* Internal links */}
       <section className="py-10 bg-cream">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 mb-4">
+            <Link href={`/best-colleges/${slug}`} className="px-4 py-2 border border-gold/40 rounded-md font-body text-sm text-navy bg-gold/10 hover:bg-gold/20 transition-colors">
+              Best {major.label.toLowerCase()} colleges ranked &rarr;
+            </Link>
             <Link href="/compare" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white">Compare colleges</Link>
             <Link href="/my-chances" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white">Check your chances</Link>
             <Link href="/financial-aid/calculator" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white">Net price calculator</Link>
             <Link href="/colleges" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white">Browse all colleges</Link>
           </div>
+          <p className="font-body text-xs text-navy/40">
+            Last updated: November 2025. Live acceptance rates and tuition pulled from each college&apos;s most recent reporting.
+          </p>
         </div>
       </section>
     </div>

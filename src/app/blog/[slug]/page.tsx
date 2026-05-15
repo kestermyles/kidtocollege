@@ -36,10 +36,17 @@ export default async function BlogPostPage({ params }: PageProps) {
   const post = getBlogPost(slug);
   if (!post) notFound();
 
+  // Tag-overlap scoring beats random for SEO: posts with shared topics
+  // form tight internal-link clusters that signal topical authority.
   const related = blogPosts
     .filter((p) => p.slug !== slug)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 3);
+    .map((p) => ({
+      post: p,
+      overlap: p.tags.filter((t) => post.tags.includes(t)).length,
+    }))
+    .sort((a, b) => b.overlap - a.overlap)
+    .slice(0, 3)
+    .map((x) => x.post);
 
   // Series navigation context — only computed when this post is part of a series.
   const seriesSiblings = post.series ? getSeriesPosts(post.series.slug) : [];
@@ -185,11 +192,21 @@ export default async function BlogPostPage({ params }: PageProps) {
             />
           )}
 
-          {/* Bottom links */}
-          <div className="flex flex-wrap gap-3 mb-12 pt-6 border-t border-card">
-            <Link href="/financial-aid/calculator" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Net price calculator</Link>
-            <Link href="/coach" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">The Coach</Link>
-            <Link href="/essays" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Essay prompts</Link>
+          {/* Bottom links — broader internal-link surface */}
+          <div className="pt-6 border-t border-card mb-12">
+            <p className="font-mono-label text-xs uppercase tracking-wider text-navy/40 mb-3">
+              Free tools mentioned in this guide
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/financial-aid/calculator" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Net price calculator</Link>
+              <Link href="/my-chances" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">My Chances</Link>
+              <Link href="/scholarships" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Scholarships</Link>
+              <Link href="/fafsa-guide" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">FAFSA Guide</Link>
+              <Link href="/best-colleges" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Best Colleges lists</Link>
+              <Link href="/coach" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">The Coach</Link>
+              <Link href="/essays" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Essay prompts</Link>
+              <Link href="/roadmap" className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors">Roadmap</Link>
+            </div>
           </div>
 
           {/* Related posts */}
