@@ -2,19 +2,29 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
 import { STATE_AID_DATA } from "@/lib/state-aid-data";
+import { breadcrumbsLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "State Financial Aid Guides — KidToCollege",
+  title: "State Financial Aid Guides — Grants & Scholarships by State",
   description:
-    "State-by-state guides to grants, scholarships, and financial aid programs. Deadlines, eligibility, and tips for maximising aid in your state.",
+    "Compare grants, scholarships, and financial aid programs in all 50 states. Find deadlines, eligibility, and dollar amounts for your state — free.",
   alternates: {
     canonical: "https://www.kidtocollege.com/financial-aid",
   },
 };
 
+const breadcrumbs = breadcrumbsLd([
+  { label: "Home", path: "/" },
+  { label: "Financial Aid" },
+]);
+
 export default function FinancialAidIndexPage() {
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+      />
       {/* Hero */}
       <section className="bg-navy py-20 sm:py-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,7 +37,7 @@ export default function FinancialAidIndexPage() {
             </h1>
             <p className="font-body text-xl text-white/60 max-w-2xl">
               Every state has its own grant programs, deadlines, and eligibility
-              rules. Find yours below and learn how to maximise the aid
+              rules. Find yours below and learn how to maximize the aid
               available to your family.
             </p>
           </FadeIn>

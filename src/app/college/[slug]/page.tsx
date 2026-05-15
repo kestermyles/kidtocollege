@@ -13,6 +13,8 @@ import { CollegeAdmissionFactors } from "@/components/CollegeAdmissionFactors";
 import { CollegeYourIn } from "@/components/CollegeYourIn";
 import { getOverridePhoto } from "@/lib/college-photo-overrides";
 import NPCCalculator from "@/components/npc/NPCCalculator";
+import { breadcrumbsLd } from "@/lib/structured-data";
+import { getStateByAbbreviation } from "@/lib/state-aid-data";
 
 export const revalidate = 86400;
 
@@ -381,6 +383,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
     url: `${siteUrl}/college/${slug}`,
     description: `${college.name} admissions information, costs, and scholarships — ${college.location}.`,
   };
+  if (heroImage) jsonLd.image = heroImage;
   if (city || college.state) {
     const address: Record<string, string> = { "@type": "PostalAddress", addressCountry: "US" };
     if (city) address.addressLocality = city;
@@ -388,12 +391,30 @@ export default async function CollegePage({ params }: CollegePageProps) {
     jsonLd.address = address;
   }
   if (college.official_url) jsonLd.sameAs = college.official_url;
+  if (college.total_enrollment) jsonLd.numberOfStudents = college.total_enrollment;
+  if (college.avg_cost_instate || college.avg_cost_outstate) {
+    jsonLd.tuition = {
+      "@type": "MonetaryAmount",
+      currency: "USD",
+      value: college.avg_cost_outstate || college.avg_cost_instate,
+    };
+  }
+
+  const breadcrumbs = breadcrumbsLd([
+    { label: "Home", path: "/" },
+    { label: "Colleges", path: "/colleges" },
+    { label: college.name },
+  ]);
 
   return (
     <div className="min-h-screen bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
       {/* Full-bleed hero */}
       <section
@@ -872,6 +893,30 @@ export default async function CollegePage({ params }: CollegePageProps) {
               className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white"
             >
               Net price calculator
+            </Link>
+            {(() => {
+              const state = getStateByAbbreviation(college.state);
+              if (!state) return null;
+              return (
+                <Link
+                  href={`/financial-aid/${state.slug}`}
+                  className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white"
+                >
+                  {state.name} financial aid &rarr;
+                </Link>
+              );
+            })()}
+            <Link
+              href="/fafsa-guide"
+              className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white"
+            >
+              FAFSA guide
+            </Link>
+            <Link
+              href="/deadlines"
+              className="px-4 py-2 border border-card rounded-md font-body text-sm text-navy hover:border-gold/40 transition-colors bg-white"
+            >
+              Application deadlines
             </Link>
           </div>
         </div>

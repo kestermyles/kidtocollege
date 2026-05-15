@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import { ScholarshipsClient } from "./ScholarshipsClient";
+import { breadcrumbsLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "Free Scholarship Search 2025–26: Find Money for College",
   description:
-    "Search thousands of scholarships by major, state, GPA, and background. Find free money for college you don't have to pay back — updated for 2025–26.",
+    "Search 68+ verified scholarships by major, state, GPA, and background — including federal, national, state, and need-based awards. Free, updated for 2025–26.",
+  alternates: { canonical: "https://www.kidtocollege.com/scholarships" },
   openGraph: {
     title: "Free Scholarship Search 2025–26: Find Money for College",
     description:
-      "Search thousands of scholarships by major, state, GPA, and background. Find free money for college you don't have to pay back.",
+      "Search 68+ verified scholarships by major, state, GPA, and background. Free money for college you don't have to pay back.",
   },
 };
+
+const breadcrumbs = breadcrumbsLd([
+  { label: "Home", path: "/" },
+  { label: "Scholarships" },
+]);
 
 const faqLd = {
   "@context": "https://schema.org",
@@ -47,6 +54,7 @@ export default function ScholarshipsPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <ScholarshipsClient />
     </>
   );

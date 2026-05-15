@@ -14,6 +14,12 @@ import {
   Info,
   FileDown,
 } from "lucide-react";
+import { breadcrumbsLd } from "@/lib/structured-data";
+
+const breadcrumbs = breadcrumbsLd([
+  { label: "Home", path: "/" },
+  { label: "FAFSA Guide" },
+]);
 
 export const metadata: Metadata = {
   title: "FAFSA Guide: How to Pay Less for College",
@@ -103,6 +109,10 @@ export default function FAFSAGuidePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
 
       {/* ─── SECTION A — Hero ─── */}

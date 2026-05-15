@@ -2,16 +2,27 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
 import { blogPosts } from "@/lib/blog-posts";
+import { breadcrumbsLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "College Admissions Blog: Free Guides for Students & Families",
   description:
-    "Expert guides on college admissions, scholarships, FAFSA, essays, and financial aid. Free, practical advice for students and families.",
+    "Practical, fact-checked guides on college admissions, scholarships, FAFSA, essays, and financial aid. New articles weekly — free, for every family.",
+  alternates: { canonical: "https://www.kidtocollege.com/blog" },
 };
+
+const breadcrumbs = breadcrumbsLd([
+  { label: "Home", path: "/" },
+  { label: "Blog" },
+]);
 
 export default function BlogIndexPage() {
   return (
     <div className="min-h-screen bg-white pt-28 pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <h1 className="font-display text-3xl sm:text-4xl font-bold text-navy mb-2">

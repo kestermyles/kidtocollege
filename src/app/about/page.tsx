@@ -1,16 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
+import { breadcrumbsLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "Why I Built KidToCollege — A Parent's Story",
   description:
     "I'm a British parent who moved to Texas and found myself baffled by the cost of US college. I built KidToCollege so every family has the tools wealthy families have always had — for free.",
+  alternates: { canonical: "https://www.kidtocollege.com/about" },
 };
+
+const breadcrumbs = breadcrumbsLd([
+  { label: "Home", path: "/" },
+  { label: "About" },
+]);
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white pt-28 pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+      />
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <span className="font-mono-label text-xs uppercase tracking-wider text-gold">

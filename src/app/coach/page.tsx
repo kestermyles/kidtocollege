@@ -2,12 +2,19 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
 import { PageHeader } from "@/components/PageHeader";
+import { breadcrumbsLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: "Free College Admissions Coach: Essays, Test Prep & Financial Aid",
   description:
-    "Your personal free college admissions coach — covering essays, SAT/ACT prep, interview practice, financial aid, letters of recommendation, and your full application checklist.",
+    "A free college admissions coach — covering essays, SAT/ACT prep, interview practice, financial aid, letters of recommendation, and a full application checklist. Everything a $15K private counselor does.",
+  alternates: { canonical: "https://www.kidtocollege.com/coach" },
 };
+
+const breadcrumbs = breadcrumbsLd([
+  { label: "Home", path: "/" },
+  { label: "Coach" },
+]);
 
 const PILLARS = [
   {
@@ -149,6 +156,7 @@ export default function CoachPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <PageHeader title="The Coach" subtitle="Your personal AI college counselor." />
 
       {/* Coaching Pillars */}

@@ -2257,3 +2257,8 @@ export const STATE_AID_DATA: StateAidData[] = [
 export function getStateBySlug(slug: string): StateAidData | undefined {
   return STATE_AID_DATA.find((s) => s.slug === slug);
 }
+
+export function getStateByAbbreviation(abbr: string | null | undefined): StateAidData | undefined {
+  if (!abbr) return undefined;
+  return STATE_AID_DATA.find((s) => s.abbreviation === abbr.toUpperCase());
+}

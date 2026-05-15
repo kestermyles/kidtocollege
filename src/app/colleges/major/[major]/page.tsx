@@ -88,7 +88,7 @@ export default async function MajorPage({ params }: PageProps) {
       }));
   }
 
-  const jsonLd = {
+  const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
@@ -98,11 +98,36 @@ export default async function MajorPage({ params }: PageProps) {
     ],
   };
 
+  // Course-collection schema: signals to Google that this is an authoritative
+  // "Best X colleges" page for course/major search results.
+  const courseListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListOrder: "https://schema.org/ItemListOrderDescending",
+    name: `Best Colleges for ${major.label}`,
+    description: `Top US colleges offering ${major.label} programs, ranked by selectivity and enrollment.`,
+    numberOfItems: colleges.length,
+    itemListElement: colleges.slice(0, 10).map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "CollegeOrUniversity",
+        name: c.name,
+        url: `https://www.kidtocollege.com/college/${c.slug}`,
+        address: c.location,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseListLd) }}
       />
 
       {/* Hero */}
