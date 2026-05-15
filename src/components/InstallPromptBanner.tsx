@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 const EXCLUDED_PATHS = [
   '/fafsa',
@@ -72,10 +73,12 @@ export default function InstallPromptBanner() {
         alignItems: 'center',
         gap: '12px',
       }}>
-        <img
+        <Image
           src="/icons/icon-192x192.png"
           alt="KidToCollege"
-          style={{ width: '36px', height: '36px', borderRadius: '8px', flexShrink: 0 }}
+          width={36}
+          height={36}
+          style={{ borderRadius: '8px', flexShrink: 0 }}
         />
         <div style={{ flex: 1, minWidth: 0 }}>
           <p style={{ color: 'white', fontSize: '14px', fontWeight: 600, margin: 0, lineHeight: 1.3 }}>

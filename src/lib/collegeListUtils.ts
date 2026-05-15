@@ -64,7 +64,7 @@ export function categoriseCollege(
   return "target";
 }
 
-export function getCategoryColour(category: Category): string {
+export function getCategoryColor(category: Category): string {
   switch (category) {
     case "reach":
       return "crimson";

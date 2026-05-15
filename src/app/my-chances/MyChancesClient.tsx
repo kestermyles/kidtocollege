@@ -122,26 +122,26 @@ export default function MyChancesClient() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Unweighted GPA <span className="text-red-500">*</span></label>
-              <input type="number" min="0" max="4.0" step="0.01" placeholder="e.g. 3.7" value={form.gpa} onChange={(e) => setForm({ ...form, gpa: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <input type="number" min="0" max="4.0" step="0.01" placeholder="e.g. 3.7" value={form.gpa} onChange={(e) => setForm({ ...form, gpa: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gold/40" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">SAT Score <span className="text-gray-400 font-normal">(optional)</span></label>
-              <input type="number" min="400" max="1600" step="10" placeholder="e.g. 1320" value={form.sat} onChange={(e) => setForm({ ...form, sat: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <input type="number" min="400" max="1600" step="10" placeholder="e.g. 1320" value={form.sat} onChange={(e) => setForm({ ...form, sat: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gold/40" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">ACT Score <span className="text-gray-400 font-normal">(optional)</span></label>
-              <input type="number" min="1" max="36" step="1" placeholder="e.g. 29" value={form.act} onChange={(e) => setForm({ ...form, act: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <input type="number" min="1" max="36" step="1" placeholder="e.g. 29" value={form.act} onChange={(e) => setForm({ ...form, act: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gold/40" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Your State <span className="text-red-500">*</span></label>
-              <select value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+              <select value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gold/40 bg-white">
                 <option value="">Select state…</option>
                 {US_STATES.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
             <div className="sm:col-span-2">
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Intended Major <span className="text-red-500">*</span></label>
-              <select value={form.major} onChange={(e) => setForm({ ...form, major: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+              <select value={form.major} onChange={(e) => setForm({ ...form, major: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gold/40 bg-white">
                 <option value="">Select major…</option>
                 {MAJORS.map((m) => <option key={m} value={m}>{m}</option>)}
               </select>
@@ -156,7 +156,7 @@ export default function MyChancesClient() {
                   onChange={(e) => searchColleges(e.target.value)}
                   onFocus={() => { if (collegeResults.length > 0) setShowCollegeDropdown(true) }}
                   placeholder="e.g. University of Texas at Austin"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gold/40"
                 />
                 {selectedCollege && (
                   <button
@@ -201,14 +201,14 @@ export default function MyChancesClient() {
                     value={suggestName}
                     onChange={(e) => setSuggestName(e.target.value)}
                     placeholder="College name"
-                    className="w-full border border-gray-200 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full border border-gray-200 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-gold/40"
                   />
                   <input
                     type="text"
                     value={suggestWebsite}
                     onChange={(e) => setSuggestWebsite(e.target.value)}
                     placeholder="Website (optional, e.g. harvard.edu)"
-                    className="w-full border border-gray-200 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full border border-gray-200 rounded px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-gold/40"
                   />
                   <div className="flex gap-2">
                     <button
@@ -252,7 +252,7 @@ export default function MyChancesClient() {
                 {selectedCollege ? selectedCollege.name : `${form.major} Programs`}
               </h2>
               <p className="text-sm text-gray-400">
-                Personalised report &middot; {form.gpa} GPA{form.sat ? ` · ${form.sat} SAT` : ""}{form.act ? ` · ${form.act} ACT` : ""} &middot; {form.state}
+                Personalized report &middot; {form.gpa} GPA{form.sat ? ` · ${form.sat} SAT` : ""}{form.act ? ` · ${form.act} ACT` : ""} &middot; {form.state}
               </p>
             </div>
 

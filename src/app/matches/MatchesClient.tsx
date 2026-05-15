@@ -47,7 +47,7 @@ const DEFAULT_PROFILE: StudentProfile = {
   preferredStates: [],
 };
 
-const BUCKET_COLOURS: Record<Bucket, string> = {
+const BUCKET_COLORS: Record<Bucket, string> = {
   safety: "bg-emerald-100 text-emerald-800 border-emerald-200",
   target: "bg-gold/20 text-navy border-gold/40",
   reach: "bg-rose-100 text-rose-800 border-rose-200",
@@ -320,7 +320,7 @@ function MatchCard({ result }: { result: MatchResult }) {
         </div>
       </div>
 
-      <span className={`inline-block text-xs font-body font-medium px-2 py-0.5 rounded-full border capitalize mb-3 ${BUCKET_COLOURS[bucket]}`}>
+      <span className={`inline-block text-xs font-body font-medium px-2 py-0.5 rounded-full border capitalize mb-3 ${BUCKET_COLORS[bucket]}`}>
         {bucket} · {Math.round(admissionChance * 100)}% chance
       </span>
 
@@ -352,12 +352,12 @@ function MatchCard({ result }: { result: MatchResult }) {
 }
 
 function ScoreBar({ label, value }: { label: string; value: number }) {
-  const colour =
+  const color =
     value >= 75 ? "bg-emerald-500" : value >= 50 ? "bg-gold" : value >= 25 ? "bg-orange-400" : "bg-rose-400";
   return (
     <div>
       <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-        <div className={`h-full ${colour}`} style={{ width: `${Math.max(4, value)}%` }} />
+        <div className={`h-full ${color}`} style={{ width: `${Math.max(4, value)}%` }} />
       </div>
       <div className="text-[10px] font-body text-navy/40 mt-0.5 text-center">{label}</div>
     </div>
