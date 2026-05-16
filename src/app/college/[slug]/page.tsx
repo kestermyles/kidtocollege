@@ -18,6 +18,10 @@ import { getStateByAbbreviation } from "@/lib/state-aid-data";
 import { getCollegeDesignations } from "@/lib/college-designations";
 import { getMentalHealthBadges } from "@/lib/mental-health-data";
 import { getProgramEarningsForSlug } from "@/lib/program-earnings";
+import {
+  getApprovedReviewsForSlug,
+  formatReviewerByline,
+} from "@/lib/college-reviews";
 
 export const revalidate = 86400;
 
@@ -151,6 +155,17 @@ function StatCard({
   );
 }
 
+function ReviewBlock({ q, a }: { q: string; a: string }) {
+  return (
+    <div>
+      <p className="font-mono-label text-[11px] uppercase tracking-wider text-navy/40 mb-1">
+        {q}
+      </p>
+      <p className="font-body text-sm text-navy/80 leading-relaxed">{a}</p>
+    </div>
+  );
+}
+
 function formatCurrency(amount: number | null) {
   if (amount == null) return "N/A";
   return `$${amount.toLocaleString()}`;
@@ -192,6 +207,7 @@ export default async function CollegePage({ params }: CollegePageProps) {
   const programEarnings = college
     ? await getProgramEarningsForSlug(slug, { limit: 8 })
     : [];
+  const reviews = college ? await getApprovedReviewsForSlug(slug, 10) : [];
 
   // If no college found, show "Did you mean?" suggestions
   if (!college) {
@@ -818,6 +834,94 @@ export default async function CollegePage({ params }: CollegePageProps) {
           </div>
         </section>
       )}
+
+      {/* Verified student reviews */}
+      <section className="py-12 sm:py-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-2">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy">
+                What current students say
+              </h2>
+              <Link
+                href="/verify-student"
+                className="font-mono-label text-xs uppercase tracking-wider text-gold hover:underline"
+              >
+                Write a review →
+              </Link>
+            </div>
+            <p className="text-sm font-body text-navy/50 mb-6">
+              Verified with .edu email. We moderate for spam/abuse, never
+              for sentiment. Reviewer names stay private.
+            </p>
+            {reviews.length === 0 ? (
+              <div className="ktc-card p-8 text-center">
+                <p className="font-body text-navy/70 mb-3">
+                  No verified reviews of {college.name} yet.
+                </p>
+                <p className="font-body text-sm text-navy/50 mb-4">
+                  Are you a current student here? Be the first to share what
+                  you wish you&apos;d known before enrolling.
+                </p>
+                <Link
+                  href="/verify-student"
+                  className="inline-block px-5 py-2.5 bg-gold hover:bg-gold/90 text-navy font-body font-medium rounded-md transition-colors text-sm"
+                >
+                  Verify with .edu and write one
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {reviews.map((r) => (
+                  <article
+                    key={r.id}
+                    className="ktc-card p-5"
+                  >
+                    <header className="flex items-baseline justify-between gap-3 mb-3 flex-wrap">
+                      <span className="font-mono-label text-xs uppercase tracking-wider text-gold">
+                        {formatReviewerByline(r)}
+                      </span>
+                      <span className="font-body text-xs text-navy/40">
+                        {new Date(r.approvedAt).toLocaleDateString(undefined, {
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </header>
+                    <div className="space-y-3">
+                      <ReviewBlock
+                        q="Why I chose this school"
+                        a={r.whyChose}
+                      />
+                      <ReviewBlock
+                        q="Biggest positive surprise"
+                        a={r.biggestPositiveSurprise}
+                      />
+                      <ReviewBlock
+                        q="Biggest negative surprise"
+                        a={r.biggestNegativeSurprise}
+                      />
+                      {r.whoThrives && (
+                        <ReviewBlock q="Who thrives here" a={r.whoThrives} />
+                      )}
+                      {r.whoShouldntCome && (
+                        <ReviewBlock
+                          q="Who shouldn't come"
+                          a={r.whoShouldntCome}
+                        />
+                      )}
+                      <ReviewBlock
+                        q="What I'd tell a high school senior"
+                        a={r.oneThingToSenior}
+                      />
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </FadeIn>
+        </div>
+      </section>
 
       {/* Net Price Calculator */}
       {college.avg_cost_instate != null && (

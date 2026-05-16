@@ -229,7 +229,97 @@ Should be in the tens of thousands after a full backfill.
 
 ---
 
-## 4. Add Resend MX record in GoDaddy
+## 4. Run migration 024 — verified-student reviews
+
+- [ ] Migration 024 ran successfully
+- [ ] edu_domain populated for known schools
+- [ ] Test verification flow with your own .edu email (if you have one) OR skip to seeding outreach
+
+### Why
+
+Adds the verified-student review system: a `verified_students` table (one row per .edu-verified user per school), a `college_reviews` table (structured Q&A), and an `edu_domain` column on colleges so we can map an .edu email back to the right school. After this runs, the `/verify-student` flow is live and reviews can be submitted.
+
+### Step 1 — Run the migration
+
+Supabase SQL editor → New query. Paste and **Run**:
+
+```sql
+ALTER TABLE colleges ADD COLUMN IF NOT EXISTS edu_domain TEXT;
+CREATE INDEX IF NOT EXISTS idx_colleges_edu_domain ON colleges(edu_domain);
+
+UPDATE colleges
+SET edu_domain = LOWER(
+  REGEXP_REPLACE(
+    REGEXP_REPLACE(official_url, '^https?://(www\.)?', ''),
+    '/.*$', ''
+  )
+)
+WHERE edu_domain IS NULL
+  AND official_url IS NOT NULL
+  AND official_url ~ '\.edu(/|$|\?)';
+
+CREATE TABLE IF NOT EXISTS verified_students (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  edu_email TEXT NOT NULL,
+  college_slug TEXT NOT NULL REFERENCES colleges(slug) ON DELETE CASCADE,
+  display_handle TEXT,
+  year_in_school INT CHECK (year_in_school BETWEEN 1 AND 6),
+  intended_major TEXT,
+  hometown_state TEXT,
+  verified_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (user_id, college_slug),
+  UNIQUE (edu_email)
+);
+
+CREATE INDEX IF NOT EXISTS idx_verified_students_user ON verified_students(user_id);
+CREATE INDEX IF NOT EXISTS idx_verified_students_slug ON verified_students(college_slug);
+
+CREATE TABLE IF NOT EXISTS college_reviews (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  college_slug TEXT NOT NULL REFERENCES colleges(slug) ON DELETE CASCADE,
+  verified_student_id UUID NOT NULL REFERENCES verified_students(id) ON DELETE CASCADE,
+  why_chose TEXT NOT NULL,
+  biggest_positive_surprise TEXT NOT NULL,
+  biggest_negative_surprise TEXT NOT NULL,
+  one_thing_to_senior TEXT NOT NULL,
+  who_thrives TEXT,
+  who_shouldnt_come TEXT,
+  status TEXT NOT NULL DEFAULT 'pending'
+    CHECK (status IN ('pending', 'approved', 'rejected', 'spam')),
+  rejection_reason TEXT,
+  helpful_count INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  approved_at TIMESTAMPTZ,
+  UNIQUE (verified_student_id, college_slug)
+);
+
+CREATE INDEX IF NOT EXISTS idx_reviews_slug_status ON college_reviews(college_slug, status);
+CREATE INDEX IF NOT EXISTS idx_reviews_status_created ON college_reviews(status, created_at DESC);
+```
+
+### Verify
+
+Count how many colleges got an edu_domain parsed from official_url:
+
+```sql
+SELECT COUNT(*) FROM colleges WHERE edu_domain IS NOT NULL;
+```
+
+Should be ~2,500+ (most US 4-year schools). The remainder either don't have official_url set or use a non-.edu site.
+
+Then visit https://www.kidtocollege.com/verify-student in a browser. The page should load. Try entering your own .edu address (or `test@harvard.edu` won't work since it has to be a real inbox you can check). The magic link will be sent via Supabase's built-in email.
+
+### Then — seed the first reviews
+
+See `OUTREACH_REVIEWS.md` at the repo root for the outreach playbook. Aim for 20 verified reviews across 6-8 schools in ~7 days through warm outreach to your network.
+
+Moderation queue lives at https://www.kidtocollege.com/admin/reviews (only your account can see it). Approve reviews within 24 hours of submission so contributors see them live.
+
+---
+
+## 5. Add Resend MX record in GoDaddy
 
 - [ ] Record added in GoDaddy
 - [ ] Verified in Resend dashboard
