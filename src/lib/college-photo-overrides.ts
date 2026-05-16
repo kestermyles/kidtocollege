@@ -23,26 +23,47 @@ const FALLBACK = {
 };
 
 export const COLLEGE_PHOTO_OVERRIDES: Record<string, CollegePhotoOverride> = {
-  // UT Austin — Unsplash defaults to the Texas State Capitol dome (not
-  // on campus).
+  // The "Nebraska Love Library" cluster — 5+ schools were all sharing
+  // the same brick-and-stone library photo (actually Love Library at
+  // U Nebraska–Lincoln). Forcing fallback until curated photos sourced.
   "ut-austin": FALLBACK,
-
-  // Columbia — Unsplash returns Washington Square Park, which is NYU's
-  // territory, not Columbia (whose campus is uptown at Morningside Heights).
   "columbia-university-in-the-city-of-new-york": FALLBACK,
-
-  // Texas A&M — Unsplash returns what looks like the Houses of Parliament
-  // in London. Not in College Station, TX.
   "texas-am-university": FALLBACK,
-
-  // Rice — Unsplash returns a suburban-looking scene with a giant cross
-  // (appears to be a Christian school). Rice is in Houston with iconic
-  // neo-Byzantine architecture, not that.
   "rice-university": FALLBACK,
-
-  // Penn — Unsplash returns a candid winter snowstorm street photo with
-  // a stranger walking. Not a campus hero shot.
   "university-of-pennsylvania": FALLBACK,
+
+  // The "BYU mountain" duplicate — Duke and Johns Hopkins both got an
+  // aerial of Utah's Y Mountain. Both schools are flat-state Eastern.
+  "duke-university": FALLBACK,
+  "johns-hopkins-university": FALLBACK,
+
+  // The "Vanderbilt/WashU night aerial" duplicate — anonymous night
+  // shot, neither shows Kirkland Hall (Vandy) or Brookings Hall (WashU).
+  "washington-university-in-st-louis": FALLBACK,
+
+  // Cross-school mismatches identified by visual audit:
+  // UCLA was showing USC's VKC globe tower + DTLA skyline.
+  "ucla": FALLBACK,
+  "university-of-california-los-angeles": FALLBACK,
+
+  // Caltech was showing an East-Asian-style modernist high-rise + stadium.
+  "california-institute-of-technology": FALLBACK,
+
+  // Michigan was showing Soviet-style apartment blocks at night.
+  "university-of-michigan-ann-arbor": FALLBACK,
+
+  // String-collision failures (Unsplash search matched on substring):
+  // U Wisconsin-Madison → got JMU (James MADISON University) Wilson Hall.
+  "university-of-wisconsin-madison": FALLBACK,
+
+  // Boston College → got Boston University Metcalf Center (signage visible).
+  "boston-college": FALLBACK,
+
+  // U Florida → got snow-covered Cornell (cross-school swap).
+  "university-of-florida": FALLBACK,
+
+  // Howard → got UW Seattle Allen/Suzzallo Library.
+  "howard-university": FALLBACK,
 };
 
 export function getOverridePhoto(slug: string): CollegePhotoOverride | null {

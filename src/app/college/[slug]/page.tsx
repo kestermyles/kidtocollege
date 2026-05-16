@@ -423,6 +423,13 @@ export default async function CollegePage({ params }: CollegePageProps) {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+        {/* If the hero is the fallback (no curated/specific photo found),
+            label it honestly rather than implying it's the campus. */}
+        {heroImage === defaultPhoto && (
+          <div className="absolute top-4 right-4 z-10 px-2 py-1 rounded bg-black/40 text-white/70 text-[10px] font-mono-label uppercase tracking-wider">
+            Generic campus image
+          </div>
+        )}
         <div className="absolute bottom-3 right-4 z-10 text-white/50 text-xs">
           {heroCreditName && heroCreditUrl ? (
             <>
