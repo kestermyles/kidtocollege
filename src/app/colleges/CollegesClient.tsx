@@ -30,6 +30,8 @@ interface CollegeRow {
   avg_cost_instate: number | null;
 }
 
+type SelectivityFilter = "" | "open" | "moderate" | "selective";
+
 export default function CollegesBrowsePage() {
   const [colleges, setColleges] = useState<CollegeRow[]>([]);
   const [total, setTotal] = useState(0);
@@ -39,6 +41,7 @@ export default function CollegesBrowsePage() {
   const [filterGreek, setFilterGreek] = useState(false);
   const [filterD1, setFilterD1] = useState(false);
   const [filterSetting, setFilterSetting] = useState("");
+  const [selectivity, setSelectivity] = useState<SelectivityFilter>("");
   const [loading, setLoading] = useState(true);
 
   const fetchColleges = useCallback(async () => {
@@ -51,7 +54,8 @@ export default function CollegesBrowsePage() {
       !stateFilter &&
       !filterGreek &&
       !filterD1 &&
-      !filterSetting;
+      !filterSetting &&
+      !selectivity;
 
     let query = supabase
       .from("colleges")
@@ -77,6 +81,15 @@ export default function CollegesBrowsePage() {
     }
     if (filterSetting) {
       query = query.eq("campus_setting", filterSetting);
+    }
+    if (selectivity === "open") {
+      // 50%+ acceptance: schools that admit at least half of applicants.
+      // This is the realistic landscape for most students (~87% of US colleges).
+      query = query.gte("acceptance_rate", 50);
+    } else if (selectivity === "moderate") {
+      query = query.gte("acceptance_rate", 25).lt("acceptance_rate", 50);
+    } else if (selectivity === "selective") {
+      query = query.lt("acceptance_rate", 25);
     }
 
     const { data, count } = await query;
@@ -104,7 +117,7 @@ export default function CollegesBrowsePage() {
     setColleges(rows);
     setTotal(count || 0);
     setLoading(false);
-  }, [page, search, stateFilter, filterGreek, filterD1, filterSetting]);
+  }, [page, search, stateFilter, filterGreek, filterD1, filterSetting, selectivity]);
 
   useEffect(() => {
     fetchColleges();
@@ -113,7 +126,7 @@ export default function CollegesBrowsePage() {
   // Reset to page 0 when filters change
   useEffect(() => {
     setPage(0);
-  }, [search, stateFilter, filterGreek, filterD1, filterSetting]);
+  }, [search, stateFilter, filterGreek, filterD1, filterSetting, selectivity]);
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
@@ -169,6 +182,17 @@ export default function CollegesBrowsePage() {
             <option value="Suburban">Suburban</option>
             <option value="Rural">Rural</option>
             <option value="College Town">College Town</option>
+          </select>
+          <select
+            value={selectivity}
+            onChange={(e) => setSelectivity(e.target.value as SelectivityFilter)}
+            className="px-3 py-2.5 border border-gray-300 rounded-lg font-body text-sm text-navy/70 focus:outline-none focus:ring-2 focus:ring-gold/30 bg-white"
+            title="Filter by how selective colleges are"
+          >
+            <option value="">All selectivities</option>
+            <option value="open">Open (50%+ accept)</option>
+            <option value="moderate">Moderate (25–50%)</option>
+            <option value="selective">Highly selective (&lt;25%)</option>
           </select>
           <button
             onClick={() => setFilterGreek(!filterGreek)}

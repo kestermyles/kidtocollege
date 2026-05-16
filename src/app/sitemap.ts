@@ -294,6 +294,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
+  const extraStatic: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/honors-colleges`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/auto-merit`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+  ];
+
   return [
     ...staticPages,
     ...collegePages,
@@ -302,5 +317,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...blogPages,
     ...bestCollegesPages,
     ...howToPages,
+    ...extraStatic,
   ];
 }

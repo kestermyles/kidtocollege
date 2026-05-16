@@ -25,6 +25,9 @@ const NAV_LINKS: NavLink[] = [
       { href: "/colleges", label: "Browse All Colleges" },
       { href: "/matches", label: "My Matches" },
       { href: "/my-chances", label: "My Chances" },
+      { href: "/best-colleges", label: "Best Colleges (Ranked Lists)" },
+      { href: "/honors-colleges", label: "Honors Colleges" },
+      { href: "/how-to-get-into", label: "How to Get Into Top Schools" },
       { href: "/compare", label: "Compare Colleges" },
       { href: "/discover", label: "What Should I Study?" },
     ],
@@ -36,6 +39,7 @@ const NAV_LINKS: NavLink[] = [
     label: "Money",
     children: [
       { href: "/scholarships", label: "Scholarships" },
+      { href: "/auto-merit", label: "Auto-Merit Scholarships" },
       { href: "/fafsa-guide", label: "FAFSA Guide" },
       { href: "/net-price-estimator", label: "Net Price Estimator" },
       { href: "/financial-aid", label: "State Aid Guides" },
