@@ -16,6 +16,8 @@ import NPCCalculator from "@/components/npc/NPCCalculator";
 import { breadcrumbsLd } from "@/lib/structured-data";
 import { getStateByAbbreviation } from "@/lib/state-aid-data";
 import { getCollegeDesignations } from "@/lib/college-designations";
+import { getMentalHealthBadges } from "@/lib/mental-health-data";
+import { getProgramEarningsForSlug } from "@/lib/program-earnings";
 
 export const revalidate = 86400;
 
@@ -186,6 +188,10 @@ export default async function CollegePage({ params }: CollegePageProps) {
   }
 
   const college = collegeRow as College | null;
+
+  const programEarnings = college
+    ? await getProgramEarningsForSlug(slug, { limit: 8 })
+    : [];
 
   // If no college found, show "Did you mean?" suggestions
   if (!college) {
@@ -500,7 +506,9 @@ export default async function CollegePage({ params }: CollegePageProps) {
               </p>
               {(() => {
                 const designations = getCollegeDesignations(slug);
-                if (designations.length === 0) return null;
+                const mhBadges = getMentalHealthBadges(slug);
+                if (designations.length === 0 && mhBadges.length === 0)
+                  return null;
                 return (
                   <div className="mt-3 flex flex-wrap gap-2">
                     {designations.map((d) => (
@@ -511,6 +519,16 @@ export default async function CollegePage({ params }: CollegePageProps) {
                         className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium font-mono-label uppercase tracking-wider bg-gold/20 text-gold border border-gold/40 hover:bg-gold/30 transition-colors"
                       >
                         {d.label}
+                      </a>
+                    ))}
+                    {mhBadges.map((b) => (
+                      <a
+                        key={b.code}
+                        href={b.href}
+                        title={b.tooltip}
+                        className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium font-mono-label uppercase tracking-wider bg-sage/20 text-sage border border-sage/40 hover:bg-sage/30 transition-colors"
+                      >
+                        {b.label}
                       </a>
                     ))}
                   </div>
@@ -731,6 +749,70 @@ export default async function CollegePage({ params }: CollegePageProps) {
                 Figures reflect federal aid recipients only — actual median
                 earnings may be higher at schools where many students receive
                 grants rather than loans.
+              </p>
+            </FadeIn>
+          </div>
+        </section>
+      )}
+
+      {/* Earnings by major */}
+      {programEarnings.length > 0 && (
+        <section className="py-12 sm:py-16 bg-cream">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy mb-2">
+                Earnings by major
+              </h2>
+              <p className="text-sm font-body text-navy/50 mb-6">
+                Median earnings 1 year after graduation, by bachelor&apos;s
+                program. Source: U.S. Department of Education College
+                Scorecard FieldOfStudy data.
+              </p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-navy/10 text-navy/60 font-mono-label uppercase tracking-wider text-xs">
+                      <th className="text-left py-2 pr-4">Program</th>
+                      <th className="text-right py-2 pr-4">
+                        Median earnings (1yr)
+                      </th>
+                      <th className="text-right py-2 pr-4">
+                        Earnings (4yr)
+                      </th>
+                      <th className="text-right py-2">Graduates</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {programEarnings.map((p) => (
+                      <tr
+                        key={`${p.cip6}-${p.credentialLevel}`}
+                        className="border-b border-navy/5"
+                      >
+                        <td className="py-2 pr-4 text-navy font-body">
+                          {p.cipTitle}
+                        </td>
+                        <td className="py-2 pr-4 text-right font-mono-label text-gold font-bold">
+                          {p.medianEarnings1yr != null
+                            ? formatCurrency(p.medianEarnings1yr)
+                            : "—"}
+                        </td>
+                        <td className="py-2 pr-4 text-right font-mono-label text-navy/70">
+                          {p.medianEarnings4yr != null
+                            ? formatCurrency(p.medianEarnings4yr)
+                            : "—"}
+                        </td>
+                        <td className="py-2 text-right text-navy/60 font-body">
+                          {p.earningsCount1yr ?? "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-xs font-body text-navy/50 italic mt-4">
+                Tracked through federal tax records. Programs with fewer than
+                30 graduates with reported earnings are privacy-suppressed.
+                4-year figure tracks the same cohort 3 years later.
               </p>
             </FadeIn>
           </div>

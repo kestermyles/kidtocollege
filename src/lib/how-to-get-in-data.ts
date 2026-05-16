@@ -211,6 +211,462 @@ export const HOW_TO_GET_IN: HowToGetInEntry[] = [
     borderline:
       "If SCS feels out of reach: Information Systems (IS) in Heinz College or Computational Biology in Mellon College of Science are still excellent CS-adjacent programs with higher acceptance rates. CMU's interdisciplinary culture lets you take SCS courses regardless of admitting college.",
   },
+  {
+    slug: "brown-university",
+    hook: "How to get into Brown: the Open Curriculum changes what readers look for",
+    angle: "Brown has no general education requirements. Every class is taken because the student chose it. Admissions reads applications looking for self-directed learners who'd actually thrive without a checklist — not for AP-stacking valedictorians. Show them you're the kind of student who would invent your own curriculum.",
+    steps: [
+      "In supplements, name specific Brown courses, concentrations, and faculty — and explain why a school without distribution requirements is right for you, specifically.",
+      "Build evidence of self-directed learning outside the classroom: independent reading projects, self-taught skills, a course you designed yourself.",
+      "Maintain a top GPA in a curriculum that already shows breadth and depth chosen by you, not forced by the school.",
+      "1500+ SAT or 34+ ACT remains the soft floor; Brown publishes admit-band data showing scores below 1450 are rare without a hook.",
+      "Apply Early Decision if Brown is your clear top choice — meaningful acceptance bump (around 14% vs 5% RD).",
+    ],
+    mistakes: [
+      "Generic 'Brown is amazing' supplements. The Open Curriculum essay is graded on whether you actually understand and want it.",
+      "Treating the PLME (8-year BS/MD) as a backup to medical school. It's the most selective program at Brown — under 3% acceptance.",
+      "Underestimating Brown's quirk. Readers like off-beat applicants and reward voice over polish.",
+    ],
+    borderline:
+      "Brown rewards students who would genuinely use the Open Curriculum. If your essays show authentic curiosity across disciplines (not just one) and you can articulate why that matters, you punch above your stats. Treat the supplement as the single most important piece of your application.",
+  },
+  {
+    slug: "dartmouth-college",
+    hook: "How to get into Dartmouth: the D-Plan and small-school fit",
+    angle: "Dartmouth is the smallest Ivy and the only one running on a quarter system with mandatory sophomore summer on campus (the D-Plan). Admissions filters hard for students who actually want a rural, undergraduate-focused, outdoorsy community — not students who put Dartmouth on the list because it's an Ivy.",
+    steps: [
+      "Address the D-Plan in your supplement. Show you've thought about how a four-quarter calendar with required summer residency works for your goals.",
+      "Reference Dartmouth's small size, outdoor culture, and rural setting as features, not bugs. The wrong applicants treat 'Hanover, NH' as a downside.",
+      "Maintain 3.9+ GPA and 1490+ SAT / 33+ ACT. Slight stat bump favored vs Brown/Yale.",
+      "Apply Early Decision if Dartmouth is your top choice — acceptance rate roughly 4x RD.",
+      "Get a teacher rec from someone who has taught small seminars or discussion-heavy courses — closer to how Dartmouth actually teaches.",
+    ],
+    mistakes: [
+      "Listing Dartmouth alongside large research universities in 'why' essays. The fit signal is the opposite.",
+      "Skipping Dartmouth visits if you can travel. Demonstrated interest is real here, especially for unhooked RD applicants.",
+      "Treating 'rural' as something to overcome. Frame it correctly: it's why Dartmouth is what it is.",
+    ],
+    borderline:
+      "Dartmouth is one of the schools where ED applicants in the middle of the stat band have a real shot — especially with clear fit signals. If you genuinely want a small undergraduate experience and can articulate that, your odds are meaningfully better than the headline 6% acceptance rate suggests.",
+  },
+  {
+    slug: "cornell-university",
+    hook: "How to get into Cornell: pick the right college and play to its strengths",
+    angle: "Cornell has seven undergraduate colleges with separate admissions: Arts & Sciences, Engineering, Industrial & Labor Relations (ILR), Hotel Administration (Nolan), Human Ecology, Agriculture & Life Sciences (CALS), Architecture/Art/Planning (AAP). Acceptance rates range from 4% (AAP) to 17%+ (some CALS majors). Your college choice is the single biggest strategic decision.",
+    steps: [
+      "Pick the college that genuinely fits your interests AND maximizes your chances. CALS, Human Ecology, and ILR often have higher acceptance rates than Arts & Sciences for related majors.",
+      "Write a 'Why this college at Cornell' supplement that names specific majors, faculty, and resources unique to that college. Generic answers get rejected.",
+      "Maintain 3.95+ GPA; SAT 1500+ / ACT 34+ for the most competitive colleges (Engineering, Dyson, AAP).",
+      "Apply Early Decision if Cornell is your top choice — meaningful bump, especially at lower-acceptance-rate colleges.",
+      "Demonstrate fit through experience: ILR applicants should show interest in labor/policy, Hotelies should show hospitality work, CALS should show agriculture/life-science engagement.",
+    ],
+    mistakes: [
+      "Applying to Engineering or Arts & Sciences because they 'sound prestigious' when your background fits CALS or Human Ecology better.",
+      "Assuming you can internal-transfer easily after admission. It varies dramatically by college and major.",
+      "Writing one generic 'Why Cornell' essay. Cornell's supplements are college-specific.",
+    ],
+    borderline:
+      "Cornell is the Ivy where 'right-fit college' planning matters most. A student who'd be a marginal Arts & Sciences applicant can be a strong CALS or ILR applicant if their experiences align. Treat the college choice as a real strategic decision, not an afterthought.",
+  },
+  {
+    slug: "columbia-university-in-the-city-of-new-york",
+    hook: "How to get into Columbia: the Core Curriculum and New York City",
+    angle: "Columbia has the most prescriptive curriculum in the Ivy League — the Core Curriculum requires every undergrad to take Lit Hum, CC, Art Hum, Music Hum, two semesters of writing, and frontiers of science. Applications that don't engage with the Core or with NYC specifically get filtered out fast.",
+    steps: [
+      "Address the Core Curriculum directly in your supplement. Read what the Core actually is; reference texts you'd be excited to study (Iliad, Plato, Marx, Woolf, etc.).",
+      "Show why New York City — not just an 'urban setting' — matters to your interests. Specific neighborhoods, institutions, internship paths.",
+      "Maintain 3.95+ GPA; 1510+ SAT / 34+ ACT. Columbia's published admit data is among the highest in the country.",
+      "Apply Early Decision if Columbia is your top choice — acceptance rate roughly 11% ED vs 4% RD.",
+      "Differentiate between Columbia College (CC), the School of Engineering (SEAS), and the School of General Studies. Most traditional undergrads apply to CC or SEAS.",
+    ],
+    mistakes: [
+      "Treating Columbia as 'Harvard in New York.' The Core makes the curriculum fundamentally different.",
+      "Generic NYC enthusiasm. 'I love New York' doesn't differentiate. Pick three specific things.",
+      "Skipping engagement with humanities texts when applying to SEAS. SEAS students take Core requirements too.",
+    ],
+    borderline:
+      "Columbia rewards applicants who genuinely engage with reading and writing across disciplines. If you can show love for the texts the Core covers, you stand out even among high-stat applicants. STEM-only applicants without humanities depth are at a real disadvantage here.",
+  },
+  {
+    slug: "university-of-pennsylvania",
+    hook: "How to get into Penn: pre-professional focus and the four schools",
+    angle: "Penn is the most pre-professional Ivy. Four undergraduate schools (College of Arts & Sciences, Wharton, Engineering, Nursing) admit separately. Wharton is one of the toughest admits in the country (~5%) and admits with a strong pre-business signal. Penn rewards applicants who already know what they want to do and have evidence to back it up.",
+    steps: [
+      "Pick the school that matches your strongest pre-professional signal. Don't apply to Wharton hoping to 'figure it out' — you need a business story.",
+      "Show concrete pre-professional engagement: Wharton applicants need business experience (internships, ventures, finance/economics work), Engineering needs research/build evidence, Nursing needs healthcare experience.",
+      "Maintain 3.95+ GPA, 1500+ SAT / 34+ ACT.",
+      "Apply Early Decision — meaningful acceptance bump and Penn explicitly rewards demonstrated interest.",
+      "Reference Penn's interdisciplinary programs in supplements: Huntsman (Wharton + Arts), M&T (Engineering + Wharton), VIPER (Engineering + Energy Research) — even if you're not applying to them, knowing they exist shows you've researched Penn.",
+    ],
+    mistakes: [
+      "Generic 'why Penn' that could apply to any Ivy. Penn's pre-professional culture is the differentiator.",
+      "Applying to the College of Arts & Sciences with weak essays, thinking it's easier than Wharton. CAS is still highly competitive.",
+      "Skipping ED if Penn is your clear top choice — ED is a 4x acceptance-rate factor here.",
+    ],
+    borderline:
+      "Penn is one of the most ED-favoring top schools. If you can credibly commit and have a strong pre-professional story, ED applicants in the middle of the stat band have real chances — especially in CAS, Nursing, and Engineering.",
+  },
+  {
+    slug: "university-of-chicago",
+    hook: "How to get into UChicago: the supplemental essays are everything",
+    angle: "UChicago's supplemental essays are famously unusual: the 'why UChicago' essay plus one of several long, philosophical, often-absurd prompts. They are not optional in any meaningful sense. Readers use them as the primary differentiator. Applicants who treat them seriously and play with ideas get rewarded. Polished, safe essays often get rejected.",
+    steps: [
+      "Treat the supplements like a portfolio. Pick the prompt that excites you most and go deep.",
+      "Show genuine intellectual play. UChicago rewards weird ideas pursued seriously.",
+      "Reference UChicago's quirks specifically: the Core, the Quads, scav hunt, the life of the mind language. Don't fake it — read about the school.",
+      "Maintain 3.95+ GPA, 1510+ SAT / 34+ ACT. Median admit stats are at the top end of the country.",
+      "Apply Early Action or Early Decision (UChicago offers both, plus ED2) — meaningful acceptance lift.",
+    ],
+    mistakes: [
+      "Writing safe, polished supplements. UChicago is one of the few schools where 'playing it safe' actively hurts.",
+      "Treating the unusual prompt as a joke. It's the most important essay in your application.",
+      "Underestimating UChicago. Acceptance rate has dropped below 6% in 5 years.",
+    ],
+    borderline:
+      "If you're a writer who likes ideas more than the school you're at, UChicago is the school where you can outperform your stats. The reverse is also true: if your stats are top-1% but you don't actually like thinking for its own sake, UChicago is harder to get into than your numbers suggest.",
+  },
+  {
+    slug: "northwestern-university",
+    hook: "How to get into Northwestern: ED, Medill, and the quarter system",
+    angle: "Northwestern is one of the most ED-friendly top schools — roughly half the class fills in Early Decision. The school admits to specific colleges (Weinberg, McCormick, Medill, School of Communication, Bienen School of Music) and demonstrated interest plus program fit matter heavily. Medill (journalism) is particularly competitive and rewards specific journalism experience.",
+    steps: [
+      "Apply Early Decision if Northwestern is your top choice. Roughly 25% ED acceptance vs 7% RD.",
+      "Show program-specific evidence: Medill applicants need real writing/journalism work, McCormick (engineering) needs build/research, School of Communication needs theatre/film/communication experience.",
+      "Reference Northwestern's quarter system and how it fits your interests — typically lets students take more courses across more departments.",
+      "Maintain 3.9+ GPA, 1500+ SAT / 33+ ACT.",
+      "Visit if you can; Northwestern tracks demonstrated interest more than many top schools.",
+    ],
+    mistakes: [
+      "Generic supplements. Northwestern is one of the schools where 'why us' has to be school-specific.",
+      "Underestimating Medill's selectivity. It's effectively a top-10% acceptance rate within an already-selective school.",
+      "Skipping ED if you can commit. Northwestern's ED is one of the biggest lever for admission.",
+    ],
+    borderline:
+      "Northwestern's ED2 (yes, they have one) is another lever. If your top choice falls through in ED1 elsewhere, ED2 at Northwestern in January is a strong play. Stat band: applicants at the median have real chances ED, less so RD.",
+  },
+  {
+    slug: "university-of-notre-dame",
+    hook: "How to get into Notre Dame: Catholic identity is a real factor",
+    angle: "Notre Dame is the most explicitly Catholic top US university. Roughly 80% of students identify as Catholic and the school's culture, mission, and admissions are deeply shaped by it. Non-Catholic applicants can absolutely get in (and many do), but applications that don't engage with Notre Dame's mission or community read as misaligned.",
+    steps: [
+      "Address Notre Dame's mission and community in your 'why' supplement. Service, faith, leadership for the common good — these aren't optional themes.",
+      "Show service that's sustained, not resume-building. Catholic-school service trips, parish work, Habitat for Humanity, etc. matter.",
+      "Maintain 3.9+ GPA, 1480+ SAT / 33+ ACT.",
+      "Apply Restrictive Early Action — slight acceptance bump and Notre Dame respects demonstrated interest.",
+      "Get a teacher recommendation that speaks to character and ethics, not just academic performance.",
+    ],
+    mistakes: [
+      "Skipping engagement with Notre Dame's Catholic identity in essays. Even non-Catholic applicants need to show they understand the community they'd be joining.",
+      "Treating Notre Dame like a backup to top private schools. The culture is different and admissions reads for fit.",
+      "Underestimating the Mendoza College of Business — among the top business programs and competitive within Notre Dame.",
+    ],
+    borderline:
+      "Notre Dame admissions are unusually fit-driven. Applicants with median stats who connect authentically with Notre Dame's mission have stronger odds than the headline 12% acceptance rate suggests. The reverse: high-stat applicants with no service or mission engagement underperform here.",
+  },
+  {
+    slug: "vanderbilt-university",
+    hook: "How to get into Vanderbilt: the unique scholarship culture and Southern Ivy positioning",
+    angle: "Vanderbilt offers some of the most generous merit aid among top-25 US universities — Cornelius Vanderbilt, Ingram, and Chancellor's scholarships cover full tuition and beyond. Vanderbilt has marketed itself as a 'Southern Ivy' and admissions are now under 6%. The school rewards students who'd actually contribute to the residential, athletics-heavy, leadership-oriented culture.",
+    steps: [
+      "Apply Early Decision if Vanderbilt is your top choice. ED acceptance rate is roughly 4x RD.",
+      "Apply for the merit scholarships (separate applications, December deadlines). Even applicants who don't win benefit — the additional essays surface leadership and impact.",
+      "Maintain 3.9+ unweighted GPA, 1500+ SAT / 34+ ACT.",
+      "Reference Vanderbilt's residential college system (Commons for first-years, Ingram Commons), Greek life, and Nashville location specifically.",
+      "Show leadership through impact, not titles. Vanderbilt rewards applicants who built or organized something.",
+    ],
+    mistakes: [
+      "Treating Vanderbilt as a backup to Duke. Vanderbilt is now harder to get into than several Ivies.",
+      "Skipping the merit scholarship applications. Even unsuccessful applications strengthen your overall admissions essays.",
+      "Generic Nashville enthusiasm. Specifics about the music scene, healthcare ecosystem, or political/legal Nashville matter.",
+    ],
+    borderline:
+      "Vanderbilt is one of the few top-15 schools where applicants in the middle of the stat band can secure both admission AND substantial merit aid in one shot. If finances matter and you can write a strong leadership story, the Cornelius Vanderbilt Scholarship application is worth real effort.",
+  },
+  {
+    slug: "university-of-southern-california",
+    hook: "How to get into USC: the trojan family and major-specific admissions",
+    angle: "USC admits to specific schools and programs — Marshall (business), Viterbi (engineering), Annenberg (communications), Thornton (music), Cinematic Arts, etc. Some of these (especially Cinematic Arts, Marshall World Bachelor, Iovine Academy) are far more competitive than the headline 12% rate. The 'Trojan family' marketing is real: alumni networking is one of USC's defining features.",
+    steps: [
+      "Apply directly to the school/program that matches your strongest work. USC respects depth over breadth.",
+      "Show specific evidence for your target program: portfolio for Cinematic Arts, business work for Marshall, audition prep for Thornton.",
+      "Maintain 3.9+ unweighted GPA, 1480+ SAT / 33+ ACT.",
+      "Apply for USC's Presidential Scholarship and Trustee Scholarship — separate December deadline, half- to full-tuition awards.",
+      "Reference USC's interdisciplinary minors (entertainment industry, screen studies, etc.) — they're a defining feature.",
+    ],
+    mistakes: [
+      "Treating USC as 'UCLA's competitor.' The cultures and admissions are fundamentally different.",
+      "Applying to Cinematic Arts without a strong creative portfolio. It's one of the toughest admits in the country (~3%).",
+      "Skipping the December scholarship deadline. Even unsuccessful applications are reread for admissions and merit aid.",
+    ],
+    borderline:
+      "USC is increasingly fit-and-program-driven. Applicants with median stats who present a clear creative or pre-professional story do well, especially in less-competitive schools. The reverse: high-stat undecided applicants without a clear angle struggle.",
+  },
+  {
+    slug: "johns-hopkins-university",
+    hook: "How to get into Johns Hopkins: research culture and pre-med calibration",
+    angle: "Johns Hopkins is the original American research university. Undergraduate research is genuinely accessible, not just marketing. Hopkins is famously rigorous and famously pre-med-heavy. Applicants who can show real research experience or a clear non-pre-med intellectual identity stand out from the pre-med wave.",
+    steps: [
+      "If you've done research, document it specifically. Lab work, methods, outcomes, conferences. Hopkins admissions reads research seriously.",
+      "If you're not pre-med, lean into that. Hopkins' humanities, writing seminars, and international studies programs are strong and admit specifically for those interests.",
+      "Maintain 3.95+ GPA, 1510+ SAT / 34+ ACT.",
+      "Apply Early Decision — Hopkins eliminated legacy preferences but still meaningfully rewards ED applicants.",
+      "Get a science teacher recommendation that speaks specifically to your research/lab work (if applicable).",
+    ],
+    mistakes: [
+      "Applying as 'pre-med' with no research or healthcare experience. Hopkins is the most-applied-to pre-med school; saying you want to be a doctor doesn't differentiate.",
+      "Underestimating the rigor. Hopkins' grade deflation is real and admissions filters for students who can handle it.",
+      "Generic 'I love Hopkins' essays. The Hopkins essay should reference specific research, faculty, or interdisciplinary programs.",
+    ],
+    borderline:
+      "Hopkins is the school where 'I have research experience' actually moves the needle. If you've done meaningful lab work, Hopkins reads it more carefully than peer schools. Pure-stats applicants without research or pre-professional depth underperform here.",
+  },
+  {
+    slug: "washington-university-in-st-louis",
+    hook: "How to get into WashU: ED matters most and the 5 schools admit separately",
+    angle: "WashU has the largest ED-vs-RD acceptance gap of any top-20 university — around 32% ED vs 9% RD. The school admits to five undergraduate divisions (Arts & Sciences, Olin Business, McKelvey Engineering, Sam Fox Art/Architecture, University College) and program fit matters. WashU is also unusually rigorous about demonstrated interest.",
+    steps: [
+      "Apply Early Decision if WashU is your top choice. The 3-4x ED bump is the largest among top private schools.",
+      "Pick the right division. Olin Business and Sam Fox have separate admissions with portfolio/interview requirements.",
+      "Maintain 3.9+ GPA, 1500+ SAT / 33+ ACT.",
+      "Visit if possible; WashU tracks demonstrated interest more aggressively than many top private schools.",
+      "Reference WashU's interdisciplinary culture, Beyond Boundaries program, and the actual residential life experience — specifics, not generic 'community' language.",
+    ],
+    mistakes: [
+      "Applying RD when you could have committed ED. The acceptance rate difference is the single biggest factor in WashU admissions.",
+      "Treating WashU as a backup. Admissions reads applications for genuine interest and rejects 'placeholder' apps even with strong stats.",
+      "Skipping the supplemental essay. WashU's optional essay is read by admissions and treated as a fit signal.",
+    ],
+    borderline:
+      "WashU ED is one of the highest-leverage applications in the country. Median-stats applicants who can commit ED have real chances. If you're not applying ED, your odds drop dramatically — plan accordingly.",
+  },
+  {
+    slug: "emory-university",
+    hook: "How to get into Emory: Oxford pathway and Atlanta's pre-med ecosystem",
+    angle: "Emory has two undergraduate options: Emory College (the main campus) and Oxford College (a two-year residential start that automatically transitions to Emory College for junior/senior year). Oxford is a meaningful back door — lower acceptance rate threshold, smaller community, same Emory degree. Atlanta's healthcare ecosystem (CDC, Emory Healthcare, Grady) makes Emory one of the strongest pre-med environments anywhere.",
+    steps: [
+      "Apply to BOTH Emory College and Oxford College on the application — it's allowed and meaningfully increases admission odds.",
+      "If pre-med, reference Atlanta's healthcare ecosystem specifically: CDC, Emory Healthcare, Grady, Children's Healthcare of Atlanta. Generic pre-med language doesn't differentiate.",
+      "Maintain 3.9+ GPA, 1480+ SAT / 33+ ACT.",
+      "Apply Early Decision (Emory has ED1 and ED2) — meaningful acceptance bump.",
+      "Reference Emory's specific strengths: business (Goizueta), public health, religion, neuroscience.",
+    ],
+    mistakes: [
+      "Applying only to Emory College when you'd accept Oxford. Apply to both — it costs nothing and meaningfully helps.",
+      "Generic Atlanta enthusiasm. Specifics about Buckhead, Decatur, the BeltLine, or healthcare institutions matter.",
+      "Underestimating Goizueta's business undergrad. It's one of the top undergraduate business programs and admits competitively.",
+    ],
+    borderline:
+      "If you'd take Oxford College, the dual-apply option is one of the best back doors at any top-25 school. Median-stats applicants get Oxford admissions when Emory College itself is out of reach.",
+  },
+  {
+    slug: "california-institute-of-technology",
+    hook: "How to get into Caltech: small, brutal, and uncompromising on stats",
+    angle: "Caltech admits roughly 250 students per class. Average admit has an SAT math of 800 and is in the top 1% of their class — Caltech is one of the few schools where stats are genuinely a floor, not a soft preference. The school is small (under 1,000 undergrads), grade-deflated, and unapologetically STEM-focused. If you don't already love math and physics for their own sake, Caltech isn't your school.",
+    steps: [
+      "Reach the math/science benchmark: SAT math 790-800, top-5% rank, multivariable calculus or beyond by senior year, AP scores of 5 in calc + at least one science.",
+      "Show genuine STEM passion that exists outside school requirements: research, competitions (AMC, AIME, USAMO, USACO, IPhO, Olympiad), independent projects.",
+      "Submit the optional 'why STEM' supplement seriously. Caltech wants intellectual fit, not just credentials.",
+      "Get teacher recs from a math or science teacher who knows your work in depth.",
+      "Apply Early Action — non-binding, small acceptance bump.",
+    ],
+    mistakes: [
+      "Treating Caltech as MIT-but-smaller. The cultures are different; Caltech is more theoretical, more academically intense, and far less hands-on.",
+      "Skipping the optional supplement. With Caltech's small class, every signal matters.",
+      "Underestimating the stat floor. Below SAT math 750 with no national-level STEM achievement, the odds are very long.",
+    ],
+    borderline:
+      "Caltech is one of the few schools where 'genuinely loves math' is the strongest hook. If you've done national-level math/science competition work or you've published research, Caltech reads that more seriously than any peer school. Pure-stats applicants without genuine STEM curiosity rarely get in.",
+  },
+  {
+    slug: "tufts-university",
+    hook: "How to get into Tufts: international relations heavy and quirky essays",
+    angle: "Tufts is famous for international relations (Fletcher School), engineering with a humanities flavor, and intentionally quirky supplemental essays. The school positions itself between a top-tier research university and a small liberal arts college, and admits students who can articulate why that hybrid matters to them.",
+    steps: [
+      "Take the quirky 'Why Tufts' and 'short answer' essays seriously. They're the single biggest differentiator.",
+      "If applying to International Relations: show specific engagement (model UN, language depth, international experience, policy interest).",
+      "Maintain 3.9+ GPA, 1480+ SAT / 33+ ACT.",
+      "Apply Early Decision (ED1 or ED2) — Tufts is one of the most ED-favoring top-30 schools.",
+      "Reference specific Tufts traditions: Fletcher, the IR program, the Experimental College, the Cannon, dorms-as-castles culture.",
+    ],
+    mistakes: [
+      "Writing safe supplements. Tufts explicitly rewards quirk and voice.",
+      "Treating Tufts as a 'BU-level' school. Acceptance rate has dropped to around 9% and the medians have climbed.",
+      "Generic international interest. The IR program admits students with specific regional/language/policy expertise.",
+    ],
+    borderline:
+      "Tufts rewards strong writers and quirky thinkers more than most top-30 schools. If your stats are at the median and your essays have a distinctive voice, Tufts ED gives you a real shot.",
+  },
+  {
+    slug: "georgetown-university",
+    hook: "How to get into Georgetown: schools, Jesuit identity, and DC focus",
+    angle: "Georgetown admits to four undergraduate schools (Georgetown College, Walsh School of Foreign Service, McDonough Business, NHS Health Studies) and they admit separately. School of Foreign Service is one of the most prestigious IR programs in the country. Georgetown is Jesuit, deeply DC-rooted, and policy-focused — applications that ignore those threads underperform.",
+    steps: [
+      "Pick the school that matches your strongest signal. SFS is competitive and rewards specific international/policy work.",
+      "Reference Georgetown's Jesuit mission (cura personalis, men/women for others) in supplements — even non-Catholic applicants benefit from showing they understand the community.",
+      "Show DC-specific interest: internship aspirations, policy interests, specific institutions you'd engage with.",
+      "Maintain 3.9+ GPA, 1480+ SAT / 33+ ACT.",
+      "Note: Georgetown does NOT use the Common App. You apply through Georgetown's own application — adds a slight friction filter that screens out resume-applicants.",
+    ],
+    mistakes: [
+      "Skipping Georgetown's separate application thinking you'll just hit Common App. It's a real friction point.",
+      "Generic 'I want to do international relations' essays. SFS readers see thousands; specifics about region, language, policy interest matter.",
+      "Underestimating the school choice. Internal transfers between Georgetown schools are not easy.",
+    ],
+    borderline:
+      "Georgetown is one of the few top schools that doesn't offer ED — restricted Early Action (no binding commitment). This means applicants don't get the dramatic ED bump seen elsewhere. Plan to compete in the regular pool with strong essays and clear school fit.",
+  },
+  {
+    slug: "university-of-michigan-ann-arbor",
+    hook: "How to get into Michigan: in-state vs out-of-state and Ross/Engineering admissions",
+    angle: "Michigan admits roughly 50% of in-state applicants and around 15-18% of out-of-state. It's the canonical example of a 'public Ivy' where in-state vs out-of-state changes the admissions math dramatically. Ross School of Business and the College of Engineering admit separately and are more competitive than the headline numbers suggest.",
+    steps: [
+      "For in-state Michigan applicants: strong GPA in the rigorous curriculum + clear major fit. Acceptance rate around 50% — admission is realistic.",
+      "For out-of-state applicants: treat Michigan as a reach. 3.9+ unweighted GPA, 1480+ SAT / 33+ ACT, strong essays.",
+      "If applying to Ross or Engineering directly: program-specific evidence matters (business experience for Ross, build/research for Engineering).",
+      "Apply Early Action by Nov 1 — non-binding, small acceptance bump.",
+      "Reference Michigan's specific strengths: research output, residential learning communities, athletics culture, Ann Arbor itself.",
+    ],
+    mistakes: [
+      "Out-of-state applicants treating Michigan as a safety. It isn't — admit rate for OOS is roughly the same as a top-30 private.",
+      "Generic 'big state school energy' essays. Michigan's academic culture is more rigorous than the marketing suggests.",
+      "Skipping Ross supplements. Ross admits in a separate pool and the essays matter.",
+    ],
+    borderline:
+      "For in-state Michigan applicants with solid stats, Michigan is a target — plan accordingly. For OOS applicants, plan as if applying to a top-25 private and don't count on yield-rate factors helping you.",
+  },
+  {
+    slug: "university-of-california-los-angeles",
+    hook: "How to get into UCLA: PIQs, weighted GPA, and the residency divide",
+    angle: "UCLA is the most-applied-to university in the United States — over 145,000 applications per year. Test-blind admissions. The four UC Personal Insight Questions (350 words each, choose from eight prompts) are the largest differentiator. In-state vs out-of-state is a huge factor: California residents have 4-5x the acceptance rate of out-of-state applicants.",
+    steps: [
+      "Pick your four PIQ prompts strategically — each should add a distinct dimension to your application.",
+      "Aim for 4.3+ UC-weighted GPA. UCLA's admit median is among the highest in the UC system.",
+      "Take the most rigorous UC-recognized courses. Honors, AP, IB count for weighting.",
+      "If applying to a specific major (CS, business-econ, engineering), make sure your background supports it. Internal transfers to CS at UCLA are very competitive.",
+      "Build a long-form, sustained extracurricular with demonstrable impact. UCLA values depth over breadth.",
+    ],
+    mistakes: [
+      "Repeating themes across all four PIQs. Each should reveal something distinct.",
+      "Out-of-state applicants treating UCLA as a target school. Without exceptional credentials, OOS admit rates are very low.",
+      "Underestimating UCLA's CS. The CS program is among the most selective in the UC system — comparable to Berkeley EECS.",
+    ],
+    borderline:
+      "UCLA is one of the schools where strong PIQ writing genuinely outweighs stat differences. Stat-median in-state applicants with distinctive PIQ responses do better than higher-stat applicants with generic essays. OOS applicants need exceptional credentials AND essays.",
+  },
+  {
+    slug: "unc-chapel-hill",
+    hook: "How to get into UNC: the 82% in-state rule and out-of-state competition",
+    angle: "UNC is constitutionally required to admit at least 82% of its in-state class from North Carolina. This means out-of-state applicants compete for a tiny share of seats and acceptance rates for OOS are roughly 10% vs around 30% in-state. UNC also runs Carolina Covenant (full-need aid for families under 200% FPL) — one of the strongest financial aid programs at any public university.",
+    steps: [
+      "For in-state applicants: focus on top-5% NC class rank, strong essays, evidence of engagement with NC communities. Median admit GPA is high but achievable.",
+      "For out-of-state applicants: aim for 3.95+ unweighted GPA, 1480+ SAT / 33+ ACT, and a distinctive non-stats hook.",
+      "Apply Early Action by Oct 15 — non-binding, small acceptance bump, used by most admitted applicants.",
+      "Reference UNC's specific strengths: Carolina Covenant, the Old Well traditions, the residential college system, specific programs (journalism, public health, business).",
+      "If financially eligible, apply for the Morehead-Cain or Robertson Scholars programs — full-ride scholarships with separate fall deadlines.",
+    ],
+    mistakes: [
+      "Out-of-state applicants treating UNC as a safety. The 10% OOS acceptance rate makes it a top-30 reach.",
+      "Generic 'I love UNC' essays. The 'Why Carolina' supplement should reference specific NC connections, programs, or traditions.",
+      "Missing the Morehead-Cain or Robertson deadlines (October). These are massive merit-aid opportunities.",
+    ],
+    borderline:
+      "For in-state NC applicants in the median band, UNC is a strong target. For out-of-state applicants, treat UNC roughly like applying to Duke or Vanderbilt RD — credentials and writing both matter at the top tier.",
+  },
+  {
+    slug: "university-of-virginia",
+    hook: "How to get into UVA: ED bump, in-state edge, and the Honor Code culture",
+    angle: "UVA is the rare public school with a major Early Decision bump — ED acceptance rates are roughly 2x Regular Decision. In-state applicants have meaningfully better odds than out-of-state. UVA's Honor Code, residential community, and Jefferson-era traditions are central to the culture and applications that engage with them outperform ones that don't.",
+    steps: [
+      "Apply Early Decision if UVA is your top choice. ED acceptance rate is roughly 30%+ vs 15%-ish RD.",
+      "Reference UVA's Honor Code, the residential 'first-year on Grounds' experience, and specific traditions (lawn rooms, dorm-bonding, Cavalier sports).",
+      "For in-state applicants: focus on top-decile rank, strong essays, evidence of engagement with Virginia communities.",
+      "For out-of-state: aim for 3.9+ unweighted GPA, 1450+ SAT / 33+ ACT.",
+      "Apply for the Jefferson Scholars Program if eligible — full-ride merit scholarship with separate fall deadlines.",
+    ],
+    mistakes: [
+      "Skipping ED when UVA is your clear top choice. ED is one of the biggest factors in UVA admissions.",
+      "Generic essays about 'historic Virginia.' Reference specific UVA-isms (the Lawn, the Rotunda, secret societies, the Honor Code).",
+      "Underestimating the McIntire School of Commerce. Internal application during sophomore year is very competitive.",
+    ],
+    borderline:
+      "UVA is one of the few public schools where ED really does move the needle. In-state applicants in the median band have strong chances ED; out-of-state applicants need stronger credentials but ED still helps materially.",
+  },
+  {
+    slug: "georgia-tech",
+    hook: "How to get into Georgia Tech: STEM-only mindset and the in-state ratio",
+    angle: "Georgia Tech is one of the most STEM-focused top universities in the country — nearly every undergraduate major is engineering, computer science, business, design, or science. The school admits roughly 60% in-state and 40% out-of-state, with acceptance rates of about 35% in-state and 12% out-of-state. CS at Georgia Tech is one of the most selective CS programs in the country.",
+    steps: [
+      "For all applicants: show STEM passion that's specific. Robotics, programming projects, research, FIRST teams, USACO, etc.",
+      "For in-state Georgia applicants: focus on top-decile rank, strong math/science grades, AP/IB rigor.",
+      "For out-of-state applicants: 1500+ SAT / 33+ ACT (with strong math), 3.95+ unweighted GPA in the most rigorous curriculum.",
+      "Apply Early Action 1 (in-state) or Early Action 2 (anyone) by the respective deadlines — meaningful acceptance bump for both.",
+      "Reference Georgia Tech's specific programs: CS threads, co-op program, Living-Learning Communities, the Atlanta tech ecosystem.",
+    ],
+    mistakes: [
+      "Applying to Georgia Tech as a generalist or a humanities-focused student. The school filters hard for STEM commitment.",
+      "Skipping the co-op program in your essays. Georgia Tech's co-op is one of the largest in the country and a defining feature.",
+      "Out-of-state applicants underestimating CS competitiveness. Tech CS is roughly as selective as CMU SCS for OOS applicants.",
+    ],
+    borderline:
+      "Georgia Tech rewards applicants with deep technical work over polished essays. If you've built things, your application reads stronger than your stats suggest. The reverse: high-stat humanities-leaning students struggle here.",
+  },
+  {
+    slug: "amherst-college",
+    hook: "How to get into Amherst: the open curriculum and small-college fit",
+    angle: "Amherst is one of the most academically rigorous small liberal arts colleges in the country — under 2,000 students, no general education requirements (only the major), and one of the top need-based financial aid programs anywhere. Amherst admits students who'd thrive in a college that demands they direct their own learning.",
+    steps: [
+      "Write a 'why Amherst' supplement that engages specifically with the open curriculum. Generic 'I like LACs' essays don't work.",
+      "Reference specific Amherst features: the Five College Consortium (cross-registration with UMass-Amherst, Smith, Mt. Holyoke, Hampshire), the residential community, specific faculty or departments.",
+      "Maintain 3.9+ GPA, 1480+ SAT / 33+ ACT.",
+      "Apply Early Decision if Amherst is your top choice. ED acceptance rate is roughly 2-3x RD.",
+      "Show sustained, independent intellectual interests. Amherst rewards genuine curiosity.",
+    ],
+    mistakes: [
+      "Generic 'small school feel' essays. Amherst readers want specifics about the curriculum and community.",
+      "Treating Amherst as a backup to an Ivy. Amherst is one of the most selective colleges in the country (~7% acceptance) and admissions reads applications for fit.",
+      "Underestimating the Five College Consortium. Cross-registration is a real, used feature — reference it specifically.",
+    ],
+    borderline:
+      "Amherst's need-based financial aid is among the most generous anywhere — no loans in aid packages. If you're low/middle-income with strong credentials, the cost story is dramatic. Apply for early QuestBridge match if eligible.",
+  },
+  {
+    slug: "williams-college",
+    hook: "How to get into Williams: tutorials and the rural New England intensity",
+    angle: "Williams is consistently ranked the #1 liberal arts college in the country. The Oxford-style tutorial program (1-2 students working closely with a professor) is the school's defining academic feature, available across many departments. Williams is small (~2,000 students), rural (Williamstown, MA), and intellectually intense.",
+    steps: [
+      "Reference the tutorial program specifically in your supplement. It's Williams' single most distinctive academic feature.",
+      "Show evidence you can engage in tutorial-style learning: independent reading, deep analytical writing, sustained focus on a topic.",
+      "Maintain 3.95+ GPA, 1490+ SAT / 33+ ACT.",
+      "Apply Early Decision if Williams is your top choice. ED bump is meaningful — 2-3x RD.",
+      "Engage with the rural New England setting as a feature: outdoor culture, the residential community, the seasonal life.",
+    ],
+    mistakes: [
+      "Generic 'I love LACs' essays. Williams supplements should reference the tutorials specifically.",
+      "Treating the rural setting as a downside. The wrong applicants frame Williamstown as remote rather than intentional.",
+      "Underestimating Williams' selectivity. Acceptance rate is around 8% and falling.",
+    ],
+    borderline:
+      "Williams is one of the few schools where strong writing genuinely outperforms stats. If you can show analytical depth in your essays, your application reads stronger than your numbers. Williams' financial aid is also exceptional — no-loan policies for families under a high income threshold.",
+  },
+  {
+    slug: "pomona-college",
+    hook: "How to get into Pomona: the Claremont Consortium and California LAC niche",
+    angle: "Pomona is the founding member of the Claremont Colleges — five undergraduate schools (Pomona, Claremont McKenna, Scripps, Pitzer, Harvey Mudd) sharing dining, libraries, and cross-registration. Pomona offers a small-school feel with consortium-scale resources. It's the most academically prestigious of the Claremonts and admissions are roughly 7%.",
+    steps: [
+      "Reference the Claremont Consortium specifically — cross-registration, shared resources, the multi-college community.",
+      "Show interest in Pomona's open curriculum and breadth-of-study expectations.",
+      "Maintain 3.9+ GPA, 1480+ SAT / 33+ ACT.",
+      "Apply Early Decision if Pomona is your top choice. ED bump is meaningful.",
+      "Engage with Pomona's distinctive features: residential life, Southern California setting, the Pomona-Pitzer athletic union, the relationship with the other Claremonts.",
+    ],
+    mistakes: [
+      "Treating Pomona as 'Harvey Mudd for non-engineers.' The Claremonts have distinct cultures.",
+      "Generic California-weather essays. Specifics about Pomona's community matter.",
+      "Underestimating the Consortium's scale. Cross-registration is real and a defining feature.",
+    ],
+    borderline:
+      "Pomona rewards applicants who'd actively use the consortium structure — students who want a small home college with big-school resources. If you can articulate that, your application stands out from generic 'I want a LAC' essays.",
+  },
 ];
 
 export function getHowToGetIn(slug: string): HowToGetInEntry | undefined {

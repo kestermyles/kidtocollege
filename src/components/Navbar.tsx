@@ -28,6 +28,7 @@ const NAV_LINKS: NavLink[] = [
       { href: "/best-colleges", label: "Best Colleges (Ranked Lists)" },
       { href: "/honors-colleges", label: "Honors Colleges" },
       { href: "/how-to-get-into", label: "How to Get Into Top Schools" },
+      { href: "/college-mental-health", label: "Mental Health at Colleges" },
       { href: "/compare", label: "Compare Colleges" },
       { href: "/discover", label: "What Should I Study?" },
     ],

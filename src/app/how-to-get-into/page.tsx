@@ -7,7 +7,7 @@ import { breadcrumbsLd } from "@/lib/structured-data";
 export const metadata: Metadata = {
   title: "How to Get Into Top Colleges: School-Specific Admissions Guides",
   description:
-    "School-specific 'how to get in' guides for Harvard, Stanford, MIT, Yale, Princeton, UT Austin, Berkeley, Rice, Duke, and CMU. Concrete steps, common mistakes, and reality checks for borderline applicants.",
+    "School-specific 'how to get in' guides for 30+ top US colleges — Ivies, Stanford, MIT, Caltech, top publics, and elite liberal arts. Concrete steps, common mistakes, and reality checks for borderline applicants.",
   alternates: { canonical: "https://www.kidtocollege.com/how-to-get-into" },
 };
 
@@ -27,6 +27,30 @@ const slugToDisplay: Record<string, string> = {
   "rice-university": "Rice",
   "duke-university": "Duke",
   "carnegie-mellon-university": "Carnegie Mellon",
+  "brown-university": "Brown",
+  "dartmouth-college": "Dartmouth",
+  "cornell-university": "Cornell",
+  "columbia-university-in-the-city-of-new-york": "Columbia",
+  "university-of-pennsylvania": "UPenn",
+  "university-of-chicago": "UChicago",
+  "northwestern-university": "Northwestern",
+  "university-of-notre-dame": "Notre Dame",
+  "vanderbilt-university": "Vanderbilt",
+  "university-of-southern-california": "USC",
+  "johns-hopkins-university": "Johns Hopkins",
+  "washington-university-in-st-louis": "WashU",
+  "emory-university": "Emory",
+  "california-institute-of-technology": "Caltech",
+  "tufts-university": "Tufts",
+  "georgetown-university": "Georgetown",
+  "university-of-michigan-ann-arbor": "Michigan",
+  "university-of-california-los-angeles": "UCLA",
+  "unc-chapel-hill": "UNC",
+  "university-of-virginia": "UVA",
+  "georgia-tech": "Georgia Tech",
+  "amherst-college": "Amherst",
+  "williams-college": "Williams",
+  "pomona-college": "Pomona",
 };
 
 export default function HowToGetInIndexPage() {

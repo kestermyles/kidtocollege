@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+import Link from 'next/link'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import ChecklistBoard from '@/components/checklist/ChecklistBoard'
 
@@ -24,27 +24,31 @@ function gradeFromGradYear(gradYear: number | null | undefined, today = new Date
 export default async function ChecklistPage() {
   const supabase = createServerSupabaseClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/')
 
-  const [tasksRes, progressRes, profileRes] = await Promise.all([
-    supabase
-      .from('checklist_tasks')
-      .select('*')
-      .order('grade_level', { ascending: true })
-      .order('ideal_completion_month', { ascending: true, nullsFirst: false })
-      .order('priority', { ascending: true }),
-    supabase
-      .from('student_checklist_progress')
-      .select('task_id, completed, completed_at')
-      .eq('user_id', user.id),
-    supabase
-      .from('profiles')
-      .select('grad_year')
-      .eq('id', user.id)
-      .maybeSingle(),
-  ])
+  const tasksRes = await supabase
+    .from('checklist_tasks')
+    .select('*')
+    .order('grade_level', { ascending: true })
+    .order('ideal_completion_month', { ascending: true, nullsFirst: false })
+    .order('priority', { ascending: true })
 
-  const defaultGrade = gradeFromGradYear(profileRes.data?.grad_year)
+  let progress: { task_id: string; completed: boolean; completed_at: string | null }[] = []
+  let defaultGrade = '11'
+  if (user) {
+    const [progressRes, profileRes] = await Promise.all([
+      supabase
+        .from('student_checklist_progress')
+        .select('task_id, completed, completed_at')
+        .eq('user_id', user.id),
+      supabase
+        .from('profiles')
+        .select('grad_year')
+        .eq('id', user.id)
+        .maybeSingle(),
+    ])
+    progress = progressRes.data ?? []
+    defaultGrade = gradeFromGradYear(profileRes.data?.grad_year)
+  }
 
   return (
     <main className="max-w-4xl mx-auto px-4 pt-24 pb-16">
@@ -85,10 +89,27 @@ export default async function ChecklistPage() {
         </ul>
       </div>
 
+      {!user && (
+        <div className="mb-6 rounded-lg border border-gold/40 bg-gold/5 p-4">
+          <p className="font-body text-sm text-navy">
+            <strong className="font-semibold">Track your progress.</strong>{" "}
+            <Link href="/signup" className="text-gold underline hover:no-underline">
+              Create a free account
+            </Link>{" "}
+            or{" "}
+            <Link href="/login" className="text-gold underline hover:no-underline">
+              sign in
+            </Link>{" "}
+            to check things off and have your grade picked automatically.
+          </p>
+        </div>
+      )}
+
       <ChecklistBoard
         tasks={tasksRes.data ?? []}
-        initialProgress={progressRes.data ?? []}
+        initialProgress={progress}
         defaultGrade={defaultGrade}
+        isAnonymous={!user}
       />
     </main>
   )

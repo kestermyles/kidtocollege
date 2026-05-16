@@ -63,10 +63,12 @@ export default function ChecklistBoard({
   tasks,
   initialProgress,
   defaultGrade,
+  isAnonymous = false,
 }: {
   tasks: Task[]
   initialProgress: Progress[]
   defaultGrade: string
+  isAnonymous?: boolean
 }) {
   const [progressMap, setProgressMap] = useState<Record<string, Progress>>(() => {
     const map: Record<string, Progress> = {}
@@ -104,6 +106,10 @@ export default function ChecklistBoard({
     : 0
 
   const toggleTask = (taskId: string) => {
+    if (isAnonymous) {
+      window.location.href = '/signup?next=/checklist'
+      return
+    }
     const current = progressMap[taskId]
     const nextCompleted = !current?.completed
     const optimistic: Progress = {
@@ -166,22 +172,24 @@ export default function ChecklistBoard({
         })}
       </div>
 
-      <div className="mb-5">
-        <div className="flex items-baseline justify-between text-sm mb-1.5">
-          <span className="font-medium text-navy">
-            {GRADES.find(g => g.value === activeGrade)?.label} progress
-          </span>
-          <span className="text-gray-500">
-            {completedCount} of {allGradeTasks.length} complete ({pctComplete}%)
-          </span>
+      {!isAnonymous && (
+        <div className="mb-5">
+          <div className="flex items-baseline justify-between text-sm mb-1.5">
+            <span className="font-medium text-navy">
+              {GRADES.find(g => g.value === activeGrade)?.label} progress
+            </span>
+            <span className="text-gray-500">
+              {completedCount} of {allGradeTasks.length} complete ({pctComplete}%)
+            </span>
+          </div>
+          <div className="h-2 bg-card rounded-full overflow-hidden">
+            <div
+              className="h-full bg-sage transition-all duration-300"
+              style={{ width: `${pctComplete}%` }}
+            />
+          </div>
         </div>
-        <div className="h-2 bg-card rounded-full overflow-hidden">
-          <div
-            className="h-full bg-sage transition-all duration-300"
-            style={{ width: `${pctComplete}%` }}
-          />
-        </div>
-      </div>
+      )}
 
       <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
         <div className="flex gap-1.5 flex-wrap">
