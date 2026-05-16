@@ -6,6 +6,12 @@
     "app/api/research/route.ts": {
       "maxDuration": 300
     },
+    "app/api/cron/enrich-photos/route.ts": {
+      "maxDuration": 300
+    },
+    "app/api/admin/backfill-photos/route.ts": {
+      "maxDuration": 300
+    },
     "app/**/*": {
       "maxDuration": 60
     }
@@ -18,6 +24,10 @@
     {
       "path": "/api/cron/checklist-reminders",
       "schedule": "0 14 * * *"
+    },
+    {
+      "path": "/api/cron/refresh-labor-data",
+      "schedule": "0 2 1 * *"
     }
   ]
 }

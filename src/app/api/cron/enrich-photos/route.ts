@@ -2,10 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { COLLEGE_PHOTO_OVERRIDES } from "@/lib/college-photo-overrides";
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
-const MAX_PER_RUN = 20;
-const DELAY_MS = 800;
+// Unsplash production rate limit is 5,000 requests/hour. Each college
+// uses up to 2 Unsplash requests (primary search + city fallback), so a
+// per-hour ceiling of ~2,500 colleges is safe. We pace at ~3 colleges/sec
+// (DELAY_MS 300) which is 10,800/hour upper bound — capped by MAX_PER_RUN
+// and Unsplash's own rate limiter, whichever hits first.
+const MAX_PER_RUN = 500;
+const DELAY_MS = 300;
 
 // Fallback when no validated match exists. The slug-override system
 // renders this as a labeled generic on the college page rather than
