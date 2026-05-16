@@ -15,6 +15,7 @@ import { getOverridePhoto } from "@/lib/college-photo-overrides";
 import NPCCalculator from "@/components/npc/NPCCalculator";
 import { breadcrumbsLd } from "@/lib/structured-data";
 import { getStateByAbbreviation } from "@/lib/state-aid-data";
+import { getCollegeDesignations } from "@/lib/college-designations";
 
 export const revalidate = 86400;
 
@@ -477,6 +478,24 @@ export default async function CollegePage({ params }: CollegePageProps) {
               <p className="mt-2 text-white/70 font-body text-lg">
                 {college.location}
               </p>
+              {(() => {
+                const designations = getCollegeDesignations(slug);
+                if (designations.length === 0) return null;
+                return (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {designations.map((d) => (
+                      <a
+                        key={d.code}
+                        href={d.href}
+                        title={d.tooltip}
+                        className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium font-mono-label uppercase tracking-wider bg-gold/20 text-gold border border-gold/40 hover:bg-gold/30 transition-colors"
+                      >
+                        {d.label}
+                      </a>
+                    ))}
+                  </div>
+                );
+              })()}
             </FadeIn>
           </div>
 
