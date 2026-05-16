@@ -432,25 +432,38 @@ export default async function CollegePage({ params }: CollegePageProps) {
         )}
         <div className="absolute bottom-3 right-4 z-10 text-white/50 text-xs">
           {heroCreditName && heroCreditUrl ? (
-            <>
+            heroCreditName.endsWith(" website") ? (
+              // Photo sourced from the college's own site — credit links
+              // back to them, no Unsplash chrome.
               <a
-                href={`${heroCreditUrl}?utm_source=kidtocollege&utm_medium=referral`}
+                href={heroCreditUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white/80 transition-colors"
               >
-                Photo by {heroCreditName}
+                Photo via {heroCreditName}
               </a>
-              <span> on </span>
-              <a
-                href="https://unsplash.com?utm_source=kidtocollege&utm_medium=referral"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white/80 transition-colors"
-              >
-                Unsplash
-              </a>
-            </>
+            ) : (
+              <>
+                <a
+                  href={`${heroCreditUrl}?utm_source=kidtocollege&utm_medium=referral`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white/80 transition-colors"
+                >
+                  Photo by {heroCreditName}
+                </a>
+                <span> on </span>
+                <a
+                  href="https://unsplash.com?utm_source=kidtocollege&utm_medium=referral"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white/80 transition-colors"
+                >
+                  Unsplash
+                </a>
+              </>
+            )
           ) : (
             <a
               href="https://unsplash.com?utm_source=kidtocollege&utm_medium=referral"
