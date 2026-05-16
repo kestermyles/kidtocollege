@@ -64,13 +64,16 @@ async function buildDefaultCollegeList(
   const reachMax = gpaNum >= 3.7 ? 25 : gpaNum >= 3.3 ? 40 : 55
 
   // Excluded name patterns: community colleges, online-mostly schools,
-  // narrowly-scoped institutes. These are legitimate paths but not what
-  // most high-school-senior applicants are evaluating against.
+  // narrowly-scoped or religious-niche institutions. These are legitimate
+  // paths but not what most high-school-senior applicants are evaluating
+  // against — they should opt in to those, not be defaulted into them.
   const NAME_BLOCKLIST = [
     "community college", "online", "digital", "world campus", "global campus",
     "campus immersion", "technical college", "vocational", "trade school",
     "western governors", "southern new hampshire", "grand canyon",
     "university of phoenix", "liberty university", "ashford", "capella",
+    "yeshiva", "seminary", "theological", "rabbinical",
+    "beauty academy", "cosmetology", "bible college", "talmudic",
   ]
   function isExcluded(name: string): boolean {
     const lower = name.toLowerCase()
@@ -85,12 +88,16 @@ async function buildDefaultCollegeList(
   ): Promise<string[]> {
     let query = supabase!
       .from("colleges")
-      .select("name, state, graduation_rate")
+      .select("name, state, graduation_rate, total_enrollment")
       .gte("acceptance_rate", minAccept)
       .lte("acceptance_rate", maxAccept)
       .not("acceptance_rate", "is", null)
       // Prefer schools with strong outcomes — proxy for residential 4-year.
       .gte("graduation_rate", 50)
+      // Min enrollment 3,000 — excludes tiny niche / religious institutions
+      // that don't fit a typical high-school-senior search default. Students
+      // who want those schools can find them via name search.
+      .gte("total_enrollment", 3000)
       .order("graduation_rate", { ascending: false, nullsFirst: false })
       .limit(40)
     if (preferState && stateAbbr) query = query.eq("state", stateAbbr)
