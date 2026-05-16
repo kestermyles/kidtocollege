@@ -28,12 +28,14 @@ const STATE_NAME_TO_ABBR: Record<string, string> = {
 
 /**
  * Pick 6 colleges spanning the student's realistic selectivity range:
- *   - 1 home-state safety (high acceptance, in their state if possible)
+ *   - 1 home-state safety (4-year residential, in their state if possible)
  *   - 2 broad safety
  *   - 2 likely/match (mid-range selectivity)
  *   - 2 reach (selective, aspirational)
- * For a typical 3.8 GPA applicant this surfaces a balanced result set
- * instead of 6 elite reaches that read as "you won't get in anywhere".
+ *
+ * Filters out community colleges, online-mostly schools, and tech/trade
+ * institutes so a 3.8 GPA student doesn't see "Austin Community College"
+ * and "SNHU" as their headline safeties.
  */
 async function buildDefaultCollegeList(
   supabase: ReturnType<typeof getSupabase>,
@@ -53,12 +55,27 @@ async function buildDefaultCollegeList(
   const gpaNum = typeof gpa === "string" ? parseFloat(gpa) : gpa
   const stateAbbr = stateName ? STATE_NAME_TO_ABBR[stateName] : undefined
 
-  // GPA-aware tier definitions. Lower-GPA students get a shift so we
-  // don't suggest 5%-acceptance reaches that are unrealistic.
-  const safetyMin = gpaNum >= 3.7 ? 65 : gpaNum >= 3.3 ? 75 : 85
+  // GPA-aware tier definitions. Safety ceiling caps at 95 so we never
+  // suggest 99-100% open-enrollment schools as the headline match.
+  const safetyMin = gpaNum >= 3.7 ? 55 : gpaNum >= 3.3 ? 70 : 80
+  const safetyMax = gpaNum >= 3.7 ? 90 : gpaNum >= 3.3 ? 95 : 99
   const matchMin = gpaNum >= 3.7 ? 25 : gpaNum >= 3.3 ? 40 : 55
   const matchMax = gpaNum >= 3.7 ? 55 : gpaNum >= 3.3 ? 70 : 85
   const reachMax = gpaNum >= 3.7 ? 25 : gpaNum >= 3.3 ? 40 : 55
+
+  // Excluded name patterns: community colleges, online-mostly schools,
+  // narrowly-scoped institutes. These are legitimate paths but not what
+  // most high-school-senior applicants are evaluating against.
+  const NAME_BLOCKLIST = [
+    "community college", "online", "digital", "world campus", "global campus",
+    "campus immersion", "technical college", "vocational", "trade school",
+    "western governors", "southern new hampshire", "grand canyon",
+    "university of phoenix", "liberty university", "ashford", "capella",
+  ]
+  function isExcluded(name: string): boolean {
+    const lower = name.toLowerCase()
+    return NAME_BLOCKLIST.some((p) => lower.includes(p))
+  }
 
   async function pick(
     minAccept: number,
@@ -68,20 +85,25 @@ async function buildDefaultCollegeList(
   ): Promise<string[]> {
     let query = supabase!
       .from("colleges")
-      .select("name, state")
+      .select("name, state, graduation_rate")
       .gte("acceptance_rate", minAccept)
       .lte("acceptance_rate", maxAccept)
       .not("acceptance_rate", "is", null)
-      .order("total_enrollment", { ascending: false, nullsFirst: false })
-      .limit(20)
+      // Prefer schools with strong outcomes — proxy for residential 4-year.
+      .gte("graduation_rate", 50)
+      .order("graduation_rate", { ascending: false, nullsFirst: false })
+      .limit(40)
     if (preferState && stateAbbr) query = query.eq("state", stateAbbr)
     const { data } = await query
-    return (data ?? []).slice(0, n).map((r: { name: string }) => r.name)
+    return (data ?? [])
+      .filter((r: { name: string }) => !isExcluded(r.name))
+      .slice(0, n)
+      .map((r: { name: string }) => r.name)
   }
 
   const [stateSafety, broadSafety, match, reach] = await Promise.all([
-    pick(safetyMin, 100, 1, true),
-    pick(safetyMin, 100, 2),
+    pick(safetyMin, safetyMax, 1, true),
+    pick(safetyMin, safetyMax, 3),
     pick(matchMin, matchMax, 2),
     pick(1, reachMax, 2),
   ])
