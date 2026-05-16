@@ -111,6 +111,16 @@ const STOPWORDS = new Set([
   "north", "south", "east", "west", "saint", "st", "&",
 ])
 
+// Words that signal a photo is genuinely OF a college campus (not just
+// of the same city). Required in combination with a school/city token,
+// otherwise "Pennsylvania" in metadata catches Drexel-Institute shots
+// and "Los Angeles" catches USC shots.
+const CAMPUS_CONTEXT_WORDS = [
+  "university", "college", "campus", "school", "academy", "institute",
+  "library", "quadrangle", "quad", "dormitory", "dorm", "lecture",
+  "student", "alumni", "graduation", "academia", "academic",
+]
+
 function matchesCollegeOrCity(
   candidate: UnsplashPhoto,
   collegeName: string,
@@ -133,12 +143,23 @@ function matchesCollegeOrCity(
     .split(/\s+/)
     .filter((t) => t.length >= 4 && !STOPWORDS.has(t))
 
+  // Strong match: a distinctive school token is in the metadata.
+  // ("harvard", "stanford", "carnegie") — these alone are usually
+  // good enough.
   for (const t of tokens) {
     if (haystack.includes(t)) return true
   }
+
+  // Weaker match: city + campus context. A photo of the right city
+  // is only accepted if its description also signals a campus subject.
+  // Stops "Pennsylvania" matching Drexel-Institute, "Los Angeles"
+  // matching USC, "Texas" matching the State Capitol, etc.
   if (city && city.length >= 4 && haystack.includes(city.toLowerCase())) {
-    return true
+    for (const w of CAMPUS_CONTEXT_WORDS) {
+      if (haystack.includes(w)) return true
+    }
   }
+
   return false
 }
 

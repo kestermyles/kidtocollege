@@ -14,15 +14,32 @@ export interface CollegePhotoOverride {
   creditUrl: string | null;
 }
 
-// The override map is now nearly empty. The three-tier photo strategy
-// (school-site og:image → validated Unsplash → category-varied close-up
-// fallback) handles most of what this map used to protect against. Add
-// an entry here ONLY when:
-//   - The cron is producing something visually wrong AND
-//   - The school's own site doesn't yield a usable og:image AND
-//   - You want to force a specific URL instead of category fallback.
+// Generic "no specific campus image" fallback. Renders with the
+// "Generic campus image" badge on the college page so the user knows
+// it isn't a real photo of that campus.
+const LABELED_FALLBACK: CollegePhotoOverride = {
+  url: "https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80",
+  creditName: null,
+  creditUrl: null,
+};
+
+// Schools whose Unsplash search keeps returning visually-wrong photos
+// (e.g. UPenn → Drexel-Institute, UT Austin → Texas State Capitol,
+// UCLA → USC, Columbia → Washington Square / NYU). The city-name
+// validation in photo-strategy.ts catches most cases, but for these
+// the wrong subject is heavily tagged with the same city words and
+// keeps slipping through. Pin them to the labeled fallback until we
+// can hand-pick verified URLs.
+//
+// To replace with a real photo, swap LABELED_FALLBACK for an
+// explicit { url, creditName, creditUrl } object.
 export const COLLEGE_PHOTO_OVERRIDES: Record<string, CollegePhotoOverride> = {
-  // (intentionally empty — let the strategy do its job)
+  "ut-austin": LABELED_FALLBACK,
+  "california-institute-of-technology": LABELED_FALLBACK,
+  "ucla": LABELED_FALLBACK,
+  "university-of-california-los-angeles": LABELED_FALLBACK,
+  "university-of-pennsylvania": LABELED_FALLBACK,
+  "columbia-university-in-the-city-of-new-york": LABELED_FALLBACK,
 };
 
 export function getOverridePhoto(slug: string): CollegePhotoOverride | null {
