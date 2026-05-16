@@ -14,14 +14,6 @@ export interface CollegePhotoOverride {
   creditUrl: string | null;
 }
 
-// Safe fallback: a generic campus library shot. Used until a proper
-// hand-picked photo for each priority school is committed.
-const FALLBACK = {
-  url: "https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80",
-  creditName: null,
-  creditUrl: null,
-};
-
 // The override map is now nearly empty. The three-tier photo strategy
 // (school-site og:image → validated Unsplash → category-varied close-up
 // fallback) handles most of what this map used to protect against. Add
