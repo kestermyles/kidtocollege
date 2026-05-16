@@ -13,7 +13,7 @@ const HOMEPAGE_FAQ = {
       name: "Is KidToCollege actually free?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes — every feature is free forever. No paywalls, no premium tier, no selling your data. The site is editorially independent and not affiliated with any college, lender, or test-prep company.",
+        text: "Yes — every feature is free, with no paywalls or premium tier. We don't sell your personal data to advertisers or data brokers, and we're not affiliated with any college, lender, or test-prep company. Full details are in our privacy policy.",
       },
     },
     {
@@ -166,7 +166,7 @@ export default function HomePage() {
           </FadeIn>
           <FadeIn delay={0.4}>
             <p className="mt-6 text-sm text-white/60 font-body">
-              Free forever. No paywalls. No selling your data.
+              Free. No paywalls. We don&apos;t sell your data to advertisers.
             </p>
           </FadeIn>
           <FadeIn delay={0.5}>

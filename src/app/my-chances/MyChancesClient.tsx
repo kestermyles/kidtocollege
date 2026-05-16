@@ -296,6 +296,36 @@ export default function MyChancesClient() {
               })}
             </div>
             <p className="text-xs text-gray-400 text-center mt-8">Always verify requirements directly with each college.</p>
+
+            {/* Reality-check footer: these are 6 example schools, not the whole landscape */}
+            {!selectedCollege && (
+              <div className="mt-10 p-5 bg-amber-50 border border-amber-200 rounded-lg">
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  <strong className="text-gray-900">These are 6 example schools.</strong>{" "}
+                  Only ~33 US colleges admit fewer than 10% of applicants. The other 2,400+ are far more open — most US 4-year colleges admit at least half of applicants, and your profile is competitive at the vast majority of them.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <a
+                    href="/colleges"
+                    className="text-xs font-medium text-amber-700 hover:text-amber-900 bg-white px-3 py-1.5 rounded-md border border-amber-300 transition-colors"
+                  >
+                    Browse 2,900+ colleges →
+                  </a>
+                  <a
+                    href="/best-colleges"
+                    className="text-xs font-medium text-amber-700 hover:text-amber-900 bg-white px-3 py-1.5 rounded-md border border-amber-300 transition-colors"
+                  >
+                    Best-fit lists →
+                  </a>
+                  <a
+                    href="/my-list"
+                    className="text-xs font-medium text-amber-700 hover:text-amber-900 bg-white px-3 py-1.5 rounded-md border border-amber-300 transition-colors"
+                  >
+                    Add specific schools to your list →
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         )}
 

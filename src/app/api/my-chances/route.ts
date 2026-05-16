@@ -11,6 +11,94 @@ function getSupabase() {
   return createClient(url, key)
 }
 
+const STATE_NAME_TO_ABBR: Record<string, string> = {
+  Alabama: "AL", Alaska: "AK", Arizona: "AZ", Arkansas: "AR", California: "CA",
+  Colorado: "CO", Connecticut: "CT", Delaware: "DE", Florida: "FL", Georgia: "GA",
+  Hawaii: "HI", Idaho: "ID", Illinois: "IL", Indiana: "IN", Iowa: "IA",
+  Kansas: "KS", Kentucky: "KY", Louisiana: "LA", Maine: "ME", Maryland: "MD",
+  Massachusetts: "MA", Michigan: "MI", Minnesota: "MN", Mississippi: "MS",
+  Missouri: "MO", Montana: "MT", Nebraska: "NE", Nevada: "NV",
+  "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
+  "North Carolina": "NC", "North Dakota": "ND", Ohio: "OH", Oklahoma: "OK",
+  Oregon: "OR", Pennsylvania: "PA", "Rhode Island": "RI", "South Carolina": "SC",
+  "South Dakota": "SD", Tennessee: "TN", Texas: "TX", Utah: "UT", Vermont: "VT",
+  Virginia: "VA", Washington: "WA", "West Virginia": "WV", Wisconsin: "WI",
+  Wyoming: "WY",
+}
+
+/**
+ * Pick 6 colleges spanning the student's realistic selectivity range:
+ *   - 1 home-state safety (high acceptance, in their state if possible)
+ *   - 2 broad safety
+ *   - 2 likely/match (mid-range selectivity)
+ *   - 2 reach (selective, aspirational)
+ * For a typical 3.8 GPA applicant this surfaces a balanced result set
+ * instead of 6 elite reaches that read as "you won't get in anywhere".
+ */
+async function buildDefaultCollegeList(
+  supabase: ReturnType<typeof getSupabase>,
+  gpa: string | number,
+  stateName?: string,
+): Promise<string[]> {
+  const FALLBACK = [
+    "Arizona State University",
+    "University of Central Florida",
+    "Texas State University",
+    "University of California Los Angeles",
+    "University of Texas at Austin",
+    "Rice University",
+  ]
+  if (!supabase) return FALLBACK
+
+  const gpaNum = typeof gpa === "string" ? parseFloat(gpa) : gpa
+  const stateAbbr = stateName ? STATE_NAME_TO_ABBR[stateName] : undefined
+
+  // GPA-aware tier definitions. Lower-GPA students get a shift so we
+  // don't suggest 5%-acceptance reaches that are unrealistic.
+  const safetyMin = gpaNum >= 3.7 ? 65 : gpaNum >= 3.3 ? 75 : 85
+  const matchMin = gpaNum >= 3.7 ? 25 : gpaNum >= 3.3 ? 40 : 55
+  const matchMax = gpaNum >= 3.7 ? 55 : gpaNum >= 3.3 ? 70 : 85
+  const reachMax = gpaNum >= 3.7 ? 25 : gpaNum >= 3.3 ? 40 : 55
+
+  async function pick(
+    minAccept: number,
+    maxAccept: number,
+    n: number,
+    preferState = false,
+  ): Promise<string[]> {
+    let query = supabase!
+      .from("colleges")
+      .select("name, state")
+      .gte("acceptance_rate", minAccept)
+      .lte("acceptance_rate", maxAccept)
+      .not("acceptance_rate", "is", null)
+      .order("total_enrollment", { ascending: false, nullsFirst: false })
+      .limit(20)
+    if (preferState && stateAbbr) query = query.eq("state", stateAbbr)
+    const { data } = await query
+    return (data ?? []).slice(0, n).map((r: { name: string }) => r.name)
+  }
+
+  const [stateSafety, broadSafety, match, reach] = await Promise.all([
+    pick(safetyMin, 100, 1, true),
+    pick(safetyMin, 100, 2),
+    pick(matchMin, matchMax, 2),
+    pick(1, reachMax, 2),
+  ])
+
+  const seen = new Set<string>()
+  const ordered: string[] = []
+  for (const list of [stateSafety, broadSafety, match, reach]) {
+    for (const name of list) {
+      if (!seen.has(name)) {
+        seen.add(name)
+        ordered.push(name)
+      }
+    }
+  }
+  return ordered.length >= 4 ? ordered.slice(0, 6) : FALLBACK
+}
+
 export async function POST(req: NextRequest) {
   const { gpa, sat, act, state, major, savedColleges, specificCollege } = await req.json()
   if (!gpa || !state || !major) return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
@@ -55,7 +143,9 @@ export async function POST(req: NextRequest) {
   } else if (savedColleges?.length > 0) {
     collegeList = savedColleges.slice(0, 8)
   } else {
-    collegeList = ["University of Texas at Austin","Texas A&M University","University of California Los Angeles","University of Michigan","New York University","University of Florida"]
+    // Smart default: spread across selectivity tiers so a typical
+    // applicant sees Safety + Likely + Match + Reach, not 6 elite reaches.
+    collegeList = await buildDefaultCollegeList(supabase, gpa, state)
   }
 
   const message = await client.messages.create({
@@ -63,7 +153,7 @@ export async function POST(req: NextRequest) {
     max_tokens: 2000,
     messages: [{
       role: "user",
-      content: `You are a college admissions expert with deep knowledge of US admission statistics.
+      content: `You are a college admissions expert with deep knowledge of US admission statistics. Be calibrated and encouraging — do not assume every applicant is aiming for the Ivy League. Most US 4-year colleges admit the majority of applicants; a student with a 3.5+ GPA is competitive at the vast majority of US schools.
 
 Student profile:
 - Unweighted GPA: ${gpa}
@@ -77,13 +167,17 @@ ${collegeList.map((c: string, i: number) => `${i + 1}. ${c}`).join("\n")}${speci
 
 For each college return:
 - college: college name
-- slug: URL slug (lowercase, hyphens only)
+- slug: URL slug (lowercase, hyphens only — must match the college's KidToCollege slug if known)
 - likelihood: "Safety" | "Likely" | "Match" | "Reach"
-- percentage: integer 0-95 (admission probability for this specific student)
+- percentage: integer 0-95 (calibrated admission probability for this specific student)
 - reasoning: 1-2 sentences citing actual median GPA/test ranges for that college
 - tips: 2-3 specific actionable improvements (cite actual score targets, named programs, real deadlines)
 
-Account for in-state advantage, major competitiveness, and holistic factors.
+Calibration rules:
+- If the college's overall acceptance rate is >70% AND the student's GPA is within or above that college's typical range, classify as Safety (percentage 80-95).
+- If the college's acceptance rate is 40-70% AND the student is within the college's typical range, classify as Likely or Match (60-85%).
+- A Reach should be a school where percentage is realistically under 35%.
+- Account for in-state advantage, major competitiveness, and holistic factors.
 
 Respond ONLY with valid JSON, no markdown:
 {"results":[{"college":"...","slug":"...","likelihood":"...","percentage":0,"reasoning":"...","tips":["...","..."]}]}`

@@ -76,8 +76,15 @@ export default function AboutPage() {
               wants it.
             </p>
             <p className="font-medium text-navy">
-              No paywalls. No premium tier. No selling your data. Not now,
-              not later.
+              No paywalls. No premium tier. We don&apos;t sell your personal data
+              to advertisers or brokers — full details are in the{" "}
+              <Link
+                href="/privacy"
+                className="text-gold underline underline-offset-2 hover:text-gold/80"
+              >
+                privacy policy
+              </Link>
+              .
             </p>
             <p className="text-navy/70">
               If it helps you, that&apos;s the whole point. If something&apos;s

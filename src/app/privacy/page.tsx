@@ -73,7 +73,24 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              4. Future advertising
+              4. Business transfers
+            </h2>
+            <p>
+              If KidToCollege is ever sold, merged with another company, or
+              otherwise transferred to a new owner, your personal data may
+              transfer to the new entity as part of that transaction. We will
+              notify you by email (if you have an account) or through a
+              prominent notice on the site before any such transfer takes
+              effect, so you have the opportunity to delete your account or
+              request your data first. Any new owner will be required to honour
+              the privacy commitments in place at the time of transfer or
+              provide you with the opportunity to opt out before changing them.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-bold text-navy mb-3">
+              5. Future advertising
             </h2>
             <p>
               KidToCollege is currently ad-free. In the future, this policy may be updated
@@ -86,7 +103,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              5. Cookies and analytics
+              6. Cookies and analytics
             </h2>
             <p>
               We use essential cookies to maintain your authentication session if you are
@@ -102,7 +119,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              6. Data retention and deletion
+              7. Data retention and deletion
             </h2>
             <p>
               Your data is retained for as long as your account is active or as needed to
@@ -124,7 +141,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              7. Data security
+              8. Data security
             </h2>
             <p>
               We use industry-standard security measures to protect your data, including
@@ -136,7 +153,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              8. Children&apos;s privacy
+              9. Children&apos;s privacy
             </h2>
             <p>
               KidToCollege is designed for use by high school students and their parents or
@@ -148,7 +165,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              9. Contact
+              10. Contact
             </h2>
             <p>
               For any questions about this privacy policy, data requests, or to exercise
@@ -165,7 +182,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              10. Governing law
+              11. Governing law
             </h2>
             <p>
               This privacy policy is governed by and construed in accordance with the laws
@@ -175,7 +192,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              11. Affiliate &amp; partner relationships
+              12. Affiliate &amp; partner relationships
             </h2>
             <p>
               We may in the future receive compensation from partners including
@@ -189,7 +206,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-display text-xl font-bold text-navy mb-3">
-              12. Changes to this policy
+              13. Changes to this policy
             </h2>
             <p>
               We may update this privacy policy from time to time. When we make material
