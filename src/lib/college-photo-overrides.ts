@@ -22,48 +22,15 @@ const FALLBACK = {
   creditUrl: null,
 };
 
+// The override map is now nearly empty. The three-tier photo strategy
+// (school-site og:image → validated Unsplash → category-varied close-up
+// fallback) handles most of what this map used to protect against. Add
+// an entry here ONLY when:
+//   - The cron is producing something visually wrong AND
+//   - The school's own site doesn't yield a usable og:image AND
+//   - You want to force a specific URL instead of category fallback.
 export const COLLEGE_PHOTO_OVERRIDES: Record<string, CollegePhotoOverride> = {
-  // The "Nebraska Love Library" cluster — 5+ schools were all sharing
-  // the same brick-and-stone library photo (actually Love Library at
-  // U Nebraska–Lincoln). Forcing fallback until curated photos sourced.
-  "ut-austin": FALLBACK,
-  "columbia-university-in-the-city-of-new-york": FALLBACK,
-  "texas-am-university": FALLBACK,
-  "rice-university": FALLBACK,
-  "university-of-pennsylvania": FALLBACK,
-
-  // The "BYU mountain" duplicate — Duke and Johns Hopkins both got an
-  // aerial of Utah's Y Mountain. Both schools are flat-state Eastern.
-  "duke-university": FALLBACK,
-  "johns-hopkins-university": FALLBACK,
-
-  // The "Vanderbilt/WashU night aerial" duplicate — anonymous night
-  // shot, neither shows Kirkland Hall (Vandy) or Brookings Hall (WashU).
-  "washington-university-in-st-louis": FALLBACK,
-
-  // Cross-school mismatches identified by visual audit:
-  // UCLA was showing USC's VKC globe tower + DTLA skyline.
-  "ucla": FALLBACK,
-  "university-of-california-los-angeles": FALLBACK,
-
-  // Caltech was showing an East-Asian-style modernist high-rise + stadium.
-  "california-institute-of-technology": FALLBACK,
-
-  // Michigan was showing Soviet-style apartment blocks at night.
-  "university-of-michigan-ann-arbor": FALLBACK,
-
-  // String-collision failures (Unsplash search matched on substring):
-  // U Wisconsin-Madison → got JMU (James MADISON University) Wilson Hall.
-  "university-of-wisconsin-madison": FALLBACK,
-
-  // Boston College → got Boston University Metcalf Center (signage visible).
-  "boston-college": FALLBACK,
-
-  // U Florida → got snow-covered Cornell (cross-school swap).
-  "university-of-florida": FALLBACK,
-
-  // Howard → got UW Seattle Allen/Suzzallo Library.
-  "howard-university": FALLBACK,
+  // (intentionally empty — let the strategy do its job)
 };
 
 export function getOverridePhoto(slug: string): CollegePhotoOverride | null {
