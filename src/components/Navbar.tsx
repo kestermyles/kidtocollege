@@ -32,6 +32,7 @@ const NAV_LINKS: NavLink[] = [
       { href: "/discover", label: "What Should I Study?" },
     ],
   },
+  { href: "/checklist", label: "What to do now" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/coach", label: "Coach" },
   {
@@ -51,7 +52,6 @@ const NAV_LINKS: NavLink[] = [
     href: "/more",
     label: "More",
     children: [
-      { href: "/checklist", label: "Checklist" },
       { href: "/deadlines", label: "Deadlines" },
       { href: "/college-fairs", label: "College Fairs" },
       { href: "/my-colleges", label: "Plan Campus Visits" },

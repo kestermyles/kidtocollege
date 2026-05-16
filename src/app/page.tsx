@@ -69,8 +69,8 @@ const STEPS = [
   },
   {
     num: "04",
-    title: "Coach your way to admission",
-    desc: "Essays, test prep, financial aid, interviews — the full private counselor experience.",
+    title: "Check off what's left",
+    desc: "A grade-by-grade checklist — clubs, leadership, service, summer programs, tests, essays, deadlines. See exactly what to do.",
   },
 ];
 
@@ -163,6 +163,15 @@ export default function HomePage() {
                 Browse 2,900+ colleges
               </Link>
             </div>
+            <p className="mt-4 text-sm text-white/70 font-body">
+              Or skip ahead:{" "}
+              <Link
+                href="/checklist"
+                className="text-gold hover:text-gold/80 underline underline-offset-2 font-medium"
+              >
+                what should I be doing right now?
+              </Link>
+            </p>
           </FadeIn>
           <FadeIn delay={0.4}>
             <p className="mt-6 text-sm text-white/60 font-body">

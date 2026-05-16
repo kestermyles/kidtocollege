@@ -123,12 +123,14 @@ const MILESTONES: string[] = [
 ];
 
 const QUICK_TOOLS = [
+  { label: "What should I be doing right now?", href: "/checklist" },
   { label: "Compare colleges", href: "/compare" },
   { label: "Application deadlines", href: "/deadlines" },
-  { label: "College fairs", href: "/college-fairs" },
   { label: "Merit Sweet Spot", href: "/coach/merit-sweet-spot" },
   { label: "Essay prompts", href: "/essays" },
   { label: "FAFSA guide", href: "/fafsa-guide" },
+  { label: "Honors colleges", href: "/honors-colleges" },
+  { label: "Auto-merit schools", href: "/auto-merit" },
 ];
 
 export default function RoadmapPage() {

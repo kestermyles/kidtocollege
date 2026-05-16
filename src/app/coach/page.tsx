@@ -18,10 +18,10 @@ const breadcrumbs = breadcrumbsLd([
 
 const PILLARS = [
   {
-    title: "My Plan",
-    href: "/coach/checklist",
+    title: "What should I be doing right now?",
+    href: "/checklist",
     description:
-      "Your personalized checklist — every task, deadline, and document tracked in one place.",
+      "71 specific tasks tagged by grade level — not just paperwork, but the activities, leadership, service, summer programs, and recommendations that build a strong application. Check things off as you do them.",
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -198,7 +198,7 @@ export default function CoachPage() {
               </FadeIn>
             ))}
 
-            {/* Checklist CTA card */}
+            {/* Personalized AI checklist CTA */}
             <FadeIn delay={0.48}>
               <Link href="/coach/checklist" className="block group">
                 <div className="ktc-card p-8 h-full bg-cream border-dashed border-2 border-gold/30 transition-all duration-200 group-hover:shadow-lg group-hover:-translate-y-1 group-hover:border-gold/60">
@@ -208,11 +208,13 @@ export default function CoachPage() {
                     </svg>
                   </div>
                   <h3 className="font-display text-xl font-bold text-navy mb-2 group-hover:text-gold transition-colors">
-                    The Checklist
+                    Personalized tasks for your colleges
                   </h3>
                   <p className="font-body text-navy/60 text-sm leading-relaxed">
-                    Your personalized, interactive college application checklist.
-                    Track every deadline, every task, every document.
+                    Already have schools on your list? We&apos;ll generate
+                    specific tasks for each one — visit dates, scholarship
+                    deadlines, supplement essays, financial aid forms.
+                    Tracked alongside the general checklist.
                   </p>
                   <div className="mt-4 font-mono-label text-xs text-gold/80 tracking-wide uppercase">
                     Account required — Sign up free

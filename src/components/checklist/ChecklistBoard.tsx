@@ -42,12 +42,12 @@ const GRADES: { value: Task['grade_level']; label: string }[] = [
 ]
 
 const CATEGORIES: { value: Task['task_category']; label: string; Icon: React.ComponentType<{ size?: number | string }> }[] = [
+  { value: 'planning', label: 'Profile & Planning', Icon: Compass },
   { value: 'testing', label: 'Testing', Icon: GraduationCap },
-  { value: 'applications', label: 'Applications', Icon: FileText },
+  { value: 'applications', label: 'Applications & Recommendations', Icon: FileText },
   { value: 'essays', label: 'Essays', Icon: PenLine },
   { value: 'financial_aid', label: 'Financial Aid', Icon: DollarSign },
-  { value: 'visits', label: 'Visits', Icon: MapPin },
-  { value: 'planning', label: 'Planning', Icon: Compass },
+  { value: 'visits', label: 'Campus Visits', Icon: MapPin },
 ]
 
 const MONTH_NAMES = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
