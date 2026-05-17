@@ -14,12 +14,30 @@ import {
   Download,
   AlertTriangle,
   ExternalLink,
+  Users,
+  Trophy,
+  HandHeart,
+  Briefcase,
+  Award,
+  MailQuestion,
 } from 'lucide-react'
 
 type Task = {
   task_id: string
   grade_level: '9' | '10' | '11' | '12' | 'summer-before-12'
-  task_category: 'testing' | 'applications' | 'financial_aid' | 'visits' | 'essays' | 'planning'
+  task_category:
+    | 'testing'
+    | 'applications'
+    | 'financial_aid'
+    | 'visits'
+    | 'essays'
+    | 'planning'
+    | 'extracurriculars'
+    | 'leadership'
+    | 'service'
+    | 'experience'
+    | 'awards'
+    | 'recommendations'
   task_title: string
   task_description: string
   ideal_completion_month: number | null
@@ -43,9 +61,15 @@ const GRADES: { value: Task['grade_level']; label: string }[] = [
 
 const CATEGORIES: { value: Task['task_category']; label: string; Icon: React.ComponentType<{ size?: number | string }> }[] = [
   { value: 'planning', label: 'Profile & Planning', Icon: Compass },
+  { value: 'extracurriculars', label: 'Extracurriculars', Icon: Users },
+  { value: 'leadership', label: 'Leadership', Icon: Trophy },
+  { value: 'service', label: 'Community Service', Icon: HandHeart },
+  { value: 'experience', label: 'Jobs & Summer', Icon: Briefcase },
+  { value: 'awards', label: 'Awards', Icon: Award },
   { value: 'testing', label: 'Testing', Icon: GraduationCap },
-  { value: 'applications', label: 'Applications & Recommendations', Icon: FileText },
   { value: 'essays', label: 'Essays', Icon: PenLine },
+  { value: 'recommendations', label: 'Recommendations', Icon: MailQuestion },
+  { value: 'applications', label: 'Applications', Icon: FileText },
   { value: 'financial_aid', label: 'Financial Aid', Icon: DollarSign },
   { value: 'visits', label: 'Campus Visits', Icon: MapPin },
 ]
