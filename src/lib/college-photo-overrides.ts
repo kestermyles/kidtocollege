@@ -37,10 +37,8 @@ export const LABELED_FALLBACK: CollegePhotoOverride = {
 // commercially. If unsure of provenance, swap that entry back to
 // LABELED_FALLBACK rather than risk a license violation.
 export const COLLEGE_PHOTO_OVERRIDES: Record<string, CollegePhotoOverride> = {
-  // UT Austin — TODO: confirm Wikimedia Commons source filename.
-  // Photo shows DKR-Texas Memorial Stadium with the Longhorn Band on the
-  // field, SEC logo visible (post-2024). Searches on Commons didn't
-  // return a match; need exact File: URL from user.
+  // UT Austin — original photo by Kester Hodgson (site owner). No
+  // attribution byline shown since the site is his own work.
   "ut-austin": {
     url: "/college-hero/ut-austin.jpg",
     creditName: null,
@@ -72,14 +70,13 @@ export const COLLEGE_PHOTO_OVERRIDES: Record<string, CollegePhotoOverride> = {
     creditUrl:
       "https://commons.wikimedia.org/wiki/File:College_Hall,_University_of_Pennsylvania,_2010.jpg",
   },
-  // Columbia — TODO: confirm. Best-guess match for the front view of the
-  // Alma Mater statue: File:Alma_Mater_statue_at_Low_Memorial_Library,_front.jpg
-  // by Valley2city, CC BY-SA 3.0 (2008). If your photo is from a
-  // different Commons file, update this with the actual source.
+  // Columbia — File:Alma_Mater_statue_at_Low_Memorial_Library,_front.jpg
+  // by Valley2city, CC BY-SA 3.0 (2008)
   "columbia-university-in-the-city-of-new-york": {
     url: "/college-hero/columbia-university-in-the-city-of-new-york.jpg",
-    creditName: null,
-    creditUrl: null,
+    creditName: "Valley2city, CC BY-SA 3.0 via Wikimedia Commons",
+    creditUrl:
+      "https://commons.wikimedia.org/wiki/File:Alma_Mater_statue_at_Low_Memorial_Library,_front.jpg",
   },
 };
 
