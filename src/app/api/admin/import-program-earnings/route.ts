@@ -75,16 +75,25 @@ export async function GET(req: NextRequest) {
   const start = Date.now();
   const budgetMs = (maxDuration - 5) * 1000;
 
-  // Find which slugs already have earnings rows for this data year
-  const { data: existing } = await supabase
-    .from("program_earnings")
-    .select("college_slug")
-    .eq("data_year", DATA_YEAR);
-  const done = new Set<string>(
-    (existing ?? []).map(
-      (r) => (r as { college_slug: string }).college_slug,
-    ),
-  );
+  // Find which slugs already have earnings rows for this data year.
+  // PostgREST caps SELECTs at 1000 rows by default — paginate so `done`
+  // captures every slug, not just the first 1000 rows of the table.
+  const done = new Set<string>();
+  {
+    const PAGE = 1000;
+    for (let offset = 0; ; offset += PAGE) {
+      const { data: page } = await supabase
+        .from("program_earnings")
+        .select("college_slug")
+        .eq("data_year", DATA_YEAR)
+        .range(offset, offset + PAGE - 1);
+      if (!page || page.length === 0) break;
+      for (const r of page) {
+        done.add((r as { college_slug: string }).college_slug);
+      }
+      if (page.length < PAGE) break;
+    }
+  }
 
   let processed = 0;
   let rowsInserted = 0;
