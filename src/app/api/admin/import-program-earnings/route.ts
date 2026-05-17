@@ -89,20 +89,31 @@ export async function GET(req: NextRequest) {
   let processed = 0;
   let rowsInserted = 0;
   let scorecardMisses = 0;
+  // Cursor pagination by slug — advances through the colleges table
+  // regardless of whether items are already in `done`.
+  let cursorSlug = "";
 
   outer: while (Date.now() - start < budgetMs - SAFETY_MARGIN_MS) {
-    const { data: colleges } = await supabase
+    let query = supabase
       .from("colleges")
       .select("slug, name")
-      .order("name")
+      .order("slug", { ascending: true })
       .limit(BATCH_SIZE);
+    if (cursorSlug) {
+      query = query.gt("slug", cursorSlug);
+    }
+    const { data: colleges } = await query;
     if (!colleges || colleges.length === 0) break;
+
+    // Advance cursor to the last slug in this batch BEFORE filtering,
+    // so already-done batches still move the cursor forward.
+    cursorSlug = colleges[colleges.length - 1].slug;
 
     // Filter to ones not yet processed
     const queue = colleges.filter((c) => !done.has(c.slug));
     if (queue.length === 0) {
-      // Refetch with offset; for simplicity here, just exit
-      break;
+      // Whole batch already done — keep advancing the cursor.
+      continue;
     }
 
     for (const college of queue) {
