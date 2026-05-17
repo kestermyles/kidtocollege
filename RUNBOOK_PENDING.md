@@ -4,13 +4,18 @@ Four things still need a human. Each section: what, why, exact paste-ready comma
 
 ---
 
-## 1. Curate 6 Unsplash hero photos
+## 1. ~~Curate 6 hero photos~~ — DONE (commit 50d… ish)
 
-- [ ] UT Austin
-- [ ] Caltech
-- [ ] UCLA (note: 2 slugs)
-- [ ] UPenn
-- [ ] Columbia
+Hero photos for UT Austin, Caltech, UCLA, UPenn, and Columbia are now
+served from `/public/college-hero/`. **Action remaining**: verify the
+source/license of each photo and fill in `creditName` + `creditUrl` in
+[src/lib/college-photo-overrides.ts](src/lib/college-photo-overrides.ts).
+Files sourced from Wikimedia Commons require CC attribution under the
+license they're published under (typically CC BY-SA 4.0). Until credits
+are filled in, the photos render without a credit byline.
+
+- [ ] Confirm source for each of the 5 photos
+- [ ] Fill creditName / creditUrl for any CC-licensed photos
 
 ### Why
 
