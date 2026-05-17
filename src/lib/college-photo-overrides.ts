@@ -37,31 +37,45 @@ export const LABELED_FALLBACK: CollegePhotoOverride = {
 // commercially. If unsure of provenance, swap that entry back to
 // LABELED_FALLBACK rather than risk a license violation.
 export const COLLEGE_PHOTO_OVERRIDES: Record<string, CollegePhotoOverride> = {
+  // UT Austin — TODO: confirm Wikimedia Commons source filename.
+  // Photo shows DKR-Texas Memorial Stadium with the Longhorn Band on the
+  // field, SEC logo visible (post-2024). Searches on Commons didn't
+  // return a match; need exact File: URL from user.
   "ut-austin": {
     url: "/college-hero/ut-austin.jpg",
     creditName: null,
     creditUrl: null,
   },
+  // Caltech — File:Caltech_Entrance.jpg by Canon.vs.nikon, CC BY-SA 3.0 (2012)
   "california-institute-of-technology": {
     url: "/college-hero/california-institute-of-technology.jpg",
-    creditName: null,
-    creditUrl: null,
+    creditName: "Canon.vs.nikon, CC BY-SA 3.0 via Wikimedia Commons",
+    creditUrl:
+      "https://commons.wikimedia.org/wiki/File:Caltech_Entrance.jpg",
   },
+  // UCLA — File:Ucladowntownla.jpg by Mike Downey, Public Domain (2006)
   "ucla": {
     url: "/college-hero/ucla.jpg",
-    creditName: null,
-    creditUrl: null,
+    creditName: "Mike Downey, Public Domain via Wikimedia Commons",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Ucladowntownla.jpg",
   },
   "university-of-california-los-angeles": {
     url: "/college-hero/university-of-california-los-angeles.jpg",
-    creditName: null,
-    creditUrl: null,
+    creditName: "Mike Downey, Public Domain via Wikimedia Commons",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Ucladowntownla.jpg",
   },
+  // UPenn — File:College_Hall,_University_of_Pennsylvania,_2010.jpg by
+  // Smallbones, CC0 1.0 / Public Domain (2010)
   "university-of-pennsylvania": {
     url: "/college-hero/university-of-pennsylvania.jpg",
-    creditName: null,
-    creditUrl: null,
+    creditName: "Smallbones, CC0 via Wikimedia Commons",
+    creditUrl:
+      "https://commons.wikimedia.org/wiki/File:College_Hall,_University_of_Pennsylvania,_2010.jpg",
   },
+  // Columbia — TODO: confirm. Best-guess match for the front view of the
+  // Alma Mater statue: File:Alma_Mater_statue_at_Low_Memorial_Library,_front.jpg
+  // by Valley2city, CC BY-SA 3.0 (2008). If your photo is from a
+  // different Commons file, update this with the actual source.
   "columbia-university-in-the-city-of-new-york": {
     url: "/college-hero/columbia-university-in-the-city-of-new-york.jpg",
     creditName: null,
